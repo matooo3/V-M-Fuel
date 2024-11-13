@@ -1,26 +1,40 @@
+/* farbvariable für standardtheme: */
+:root {
+    --theme-color-green: #30962b;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    color: #7adb74;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #e6e5e5;
+    color: var(--theme-color-green);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    overflow: hidden; /* Der Kollege versteckt die Scrollbars */
 }
 
 #app {
+    padding: 20px;
+    margin: 20px;
+    border: #00000036 1px solid;
+    border-radius: 10px;
+
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    border: black 1px solid;
-    padding: 40%;
+    justify-content: start;
+    align-items: center;
     flex-grow: 1;
-    border-radius: 16px;
+    flex: 1;
+    
+    /* RELATIV, DASS WIR IN APP ABSOLUTE BAUEN KÖNNEN: */
+    position: relative;
 }
 
 nav {
@@ -32,7 +46,7 @@ nav {
 }
 
 nav a {
-    color: #7adb74;
+    color: var(--theme-color-green);
     text-decoration: none;
     margin: 10px;
     border: black 1px solid;
