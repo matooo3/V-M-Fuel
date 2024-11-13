@@ -1,6 +1,6 @@
 /* farbvariable für standardtheme: */
 :root {
-    --theme-color-green: #30962b;
+    --theme-color-green: #64c25de5;
 }
 
 body {
@@ -49,7 +49,6 @@ nav a {
     color: var(--theme-color-green);
     text-decoration: none;
     margin: 10px;
-    border: black 1px solid;
     padding: 5px 10px;
     border-radius: 30px;
 }
