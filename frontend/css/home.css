@@ -14,6 +14,16 @@
     margin-top: 40px;
 }
 
+.top-el {
+    margin-top: 27px;
+}
+
+label {
+    font-size: 16px;
+    margin: 10px;
+    font-weight: bold;
+}
+
 input {
     padding: 10px;
     margin: 10px;
@@ -33,15 +43,17 @@ input {
     font-weight: bold;
     cursor: pointer;
     border-radius: 10px;
-    position: absolute; /* absolut zu #app */
 }
 
 #calc-mode-btn {
+    position: absolute; /* absolut zu #app */
     top: 20px;
     left: 20px;
 }
 
 #calc-btn {
+    position: absolute; /* absolut zu #app */
     bottom: 20px;
     right: 20px;
 }
+
