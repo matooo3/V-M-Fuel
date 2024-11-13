@@ -1,7 +1,41 @@
 body {
-    margin: 0;
-    padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #000080;
-    color: #ffffff;
+    background-color: #ffffff;
+    color: #7adb74;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: black 1px solid;
+    padding: 40%;
+    flex-grow: 1;
+    border-radius: 16px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 5px 0;
+    margin: 20px;
+}
+
+nav a {
+    color: #7adb74;
+    text-decoration: none;
+    margin: 10px;
+    border: black 1px solid;
+    padding: 5px 10px;
+    border-radius: 30px;
 }
