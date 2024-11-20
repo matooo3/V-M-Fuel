@@ -10,8 +10,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 20px;
-    margin-top: 40px;
 }
 
 .top-el {
@@ -26,7 +24,7 @@ label {
 
 input {
     padding: 10px;
-    margin: 10px;
+    margin: 5px;
     border: 1px solid #00000036;
     border-radius: 10px;
     font-size: 16px;
@@ -35,7 +33,7 @@ input {
 
 .btn {
     padding: 8px;
-    margin: 0; /* necessary margin 0 to avoid shifting */
+    margin: 0px; /* necessary margin 0 to avoid shifting */
     border: 1px solid #00000036;
     background-color: #f9f9f9;
     color: #000000;
@@ -55,5 +53,18 @@ input {
     position: absolute; /* absolut zu #app */
     bottom: 20px;
     right: 20px;
+}
+
+#result-kcal {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    margin-top: 40px;
+    border: #00000036 1px solid;
+    padding: 20px;
+
 }
 

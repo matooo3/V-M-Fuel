@@ -41,8 +41,8 @@
 
                 <label class="top-el" for="gender">Geschlecht:</label>
                 <select class="btn" name="gender" id="gender">
-                    <option value="männlich">männlich</option>
-                    <option value="weiblich">weiblich</option>
+                    <option value="male">männlich</option>
+                    <option value="female">weiblich</option>
                 </select>
 
                 <label class="top-el" for="activity">Aktivitätslevel:</label>
@@ -53,8 +53,19 @@
                     <option value="1.725">sehr aktiv</option>
                     <option value="1.9">extrem aktiv</option>
                 </select>
+
+                <label for="goal">Ziel:</label>
+                <select class="btn" name="goal" id="goal">
+                    <option value="bulk">Bulk</option>
+                    <option value="maintain">Gewicht halten</option>
+                    <option value="cut">Cut</option>
+                </select>
                 
+                <div id="result-kcal">
+                    Test
                 </div>
+
+            </div>
 
                 <!-- Dropdownmenu to change default / kcal here: -->
                 <select class="btn" id="calc-mode-btn">
@@ -96,7 +107,7 @@
         </a>
     </nav>
 
-    <script type="module" src="./scripts/script.js"></script>
+    <script type="module" src="../scripts/script.js"></script>
 </body>
 
 </html>
