@@ -45,3 +45,14 @@ export default function loadHome() {
         </div> <!-- end-home -->
     `;
 }
+
+// kcal berechnen Funktion
+export function calcKcal() {
+    
+    const kg = document.getElementById('kg').value;
+    const cm = document.getElementById('cm').value;
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    const activity = document.getElementById('activity').value;
+
+}
