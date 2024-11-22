@@ -9,10 +9,8 @@
     <!-- main css -->
     <link rel="stylesheet" href="../css/style.css">
     <!-- sub css -->
-    <link rel="stylesheet" href="../css/home.css">
-    <link rel="stylesheet" href="">
-    <link rel="stylesheet" href="">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../css/list.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
    
     
@@ -26,11 +24,20 @@
         
         <div id="list">
           
-            <ol>
-                <li class = "grocery">
-
+            <ol class="checklist">
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <span class="bullet"></span> Apfel
+                    </label>
                 </li>
-            </ol>
+            </ol> 
+
+            <select class="btn" id="order-btn">
+                <option value="food categories">food categories</option>
+                <option value="alphabetic">alphabetic</option>
+            </select>
+            <button class = "btn" id = update-button> Generate </button>
 
         </div> <!-- end-list -->
 
