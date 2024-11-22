@@ -19,18 +19,58 @@ export default function loadList() {
     `;
 
 // Event Listener hinzufügen
-document.getElementById('update-button').addEventListener('click', () => {
+document.getElementById("update-button").addEventListener("click", () => {
 
     // function for getting the right food from data base still needs to be implemented!!
-    const array = ["Apfel", "Banane", "Tomate"]
+    const array = ["Apfel", "Gurke", "Banane"]
     // TODO
 
     updateList(array)
 });
+
+// Event Listener for Dropdown-Button
+document.getElementById("order-btn").addEventListener("change", (event) => {
+    
+    const orderType = event.target.value;
+
+    // getting current entries
+    const items = Array.from(document.querySelectorAll(".checklist li label"))
+        .map(label => label.textContent.trim()); // trim is not necessary right now, but will be necessary if the user is able to edit the list
+
+    if (orderType === "food categories") {
+
+        // TODO
+        // sorting according to certain food categroies
+
+    }
+
+    if (orderType === "alphabetic") {
+
+        // sorting alphabetically
+        updateList(items.sort());
+
+    }
+});
+
 }
 
     // Funktion zum Aktualisieren der Liste
     function updateList(array) {
+
+        const sort_val = document.getElementById("order-btn").value;
+
+        if (sort_val === "food categories") {
+
+            // TODO
+            // sorting according to certain food categroies
+    
+        }
+    
+        if (sort_val === "alphabetic") {
+    
+            array.sort();
+    
+        }
     
         const checklist = document.querySelector('.checklist');
     
