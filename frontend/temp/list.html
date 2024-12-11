@@ -9,6 +9,7 @@
     <!-- main css -->
     <link rel="stylesheet" href="../css/style.css">
     <!-- sub css -->
+    <link rel="stylesheet" href="../css/list.css">
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="">
@@ -25,11 +26,20 @@
         
         <div id="list">
           
-            <ol>
-                <li class = "grocery">
-
+            <ol class="checklist">
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <span class="bullet"></span> Not able to generate a list yet
+                    </label>
                 </li>
-            </ol>
+            </ol> 
+
+            <select class="btn" name = "order-btn" id ="order-btn">
+                <option value="food categories">food categories</option>
+                <option value="alphabetic">alphabetic</option>
+            </select>
+            <button class = "btn" id = "update-button"> Generate </button>
 
         </div> <!-- end-list -->
 
