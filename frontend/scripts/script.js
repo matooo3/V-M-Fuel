@@ -12,15 +12,15 @@ const routes = {
 
 function router() {
     const hash = window.location.hash.slice(1);
-    // Fallback auf Home-Seite
+    // Fallback on home page
     const baseTab = "initial Page to implement";
     const loadPage = routes[hash] || baseTab;
-    // Löscht vorherigen Inhalt
+    // deletes current content
     // document.getElementById('app').innerHTML = '';
     loadPage();
     console.log('Page loaded:', hash || 'home');
 }
 
 window.addEventListener('hashchange', router);
-// Lädt die Standardseite beim Start:
+// load standard page at the start
 window.addEventListener('load', router);
