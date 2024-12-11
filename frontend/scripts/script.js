@@ -24,4 +24,3 @@ function router() {
 window.addEventListener('hashchange', router);
 // load standard page at the start
 window.addEventListener('load', router);
-

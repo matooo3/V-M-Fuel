@@ -1,0 +1,53 @@
+#list {
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: #f9f9f9; /* Optional: Hintergrundfarbe für den gesamten Container */
+}
+
+.checklist {
+    list-style: none; /* Standard-Aufzählungszeichen entfernen */
+    padding: 0;
+    margin: 0;
+}
+
+.checklist li {
+    margin: 15px 0; /* Abstand zwischen den Listenelementen */
+    display: flex;
+    align-items: center; /* Vertikale Zentrierung */
+}
+
+.checklist label {
+    display: flex;
+    align-items: center; /* Text und Punkt nebeneinander zentrieren */
+    cursor: pointer; /* Zeigeränderung bei Hover */
+}
+
+.checklist input[type="checkbox"] {
+    display: none; /* Checkbox ausblenden */
+}
+
+.checklist .bullet {
+    width: 20px; 
+    height: 20px; 
+    border-radius: 50%; /* Macht den Punkt rund */
+    border: 2px solid #555; /* Umrandung des Punktes */
+    margin-right: 10px; /* Abstand zwischen Punkt und Text */
+    background-color: transparent; /* Startet als leer */
+    transition: background-color 0.3s ease; /* Animation bei Veränderung */
+}
+
+.checklist input[type="checkbox"]:checked + .bullet {
+    background-color: #4caf50; /* Punkt wird grün, wenn Checkbox abgehakt */
+    border-color: #4caf50; /* Umrandung wird passend */
+}
+
+.checklist label:hover .bullet {
+    border-color: #bdbbbb; /* Ändert die Farbe des Kreises beim Hover */
+}
+
+#order-btn {
+    position: absolute; /* absolut zu #app */
+    top: 20px;
+    right: 20px;
+}
