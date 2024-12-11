@@ -18,30 +18,15 @@ export default function loadList() {
             <button class = "btn" id = "update-button"> Generate </button>
     `;
 
-}
-
-// Add event listener
-document.getElementById('update-button').addEventListener('click', () => {
-
-    // function for getting the right food from data base still needs to be implemented!!
-    const array = ["Apfel", "Banane", "Tomate"]
-
 // Event Listener hinzufügen
 document.getElementById("update-button").addEventListener("click", () => {
 
-}
+    // function for getting the right food from data base still needs to be implemented!!
+    const array = ["Apfel", "Gurke", "Banane"]
+    // TODO
 
-    // fuction for updating list
-    function updateList(array) {
-    
-        const checklist = document.querySelector('.checklist');
-    
-        // remove all entries
-        checklist.innerHTML = '';
-    
-        // add new entries
-        array.forEach((item) => {
-            // create list elements for each food item in array
+    updateList(array)
+});
 
 // Event Listener for Dropdown-Button
 document.getElementById("order-btn").addEventListener("change", (event) => {
@@ -95,7 +80,6 @@ document.getElementById("order-btn").addEventListener("change", (event) => {
         // Neue Einträge hinzufügen
         array.forEach((item) => {
             // Neues Listenelement erstellen
-
             const li = document.createElement('li');
             const label = document.createElement('label');
             const checkbox = document.createElement('input');
@@ -104,8 +88,7 @@ document.getElementById("order-btn").addEventListener("change", (event) => {
             bullet.className = 'bullet';
             const text = document.createTextNode(` ${item}`);
     
-            // merge elements
-
+            // Zusammenfügen der Elemente
             label.appendChild(checkbox);
             label.appendChild(bullet);
             label.appendChild(text);

@@ -73,7 +73,7 @@ export default function loadHome() {
 //               HOME-CALCULATE-KCAL-FUNCTION                 //
 ////////////////////////////////////////////////////////////////
 
-// kcal calculate Funktion
+// kcal berechnen Funktion
 function calcKcal() {
 
     const calcMode = document.getElementById('calc-mode-btn').value;
