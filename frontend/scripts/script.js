@@ -29,7 +29,7 @@ window.addEventListener('load', router);
 //
 export async function getData() {
     try {
-        const response = await fetch('${window.location.protocol}//${window.location.hostname}:3000/dishes'); // API-Endpoint of Backend
+        const response = await fetch('http://172.18.45.1:3000/dishes'); // API-Endpoint of Backend
         if (!response.ok) {
             throw new Error(`HTTP-Error! Status: ${response.status}`);
         }
