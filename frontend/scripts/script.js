@@ -24,3 +24,20 @@ function router() {
 window.addEventListener('hashchange', router);
 // Lädt die Standardseite beim Start:
 window.addEventListener('load', router);
+
+// BACKEND-http-Request:
+//
+export async function getData() {
+    try {
+        const response = await fetch('http://localhost:3000/dishes'); // API-Endpoint of Backend
+        if (!response.ok) {
+            throw new Error(`HTTP-Error! Status: ${response.status}`);
+        }
+        const data = await response.json(); // get data of API
+        console.log('Daten abgerufen:', data); // Debugging
+        return data;
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Daten:', error);
+    }
+}
+
