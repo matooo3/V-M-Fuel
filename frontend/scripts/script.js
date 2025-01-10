@@ -2,6 +2,7 @@ import loadHome from '../pages/home.js';
 import loadList from '../pages/list.js';
 import loadPlan from '../pages/plan.js';
 import loadMeals from '../pages/meals.js';
+import { loadMeals } from './pages/meals.js'; // Importiere die loadMeals-Funktion
 
 const routes = {
     "home": loadHome,

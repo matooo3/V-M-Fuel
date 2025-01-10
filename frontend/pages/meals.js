@@ -1,23 +1,50 @@
 // ./pages/meals.js
-import { getData } from '../scripts/script.js';
 
-export default async function loadMeals() {
+export async function loadMeals() {
     const app = document.getElementById('app');
-    app.innerHTML = `
-        <h1>Meals</h1>
-        <p>Willkommen auf der Meals-Seite!</p>
-        <ul id="meal-list"></ul>
-    `;
-
+    
     try {
-        const data = await getData(); // Daten abrufen
-        const mealList = document.getElementById('meal-list');
-        data.forEach(meal => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${meal.name} - ${meal.price}€`; // Beispielhafte Darstellung
-            mealList.appendChild(listItem);
-        });
+        const data = await getData(); // Abrufen der Daten von der Backend-API
+        if (!data || data.length === 0) {
+            app.innerHTML = '<p>Keine Gerichte gefunden.</p>';
+            return;
+        }
+        
+        // Die Gerichte als Liste anzeigen
+        app.innerHTML = `
+            <h1>Meals</h1>
+            <p>Willkommen auf der Meals-Seite!</p>
+            <ul>
+                ${data.map(meal => `
+                    <li>
+                        <strong>${meal.name}</strong><br>
+                        Kalorien: ${meal.calories}<br>
+                        Protein: ${meal.protein}g<br>
+                        Carbs: ${meal.carbs}g<br>
+                        Fette: ${meal.fats}g<br>
+                        VM Score: ${meal.vm_score}<br>
+                        Kategorie: ${meal.meal_category}
+                    </li>
+                `).join('')}
+            </ul>
+        `;
     } catch (error) {
+        app.innerHTML = '<p>Fehler beim Laden der Gerichte.</p>';
         console.error('Fehler beim Laden der Gerichte:', error);
+    }
+}
+
+async function getData() {
+    try {
+        // Anfrage an das Backend
+        const response = await fetch('http://172.18.45.1:3000/dishes');
+        if (!response.ok) {
+            throw new Error(`Fehler: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log('Daten vom Backend:', data); // Zum Debuggen
+        return data;
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Daten:', error);
     }
 }
