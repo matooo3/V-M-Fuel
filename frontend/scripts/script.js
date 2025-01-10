@@ -30,7 +30,9 @@ window.addEventListener('load', router);
 //
 export async function getData() {
     try {
+        console.log("trying to get API-data.....");
         const response = await fetch('http://172.18.45.1:3000/dishes'); // API-Endpoint of Backend
+        console.log("API-data arrived...");
         if (!response.ok) {
             throw new Error(`HTTP-Error! Status: ${response.status}`);
         }
