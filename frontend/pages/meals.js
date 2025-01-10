@@ -1,6 +1,6 @@
 // ./pages/meals.js
 
-export async function loadMeals() {
+export default async function loadMeals() {
     const app = document.getElementById('app');
     
     try {
