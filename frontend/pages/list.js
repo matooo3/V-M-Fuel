@@ -5,13 +5,13 @@ let counter = 0;
 export default function loadList() {
     const app = document.getElementById('app');
     app.innerHTML = `
-    <div class="container">
+    <div class="meal-container">
         <div class="header">
-            <select id="order-btn" class="btn">
+            <select id="order-btn" class="meal-btn">
                 <option value="food categories">Food Categories</option>
                 <option value="alphabetic">Alphabetic</option>
             </select>
-            <button id="generate-btn" class="btn">Generate</button>
+            <button id="generate-btn" class="meal-btn">Generate</button>
         </div>
         <ul class="checklist">
 
@@ -19,7 +19,7 @@ export default function loadList() {
         <div class="add-more">Add More Items
             <div id="add-more-inputs">
                 <input type="text" id="new-items" placeholder="Enter items, separated by commas">
-                <button id="add-button" class="generate-btn">Add</button>
+                <button id="add-button" class="meal-btn">Add</button>
             </div>
         </div>
     `;
@@ -101,6 +101,7 @@ function sort_items(){
         if (sort_val === "alphabetic") {
             
             items.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())); // lower case variants are getting compared
+            updateList(items);
     
         }
 
@@ -135,7 +136,7 @@ function add_items(){
             items.push(newItems[i]);
 
         }
-
+        
         sort_items();
         updateList(items);
         newItemsInput.value = ""; // Empty input field

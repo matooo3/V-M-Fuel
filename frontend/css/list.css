@@ -1,10 +1,5 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-}
-.container {
+
+.meal-container {
     width: 100%;
     max-width: 400px;
     margin: 20px auto;
@@ -135,7 +130,7 @@ body {
     display: block;
 }
 
-.btn {
+.meal-btn {
     padding: 10px 15px;
     font-size: 14px;
     background-color: #007bff;
