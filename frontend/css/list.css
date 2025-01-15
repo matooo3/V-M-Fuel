@@ -1,4 +1,4 @@
-
+/* General structure */
 .meal-container {
     width: 100%;
     max-width: 400px;
@@ -9,85 +9,8 @@
     overflow: hidden;
     position: relative;
 }
-.item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 15px;
-    border-bottom: 1px solid #f0f0f0;
-}
-.item:last-child {
-    border-bottom: none;
-}
-.details {
-    flex: 1;
-    margin-left: 10px;
-}
-.details h4 {
-    margin: 0;
-    font-size: 16px;
-    color: #333;
-}
-.details p {
-    margin: 5px 0 0;
-    font-size: 14px;
-    color: #666;
-}
-.calories {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
-.delete-btn {
-    width: 24px;
-    height: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-.delete-btn img {
-    width: 100%;
-    height: 100%;
-}
-.add-more {
-    text-align: center;
-    padding: 15px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #28a745;
-    cursor: pointer;
-}
 
-.label {
-    display: flex;
-    align-items: center; /* Text und Punkt nebeneinander zentrieren */
-    cursor: pointer; /* Zeigeränderung bei Hover */
-}
-
-.input {
-    display: none; /* Checkbox ausblenden */
-}
-
-.bullet {
-    width: 20px; 
-    height: 20px; 
-    border-radius: 50%; /* Macht den Punkt rund */
-    border: 2px solid #555; /* Umrandung des Punktes */
-    margin-right: 10px; /* Abstand zwischen Punkt und Text */
-    background-color: transparent; /* Startet als leer */
-    transition: background-color 0.3s ease, border-color 0.3s ease; /* Animation bei Veränderung */
-}
-
-.input:checked + .bullet {
-    background-color: #4caf50; /* Punkt wird grün, wenn Checkbox abgehakt */
-    border-color: #4caf50; /* Umrandung wird passend */
-}
-
-.label:hover .bullet {
-    border-color: #bdbbbb; /* Ändert die Farbe des Kreises beim Hover */
-}
-
-.header {
+.meal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -97,6 +20,63 @@
     position: relative;
 }
 
+.meal-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.generate-btn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Grocery list */
+.checklist {
+    list-style: none;
+    padding: 0;
+}
+
+.checklist li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.label {
+    display: flex;
+    align-items: center; /* center text and circle */
+    cursor: pointer; /* change curser when hovering */
+}
+
+.label:hover .bullet {
+    border-color: #bdbbbb; 
+}
+
+.input {
+    display: none; /* hide checkbox */
+}
+
+.bullet {
+    width: 20px; 
+    height: 20px; 
+    border-radius: 50%; /* rounds circle */
+    border: 2px solid #555; 
+    margin-right: 10px; 
+    background-color: transparent; /* Starts as empty */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Animation when changing */
+}
+
+.input:checked + .bullet {
+    background-color: #4caf50; /* green point, when checkbox was clicked */
+    border-color: #4caf50; 
+}
+
+
+/* Dropdown menu */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -130,28 +110,15 @@
     display: block;
 }
 
-.meal-btn {
-    padding: 10px 15px;
-    font-size: 14px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
+
+/* Adding items */
+.add-more {
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #28a745;
     cursor: pointer;
-}
-
-.generate-btn:hover {
-    background-color: #0056b3;
-}
-
-.checklist {
-    list-style: none;
-    padding: 0;
-}
-
-.checklist li {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
 }
 
 #add-more-inputs {
@@ -180,4 +147,13 @@
 
 #add-button:hover {
     background-color: #1e7a37;
+}
+
+/* Deleting items */
+.delete-button{
+    
+    margin-left: auto;
+    background-color: rgb(235, 67, 67);
+    color: white;
+
 }

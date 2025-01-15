@@ -6,7 +6,7 @@ export default function loadList() {
     const app = document.getElementById('app');
     app.innerHTML = `
     <div class="meal-container">
-        <div class="header">
+        <div class="meal-header">
             <select id="order-btn" class="meal-btn">
                 <option value="food categories">Food Categories</option>
                 <option value="alphabetic">Alphabetic</option>
@@ -14,7 +14,6 @@ export default function loadList() {
             <button id="generate-btn" class="meal-btn">Generate</button>
         </div>
         <ul class="checklist">
-
         </ul>
         <div class="add-more">Add More Items
             <div id="add-more-inputs">
@@ -80,10 +79,18 @@ function updateList(items) {
                 <input class="input" type="checkbox">
                 <span class="bullet"></span>
                 ${item}
+                <button class="meal-btn delete-button">delete</button>
             </label>
         `;
         checklist.appendChild(li);
 
+    });
+
+    const deleteButtons = document.querySelectorAll(".delete-button");
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", (event) => {
+            delete_item(event);
+        });
     });
 
 }
@@ -147,4 +154,22 @@ function add_items(){
         alert("Please enter at least one item.");
 
     }
+}
+
+function delete_item(event){
+
+    const checklist = document.querySelector(".checklist");
+    console.log(checklist)
+    const listItem = event.target.closest("li"); // Gets the parent <li> of the button
+    listItem.remove(); // Removes the <li> element from the DOM
+    console.log(checklist)
+
+    // Remove element from array
+    const itemText = listItem.querySelector("span").textContent.trim(); 
+    const index = items.indexOf(itemText); // Returns -1 if the index doesnt exist
+
+    if (index !== -1) {
+        items.splice(index, 1); // Removes 1 element from array
+    }
+
 }
