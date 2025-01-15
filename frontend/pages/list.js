@@ -23,27 +23,12 @@ export default function loadList() {
         </div>
     `;
 
-<<<<<<< Updated upstream
-// Event Listener hinzufügen
-document.getElementById('update-button').addEventListener('click', () => {
-
-    // function for getting the right food from data base still needs to be implemented!!
-    const array = ["Apfel", "Banane", "Tomate"]
-    // TODO
-=======
 // Add event listener
 document.getElementById("generate-btn").addEventListener("click", () => {
 
     updateList(items);
->>>>>>> Stashed changes
 
 });
-<<<<<<< Updated upstream
-}
-
-    // Funktion zum Aktualisieren der Liste
-    function updateList(array) {
-=======
 
 // Add event listener for Dropdown-Button
 document.getElementById("order-btn").addEventListener("change", () => {
@@ -55,7 +40,7 @@ document.getElementById("order-btn").addEventListener("change", () => {
 document.querySelector(".add-more").addEventListener("click", () => {
 
     counter += 1;
-    display_addmore();
+    display_addmore(counter);
 
 });
 
@@ -124,15 +109,23 @@ function sort_items(){
 }
 
 
-function display_addmore(){
+function display_addmore(counter){
 
     const inputsDiv = document.getElementById("add-more-inputs");
-    inputsDiv.style.display = "block";
+
+    if(counter % 2 == 0){
+
+        inputsDiv.style.display = "none";
+
+    } else {
+
+        inputsDiv.style.display = "block";
+
+    }
 
 }
 
 function add_items(){
->>>>>>> Stashed changes
     
     const newItemsInput = document.getElementById("new-items");
     const newItems = newItemsInput.value.split(",").map(item => item.trim()).filter(item => item);
