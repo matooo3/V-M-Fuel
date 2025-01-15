@@ -94,7 +94,6 @@ function sort_items(){
 
         if (sort_val === "food categories") {
 
-            updateList(items);
             // TODO
             // sorting according to certain food categroies
         }
@@ -102,8 +101,6 @@ function sort_items(){
         if (sort_val === "alphabetic") {
             
             items.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())); // lower case variants are getting compared
-            console.log(items)
-            updateList(items);
     
         }
 
