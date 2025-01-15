@@ -1,53 +1,188 @@
-#list {
-    padding: 20px;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+.container {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.item:last-child {
+    border-bottom: none;
+}
+.details {
+    flex: 1;
+    margin-left: 10px;
+}
+.details h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+.details p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}
+.calories {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+.delete-btn {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.delete-btn img {
     width: 100%;
     height: 100%;
-    background-color: #f9f9f9; /* Optional: Hintergrundfarbe für den gesamten Container */
+}
+.add-more {
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #28a745;
+    cursor: pointer;
 }
 
-.checklist {
-    list-style: none; /* Standard-Aufzählungszeichen entfernen */
-    padding: 0;
-    margin: 0;
-}
-
-.checklist li {
-    margin: 15px 0; /* Abstand zwischen den Listenelementen */
-    display: flex;
-    align-items: center; /* Vertikale Zentrierung */
-}
-
-.checklist label {
+.label {
     display: flex;
     align-items: center; /* Text und Punkt nebeneinander zentrieren */
     cursor: pointer; /* Zeigeränderung bei Hover */
 }
 
-.checklist input[type="checkbox"] {
+.input {
     display: none; /* Checkbox ausblenden */
 }
 
-.checklist .bullet {
+.bullet {
     width: 20px; 
     height: 20px; 
     border-radius: 50%; /* Macht den Punkt rund */
     border: 2px solid #555; /* Umrandung des Punktes */
     margin-right: 10px; /* Abstand zwischen Punkt und Text */
     background-color: transparent; /* Startet als leer */
-    transition: background-color 0.3s ease; /* Animation bei Veränderung */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Animation bei Veränderung */
 }
 
-.checklist input[type="checkbox"]:checked + .bullet {
+.input:checked + .bullet {
     background-color: #4caf50; /* Punkt wird grün, wenn Checkbox abgehakt */
     border-color: #4caf50; /* Umrandung wird passend */
 }
 
-.checklist label:hover .bullet {
+.label:hover .bullet {
     border-color: #bdbbbb; /* Ändert die Farbe des Kreises beim Hover */
 }
 
-#order-btn {
-    position: absolute; /* absolut zu #app */
-    top: 20px;
-    right: 20px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    position: relative;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.generate-btn:hover {
+    background-color: #0056b3;
+}
+
+.checklist {
+    list-style: none;
+    padding: 0;
+}
+
+.checklist li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+#add-more-inputs {
+    text-align: center;
+    margin-top: 10px;
+    display: none;
+}
+
+#new-items {
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    width: 80%;
+}
+
+#add-button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#add-button:hover {
+    background-color: #1e7a37;
 }
