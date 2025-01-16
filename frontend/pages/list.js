@@ -40,13 +40,6 @@ document.getElementById("order-btn").addEventListener("change", () => {
 document.getElementById("generate-btn").addEventListener("click", () => {
 
     generate_counter += 1;
-
-    if(generate_counter > 1){
-
-        alert("It is not recommended to generate the ingredients more than once.");
-
-    }
-
     updateList(items);
 
 });
@@ -196,7 +189,7 @@ function delete_item(event){
     const itemText = labelText.replace(/delete/g, '').trim();
 
     // Add removed item to array
-    deleted_items.push(itemText)
+    deleted_items.push(itemText);
 
     // Delete items finally from array
     const index = items.indexOf(itemText); // Returns -1 if the index doesnt exist
@@ -212,16 +205,19 @@ function restore_items(){
     // If checklist is empty then do nothing - TODO
     const checklist = document.querySelector(".checklist")
 
-    if (checklist.children.length != 0){
+    if (generate_counter > 0){
 
      // Restore all removed items
      for(let i = 0; i < deleted_items.length; i++){
         
         items.push(deleted_items[i]);
-        deleted_items.splice(i, 1);
 
     }
 
+    // Remove all items from deleted_items to prevent the user from generating them twice
+    deleted_items.splice(0, deleted_items.length);
+
+    console.log(items);
     // Sort them according to selected category and update checklist
     sort_items();
     updateList(items);  
