@@ -1,7 +1,12 @@
 // ./pages/list.js
-let items = getData();
-let counter = 0;
 
+// Initialize neccessary variables
+let items = getData();
+let deleted_items = [];
+let add_counter = 0;
+let generate_counter = 0;
+
+// Main function
 export default function loadList() {
     const app = document.getElementById('app');
     app.innerHTML = `
@@ -12,6 +17,7 @@ export default function loadList() {
                 <option value="alphabetic">Alphabetic</option>
             </select>
             <button id="generate-btn" class="meal-btn">Generate</button>
+            <button id="restore-btn" class="meal-btn">Restore one item</button>
         </div>
         <ul class="checklist">
         </ul>
@@ -23,24 +29,38 @@ export default function loadList() {
         </div>
     `;
 
-// Add event listener
-document.getElementById("generate-btn").addEventListener("click", () => {
-
-    updateList(items);
-
-});
-
-// Add event listener for Dropdown-Button
+// Add event listener 
 document.getElementById("order-btn").addEventListener("change", () => {
  
     sort_items();
         
 });
 
+
+document.getElementById("generate-btn").addEventListener("click", () => {
+
+    generate_counter += 1;
+
+    if(generate_counter > 1){
+
+        alert("It is not recommended to generate the ingredients more than once.");
+
+    }
+
+    updateList(items);
+
+});
+
+document.getElementById("restore-btn").addEventListener("click", () => {
+
+    restore_items();
+
+});
+
 document.querySelector(".add-more").addEventListener("click", () => {
 
-    counter += 1;
-    display_addmore(counter);
+    add_counter += 1;
+    display_addmore(add_counter);
 
 });
 
@@ -58,6 +78,7 @@ document.getElementById("add-button").addEventListener("click", () => {
 
 }
 
+// Add necessary functions
 function getData(){
 
     // Get Data from database - TODO
@@ -67,10 +88,13 @@ function getData(){
 
 function updateList(items) {
 
-
+    // Get checklist
     const checklist = document.querySelector(".checklist");
 
+    // Empty it for not adding ingredients more than once
     checklist.innerHTML = "";
+
+    // Add items to checklist
     items.forEach(item => {
 
         const li = document.createElement("li");
@@ -78,7 +102,7 @@ function updateList(items) {
             <label class="label">
                 <input class="input" type="checkbox">
                 <span class="bullet"></span>
-                ${item}
+                ${item} 
                 <button class="meal-btn delete-button">delete</button>
             </label>
         `;
@@ -86,7 +110,9 @@ function updateList(items) {
 
     });
 
+    // Add event listeners for every delete button
     const deleteButtons = document.querySelectorAll(".delete-button");
+
     deleteButtons.forEach(button => {
         button.addEventListener("click", (event) => {
             delete_item(event);
@@ -115,11 +141,12 @@ function sort_items(){
 }
 
 
-function display_addmore(counter){
+function display_addmore(add_counter){
 
+    // Display input field for adding more items accordingly
     const inputsDiv = document.getElementById("add-more-inputs");
 
-    if(counter % 2 == 0){
+    if(add_counter % 2 == 0){
 
         inputsDiv.style.display = "none";
 
@@ -133,6 +160,7 @@ function display_addmore(counter){
 
 function add_items(){
     
+    // Get user input
     const newItemsInput = document.getElementById("new-items");
     const newItems = newItemsInput.value.split(",").map(item => item.trim()).filter(item => item);
 
@@ -144,8 +172,10 @@ function add_items(){
 
         }
         
+        // Sort the array and then update it
         sort_items();
         updateList(items);
+
         newItemsInput.value = ""; // Empty input field
         document.getElementById("add-more-inputs").style.display = "none"; // Hide input field
 
@@ -158,18 +188,49 @@ function add_items(){
 
 function delete_item(event){
 
-    const checklist = document.querySelector(".checklist");
-    console.log(checklist)
     const listItem = event.target.closest("li"); // Gets the parent <li> of the button
     listItem.remove(); // Removes the <li> element from the DOM
-    console.log(checklist)
 
-    // Remove element from array
-    const itemText = listItem.querySelector("span").textContent.trim(); 
+    // Search for text label of the deleted item
+    const labelText = listItem.querySelector("label").textContent.trim();
+    const itemText = labelText.replace(/delete/g, '').trim();
+
+    // Add removed item to array
+    deleted_items.push(itemText)
+
+    // Delete items finally from array
     const index = items.indexOf(itemText); // Returns -1 if the index doesnt exist
-
     if (index !== -1) {
         items.splice(index, 1); // Removes 1 element from array
     }
+
+
+}
+
+function restore_items(){
+
+    // If checklist is empty then do nothing - TODO
+    const checklist = document.querySelector(".checklist")
+
+    if (checklist.children.length != 0){
+
+     // Restore all removed items
+     for(let i = 0; i < deleted_items.length; i++){
+        
+        items.push(deleted_items[i]);
+        deleted_items.splice(i, 1);
+
+    }
+
+    // Sort them according to selected category and update checklist
+    sort_items();
+    updateList(items);  
+
+    } else {
+
+        alert("You cant restore items before generating them!");
+
+    }
+
 
 }
