@@ -17,7 +17,7 @@ export default function loadList() {
                 <option value="alphabetic">Alphabetic</option>
             </select>
             <button id="generate-btn" class="meal-btn">Generate</button>
-            <button id="restore-btn" class="meal-btn">Restore one item</button>
+            <button id="restore-btn" class="meal-btn">Restore all ingredients</button>
         </div>
         <ul class="checklist">
         </ul>
