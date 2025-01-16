@@ -10,21 +10,21 @@ let generate_counter = 0;
 export default function loadList() {
     const app = document.getElementById('app');
     app.innerHTML = `
-    <div class="meal-container">
-        <div class="meal-header">
-            <select id="order-btn" class="meal-btn">
+    <div class="list-container">
+        <div class="list-header">
+            <select id="order-btn" class="list-btn">
                 <option value="food categories">Food Categories</option>
                 <option value="alphabetic">Alphabetic</option>
             </select>
-            <button id="generate-btn" class="meal-btn">Generate</button>
-            <button id="restore-btn" class="meal-btn">Restore all ingredients</button>
+            <button id="generate-btn" class="list-btn">Generate</button>
+            <button id="restore-btn" class="list-btn">Restore all ingredients</button>
         </div>
         <ul class="checklist">
         </ul>
         <div class="add-more">Add More Items
             <div id="add-more-inputs">
                 <input type="text" id="new-items" placeholder="Enter items, separated by commas">
-                <button id="add-button" class="meal-btn">Add</button>
+                <button id="add-button" class="list-btn">Add</button>
             </div>
         </div>
     `;
@@ -72,7 +72,20 @@ document.getElementById("add-button").addEventListener("click", () => {
 }
 
 // Add necessary functions
-function getData(){
+async function getData(){
+
+    try {
+        // Anfrage an das Backend
+        const response = await fetch('http://172.18.45.1:3000/ingredients');
+        if (!response.ok) {
+            throw new Error(`Fehler: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log('Daten vom Backend:', data); // Zum Debuggen
+        return data;
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Daten:', error);
+    }
 
     // Get Data from database - TODO
     return ["Gurke", "Apfel", "Banane"];
@@ -202,7 +215,7 @@ function delete_item(event){
 
 function restore_items(){
 
-    // If checklist is empty then do nothing - TODO
+    // If checklist is empty then do nothing 
     const checklist = document.querySelector(".checklist")
 
     if (generate_counter > 0){

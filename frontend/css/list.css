@@ -1,5 +1,5 @@
 /* General structure */
-.meal-container {
+.list-container {
     width: 100%;
     max-width: 500px;
     margin: 20px auto;
@@ -10,7 +10,7 @@
     position: relative;
 }
 
-.meal-header {
+.list-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,7 +20,7 @@
     position: relative;
 }
 
-.meal-btn {
+.list-btn {
     padding: 10px 15px;
     font-size: 14px;
     background-color: white;

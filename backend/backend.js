@@ -39,6 +39,19 @@ app.get('/dishes', (req, res) => {
     });
 });
 
+// API-Endpunkt: Alle ingredients abrufen
+app.get('/ingredients', (req, res) => {
+    const query = 'SELECT * FROM ingredients';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error fetching ingredients');
+        } else {
+            res.json(results);
+        }
+    });
+});
+
 // Starte den Server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
