@@ -1,14 +1,15 @@
 // ./pages/list.js
 
 // Initialize neccessary variables
-let items = getData();
+let items = [];
 let deleted_items = [];
 let add_counter = 0;
 let generate_counter = 0;
 
 // Main function
-export default function loadList() {
+export default async function loadList() {
     const app = document.getElementById('app');
+
     app.innerHTML = `
     <div class="list-container">
         <div class="list-header">
@@ -29,6 +30,8 @@ export default function loadList() {
         </div>
     `;
 
+items = await getData();
+    
 // Add event listener 
 document.getElementById("order-btn").addEventListener("change", () => {
  
@@ -81,14 +84,16 @@ async function getData(){
             throw new Error(`Fehler: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Daten vom Backend:', data); // Zum Debuggen
-        return data;
+
+        // Nur die Namen der Ingredients extrahieren
+        const names = data.map(ingredient => ingredient.name);
+        console.log('Namen der Ingredients:', names); // Zum Debuggen
+
+        return names;
+
     } catch (error) {
         console.error('Fehler beim Abrufen der Daten:', error);
     }
-
-    // Get Data from database - TODO
-    return ["Gurke", "Apfel", "Banane"];
 
 }
 
@@ -109,7 +114,7 @@ function updateList(items) {
                 <input class="input" type="checkbox">
                 <span class="bullet"></span>
                 ${item} 
-                <button class="meal-btn delete-button">delete</button>
+                <button class="list-btn delete-button">delete</button>
             </label>
         `;
         checklist.appendChild(li);
