@@ -208,7 +208,6 @@ function delete_item(event){
 
     // Add removed item to array
     deleted_items.push(itemText);
-    console.log(deleted_items);
 
     // Delete items finally from array
     const index = items.indexOf(itemText); // Returns -1 if the index doesnt exist
@@ -236,7 +235,6 @@ function restore_items(){
     // Sort them according to selected category and update checklist
     sort_items();
     updateList(items);  
-    console.log(items);
 
     } else {
 
