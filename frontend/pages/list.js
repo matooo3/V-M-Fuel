@@ -4,7 +4,8 @@
 let items = [];
 let deleted_items = [];
 let add_counter = 0;
-let generate_counter = 0;
+let delete_counter = 0;
+// let generate_counter = 0;
 
 // Main function
 export default async function loadList() {
@@ -13,12 +14,12 @@ export default async function loadList() {
     app.innerHTML = `
     <div class="list-container">
         <div class="list-header">
+            <button id="restore-btn" class="list-btn">Restore all</button>
             <select id="order-btn" class="list-btn">
                 <option value="food categories">Food Categories</option>
                 <option value="alphabetic">Alphabetic</option>
             </select>
-            <button id="generate-btn" class="list-btn">Generate</button>
-            <button id="restore-btn" class="list-btn">Restore all ingredients</button>
+            <button id="delete-all-btn" class="list-btn">Delete all</button>
         </div>
         <ul class="checklist">
         </ul>
@@ -31,6 +32,7 @@ export default async function loadList() {
     `;
 
 items = await getData();
+updateList(items);
     
 // Add event listener 
 document.getElementById("order-btn").addEventListener("change", () => {
@@ -40,10 +42,17 @@ document.getElementById("order-btn").addEventListener("change", () => {
 });
 
 
-document.getElementById("generate-btn").addEventListener("click", () => {
+// document.getElementById("generate-btn").addEventListener("click", () => {
 
-    generate_counter += 1;
-    updateList(items);
+//     generate_counter += 1;
+//     updateList(items);
+
+// });
+
+document.getElementById("delete-all-btn").addEventListener("click", () => {
+
+    delete_counter += 1;
+    delete_all();
 
 });
 
@@ -126,7 +135,10 @@ function updateList(items) {
 
     deleteButtons.forEach(button => {
         button.addEventListener("click", (event) => {
+
+            delete_counter += 1;
             delete_item(event);
+
         });
     });
 
@@ -220,14 +232,12 @@ function delete_item(event){
 
 function restore_items(){
 
-    if (generate_counter > 0){
+    console.log(delete_counter);
+
+    if (delete_counter > 0){
 
      // Restore all removed items
-     for(let i = 0; i < deleted_items.length; i++){
-        
-        items.push(deleted_items[i]);
-
-    }
+    items.push(...deleted_items); // ... is a speed operator that spreads the array into its elements
 
     // Remove all items from deleted_items to prevent the user from generating them twice
     deleted_items.splice(0, deleted_items.length);
@@ -238,9 +248,20 @@ function restore_items(){
 
     } else {
 
-        alert("You cant restore items before generating them!");
+        alert("You must delete items to be able to restore them!");
 
     }
 
+
+}
+
+function delete_all(){
+
+    // Add all items to deleted_items array
+    deleted_items.push(...items);
+
+    // Delete all items from the list
+    items.splice(0, items.length);
+    updateList(items);
 
 }

@@ -13,7 +13,7 @@ body {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    height: 100vh;
+    /* height: 100vh;
     /* overflow: hidden; Der Kollege versteckt die Scrollbars */
 }
 
