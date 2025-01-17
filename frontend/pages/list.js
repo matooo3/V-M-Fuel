@@ -278,17 +278,13 @@ function delete_item(event){
 
 function restore_items(){
 
-    console.log(delete_counter);
-
     if (delete_counter > 0){
 
      // Restore all removed items
-    items.push(...deleted_items)
-    console.log(deleted_items); // ... is a speed operator that spreads the array into its elements
+    items.push(...deleted_items) // ... is a speed operator that spreads the array into its elements
 
     // Remove all items from deleted_items to prevent the user from generating them twice
     deleted_items.splice(0, deleted_items.length);
-    console.log(deleted_items);
 
     // Sort them according to selected category and update checklist
     sort_items();
