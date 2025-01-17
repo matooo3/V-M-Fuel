@@ -1,10 +1,10 @@
 // ./pages/list.js
 
 // Initialize neccessary variables
-let items = [];
 let deleted_items = [];
 let add_counter = 0;
 let delete_counter = 0;
+let ingredients = [];
 // let generate_counter = 0;
 
 // Main function
@@ -26,14 +26,14 @@ export default async function loadList() {
         </ul>
         <div class="add-more">Add More Items
             <div id="add-more-inputs">
-                <input type="text" id="new-items" placeholder="Enter items, separated by commas">
+                <input type="text" id="new-items" placeholder="Example items: Chicken. 400. g, Water. 250. ml">
                 <button id="add-button" class="list-btn">Add</button>
             </div>
         </div>
     `;
 
-items = await getAllDishIngredients();
-updateList(items);
+ingredients = await getAllDishIngredients();
+updateList(ingredients);
     
 // Add event listener 
 
@@ -132,7 +132,11 @@ async function getAllDishIngredients() {
 
                 if (ingredient) {
 
-                    ingredientsArray.push(`${ingredient.name} ${di.amount} ${di.unit_of_measurement}`);
+                    ingredientsArray.push({
+                        name: ingredient.name,
+                        amount: di.amount,
+                        unit_of_measurement: di.unit_of_measurement
+                    });
 
                 }
 
@@ -148,7 +152,7 @@ async function getAllDishIngredients() {
 }
 
 
-function updateList(items) {
+function updateList(ingredients) {
 
     // Get checklist
     const checklist = document.querySelector(".checklist");
@@ -157,14 +161,16 @@ function updateList(items) {
     checklist.innerHTML = "";
 
     // Add items to checklist
-    items.forEach(item => {
+    ingredients.forEach(ingredient => {
 
         const li = document.createElement("li");
         li.innerHTML = `
-            <label class="label">
-                <input class="input" type="checkbox">
-                <span class="bullet"></span>
-                ${item} 
+            <label class="list-label">
+                <input class="list-input" type="checkbox">
+                <span class="list-bullet"></span>
+                ${ingredient.name}
+                <input type="text" id="amount" value="${ingredient.amount}" min="0">
+                <input type="text" id="unit_of_measurement" value="${ingredient.unit_of_measurement}" readonly>
                 <button id = "delete-ingredients-button" class="list-btn">
                     <span id = "close" class = "material-symbols-outlined">
                         close
@@ -202,8 +208,9 @@ function sort_items(){
     
         if (sort_val === "alphabetic") {
             
-            items.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())); // lower case variants are getting compared
-            updateList(items);
+            ingredients.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())); // lower case variants are getting compared
+            updateList(ingredients);
+            console.log(ingredients);
     
         }
 
@@ -227,23 +234,33 @@ function display_addmore(add_counter){
 
 }
 
-function add_items(){
-    
+function add_items() {
     // Get user input
     const newItemsInput = document.getElementById("new-items");
-    const newItems = newItemsInput.value.split(",").map(item => item.trim()).filter(item => item);
+    const newIngredientsInput = newItemsInput.value.split(",").map(item => item.trim()).filter(item => item);
 
-    if (newItems.length > 0) {
+    if (newIngredientsInput.length > 0) {
 
-        for(let i = 0; i < newItems.length; i++){
-            
-            items.push(newItems[i]);
+        for (let i = 0; i < newIngredientsInput.length; i++) {
+
+            // Split the input by spaces
+            const parts = newIngredientsInput[i].split(".");
+
+            const temp = {
+
+                name: parts[0],
+                amount: parts[1],
+                unit_of_measurement: parts[2]
+        
+            };
+
+            ingredients.push(temp);
 
         }
-        
+
         // Sort the array and then update it
         sort_items();
-        updateList(items);
+        updateList(ingredients);
 
         newItemsInput.value = ""; // Empty input field
         document.getElementById("add-more-inputs").style.display = "none"; // Hide input field
@@ -255,40 +272,62 @@ function add_items(){
     }
 }
 
-function delete_item(event){
+function delete_item(event) {
 
-    const listItem = event.target.closest("li"); // Gets the parent <li> of the button
-    listItem.remove(); // Removes the <li> element from the DOM
+    // Find the parent <li> element of the delete button
+    const listItem = event.target.closest("li"); 
+    listItem.remove(); 
 
-    // Search for text label of the deleted item
+    // Extract the necessary values from the DOM
     const labelText = listItem.querySelector("label").textContent.trim();
-    const itemText = labelText.replace(/close/g, '').trim();
+    const name = labelText.replace(/close/g, '').trim();
+    const amount = listItem.querySelector("#amount").value.trim(); 
+    const unitOfMeasurement = listItem.querySelector("#unit_of_measurement").value.trim(); 
 
-    // Add removed item to array
-    deleted_items.push(itemText);
+    // Create an object containing the deleted item's details
+    const deletedItem = {
 
-    // Delete items finally from array
-    const index = items.indexOf(itemText); // Returns -1 if the index doesnt exist
+        name: name,
+        amount: amount,
+        unit_of_measurement: unitOfMeasurement
+
+    };
+
+    // Add the deleted item to the array of deleted items
+    deleted_items.push(deletedItem);
+
+    // Find the index of the item in the ingredients array
+    const index = ingredients.findIndex(ing => 
+
+        ing.name === name && 
+        ing.amount.toString() === amount && 
+        ing.unit_of_measurement === unitOfMeasurement
+
+    );
+
+    // Remove the item from the ingredients array if found
     if (index !== -1) {
-        items.splice(index, 1); // Removes 1 element from array
+
+        ingredients.splice(index, 1); // Remove 1 element from the array
+
     }
 
-
 }
+
 
 function restore_items(){
 
     if (delete_counter > 0){
 
-     // Restore all removed items
-    items.push(...deleted_items) // ... is a speed operator that spreads the array into its elements
+        // Restore all removed items
+        ingredients.push(...deleted_items) // ... is a speed operator that spreads the array into its elements
 
-    // Remove all items from deleted_items to prevent the user from generating them twice
-    deleted_items.splice(0, deleted_items.length);
+        // Remove all items from deleted_items to prevent the user from generating them twice
+        deleted_items.splice(0, deleted_items.length);
 
-    // Sort them according to selected category and update checklist
-    sort_items();
-    updateList(items);  
+        // Sort them according to selected category and update checklist
+        sort_items();
+        updateList(ingredients);  
 
     } else {
 
@@ -302,18 +341,18 @@ function restore_items(){
 function delete_all(){
 
     // Add all items to deleted_items array
-    deleted_items.push(...items);
+    deleted_items.push(...ingredients);
 
     // Delete all items from the list
-    items.splice(0, items.length);
-    updateList(items);
+    ingredients.splice(0, ingredients.length);
+    updateList(ingredients);
 
 }
 
 function own_grocery_list(){
 
     // Delete all items from the list
-    items.splice(0, items.length);
-    updateList(items);
+    ingredients.splice(0, ingredients.length);
+    updateList(ingredients);
 
 }
