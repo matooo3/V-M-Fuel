@@ -1,13 +1,15 @@
 /* General structure */
 .list-container {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     margin: 20px auto;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     position: relative;
+    height: 80vh; /* Feste Höhe für den Container */
+    overflow-y: auto; /* Ermöglicht vertikales Scrollen */
 }
 
 .list-header {
@@ -119,6 +121,12 @@
     font-weight: bold;
     color: #28a745;
     cursor: pointer;
+    background-color: #fff;
+    border-top: 1px solid #e0d9d9;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 #add-more-inputs {

@@ -19,6 +19,7 @@ export default async function loadList() {
                 <option value="food categories">Food Categories</option>
                 <option value="alphabetic">Alphabetic</option>
             </select>
+            <button id="grocery-btn" class="list-btn">Own gorcery list</button>
             <button id="delete-all-btn" class="list-btn">Delete all</button>
         </div>
         <ul class="checklist">
@@ -35,6 +36,13 @@ items = await getData();
 updateList(items);
     
 // Add event listener 
+
+document.getElementById("restore-btn").addEventListener("click", () => {
+
+    restore_items();
+
+});
+
 document.getElementById("order-btn").addEventListener("change", () => {
  
     sort_items();
@@ -49,16 +57,16 @@ document.getElementById("order-btn").addEventListener("change", () => {
 
 // });
 
+document.getElementById("grocery-btn").addEventListener("click", () => {
+
+    own_grocery_list();
+
+});
+
 document.getElementById("delete-all-btn").addEventListener("click", () => {
 
     delete_counter += 1;
     delete_all();
-
-});
-
-document.getElementById("restore-btn").addEventListener("click", () => {
-
-    restore_items();
 
 });
 
@@ -248,7 +256,7 @@ function restore_items(){
 
     } else {
 
-        alert("You must delete items to be able to restore them!");
+        alert("You have to delete at least one ingredient to be able to restore ingredients!");
 
     }
 
@@ -259,6 +267,14 @@ function delete_all(){
 
     // Add all items to deleted_items array
     deleted_items.push(...items);
+
+    // Delete all items from the list
+    items.splice(0, items.length);
+    updateList(items);
+
+}
+
+function own_grocery_list(){
 
     // Delete all items from the list
     items.splice(0, items.length);
