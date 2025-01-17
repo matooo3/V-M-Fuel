@@ -208,6 +208,7 @@ function delete_item(event){
 
     // Add removed item to array
     deleted_items.push(itemText);
+    console.log(deleted_items);
 
     // Delete items finally from array
     const index = items.indexOf(itemText); // Returns -1 if the index doesnt exist
@@ -219,9 +220,6 @@ function delete_item(event){
 }
 
 function restore_items(){
-
-    // If checklist is empty then do nothing 
-    const checklist = document.querySelector(".checklist")
 
     if (generate_counter > 0){
 
@@ -235,10 +233,10 @@ function restore_items(){
     // Remove all items from deleted_items to prevent the user from generating them twice
     deleted_items.splice(0, deleted_items.length);
 
-    console.log(items);
     // Sort them according to selected category and update checklist
     sort_items();
     updateList(items);  
+    console.log(items);
 
     } else {
 
