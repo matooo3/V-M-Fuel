@@ -6,10 +6,10 @@
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow-x: hidden;
     position: relative;
-    height: 80vh; /* Feste Höhe für den Container */
-    overflow-y: auto; /* Ermöglicht vertikales Scrollen */
+    height: 80vh; 
+    overflow-y: auto; /* scrolling */
 }
 
 .list-header {
