@@ -157,10 +157,35 @@
 }
 
 /* Deleting items */
-.delete-button{
+#delete-ingredients-button{
     
     margin-left: auto;
+    background-color: white;
+    color: white;
+    padding: 0px;
+    /* border: 2px solid #555; */ /* for adjusting size */
+
+}
+
+#close{
+
+    color: rgb(235, 67, 67);
+    background-color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#delete-all-btn{
+
     background-color: rgb(235, 67, 67);
     color: white;
 
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
 }

@@ -2,6 +2,7 @@
 
 // Initialize neccessary variables
 let items = [];
+let ingredients = [];
 let deleted_items = [];
 let add_counter = 0;
 let delete_counter = 0;
@@ -14,12 +15,12 @@ export default async function loadList() {
     app.innerHTML = `
     <div class="list-container">
         <div class="list-header">
-            <button id="restore-btn" class="list-btn">Restore all</button>
             <select id="order-btn" class="list-btn">
                 <option value="food categories">Food Categories</option>
                 <option value="alphabetic">Alphabetic</option>
             </select>
             <button id="grocery-btn" class="list-btn">Own gorcery list</button>
+            <button id="restore-btn" class="list-btn">Restore all</button>
             <button id="delete-all-btn" class="list-btn">Delete all</button>
         </div>
         <ul class="checklist">
@@ -32,7 +33,7 @@ export default async function loadList() {
         </div>
     `;
 
-items = await getData();
+items = await getAllDishIngredients();
 updateList(items);
     
 // Add event listener 
@@ -104,15 +105,72 @@ async function getData(){
 
         // Nur die Namen der Ingredients extrahieren
         const names = data.map(ingredient => ingredient.name);
-        console.log('Namen der Ingredients:', names); // Zum Debuggen
+        // console.log('Namen der Ingredients:', names); // Zum Debuggen
 
         return names;
 
     } catch (error) {
-        console.error('Fehler beim Abrufen der Daten:', error);
+        console.error('Error while fetching the data:', error);
     }
 
 }
+
+async function getAllDishIngredients() {
+
+    try {
+
+        // Fetch data
+        const [ingredientsRes, dishesRes, dishIngredientsRes] = await Promise.all([
+            fetch('http://172.18.45.1:3000/ingredients'),
+            fetch('http://172.18.45.1:3000/dishes'),
+            fetch('http://172.18.45.1:3000/dish_ingredients')
+
+        ]);
+
+        if (!ingredientsRes.ok || !dishesRes.ok || !dishIngredientsRes.ok) {
+            throw new Error('Error while fetching the data');
+
+        }
+
+        // JSON-Data
+        const ingredients = await ingredientsRes.json();
+        const dishes = await dishesRes.json();
+        const dishIngredients = await dishIngredientsRes.json();
+
+        // Array for ingredients and amounts
+        const ingredientsArray = [];
+
+        // Iterate over all dishes
+        dishes.forEach(dish => {
+
+            const dishId = dish.dish_id;
+
+            // Filter ingredients for the current dish
+            const relatedIngredients = dishIngredients.filter(di => di.dish_id === dishId);
+
+            // Add ingredients and amounts to the array
+            relatedIngredients.forEach(di => {
+
+                // Find the ingredient for the current dish_ingredient element in the ingredients table
+                const ingredient = ingredients.find(ing => ing.ingredient_id === di.ingredient_id);
+
+                if (ingredient) {
+
+                    ingredientsArray.push(`${ingredient.name} ${di.amount} ${di.unit_of_measurement}`);
+
+                }
+
+            });
+        });
+
+        // console.log(ingredientsArray); // For debugging
+        return ingredientsArray;
+
+    } catch (error) {
+        console.error('Error while fetching the data:', error);
+    }
+}
+
 
 function updateList(items) {
 
@@ -131,7 +189,11 @@ function updateList(items) {
                 <input class="input" type="checkbox">
                 <span class="bullet"></span>
                 ${item} 
-                <button class="list-btn delete-button">delete</button>
+                <button id = "delete-ingredients-button" class="list-btn">
+                    <span id = "close" class = "material-symbols-outlined">
+                        close
+                    </span>
+                </button>
             </label>
         `;
         checklist.appendChild(li);
@@ -139,7 +201,7 @@ function updateList(items) {
     });
 
     // Add event listeners for every delete button
-    const deleteButtons = document.querySelectorAll(".delete-button");
+    const deleteButtons = document.querySelectorAll("#delete-ingredients-button");
 
     deleteButtons.forEach(button => {
         button.addEventListener("click", (event) => {
