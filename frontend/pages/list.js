@@ -2,7 +2,6 @@
 
 // Initialize neccessary variables
 let items = [];
-let ingredients = [];
 let deleted_items = [];
 let add_counter = 0;
 let delete_counter = 0;
@@ -89,29 +88,6 @@ document.getElementById("add-button").addEventListener("click", () => {
     add_items();
 
 });
-
-}
-
-// Add necessary functions
-async function getData(){
-
-    try {
-        // Anfrage an das Backend
-        const response = await fetch('http://172.18.45.1:3000/ingredients');
-        if (!response.ok) {
-            throw new Error(`Fehler: ${response.statusText}`);
-        }
-        const data = await response.json();
-
-        // Nur die Namen der Ingredients extrahieren
-        const names = data.map(ingredient => ingredient.name);
-        // console.log('Namen der Ingredients:', names); // Zum Debuggen
-
-        return names;
-
-    } catch (error) {
-        console.error('Error while fetching the data:', error);
-    }
 
 }
 
@@ -286,7 +262,7 @@ function delete_item(event){
 
     // Search for text label of the deleted item
     const labelText = listItem.querySelector("label").textContent.trim();
-    const itemText = labelText.replace(/delete/g, '').trim();
+    const itemText = labelText.replace(/close/g, '').trim();
 
     // Add removed item to array
     deleted_items.push(itemText);
@@ -307,10 +283,12 @@ function restore_items(){
     if (delete_counter > 0){
 
      // Restore all removed items
-    items.push(...deleted_items); // ... is a speed operator that spreads the array into its elements
+    items.push(...deleted_items)
+    console.log(deleted_items); // ... is a speed operator that spreads the array into its elements
 
     // Remove all items from deleted_items to prevent the user from generating them twice
     deleted_items.splice(0, deleted_items.length);
+    console.log(deleted_items);
 
     // Sort them according to selected category and update checklist
     sort_items();
