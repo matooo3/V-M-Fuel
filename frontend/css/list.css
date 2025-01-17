@@ -10,7 +10,7 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 80vh; /* Feste Höhe für den Container */
+    height: 65vh; /* Feste Höhe für den Container */
     position: relative;
 }
 
