@@ -1,53 +1,228 @@
-#list {
-    padding: 20px;
+/* General structure */
+.list-container {
     width: 100%;
-    height: 100%;
-    background-color: #f9f9f9; /* Optional: Hintergrundfarbe für den gesamten Container */
+    max-width: 600px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 65vh; /* Feste Höhe für den Container */
+    position: relative;
 }
 
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+.list-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Grocery list */
 .checklist {
-    list-style: none; /* Standard-Aufzählungszeichen entfernen */
+    list-style: none;
     padding: 0;
-    margin: 0;
 }
 
 .checklist li {
-    margin: 15px 0; /* Abstand zwischen den Listenelementen */
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.list-label {
     display: flex;
-    align-items: center; /* Vertikale Zentrierung */
+    align-items: center; /* center text and circle */
+    cursor: pointer; /* change curser when hovering */
+    gap: 0px;
+    color: #555;
 }
 
-.checklist label {
-    display: flex;
-    align-items: center; /* Text und Punkt nebeneinander zentrieren */
-    cursor: pointer; /* Zeigeränderung bei Hover */
+.list-label:hover .list-bullet {
+    border-color: #bdbbbb; 
 }
 
-.checklist input[type="checkbox"] {
-    display: none; /* Checkbox ausblenden */
+.list-input {
+    display: none; /* hide checkbox */
 }
 
-.checklist .bullet {
+.list-bullet {
     width: 20px; 
     height: 20px; 
-    border-radius: 50%; /* Macht den Punkt rund */
-    border: 2px solid #555; /* Umrandung des Punktes */
-    margin-right: 10px; /* Abstand zwischen Punkt und Text */
-    background-color: transparent; /* Startet als leer */
-    transition: background-color 0.3s ease; /* Animation bei Veränderung */
+    border-radius: 50%; /* rounds circle */
+    border: 2px solid #555; 
+    margin-right: 10px; 
+    background-color: transparent; /* Starts as empty */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Animation when changing */
 }
 
-.checklist input[type="checkbox"]:checked + .bullet {
-    background-color: #4caf50; /* Punkt wird grün, wenn Checkbox abgehakt */
-    border-color: #4caf50; /* Umrandung wird passend */
+.list-input:checked + .list-bullet {
+    background-color: #555; /* green point, when checkbox was clicked */
 }
 
-.checklist label:hover .bullet {
-    border-color: #bdbbbb; /* Ändert die Farbe des Kreises beim Hover */
+
+/* Dropdown menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
-#order-btn {
-    position: absolute; /* absolut zu #app */
-    top: 20px;
-    right: 20px;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
 }
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+/* Adding items */
+.add-more {
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #28a745;
+    cursor: pointer;
+    background-color: #fff;
+    border-top: 1px solid #e0d9d9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: auto;
+    position: sticky;
+    bottom: 0;
+}
+
+#add-more-inputs {
+    text-align: center;
+    margin-top: 10px;
+    display: none;
+}
+
+#new-items {
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    width: 80%;
+}
+
+#add-button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#add-button:hover {
+    background-color: #1e7a37;
+}
+
+/* Deleting items */
+#delete-ingredients-button{
+    
+    margin-left: auto;
+    background-color: white;
+    color: white;
+    padding: 0px;
+    /* border: 2px solid #555; */ /* for adjusting size */
+
+}
+
+#close{
+
+    color: rgb(235, 67, 67);
+    background-color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#delete-all-btn{
+
+    background-color: rgb(235, 67, 67);
+    color: white;
+
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+#amount{
+
+    font-size: 14px;
+    border: none;
+    padding: 0px;
+    width: 5%;
+    /* border:2px solid rgba(0, 0, 0, 0.1); For debugging */
+    text-align: center;
+    margin-right: 0;
+
+}
+#unit_of_measurement {
+
+    font-size: 14px;
+    border: none;
+    border-radius: 0;
+    padding: 0px;
+    width: 10%;
+    /* border:2px solid rgba(0, 0, 0, 0.1); For debugging */
+    margin-left: 0;
+
+}
+
+#unit_of_measurement:focus {
+    outline: none;  
+    border: none;   
+}
+
+#amount:focus {
+    outline: none;  
+    border: 1px solid #555;   
+}
+
+
+

@@ -1,98 +1,358 @@
 // ./pages/list.js
-export default function loadList() {
-    const app = document.getElementById('app');
-    app.innerHTML = `
-            <ol class="checklist">
-                <li>
-                    <label>
-                        <input type="checkbox">
-                        <span class="bullet"></span> Apfel
-                    </label>
-                </li>
-            </ol> 
 
-            <select class="btn" id="order-btn">
-                <option value="food categories">food categories</option>
-                <option value="alphabetic">alphabetic</option>
+// Initialize neccessary variables
+let deleted_items = [];
+let add_counter = 0;
+let delete_counter = 0;
+let ingredients = [];
+// let generate_counter = 0;
+
+// Main function
+export default async function loadList() {
+    const app = document.getElementById('app');
+
+    app.innerHTML = `
+    <div class="list-container">
+        <div class="list-header">
+            <select id="order-btn" class="list-btn">
+                <option value="food categories">Food Categories</option>
+                <option value="alphabetic">Alphabetic</option>
             </select>
-            <button class = "btn" id = "update-button"> Generate </button>
+            <button id="grocery-btn" class="list-btn">Own gorcery list</button>
+            <button id="restore-btn" class="list-btn">Restore all</button>
+            <button id="delete-all-btn" class="list-btn">Delete all</button>
+        </div>
+        <ul class="checklist">
+        </ul>
+        <div class="add-more">Add More Items
+            <div id="add-more-inputs">
+                <input type="text" id="new-items" placeholder="Example items: Chicken. 400. g, Water. 250. ml">
+                <button id="add-button" class="list-btn">Add</button>
+            </div>
+        </div>
     `;
 
-// Event Listener hinzufügen
-document.getElementById("update-button").addEventListener("click", () => {
+ingredients = await getAllDishIngredients();
+updateList(ingredients);
+    
+// Add event listener 
 
-    // function for getting the right food from data base still needs to be implemented!!
-    const array = ["Apfel", "Gurke", "Banane"]
-    // TODO
+document.getElementById("restore-btn").addEventListener("click", () => {
 
-    updateList(array)
+    restore_items();
+
 });
 
-// Event Listener for Dropdown-Button
-document.getElementById("order-btn").addEventListener("change", (event) => {
-    
-    const orderType = event.target.value;
+document.getElementById("order-btn").addEventListener("change", () => {
+ 
+    sort_items();
+        
+});
 
-    // getting current entries
-    const items = Array.from(document.querySelectorAll(".checklist li label"))
-        .map(label => label.textContent.trim()); // trim is not necessary right now, but will be necessary if the user is able to edit the list
 
-    if (orderType === "food categories") {
+// document.getElementById("generate-btn").addEventListener("click", () => {
 
-        // TODO
-        // sorting according to certain food categroies
+//     generate_counter += 1;
+//     updateList(items);
 
-    }
+// });
 
-    if (orderType === "alphabetic") {
+document.getElementById("grocery-btn").addEventListener("click", () => {
 
-        // sorting alphabetically
-        updateList(items.sort());
+    own_grocery_list();
 
-    }
+});
+
+document.getElementById("delete-all-btn").addEventListener("click", () => {
+
+    delete_counter += 1;
+    delete_all();
+
+});
+
+document.querySelector(".add-more").addEventListener("click", () => {
+
+    add_counter += 1;
+    display_addmore(add_counter);
+
+});
+
+document.getElementById("new-items").addEventListener("click", (event) => {
+
+    event.stopPropagation(); // Prevents that klicking hides the input field always
+
+});
+
+document.getElementById("add-button").addEventListener("click", () => {
+
+    add_items();
+
 });
 
 }
 
-    // Funktion zum Aktualisieren der Liste
-    function updateList(array) {
+async function getAllDishIngredients() {
 
-        const sort_val = document.getElementById("order-btn").value;
+    try {
+
+        // Fetch data
+        const [ingredientsRes, dishesRes, dishIngredientsRes] = await Promise.all([
+            fetch('http://172.18.45.1:3000/ingredients'),
+            fetch('http://172.18.45.1:3000/dishes'),
+            fetch('http://172.18.45.1:3000/dish_ingredients')
+
+        ]);
+
+        if (!ingredientsRes.ok || !dishesRes.ok || !dishIngredientsRes.ok) {
+            throw new Error('Error while fetching the data');
+
+        }
+
+        // JSON-Data
+        const ingredients = await ingredientsRes.json();
+        const dishes = await dishesRes.json();
+        const dishIngredients = await dishIngredientsRes.json();
+
+        // Array for ingredients and amounts
+        const ingredientsArray = [];
+
+        // Iterate over all dishes
+        dishes.forEach(dish => {
+
+            const dishId = dish.dish_id;
+
+            // Filter ingredients for the current dish
+            const relatedIngredients = dishIngredients.filter(di => di.dish_id === dishId);
+
+            // Add ingredients and amounts to the array
+            relatedIngredients.forEach(di => {
+
+                // Find the ingredient for the current dish_ingredient element in the ingredients table
+                const ingredient = ingredients.find(ing => ing.ingredient_id === di.ingredient_id);
+
+                if (ingredient) {
+
+                    ingredientsArray.push({
+                        name: ingredient.name,
+                        amount: di.amount,
+                        unit_of_measurement: di.unit_of_measurement
+                    });
+
+                }
+
+            });
+        });
+
+        // console.log(ingredientsArray); // For debugging
+        return ingredientsArray;
+
+    } catch (error) {
+        console.error('Error while fetching the data:', error);
+    }
+}
+
+
+function updateList(ingredients) {
+
+    // Get checklist
+    const checklist = document.querySelector(".checklist");
+
+    // Empty it for not adding ingredients more than once
+    checklist.innerHTML = "";
+
+    // Add items to checklist
+    ingredients.forEach(ingredient => {
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <label class="list-label">
+                <input class="list-input" type="checkbox">
+                <span class="list-bullet"></span>
+                ${ingredient.name}
+                <input type="text" id="amount" value="${ingredient.amount}" min="0">
+                <input type="text" id="unit_of_measurement" value="${ingredient.unit_of_measurement}" readonly>
+                <button id = "delete-ingredients-button" class="list-btn">
+                    <span id = "close" class = "material-symbols-outlined">
+                        close
+                    </span>
+                </button>
+            </label>
+        `;
+        checklist.appendChild(li);
+
+    });
+
+    // Add event listeners for every delete button
+    const deleteButtons = document.querySelectorAll("#delete-ingredients-button");
+
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", (event) => {
+
+            delete_counter += 1;
+            delete_item(event);
+
+        });
+    });
+
+}
+
+function sort_items(){
+        
+    const sort_val = document.getElementById("order-btn").value
 
         if (sort_val === "food categories") {
 
             // TODO
             // sorting according to certain food categroies
-    
         }
     
         if (sort_val === "alphabetic") {
-    
-            array.sort();
+            
+            ingredients.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())); // lower case variants are getting compared
+            updateList(ingredients);
+            console.log(ingredients);
     
         }
-    
-        const checklist = document.querySelector('.checklist');
-    
-        // Alte Einträge entfernen
-        checklist.innerHTML = '';
-    
-        // Neue Einträge hinzufügen
-        array.forEach((item) => {
-            // Neues Listenelement erstellen
-            const li = document.createElement('li');
-            const label = document.createElement('label');
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            const bullet = document.createElement('span');
-            bullet.className = 'bullet';
-            const text = document.createTextNode(` ${item}`);
-    
-            // Zusammenfügen der Elemente
-            label.appendChild(checkbox);
-            label.appendChild(bullet);
-            label.appendChild(text);
-            li.appendChild(label);
-            checklist.appendChild(li);
-        });
+
+}
+
+
+function display_addmore(add_counter){
+
+    // Display input field for adding more items accordingly
+    const inputsDiv = document.getElementById("add-more-inputs");
+
+    if(add_counter % 2 == 0){
+
+        inputsDiv.style.display = "none";
+
+    } else {
+
+        inputsDiv.style.display = "block";
+
     }
+
+}
+
+function add_items() {
+    // Get user input
+    const newItemsInput = document.getElementById("new-items");
+    const newIngredientsInput = newItemsInput.value.split(",").map(item => item.trim()).filter(item => item);
+
+    if (newIngredientsInput.length > 0) {
+
+        for (let i = 0; i < newIngredientsInput.length; i++) {
+
+            // Split the input by spaces
+            const parts = newIngredientsInput[i].split(".");
+
+            const temp = {
+
+                name: parts[0],
+                amount: parts[1],
+                unit_of_measurement: parts[2]
+        
+            };
+
+            ingredients.push(temp);
+
+        }
+
+        // Sort the array and then update it
+        sort_items();
+        updateList(ingredients);
+
+        newItemsInput.value = ""; // Empty input field
+        document.getElementById("add-more-inputs").style.display = "none"; // Hide input field
+
+    } else {
+
+        alert("Please enter at least one item.");
+
+    }
+}
+
+function delete_item(event) {
+
+    // Find the parent <li> element of the delete button
+    const listItem = event.target.closest("li"); 
+    listItem.remove(); 
+
+    // Extract the necessary values from the DOM
+    const labelText = listItem.querySelector("label").textContent.trim();
+    const name = labelText.replace(/close/g, '').trim();
+    const amount = listItem.querySelector("#amount").value.trim(); 
+    const unitOfMeasurement = listItem.querySelector("#unit_of_measurement").value.trim(); 
+
+    // Create an object containing the deleted item's details
+    const deletedItem = {
+
+        name: name,
+        amount: amount,
+        unit_of_measurement: unitOfMeasurement
+
+    };
+
+    // Add the deleted item to the array of deleted items
+    deleted_items.push(deletedItem);
+
+    // Find the index of the item in the ingredients array
+    const index = ingredients.findIndex(ing => 
+
+        ing.name === name && 
+        ing.amount.toString() === amount && 
+        ing.unit_of_measurement === unitOfMeasurement
+
+    );
+
+    // Remove the item from the ingredients array if found
+    if (index !== -1) {
+
+        ingredients.splice(index, 1); // Remove 1 element from the array
+
+    }
+
+}
+
+
+function restore_items(){
+
+    if (delete_counter > 0){
+
+        // Restore all removed items
+        ingredients.push(...deleted_items) // ... is a speed operator that spreads the array into its elements
+
+        // Remove all items from deleted_items to prevent the user from generating them twice
+        deleted_items.splice(0, deleted_items.length);
+
+        // Sort them according to selected category and update checklist
+        sort_items();
+        updateList(ingredients);  
+
+    } else {
+
+        alert("You have to delete at least one ingredient to be able to restore ingredients!");
+
+    }
+
+
+}
+
+function delete_all(){
+
+    // Add all items to deleted_items array
+    deleted_items.push(...ingredients);
+
+    // Delete all items from the list
+    ingredients.splice(0, ingredients.length);
+    updateList(ingredients);
+
+}
+
+function own_grocery_list(){
+
+    // Delete all items from the list
+    ingredients.splice(0, ingredients.length);
+    updateList(ingredients);
+
+}
