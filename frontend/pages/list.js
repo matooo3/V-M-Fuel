@@ -26,7 +26,7 @@ export default async function loadList() {
         </ul>
         <div class="add-more">Add More Items
             <div id="add-more-inputs">
-                <input type="text" id="new-items" placeholder="Example items: Chicken. 400. g, Water. 250. ml">
+                <input type="text" id="new-items" placeholder="Separate different items by commas">
                 <button id="add-button" class="list-btn">Add</button>
             </div>
         </div>
