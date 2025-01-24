@@ -6,6 +6,7 @@
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 5px solid #1ab0e6;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -19,7 +20,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
-    background-color: #28a745;
+    background-color: #1ab0e6;
     color: white;
     position: sticky;
     top: 0;
@@ -54,8 +55,8 @@
     color: #555;
 }
 
-.list-label:hover .list-bullet {
-    border-color: #bdbbbb; 
+.list-label:hover .list-bullet { 
+    border: 5px solid #1ab0e6;
 }
 
 .list-input {
@@ -66,14 +67,14 @@
     width: 20px; 
     height: 20px; 
     border-radius: 50%; /* rounds circle */
-    border: 2px solid #555; 
+    border: 3px solid #1ab0e6; 
     margin-right: 10px; 
     background-color: transparent; /* Starts as empty */
     transition: background-color 0.3s ease, border-color 0.3s ease; /* Animation when changing */
 }
 
 .list-input:checked + .list-bullet {
-    background-color: #555; /* green point, when checkbox was clicked */
+    background-color: #1ab0e6; /* green point, when checkbox was clicked */
 }
 
 
@@ -118,7 +119,7 @@
     padding: 15px;
     font-size: 16px;
     font-weight: bold;
-    color: #28a745;
+    color: #1ab0e6;
     cursor: pointer;
     background-color: #fff;
     border-top: 1px solid #e0d9d9;
@@ -127,6 +128,11 @@
     margin-top: auto;
     position: sticky;
     bottom: 0;
+}
+
+.add-more:hover{
+
+    font-size: 20px;
 }
 
 #add-more-inputs {
@@ -145,7 +151,7 @@
 
 #add-button {
     padding: 5px 10px;
-    background-color: #28a745;
+    background-color: #1ab0e6;
     color: white;
     border: none;
     border-radius: 5px;
@@ -154,7 +160,7 @@
 }
 
 #add-button:hover {
-    background-color: #1e7a37;
+    background-color: #1a68e6;
 }
 
 /* Deleting items */

@@ -16,15 +16,15 @@ export default async function loadList() {
         <div class="list-header">
             <select id="order-btn" class="list-btn">
                 <option value="food categories">Food Categories</option>
-                <option value="alphabetic">Alphabetic</option>
+                <option value="alphabetic">ABC</option>
             </select>
-            <button id="grocery-btn" class="list-btn">Own gorcery list</button>
-            <button id="restore-btn" class="list-btn">Restore all</button>
-            <button id="delete-all-btn" class="list-btn">Delete all</button>
+            <button id="grocery-btn" class="list-btn">My own gorcery list</button>
+            <button id="restore-btn" class="list-btn">Come back</button>
+            <button id="delete-all-btn" class="list-btn">Dont like it</button>
         </div>
         <ul class="checklist">
         </ul>
-        <div class="add-more">Add More Items
+        <div class="add-more">What I want is...
             <div id="add-more-inputs">
                 <input type="text" id="new-items" placeholder="Example items: Chicken. 400. g, Water. 250. ml">
                 <button id="add-button" class="list-btn">Add</button>
