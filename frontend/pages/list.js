@@ -26,7 +26,7 @@ export default async function loadList() {
         </ul>
         <div class="add-more">Add More Items
             <div id="add-more-inputs">
-                <input type="text" id="new-items" placeholder="Example items: Chicken. 400. g, Water. 250. ml">
+                <input type="text" id="new-items" placeholder="Separate different items by commas">
                 <button id="add-button" class="list-btn">Add</button>
             </div>
         </div>
@@ -244,17 +244,13 @@ function add_items() {
         for (let i = 0; i < newIngredientsInput.length; i++) {
 
             // Split the input by spaces
-            const parts = newIngredientsInput[i].split(".");
+            const parts = split_input(newIngredientsInput[i]);
 
-            const temp = {
+            console.log(parts);
 
-                name: parts[0],
-                amount: parts[1],
-                unit_of_measurement: parts[2]
-        
-            };
-
-            ingredients.push(temp);
+            // add to ingredients
+            ingredients.push(parts);
+            console.log(ingredients);
 
         }
 
@@ -270,6 +266,27 @@ function add_items() {
         alert("Please enter at least one item.");
 
     }
+}
+
+function split_input(input){
+
+    // define regex
+    const unit_amount_regex = /(\d+)\s*(ml|g|cup|slice|piece)/;
+
+    // extracting amount and unit
+    const unit_amount = input.match(unit_amount_regex);
+
+    // extracting amount
+    const amount = Number(unit_amount[1]);
+
+    // extracting unit
+    const unit_of_measurement = unit_amount[2];
+
+    // extracting name
+    const name = input.replace(unit_amount[0], "");
+
+    return {name, amount, unit_of_measurement};
+
 }
 
 function delete_item(event) {
