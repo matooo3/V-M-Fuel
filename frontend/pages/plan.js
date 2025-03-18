@@ -1,5 +1,5 @@
 let currentWeekday = 0;
-const weekdays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
 
 // ./pages/plan.js
@@ -10,7 +10,7 @@ export default function loadPlan() {
 
             <nav id="weekday-nav">
                 <button class="btn" id="weekdayDownBtn"><</button>
-                <h1 id="weekday-tag">Montag</h1>
+                <h1 id="weekday-tag">monday</h1>
                 <button class="btn" id="weekdayUpBtn">></button>
             </nav>
             
