@@ -1,0 +1,52 @@
+#app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+}
+
+#plan {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid blue;
+    height: 100%;
+    width: 100%;
+}
+
+#weekday-nav {
+    display: flex;
+    justify-content: space-between;   /* horizontal */
+    align-items: center;    /* vertikal */
+    border: 1px solid black;
+    width: 100%;
+}
+
+#weekday-tag {
+    font-size: 16px;
+    color: blue;
+
+}
+
+#parent-dish-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid green;
+    height: 90%;
+    width: 100%;
+}
+
+.dish-container {
+    border: 1px solid red;
+    height: 12%;
+    width: 40%;
+}
+
+.dish-tag {
+    font-size: 16px;
+}
+
