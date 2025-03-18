@@ -48,7 +48,7 @@ body {
     border-radius: 10px;
 }
 
-nav {
+#main-nav {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -56,7 +56,7 @@ nav {
     margin: 20px;
 }
 
-nav a {
+#main-nav a {
     color: var(--theme-color-green);
     text-decoration: none;
     margin: 10px;
