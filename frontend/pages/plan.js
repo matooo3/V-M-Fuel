@@ -17,22 +17,23 @@ export default function loadPlan() {
             <div id="parent-dish-container">
                 <div class="dish-container">
                     <h2 class="dish-tag">breakfast</h2>
-
+                    <div id="meal1">meal1</div>
                 </div>
                 <div class="dish-container">
                     <h2 class="dish-tag">lunch</h2>
-
+                    <div id="meal2">meal2</div>
                 </div>
                 <div class="dish-container">
                     <h2 class="dish-tag">dinner</h2>
-
+                    <div id="meal3">meal3</div>
                 </div>
                 <div class="dish-container">
                     <h2 class="dish-tag">snacks</h2>
-
+                    <div id="meal4">meal4</div>
                 </div>
                 <div class="dish-container">
                     <h2 class="dish-tag">drinks</h2>
+                    <div id="meal5">meal5</div>
                 </div>
             </div>
             
@@ -78,7 +79,22 @@ function weekdayDown(weekdays, weekdayTag) {
     loadDishes();
 }   
 
+// dictionary, for each day: breakfast, lunch, dinner, snacks, drinks
+// get data from main-algorith
+
 function loadDishes() {
+    // dummy-values for now:
+    const meal1 = document.getElementById('meal1');
+    const meal2 = document.getElementById('meal2');
+    const meal3 = document.getElementById('meal3');
+    const meal4 = document.getElementById('meal4');
+    const meal5 = document.getElementById('meal5');
+
+    meal1.innerHTML = 'testMeal1';
+    meal2.innerHTML = 'testMeal2';
+    meal3.innerHTML = 'testMeal3';
+    meal4.innerHTML = 'testMeal4';
+    meal5.innerHTML = 'testMeal5';
 
 }
 
