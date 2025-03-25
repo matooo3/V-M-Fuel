@@ -17,23 +17,23 @@ export default function loadPlan() {
             <div id="parent-dish-container">
                 <div class="dish-container">
                     <h2 class="dish-tag">breakfast</h2>
-                    <div id="meal1">meal1</div>
+                    <div id="breakfast"></div>
                 </div>
                 <div class="dish-container">
                     <h2 class="dish-tag">lunch</h2>
-                    <div id="meal2">meal2</div>
+                    <div id="lunch"></div>
                 </div>
                 <div class="dish-container">
                     <h2 class="dish-tag">dinner</h2>
-                    <div id="meal3">meal3</div>
+                    <div id="dinner"></div>
                 </div>
                 <div class="dish-container">
                     <h2 class="dish-tag">snacks</h2>
-                    <div id="meal4">meal4</div>
+                    <div id="snacks"></div>
                 </div>
                 <div class="dish-container">
                     <h2 class="dish-tag">drinks</h2>
-                    <div id="meal5">meal5</div>
+                    <div id="drinks"></div>
                 </div>
             </div>
             
@@ -47,7 +47,7 @@ export default function loadPlan() {
     const weekdayDownBtn = document.getElementById('weekdayDownBtn');
     
     let weekdayTag = document.getElementById('weekday-tag');
-    
+    loadDishes();
 
     weekdayUpBtn.addEventListener('click', () => {
         weekdayUp(weekdays, weekdayTag);
@@ -82,20 +82,35 @@ function weekdayDown(weekdays, weekdayTag) {
 // dictionary, for each day: breakfast, lunch, dinner, snacks, drinks
 // get data from main-algorith
 
+// Centralized meal data
+const weeklyMeals = {
+    0: ["Müsli", "Spaghetti", "Pizza", "Apfel", "Wasser"],                        
+    1: ["Joghurt", "Pasta Bolognese", "Chili con Carne", "Nüsse", "Fanta"],      
+    2: ["Porridge", "Risotto", "Sushi", "Banane", "Kaffee"],                     
+    3: ["Toast", "Käsespätzle", "Curry", "Möhrensticks", "Tee"],                
+    4: ["Croissant", "Burger", "Lasagne", "Trauben", "Cola"],                   
+    5: ["Rührei", "Falafel", "Tacos", "Mandarinen", "Limo"],                    
+    6: ["Pfannkuchen", "Suppe", "Braten", "Matze's Mom", "Saft"],                     
+};
+
+
 function loadDishes() {
-    // dummy-values for now:
-    const meal1 = document.getElementById('meal1');
-    const meal2 = document.getElementById('meal2');
-    const meal3 = document.getElementById('meal3');
-    const meal4 = document.getElementById('meal4');
-    const meal5 = document.getElementById('meal5');
+    const meals = getMealsHtml();
+    const dailyMeals = weeklyMeals[currentWeekday];
 
-    meal1.innerHTML = 'testMeal1';
-    meal2.innerHTML = 'testMeal2';
-    meal3.innerHTML = 'testMeal3';
-    meal4.innerHTML = 'testMeal4';
-    meal5.innerHTML = 'testMeal5';
+    meals.forEach((mealElement, index) => {
+        mealElement.innerHTML = dailyMeals[index];
+    });
+}
 
+function getMealsHtml() {
+    return [
+        document.getElementById('breakfast'),
+        document.getElementById('lunch'),
+        document.getElementById('dinner'),
+        document.getElementById('snacks'),
+        document.getElementById('drinks')
+    ];
 }
 
 
