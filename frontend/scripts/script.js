@@ -2,6 +2,7 @@ import loadHome from '../pages/home.js';
 import loadList from '../pages/list.js';
 import loadPlan from '../pages/plan.js';
 import loadMeals from '../pages/meals.js';
+import * as Storage from './storage.js';
 
 const routes = {
     "home": loadHome,
@@ -27,7 +28,7 @@ window.addEventListener('load', router);
 
 // BACKEND-http-Request:
 //
-// export async function getData() {
+// export async function getDataDB() {
 //     try {
 //         console.log("trying to get API-data.....");
 //         const response = await fetch('http://172.18.45.1:3000/dishes'); // API-Endpoint of Backend
@@ -43,3 +44,28 @@ window.addEventListener('load', router);
 //     }
 // }
 
+ // --------------- LOAD ALL DATA --------------------
+async function loadData() {
+    const data = await Storage.getDataDB();
+    console.log('Daten aus storage.js:', data);
+}
+
+await loadData();
+
+// EXAMPLE CALL FOR TESTING: (DB)
+console.log("--------------DATA LOADED FROM DBBBBB-------------");
+const dishes = await Storage.getDishes();
+dishes.forEach(dish => {
+    console.log(`Dish Name: ${dish.name}`);
+});
+
+// EXAMPLE CALL FOR TESTING: (LS)
+console.log("--------------DATA LOADED FROM LS LS LS-------------");
+const dataLS = Storage.getDataLS();
+
+const ingredients = dataLS.ingredients;
+
+console.log(dataLS);
+dataLS.dishes.forEach(dish => {
+    console.log(`Dish Name: ${dish.name}`);
+});
