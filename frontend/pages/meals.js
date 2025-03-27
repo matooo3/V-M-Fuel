@@ -4,7 +4,7 @@ export default async function loadMeals() {
     const app = document.getElementById('app');
     
     try {
-        const data = await getData(); // Abrufen der Daten von der Backend-API
+        const data = await getDataDB(); // Abrufen der Daten von der Backend-API
         if (!data || data.length === 0) {
             app.innerHTML = '<p>Keine Gerichte gefunden.</p>';
             return;
@@ -34,7 +34,7 @@ export default async function loadMeals() {
     }
 }
 
-async function getData() {
+async function getDataDB() {
     try {
         // Anfrage an das Backend
         const response = await fetch('http://172.18.45.1:3000/dishes');

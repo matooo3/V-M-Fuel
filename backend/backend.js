@@ -66,6 +66,32 @@ app.get('/dish_ingredients', (req, res) => {
 });
 
 
+// API-Endpunkt: Alle Nutzer abrufen
+app.get('/users', (req, res) => {
+    const query = 'SELECT * FROM users';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error fetching users');
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+// API-Endpunkt: Alle Zuordnungen zwischen Nutzern und Gerichten abrufen
+app.get('/user_dishes', (req, res) => {
+    const query = 'SELECT * FROM user_dishes';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error fetching user_dishes');
+        } else {
+            res.json(results);
+        }
+    });
+});
+
 // Starte den Server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
