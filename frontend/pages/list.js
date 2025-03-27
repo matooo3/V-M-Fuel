@@ -242,15 +242,16 @@ function add_items() {
     if (newIngredientsInput.length > 0) {
 
         for (let i = 0; i < newIngredientsInput.length; i++) {
+            
+            if(split_input(newIngredientsInput[i]) !== null){
 
-            // Split the input by spaces
-            const parts = split_input(newIngredientsInput[i]);
-
-            console.log(parts);
-
-            // add to ingredients
-            ingredients.push(parts);
-            console.log(ingredients);
+                // Split the input by spaces
+                const parts = split_input(newIngredientsInput[i]);
+                
+                // add to ingredients
+                ingredients.push(parts);
+                
+            }
 
         }
 
@@ -270,22 +271,43 @@ function add_items() {
 
 function split_input(input){
 
-    // define regex
+
+    // define regex bc order matters
     const unit_amount_regex = /(\d+)\s*(ml|g|cup|slice|piece)/;
 
     // extracting amount and unit
-    const unit_amount = input.match(unit_amount_regex);
+    const unit_amount_match = input.match(unit_amount_regex);
 
-    // extracting amount
-    const amount = Number(unit_amount[1]);
+    if (!unit_amount_match) {
+        
+        alert("Amount and/or unit for the item: " + input + " is missing!");
+        return null;
 
-    // extracting unit
-    const unit_of_measurement = unit_amount[2];
+    } else {
+
+        // extracting amount
+        const amount = Number(unit_amount_match[1]);
+
+        // extracting unit
+        const unit_of_measurement = unit_amount_match[2];
+
+    }
 
     // extracting name
-    const name = input.replace(unit_amount[0], "");
+    const name = input.replace(unit_amount_match[0], "");
 
-    return {name, amount, unit_of_measurement};
+    if(name === ""){
+
+        alert("Name for the item: " + input + " is missing!");
+        return null;
+
+    }
+
+    if(unit_amount_match && name !== ""){
+
+        return {name, amount, unit_of_measurement};
+
+    }
 
 }
 
