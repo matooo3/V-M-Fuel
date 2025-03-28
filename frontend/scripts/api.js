@@ -1,5 +1,5 @@
 // BACKEND base-URL
-const apiBaseUrl = 'https://172.18.45.1:3000';
+const apiBaseUrl = 'http://172.18.45.1:3000';
 // const apiBaseUrl = `${window.location.protocol}//${window.location.hostname}:3000`;
 
 // fetching any DATA-ENDPOINT from BACKEND
