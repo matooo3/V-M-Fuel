@@ -17,6 +17,24 @@ body {
     /* overflow: hidden; Der Kollege versteckt die Scrollbars */
 }
 
+
+
+/* --------------NATIVE APP FEELING --------*/
+body {
+    -webkit-user-select: none; /* Deaktiviert das Markieren von Text in Webkit-basierten Browsern (Safari, Chrome) */
+    -moz-user-select: none; /* Für Firefox */
+    -ms-user-select: none; /* Für Internet Explorer */
+    user-select: none; /* Für alle anderen modernen Browser */
+}
+
+html, body {
+    touch-action: manipulation; /* verhindert Pinch-to-zoom teilweise */
+    overscroll-behavior: none;  /* verhindert Scroll-Rückfederung */
+}
+/* ----------------------------------------- */
+
+
+
 #app {
     padding: 20px;
     margin: 20px;
