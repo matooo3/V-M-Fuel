@@ -1,4 +1,5 @@
 // ./pages/list.js
+import * as Storage from '../scripts/storage.js';
 
 // Initialize neccessary variables
 let deleted_items = [];
@@ -32,13 +33,15 @@ export default async function loadList() {
         </div>
     `;
 
-ingredients = await getAllDishIngredients();
-updateList(ingredients);
+
+ingredients = await getAllDishIngredients()
+updateList(ingredients); 
     
 // Add event listener 
 
 document.getElementById("restore-btn").addEventListener("click", () => {
 
+    console.log(ingredients);
     restore_items();
 
 });
@@ -93,62 +96,46 @@ document.getElementById("add-button").addEventListener("click", () => {
 
 async function getAllDishIngredients() {
 
-    try {
+    // JSON-Data
+    let data = await Storage.getDataDB();
+    const ingredients = data.ingredients;
+    // calculate_dishes();
+    const dishes = data.dishes;
+    const dishIngredients = data.dishIngredients;
 
-        // Fetch data
-        const [ingredientsRes, dishesRes, dishIngredientsRes] = await Promise.all([
-            fetch('http://172.18.45.1:3000/ingredients'),
-            fetch('http://172.18.45.1:3000/dishes'),
-            fetch('http://172.18.45.1:3000/dish_ingredients')
+    // Array for ingredients and amounts
+    let ingredientsArray = [];
 
-        ]);
+    // Iterate over all dishes
+    dishes.forEach(dish => {
 
-        if (!ingredientsRes.ok || !dishesRes.ok || !dishIngredientsRes.ok) {
-            throw new Error('Error while fetching the data');
+        const dishId = dish.dish_id;
 
-        }
+        // Filter ingredients for the current dish
+        const relatedIngredients = dishIngredients.filter(di => di.dish_id === dishId);
 
-        // JSON-Data
-        const ingredients = await ingredientsRes.json();
-        const dishes = await dishesRes.json();
-        const dishIngredients = await dishIngredientsRes.json();
+        // Add ingredients and amounts to the array
+        relatedIngredients.forEach(di => {
 
-        // Array for ingredients and amounts
-        const ingredientsArray = [];
+            // Find the ingredient for the current dish_ingredient element in the ingredients table
+            const ingredient = ingredients.find(ing => ing.ingredient_id === di.ingredient_id);
 
-        // Iterate over all dishes
-        dishes.forEach(dish => {
+            if (ingredient) {
 
-            const dishId = dish.dish_id;
+                ingredientsArray.push({
+                    name: ingredient.name,
+                    amount: di.amount,
+                    unit_of_measurement: di.unit_of_measurement
+                });
 
-            // Filter ingredients for the current dish
-            const relatedIngredients = dishIngredients.filter(di => di.dish_id === dishId);
+            }
 
-            // Add ingredients and amounts to the array
-            relatedIngredients.forEach(di => {
-
-                // Find the ingredient for the current dish_ingredient element in the ingredients table
-                const ingredient = ingredients.find(ing => ing.ingredient_id === di.ingredient_id);
-
-                if (ingredient) {
-
-                    ingredientsArray.push({
-                        name: ingredient.name,
-                        amount: di.amount,
-                        unit_of_measurement: di.unit_of_measurement
-                    });
-
-                }
-
-            });
         });
 
-        // console.log(ingredientsArray); // For debugging
-        return ingredientsArray;
+    });
 
-    } catch (error) {
-        console.error('Error while fetching the data:', error);
-    }
+    // console.log(ingredientsArray); // For debugging
+    return ingredientsArray;
 }
 
 
@@ -168,9 +155,9 @@ function updateList(ingredients) {
             <label class="list-label">
                 <input class="list-input" type="checkbox">
                 <span class="list-bullet"></span>
-                ${ingredient.name}
-                <input type="text" id="amount" value="${ingredient.amount}" min="0">
-                <input type="text" id="unit_of_measurement" value="${ingredient.unit_of_measurement}" readonly>
+                <span class="ingredient-name">${ingredient.name}</span>
+                <input type="text" class="amount" value="${ingredient.amount}" min="0">
+                <input type="text" class="unit_of_measurement" value="${ingredient.unit_of_measurement}" readonly>
                 <button id = "delete-ingredients-button" class="list-btn">
                     <span id = "close" class = "material-symbols-outlined">
                         close
@@ -194,6 +181,16 @@ function updateList(ingredients) {
         });
     });
 
+    const inputs = document.querySelectorAll(".amount");
+
+    inputs.forEach(input => {
+        input.addEventListener("change", (event) => {
+
+            saveValue(event);
+
+        });
+    });
+
 }
 
 function sort_items(){
@@ -210,7 +207,6 @@ function sort_items(){
             
             ingredients.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())); // lower case variants are getting compared
             updateList(ingredients);
-            console.log(ingredients);
     
         }
 
@@ -291,24 +287,7 @@ function split_input(input){
 
 function delete_item(event) {
 
-    // Find the parent <li> element of the delete button
-    const listItem = event.target.closest("li"); 
-    listItem.remove(); 
-
-    // Extract the necessary values from the DOM
-    const labelText = listItem.querySelector("label").textContent.trim();
-    const name = labelText.replace(/close/g, '').trim();
-    const amount = listItem.querySelector("#amount").value.trim(); 
-    const unitOfMeasurement = listItem.querySelector("#unit_of_measurement").value.trim(); 
-
-    // Create an object containing the deleted item's details
-    const deletedItem = {
-
-        name: name,
-        amount: amount,
-        unit_of_measurement: unitOfMeasurement
-
-    };
+    let deletedItem = getDeletedItem(event);
 
     // Add the deleted item to the array of deleted items
     deleted_items.push(deletedItem);
@@ -316,11 +295,13 @@ function delete_item(event) {
     // Find the index of the item in the ingredients array
     const index = ingredients.findIndex(ing => 
 
-        ing.name === name && 
-        ing.amount.toString() === amount && 
-        ing.unit_of_measurement === unitOfMeasurement
+        ing.name === deletedItem.name && 
+        ing.amount === deletedItem.amount && 
+        ing.unit_of_measurement === deletedItem.unit_of_measurement
 
     );
+
+    console.log(index)
 
     // Remove the item from the ingredients array if found
     if (index !== -1) {
@@ -331,12 +312,37 @@ function delete_item(event) {
 
 }
 
+function getDeletedItem(event) {
+
+        // Find the parent <li> element of the delete button
+        const listItem = event.target.closest("li"); 
+        listItem.remove(); 
+    
+        // Extract the necessary values from the DOM
+        const name = listItem.querySelector(".ingredient-name").textContent.trim();
+
+        const amount = listItem.querySelector(".amount").value.trim(); 
+        const unit_of_measurement = listItem.querySelector(".unit_of_measurement").value.trim(); 
+    
+        // Create an object containing the deleted item's details
+        const deletedItem = {
+            
+            name: name,
+            amount: Number(amount),
+            unit_of_measurement: unit_of_measurement
+    
+        }
+
+        return deletedItem;
+
+}
+
 
 function restore_items(){
 
     if (delete_counter > 0){
 
-        // Restore all removed items
+        // Restore all removed items  
         ingredients.push(...deleted_items) // ... is a speed operator that spreads the array into its elements
 
         // Remove all items from deleted_items to prevent the user from generating them twice
@@ -373,3 +379,31 @@ function own_grocery_list(){
     updateList(ingredients);
 
 }
+
+function saveValue(event) {
+
+    // Wert aus Inputfeld holen
+    const input = event.target;
+    const value = input.value.trim();
+
+    // Prüfen, ob der Wert gültig ist
+    if (isNaN(value) || value === "") {
+        alert("Please enter a valid number for amount.");
+        input.value = ""; // Inputfeld zurücksetzen
+        return;
+    }
+
+    // DOM-Elemente holen, ohne sie zu entfernen!
+    const listItem = input.closest("li");
+    const name = listItem.querySelector(".ingredient-name").textContent.trim();
+    const unit_of_measurement = listItem.querySelector(".unit_of_measurement").value.trim();
+
+    // Zutatenliste aktualisieren
+    ingredients.forEach(ing => {
+        if (ing.name === name && ing.unit_of_measurement === unit_of_measurement) {
+            ing.amount = Number(value);
+        }
+    });
+
+}
+
