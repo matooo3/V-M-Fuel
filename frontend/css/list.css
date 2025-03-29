@@ -191,7 +191,7 @@
   'opsz' 24
 }
 
-#amount{
+.amount{
 
     font-size: 14px;
     border: none;
@@ -202,7 +202,7 @@
     margin-right: 0;
 
 }
-#unit_of_measurement {
+.unit_of_measurement {
 
     font-size: 14px;
     border: none;
@@ -214,12 +214,12 @@
 
 }
 
-#unit_of_measurement:focus {
+.unit_of_measurement:focus {
     outline: none;  
     border: none;   
 }
 
-#amount:focus {
+.amount:focus {
     outline: none;  
     border: 1px solid #555;   
 }
