@@ -2,6 +2,24 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+const axios = require('axios');
+
+// Lade die geheime Konfigurationsdatei aus dem Home-Verzeichnis
+const homeDirectory = os.homedir(); // Holt das Home-Verzeichnis des Benutzers
+const configPath = path.join(homeDirectory, 'dbConfig.json'); // Pfad zur Konfigurationsdatei
+
+let dbConfig;
+
+try {
+    // Versuche, die Konfigurationsdatei zu lesen
+    dbConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+} catch (err) {
+    console.error('Fehler beim Laden der DB-Konfiguration:', err);
+    process.exit(1); // Beende den Prozess, wenn die Datei fehlt oder fehlerhaft ist
+}
 
 const app = express();
 const PORT = 3000; // Port für das Backend
@@ -10,20 +28,15 @@ const PORT = 3000; // Port für das Backend
 app.use(cors());
 app.use(bodyParser.json());
 
-// MariaDB-Verbindung
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root', // Benutzername deiner Datenbank
-    password: '', // Passwort deiner Datenbank
-    database: 'fitness_app', // Name der Datenbank
-});
+// MariaDB-Verbindung mit den geladenen Zugangsdaten
+const db = mysql.createConnection(dbConfig);
 
 db.connect((err) => {
     if (err) {
-        console.error('Error connecting to MariaDB:', err);
+        console.error('Fehler bei der Verbindung zu MariaDB:', err);
         return;
     }
-    console.log('Connected to MariaDB');
+    console.log('Erfolgreich mit MariaDB verbunden');
 });
 
 // API-Endpunkt: Alle Gerichte abrufen
@@ -31,8 +44,8 @@ app.get('/dishes', (req, res) => {
     const query = 'SELECT * FROM dishes';
     db.query(query, (err, results) => {
         if (err) {
-            console.error(err);
-            res.status(500).send('Error fetching dishes');
+            console.error('Fehler beim Abrufen der Gerichte:', err);
+            res.status(500).send('Fehler beim Abrufen der Gerichte');
         } else {
             res.json(results);
         }
@@ -65,7 +78,6 @@ app.get('/dish_ingredients', (req, res) => {
     });
 });
 
-
 // API-Endpunkt: Alle Nutzer abrufen
 app.get('/users', (req, res) => {
     const query = 'SELECT * FROM users';
@@ -92,7 +104,37 @@ app.get('/user_dishes', (req, res) => {
     });
 });
 
+app.post('/parse-ingredients', async (req, res) => {
+    const userInput = req.body.input;  // The input from the user
+
+    // Prompt to ask the model to process the ingredients into name, amount, and unit
+    const prompt = `
+        Please split the following ingredients into Name, Amount, and Unit:
+        ${userInput}
+
+        Provide the response as JSON in the format:
+        [{"name": "Ingredient", "amount": "Amount", "unit_of_measurement": "Unit_Of_Measurement"}, ...]
+    `;
+
+    try {
+        // Send request to the model (Llama 2, Mistral, etc.)
+        const response = await axios.post("http://localhost:11434/api/generate", {
+            model: "deepseek-r1:14b",  
+            prompt: prompt,
+            stream: false
+        });
+
+        // Return the model's structured response
+        res.json(response.data);
+    } catch (error) {
+        console.error("Error parsing ingredients:", error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
 // Starte den Server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server läuft auf http://172.18.45.1:${PORT}`);
 });
