@@ -38,7 +38,8 @@ export default async function loadMeals() {
 async function getDataDB() {
     try {
         // Anfrage an das Backend
-        const response = await fetch('https://gfoh.ddns.net:6969/api/dishes');
+        // const response = await fetch('http://172.18.45.1:3000/dishes'); // direct to backend
+        const response = await fetch('https://gfoh.ddns.net:6969/api/dishes'); // via reverse proxy
         if (!response.ok) {
             throw new Error(`Fehler: ${response.statusText}`);
         }
