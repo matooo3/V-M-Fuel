@@ -11,7 +11,7 @@ function saveToLS(key, data) {
 // ---------------------- get() ----------------------------------
 // get DISHES
 async function getDishes() {
-  const dishes = await api.fetchData('/api/dishes');
+  const dishes = await api.fetchData('/dishes');
     // saveToLS('dishes', dishes);
   return dishes;
 }
@@ -19,28 +19,28 @@ async function getDishes() {
 
 // get DISH INGREDIENTS
 async function getDishIngredients() {
-    const dishIngredients = await api.fetchData('/api/dish_ingredients');
+    const dishIngredients = await api.fetchData('/dish_ingredients');
     //   saveToLS('dishIngredients', dishIngredients);
     return dishIngredients;
 }
 
 // get INGREDIENTS
 async function getIngredients() {
-  const ingredients = await api.fetchData('/api/ingredients');
+  const ingredients = await api.fetchData('/ingredients');
 //     saveToLS('ingredients', ingredients);
   return ingredients;
 }
 
 // get USERS
 async function getUsers() {
-  const users = await api.fetchData('/api/users');
+  const users = await api.fetchData('/users');
 //     saveToLS('users', users);
   return users;
 }
 
 // get USER-DISHES
 async function getUserDishes() {
-  const userDishes = await api.fetchData('/api/user_dishes');
+  const userDishes = await api.fetchData('/user_dishes');
 //     saveToLS('userDishes', userDishes);
   return userDishes;
 }
