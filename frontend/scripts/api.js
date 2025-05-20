@@ -1,5 +1,6 @@
 // BACKEND base-URL
-const apiBaseUrl = 'http://172.18.45.1:3000';
+// const apiBaseUrl = 'http://172.18.45.1:3000'; // DIREKT
+const apiBaseUrl = 'https://gfoh.ddns.net:6969'; // PER REVERSE PROXY
 // const apiBaseUrl = `${window.location.protocol}//${window.location.hostname}:3000`;
 
 // fetching any DATA-ENDPOINT from BACKEND
