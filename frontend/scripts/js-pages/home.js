@@ -1,60 +1,12 @@
 // ./pages/home.js
-export default function loadHome() {
+
+import { loadHTMLTemplate } from '../templateLoader.js';
+
+export default async function loadHome() {
     const app = document.getElementById('app');
-    app.innerHTML = `
-        <div id="home">
-            <!-- USER INPUT: -->
-
-            <div id="input-container">
-                
-                <label class="top-el" for="kg">Gewicht:</label>
-                <input type="number" id="kg" placeholder="kg" min="0">
-
-                <label class="top-el" for="cm">Größe:</label>
-                <input type="number" id="cm" placeholder="cm" min="0">
-
-                <label for="age">Alter:</label>
-                <input type="number" id="age" placeholder="Jahre" min="0">
-
-                <label class="top-el" for="gender">Geschlecht:</label>
-                <select class="btn" name="gender" id="gender">
-                    <option value="male">männlich</option>
-                    <option value="female">weiblich</option>
-                </select>
-
-                <label class="top-el" for="activity">Aktivitätslevel:</label>
-                <select class="btn" name="activity" id="activity">
-                    <option value="1.2">keine Aktivität</option>
-                    <option value="1.375">leicht aktiv</option>
-                    <option value="1.55">mäßig aktiv</option>
-                    <option value="1.725">sehr aktiv</option>
-                    <option value="1.9">extrem aktiv</option>
-                </select>
-
-                <label for="goal">Ziel:</label>
-                <select class="btn" name="goal" id="goal">
-                    <option value="bulk">Bulk</option>
-                    <option value="maintain">Gewicht halten</option>
-                    <option value="cut">Cut</option>
-                </select>
-                
-                <div id="result-kcal">
-                    Test
-                </div>
-
-            </div>
-
-                <!-- Dropdownmenu to change default / kcal here: -->
-                <select class="btn" id="calc-mode-btn">
-                    <option value="default">default</option>
-                    <option value="kcal">kcal</option>
-                </select>
-            
-                <button class="btn" id="calc-btn">calc</button> 
-            
-        
-        </div> <!-- end-home -->
-    `;
+    // LOAD app html-code
+    const html = await loadHTMLTemplate('/frontend/html-pages/home.html');
+    app.innerHTML = html;
 
     // Eventlistener: -------------------------------------------
 

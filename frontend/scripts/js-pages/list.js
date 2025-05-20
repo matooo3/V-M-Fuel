@@ -1,5 +1,6 @@
 // ./pages/list.js
-import * as Storage from '../scripts/storage.js';
+import * as Storage from '../storage.js';
+import { loadHTMLTemplate } from '../templateLoader.js';
 
 // Initialize neccessary variables
 let deleted_items = [];
@@ -11,27 +12,9 @@ let ingredients = [];
 // Main function
 export default async function loadList() {
     const app = document.getElementById('app');
-
-    app.innerHTML = `
-    <div class="list-container">
-        <div class="list-header">
-            <select id="order-btn" class="list-btn">
-                <option value="food categories">Food Categories</option>
-                <option value="alphabetic">Alphabetic</option>
-            </select>
-            <button id="grocery-btn" class="list-btn">Own gorcery list</button>
-            <button id="restore-btn" class="list-btn">Restore all</button>
-            <button id="delete-all-btn" class="list-btn">Delete all</button>
-        </div>
-        <ul class="checklist">
-        </ul>
-        <div class="add-more">Add More Items
-            <div id="add-more-inputs">
-                <input type="text" id="new-items" placeholder="Separate different items by commas">
-                <button id="add-button" class="list-btn">Add</button>
-            </div>
-        </div>
-    `;
+    // LOAD app html-code
+    const html = await loadHTMLTemplate('/frontend/html-pages/list.html');
+    app.innerHTML = html;
 
 
 ingredients = await getAllDishIngredients()
