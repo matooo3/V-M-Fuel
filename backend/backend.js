@@ -40,7 +40,7 @@ db.connect((err) => {
 });
 
 // API-Endpunkt: Alle Gerichte abrufen
-app.get('/dishes', (req, res) => {
+app.get('/api/dishes', (req, res) => {
     const query = 'SELECT * FROM dishes';
     db.query(query, (err, results) => {
         if (err) {
@@ -53,7 +53,7 @@ app.get('/dishes', (req, res) => {
 });
 
 // API-Endpunkt: Alle ingredients abrufen
-app.get('/ingredients', (req, res) => {
+app.get('/api/ingredients', (req, res) => {
     const query = 'SELECT * FROM ingredients';
     db.query(query, (err, results) => {
         if (err) {
@@ -66,7 +66,7 @@ app.get('/ingredients', (req, res) => {
 });
 
 // API-Endpunkt: Zutaten und Mengen für alle Gerichte abrufen
-app.get('/dish_ingredients', (req, res) => {
+app.get('/api/dish_ingredients', (req, res) => {
     const query = 'SELECT * FROM dish_ingredients';
     db.query(query, (err, results) => {
         if (err) {
@@ -79,7 +79,7 @@ app.get('/dish_ingredients', (req, res) => {
 });
 
 // API-Endpunkt: Alle Nutzer abrufen
-app.get('/users', (req, res) => {
+app.get('/api/users', (req, res) => {
     const query = 'SELECT * FROM users';
     db.query(query, (err, results) => {
         if (err) {
@@ -92,7 +92,7 @@ app.get('/users', (req, res) => {
 });
 
 // API-Endpunkt: Alle Zuordnungen zwischen Nutzern und Gerichten abrufen
-app.get('/user_dishes', (req, res) => {
+app.get('/api/user_dishes', (req, res) => {
     const query = 'SELECT * FROM user_dishes';
     db.query(query, (err, results) => {
         if (err) {
@@ -104,7 +104,7 @@ app.get('/user_dishes', (req, res) => {
     });
 });
 
-app.post('/parse-ingredients', async (req, res) => {
+app.post('/api/parse-ingredients', async (req, res) => {
     const userInput = req.body.input;  // The input from the user
 
     // Prompt to ask the model to process the ingredients into name, amount, and unit
