@@ -1,4 +1,5 @@
 // ./pages/meals.js
+import { loadHTMLTemplate } from '../templateLoader.js';
 
 export default async function loadMeals() {
     const app = document.getElementById('app');
@@ -16,7 +17,7 @@ export default async function loadMeals() {
             <p>Willkommen auf der Meals-Seite!</p>
             <ul>
                 ${data.map(meal => `
-                    <li>
+                    <li> 
                         <strong>${meal.name}</strong><br>
                         Kalorien: ${meal.calories}<br>
                         Protein: ${meal.protein}g<br>

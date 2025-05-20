@@ -1,7 +1,7 @@
-import loadHome from '../pages/home.js';
-import loadList from '../pages/list.js';
-import loadPlan from '../pages/plan.js';
-import loadMeals from '../pages/meals.js';
+import loadHome from './js-pages/home.js';
+import loadList from './js-pages/list.js';
+import loadPlan from './js-pages/plan.js';
+import loadMeals from './js-pages/meals.js';
 import * as Storage from './storage.js';
 
 const routes = {

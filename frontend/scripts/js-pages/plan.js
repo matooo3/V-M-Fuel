@@ -1,45 +1,14 @@
+import { loadHTMLTemplate } from '../templateLoader.js';
+
 let currentWeekday = 0;
 const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
-
 // ./pages/plan.js
-export default function loadPlan() {
+export default async function loadPlan() {
     const app = document.getElementById('app');
-    app.innerHTML = `
-        <div id="plan">
-
-            <nav id="weekday-nav">
-                <button class="btn" id="weekdayDownBtn"><</button>
-                <h1 id="weekday-tag">monday</h1>
-                <button class="btn" id="weekdayUpBtn">></button>
-            </nav>
-            
-            <div id="parent-dish-container">
-                <div class="dish-container">
-                    <h2 class="dish-tag">breakfast</h2>
-                    <div id="breakfast"></div>
-                </div>
-                <div class="dish-container">
-                    <h2 class="dish-tag">lunch</h2>
-                    <div id="lunch"></div>
-                </div>
-                <div class="dish-container">
-                    <h2 class="dish-tag">dinner</h2>
-                    <div id="dinner"></div>
-                </div>
-                <div class="dish-container">
-                    <h2 class="dish-tag">snacks</h2>
-                    <div id="snacks"></div>
-                </div>
-                <div class="dish-container">
-                    <h2 class="dish-tag">drinks</h2>
-                    <div id="drinks"></div>
-                </div>
-            </div>
-            
-            
-        </div> <!-- end-plan -->
-    `;
+    // LOAD app html-code
+    const html = await loadHTMLTemplate('/frontend/html-pages/plan.html');
+    app.innerHTML = html;
 
     
     // implement current weekday meal plan
