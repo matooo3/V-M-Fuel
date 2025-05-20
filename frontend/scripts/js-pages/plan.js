@@ -59,7 +59,7 @@ const weeklyMeals = {
     3: ["Toast", "Käsespätzle", "Curry", "Möhrensticks", "Tee"],                
     4: ["Croissant", "Burger", "Lasagne", "Trauben", "Cola"],                   
     5: ["Rührei", "Falafel", "Tacos", "Mandarinen", "Limo"],                    
-    6: ["Pfannkuchen", "Suppe", "Braten", "Matze's Mom", "Saft"],                     
+    6: ["Pfannkuchen", "Suppe", "Braten", "Chips", "Saft"],                     
 };
 
 
