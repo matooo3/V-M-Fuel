@@ -138,4 +138,3 @@ app.post('/parse-ingredients', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server läuft auf http://172.18.45.1:${PORT}`);
 });
-// TEATTTTTTTT
