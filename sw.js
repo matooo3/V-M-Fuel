@@ -57,30 +57,107 @@ self.addEventListener('activate', e => {
 });
 
 // Fetch-Strategie: online first → fallback cache → offline.html
+// self.addEventListener('fetch', event => {
+//   const req = event.request;
+
+//   // Only handle GET requests
+//   if (req.method !== 'GET') {
+//     return;
+//   }
+//   event.respondWith(
+//     fetch(req).then(networkRes => {
+//       // Cache aktualisieren
+//       return caches.open(CACHE_NAME).then(cache => {
+//         cache.put(req, networkRes.clone());
+//         console.log('[SW] Updated cache:', req.url);
+//         return networkRes;
+//       });
+//     }).catch(() => {
+//       // Fehler beim Netzwerk-Fetch
+//       console.warn('[SW] Fetch failed – trying cache:', req.url);
+//       return caches.match(req).then(cacheRes => {
+//         return cacheRes || caches.match('/frontend/offline.html');
+//       });
+//     })
+//   );
+// });
+// offline first -> network later
+// self.addEventListener('fetch', event => {
+//   const req = event.request;
+
+//   // Nur GET-Anfragen behandeln
+//   if (req.method !== 'GET') return;
+
+//   event.respondWith(
+//     caches.match(req).then(cacheRes => {
+//       if (cacheRes) {
+//         // Sofortige Antwort aus Cache
+//         console.log('[SW] From cache:', req.url);
+//         return cacheRes;
+//       }
+
+//       // Falls nicht im Cache: aus dem Netz holen
+//       return fetch(req).then(networkRes => {
+//         return caches.open(CACHE_NAME).then(cache => {
+//           cache.put(req, networkRes.clone());
+//           console.log('[SW] Cached new:', req.url);
+//           return networkRes;
+//         });
+//       }).catch(() => {
+//         // Wenn fetch fehlschlägt (z. B. offline)
+//         return caches.match('/frontend/offline.html');
+//       });
+//     })
+//   );
+// });
+
+//hybrid!!! !  !!
+// const CACHE_NAME = 'v1';
+const CACHE_MAX_AGE = 30 * 1000; // 15 Sekunden in Millisekunden
+
 self.addEventListener('fetch', event => {
   const req = event.request;
 
-  // Only handle GET requests
-  if (req.method !== 'GET') {
-    return;
-  }
+  if (req.method !== 'GET') return;
+
   event.respondWith(
-    fetch(req).then(networkRes => {
-      // Cache aktualisieren
-      return caches.open(CACHE_NAME).then(cache => {
+    caches.open(CACHE_NAME).then(async cache => {
+      const cachedRes = await cache.match(req);
+      const cacheTime = await cache.match(req.url + ':timestamp');
+
+      const now = Date.now();
+
+      // Prüfe, ob Cache veraltet ist
+      const isExpired = cacheTime
+        ? now - parseInt(await cacheTime.text()) > CACHE_MAX_AGE
+        : true;
+  
+      // Wenn gecached und nicht veraltet → sofort zurückgeben
+      if (cachedRes && !isExpired) {
+        console.log('[SW] From cache:', req.url);
+        return cachedRes;
+      }
+
+      // Versuche, vom Netzwerk zu laden
+      return fetch(req).then(networkRes => {
+        // Speichere neuen Timestamp
         cache.put(req, networkRes.clone());
-        console.log('[SW] Updated cache:', req.url);
+        cache.put(
+          req.url + ':timestamp',
+          new Response(now.toString())
+        );
+        console.log('[SW] Cache updated:', req.url);
         return networkRes;
-      });
-    }).catch(() => {
-      // Fehler beim Netzwerk-Fetch
-      console.warn('[SW] Fetch failed – trying cache:', req.url);
-      return caches.match(req).then(cacheRes => {
-        return cacheRes || caches.match('/frontend/offline.html');
+      }).catch(() => {
+        // Fallback bei Netzwerkfehler
+        console.warn('[SW] Network failed, fallback to cache:', req.url);
+        return cachedRes || cache.match('/frontend/offline.html');
       });
     })
   );
 });
+
+
 
 // Hilfsfunktion: Internetverbindung prüfen über /ping
 // function isOnline() {
