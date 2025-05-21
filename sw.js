@@ -60,6 +60,10 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', event => {
   const req = event.request;
 
+  // Only handle GET requests
+  if (req.method !== 'GET') {
+    return;
+  }
   event.respondWith(
     isOnline().then(online => {
       console.log('[SW] Fetch:', req.url, 'Online:', online);
