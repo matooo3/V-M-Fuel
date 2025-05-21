@@ -65,29 +65,18 @@ self.addEventListener('fetch', event => {
     return;
   }
   event.respondWith(
-    isOnline().then(online => {
-      console.log('[SW] Fetch:', req.url, 'Online:', online);
-
-      if (!online) {
-        return caches.match(req).then(cacheRes => {
-          console.log('[SW] Offline – from cache:', req.url);
-          return cacheRes || caches.match('/frontend/offline.html');
-        });
-      }
-
-      return fetch(req).then(networkRes => {
-        // Cache aktualisieren
-        return caches.open(CACHE_NAME).then(cache => {
-          cache.put(req, networkRes.clone());
-          console.log('[SW] Updated cache:', req.url);
-          return networkRes;
-        });
-      }).catch(() => {
-        // Fehler beim Netzwerk-Fetch
-        console.warn('[SW] Fetch failed – trying cache:', req.url);
-        return caches.match(req).then(cacheRes => {
-          return cacheRes || caches.match('/frontend/offline.html');
-        });
+    fetch(req).then(networkRes => {
+      // Cache aktualisieren
+      return caches.open(CACHE_NAME).then(cache => {
+        cache.put(req, networkRes.clone());
+        console.log('[SW] Updated cache:', req.url);
+        return networkRes;
+      });
+    }).catch(() => {
+      // Fehler beim Netzwerk-Fetch
+      console.warn('[SW] Fetch failed – trying cache:', req.url);
+      return caches.match(req).then(cacheRes => {
+        return cacheRes || caches.match('/frontend/offline.html');
       });
     })
   );
