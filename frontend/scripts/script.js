@@ -4,6 +4,11 @@ import loadPlan from './js-pages/plan.js';
 import loadMeals from './js-pages/meals.js';
 import * as Storage from './storage.js';
 
+// SERVICE-WORKER REGISTRATION
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+
 const routes = {
     "home": loadHome,
     "list": loadList,
