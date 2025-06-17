@@ -454,6 +454,9 @@ class UniversalApplePicker {
     }
 }
 
+// -----------------------------------
+// For Matze:
+
 // Global instances
 let pickerInstance;
 
@@ -462,17 +465,7 @@ function getSelectedValue() {
     return pickerInstance?.getSelectedValue() || null;
 }
 
-function getSelectedDate() {
-    return pickerInstance?.type === 'age' ? pickerInstance.getSelectedValue() : null;
-}
-
-function getSelectedHeight() {
-    return pickerInstance?.type === 'height' ? pickerInstance.getSelectedValue() : null;
-}
-
-function getSelectedWeight() {
-    return pickerInstance?.type === 'weight' ? pickerInstance.getSelectedValue() : null;
-}
+// -----------------------------------
 
 // Auto-initialize based on page
 document.addEventListener('DOMContentLoaded', () => {
