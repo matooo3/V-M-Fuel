@@ -10,7 +10,7 @@
   overflow-y: hidden;
  }
 
- .landing-container {
+.landing-container {
     display: grid;
     justify-items: center;
     grid-template-columns: 1fr;
