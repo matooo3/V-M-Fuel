@@ -10,6 +10,22 @@ const pages = [
   'account.html',
 ];
 
+// Store the previous page when navigating to login
+function storePreviousPage() {
+    const currentFile = window.location.pathname.split('/').pop();
+    sessionStorage.setItem('previousPage', currentFile);
+}
+
+// Get the stored previous page
+function getPreviousPage() {
+    return sessionStorage.getItem('previousPage');
+}
+
+// Clear stored previous page
+function clearPreviousPage() {
+    sessionStorage.removeItem('previousPage');
+}
+
 // Get current page from URL
 function getCurrentPageIndex() {
     const currentFile = window.location.pathname.split('/').pop();
@@ -47,8 +63,8 @@ function getNextPage(currentIndex) {
     return `../pages/${nextPage}`;
 }
 
-// Get the previous page
-function getPreviousPage(currentIndex) {
+// Get the previous page for normal navigation
+function getPreviousPageNormal(currentIndex) {
     const prevIndex = currentIndex - 1;
     
     if (prevIndex < 0) {
@@ -74,9 +90,25 @@ function initNavigation() {
     const backArrow = document.querySelector('.arrow-back');
     const loginBtn = document.querySelector('.login-btn');
 
+    // Handle login span (on all pages except getstarted.html)
+    if(currentFile !== 'getstarted.html') {
+        // Event listener for log in in the footer section
+        const text_log_in = document.querySelector('.log-in');
+        
+        if (text_log_in) {
+            text_log_in.addEventListener('click', function() {
+                // Store current page before navigating to login
+                storePreviousPage();
+                window.location.href = '../pages/log-in.html';
+            });
+        }
+    }
+
     // Handle login button (specific to getstarted.html)
     if (loginBtn && currentFile === 'getstarted.html') {
         loginBtn.addEventListener('click', function() {
+            // Store getstarted as previous page
+            storePreviousPage();
             window.location.href = '../pages/log-in.html';
         });
     }
@@ -87,17 +119,18 @@ function initNavigation() {
 
             if (currentIndex === pages.length - 1) {
                 // Last page - go to main index
-
+                clearPreviousPage(); // Clear stored page when completing flow
                 window.location.href = '../../index.html'; //password needs to be set up
 
             } else {
                 // Special handling for getstarted.html - default to gender.html
                 if (currentFile === 'getstarted.html') {
+                    clearPreviousPage(); // Clear any stored previous page
                     window.location.href = '../pages/gender.html';
 
                 } else if (currentFile === 'log-in.html') {
-
                     // After login, go directly to index.html
+                    clearPreviousPage(); // Clear stored page after login
                     window.location.href = '../../index.html';
                     // log in data needs to be correct
 
@@ -112,16 +145,31 @@ function initNavigation() {
     
     // Configure back arrow
     if (backArrow) {
-        if (currentIndex > 0) {
+        if (currentIndex > 0 || currentFile === 'log-in.html') {
             backArrow.style.display = 'block';
             backArrow.style.cursor = 'pointer';
+            
             backArrow.addEventListener('click', function() {
-                // Special handling for pages that can come from multiple sources
-                if (currentFile === 'age.html') {
+                
+                if (currentFile === 'log-in.html') {
+                    // Go back to the page that led to login
+                    const previousPage = getPreviousPage();
+                    
+                    if (previousPage && previousPage !== 'log-in.html') {
+                        clearPreviousPage(); // Clear after using
+                        window.location.href = `../pages/${previousPage}`;
+                    } else {
+                        // Fallback to getstarted if no previous page stored
+                        window.location.href = '../pages/getstarted.html';
+                    }
+                    
+                } else if (currentFile === 'age.html') {
                     // Age can come from gender or log-in, default back to gender
                     window.location.href = '../pages/gender.html';
+                    
                 } else {
-                    const prevPage = getPreviousPage(currentIndex);
+                    // Normal flow
+                    const prevPage = getPreviousPageNormal(currentIndex);
                     if (prevPage) {
                         window.location.href = prevPage;
                     }
@@ -149,4 +197,3 @@ cards.forEach(card => {
         this.classList.add('clicked');
     });
 });
-
