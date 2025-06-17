@@ -112,10 +112,36 @@ function initNavigation() {
             window.location.href = '../pages/log-in.html';
         });
     }
+
+// -----------------------------------
+// For Matze:
+
+function getCardInfo(){
+    const selectedCard = document.querySelector('.card.clicked');
+    
+    if (selectedCard) {
+        // Get the data attributes from the selected card
+        const cardData = selectedCard.textContent.trim();
+        
+        return cardData;
+    }
+    
+    return null; // No card selected
+}
+
+// -----------------------------------
     
     // Configure next button
     if (nextBtn) {
         nextBtn.addEventListener('click', function() {
+
+            const pagesWithCards = ['goal.html', 'activity-level.html', 'gender.html'];
+
+            if (pagesWithCards.includes(currentFile)) {
+                
+                getCardInfo(); // Get selected card info
+                
+            }
 
             if (currentIndex === pages.length - 1) {
                 // Last page - go to main index
@@ -175,10 +201,7 @@ function initNavigation() {
                     }
                 }
             });
-        } else {
-            // First page - hide back arrow
-            backArrow.style.display = 'none';
-        }
+        } 
     }
 }
 
