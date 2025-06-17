@@ -19,8 +19,13 @@
 
 /* pictures */
 .logo {
-  width: 120px;
+  width: 80px;
   margin: 30px;
+}
+
+.logo-getstarted{
+  width: 120px;
+  margin: 40px;
 }
 
 .arrow-back{
