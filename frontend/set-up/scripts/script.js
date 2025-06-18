@@ -176,7 +176,10 @@ function initNavigation() {
                             // Update footer text
                             const footerText = document.getElementById('footer-text');
                             if (footerText) {
+                                
                                 footerText.innerHTML = 'Email sent successfully!';
+
+                                // Email sending functionality
                             }
                             
                         } else {
