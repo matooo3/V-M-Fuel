@@ -452,20 +452,61 @@ class UniversalApplePicker {
         
         return age;
     }
-}
 
-// -----------------------------------
-// For Matze:
+    // Simple method to get all values as a basic array
+    getAllValues() {
+        const values = [];
+        
+        switch (this.type) {
+            case 'age':
+                const currentYear = new Date().getFullYear();
+                for (let year = currentYear - 120; year <= currentYear; year++) {
+                    for (let month = 0; month < 12; month++) {
+                        const daysInMonth = new Date(year, month + 1, 0).getDate();
+                        for (let day = 1; day <= daysInMonth; day++) {
+                            values.push([day, month + 1, year]); // [day, month, year]
+                        }
+                    }
+                }
+                break;
+                
+            case 'height':
+                this.config.units.forEach(unit => {
+                    const range = this.config.ranges[unit];
+                    for (let whole = range.min; whole <= range.max; whole++) {
+                        for (let decimal = 0; decimal <= 9; decimal++) {
+                            values.push([whole, decimal, unit]); // [whole, decimal, unit]
+                        }
+                    }
+                });
+                break;
+                
+            case 'weight':
+                this.config.units.forEach(unit => {
+                    const range = this.config.ranges[unit];
+                    for (let whole = range.min; whole <= range.max; whole++) {
+                        for (let decimal = 0; decimal <= 9; decimal++) {
+                            values.push([whole, decimal, unit]); // [whole, decimal, unit]
+                        }
+                    }
+                });
+                break;
+        }
+        
+        return values;
+    }
+}
 
 // Global instances
 let pickerInstance;
 
-// Global getter functions
-function getSelectedValue() {
-    return pickerInstance?.getSelectedValue() || null;
+// Global function to access the array
+function getAllValues() {
+    return pickerInstance?.getAllValues() || [];
 }
 
-// -----------------------------------
+// Make it accessible on window object
+window.getAllValues = getAllValues;
 
 // Auto-initialize based on page
 document.addEventListener('DOMContentLoaded', () => {
