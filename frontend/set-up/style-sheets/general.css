@@ -61,6 +61,11 @@ h1 {
   text-align: center;
 }
 
+.set-up{
+  font-size: 1.5rem;
+  margin: 10px;
+}
+
 /* Button styles */
 
 /* General */
@@ -96,10 +101,6 @@ button {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-
-#set-up{
-  margin: 10px;
 }
 
 .progress-bar{

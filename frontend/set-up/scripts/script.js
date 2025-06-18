@@ -10,6 +10,10 @@ const pages = [
   'account.html',
 ];
 
+let cardDataArray = [];
+
+window.cardDataArray = cardDataArray; // Make it globally accessible
+
 // Store the previous page when navigating to login
 function storePreviousPage() {
     const currentFile = window.location.pathname.split('/').pop();
@@ -23,7 +27,7 @@ function getPreviousPage() {
 
 // Clear stored previous page
 function clearPreviousPage() {
-    sessionStorage.removeItem('previousPage');
+    sessionStorage.removeItem('previousePage');
 }
 
 // Get current page from URL
@@ -104,6 +108,114 @@ function initNavigation() {
         }
     }
 
+    if(currentFile === 'log-in.html') {
+        const reset = document.querySelector('.reset');
+        
+        if (reset) {
+            reset.addEventListener('click', function() {
+                // 1. Only replace the personal-data-div content
+                const personalDataDiv = document.getElementById('personal-data-div');
+                if (personalDataDiv) {
+                    personalDataDiv.innerHTML = `
+                        <h1 id="reset-title">Reset Password</h1>
+                        <div class="data">
+                            <input type="email" placeholder="Enter your email address" id="reset-email">
+                        </div>
+                    `;
+                }
+
+                // Transform the email div to just a horizontal line
+                const emailDiv = document.querySelector('.email');
+                if (emailDiv) {
+                    emailDiv.style.height = emailDiv.offsetHeight + 'px';
+                    emailDiv.style.display = 'flex';
+                    emailDiv.style.alignItems = 'center';
+                    emailDiv.style.justifyContent = 'center';
+                    emailDiv.innerHTML = '<div id="reset-line"></div>';
+                }
+
+                // Change the next button to "Send Reset Link"
+                const nextBtn = document.querySelector('.next-btn');
+                if (nextBtn) {
+                    // Clone the button to remove all event listeners
+                    const newBtn = nextBtn.cloneNode(true);
+                    nextBtn.parentNode.replaceChild(newBtn, nextBtn);
+                    
+                    // Now configure the new button
+                    newBtn.textContent = 'Send Reset Link';
+                    newBtn.className = 'reset-btn';
+                    
+                    // Add the reset functionality
+                    newBtn.addEventListener('click', function() {
+                        const emailInput = document.getElementById('reset-email');
+                        const email = emailInput.value.trim();
+                        
+                        if (email && email.includes('@')) {
+                            // Show success message in personal-data-div
+                            personalDataDiv.innerHTML = `
+                                <div class="reset-success">
+                                    <h2>Email Sent!</h2>
+                                    <p>We've sent a password reset link to <strong>${email}</strong></p>
+                                    <p>Please check your email and follow the instructions to reset your password.</p>
+                                </div>
+                            `;
+                            
+                            // Change button to "Back to Login"
+                            newBtn.textContent = 'Back to Login';
+                            newBtn.className = 'back-to-login-btn';
+                            
+                            // Remove old event listener and add new one
+                            const finalBtn = newBtn.cloneNode(true);
+                            newBtn.parentNode.replaceChild(finalBtn, newBtn);
+                            
+                            // Add back to login functionality to the new button
+                            finalBtn.addEventListener('click', function() {
+                                window.location.reload();
+                            });
+                            
+                            // Update footer text
+                            const footerText = document.getElementById('footer-text');
+                            if (footerText) {
+                                
+                                footerText.innerHTML = 'Email sent successfully!';
+
+                                // Email sending functionality
+                            }
+                            
+                        } else {
+                            // Show error message
+                            emailInput.style.borderColor = 'red';
+                            emailInput.style.backgroundColor = '#ffe6e6';
+                            emailInput.placeholder = 'Please enter a valid email address';
+                            emailInput.value = '';
+                        }
+                    });
+                }
+
+                const backArrow = document.querySelector('.arrow-back');
+                if (backArrow) {
+                    // Hide the back arrow on reset page
+                    backArrow.style.display = 'none';
+                }
+                
+                // Update the footer text
+                const footerText = document.getElementById('footer-text');
+                if (footerText) {
+                    footerText.innerHTML = 'Remember your password? <span class="accent-col login-link">Back to Login</span>';
+                }
+                
+                // Add functionality to "Back to Login" link in footer
+                const loginLink = document.querySelector('.login-link');
+                if (loginLink) {
+                    loginLink.addEventListener('click', function() {
+                        // Reload the page to restore original login form
+                        window.location.reload();
+                    });
+                }
+            });
+        }
+    }
+
     // Handle login button (specific to getstarted.html)
     if (loginBtn && currentFile === 'getstarted.html') {
         loginBtn.addEventListener('click', function() {
@@ -112,10 +224,32 @@ function initNavigation() {
             window.location.href = '../pages/log-in.html';
         });
     }
+
+    function getCardInfo(){
+        const selectedCard = document.querySelector('.card.clicked');
+        
+        if (selectedCard) {
+            // Get the data attributes from the selected card
+            const cardData = selectedCard.textContent.trim();
+            
+            cardDataArray.push(cardData); // Store card data in array
+
+        }
+        
+        return null; // No card selected
+    }
     
     // Configure next button
     if (nextBtn) {
         nextBtn.addEventListener('click', function() {
+
+            const pagesWithCards = ['goal.html', 'activity-level.html', 'gender.html'];
+
+            if (pagesWithCards.includes(currentFile)) {
+                
+                getCardInfo(); // Get selected card info
+                
+            }
 
             if (currentIndex === pages.length - 1) {
                 // Last page - go to main index
@@ -129,10 +263,67 @@ function initNavigation() {
                     window.location.href = '../pages/gender.html';
 
                 } else if (currentFile === 'log-in.html') {
-                    // After login, go directly to index.html
-                    clearPreviousPage(); // Clear stored page after login
-                    window.location.href = '../../index.html';
-                    // log in data needs to be correct
+                    // Validate login credentials before proceeding
+                    const emailInput = document.querySelector('input[type="email"]');
+                    const passwordInput = document.querySelector('input[type="password"]');
+                    
+                    const email = emailInput.value.trim();
+                    const password = passwordInput.value.trim();
+                    
+                    // Reset previous error styles
+                    emailInput.style.borderColor = '';
+                    passwordInput.style.borderColor = '';
+                    emailInput.style.backgroundColor = '';
+                    passwordInput.style.backgroundColor = '';
+                    
+                    let isValid = true;
+                    
+                    // Email validation
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!email) {
+                        emailInput.style.borderColor = 'red';
+                        emailInput.style.backgroundColor = '#ffe6e6';
+                        emailInput.placeholder = 'Email is required';
+                        isValid = false;
+                    } else if (!emailRegex.test(email)) {
+                        emailInput.style.borderColor = 'red';
+                        emailInput.style.backgroundColor = '#ffe6e6';
+                        emailInput.value = '';
+                        emailInput.placeholder = 'Please enter a valid email address';
+                        isValid = false;
+                    }
+                    
+                    // Password validation
+                    if (!password) {
+                        passwordInput.style.borderColor = 'red';
+                        passwordInput.style.backgroundColor = '#ffe6e6';
+                        passwordInput.placeholder = 'Password is required';
+                        isValid = false;
+                    } else if (password.length < 6) {
+                        passwordInput.style.borderColor = 'red';
+                        passwordInput.style.backgroundColor = '#ffe6e6';
+                        passwordInput.value = '';
+                        passwordInput.placeholder = 'Password must be at least 6 characters';
+                        isValid = false;
+                    }
+                    
+                    // If validation passes, proceed to next page
+                    if (isValid) {
+                        // Here you would typically validate against a database
+                        // For demo purposes, we'll accept any valid email/password combo
+                        // You can add specific email/password combinations for testing:
+                        
+                        // Example: Check for demo credentials
+                        if (email === 'demo@example.com' && password === 'password123') {
+                            clearPreviousPage(); // Clear stored page after login
+                            window.location.href = '../../index.html';
+                        } else {
+                            // For demo, accept any valid format for now
+                            // In production, this would make an API call to verify credentials
+                            clearPreviousPage(); // Clear stored page after login
+                            window.location.href = '../../index.html';
+                        }
+                    }
 
                 } else {
                     // Normal flow
@@ -175,10 +366,7 @@ function initNavigation() {
                     }
                 }
             });
-        } else {
-            // First page - hide back arrow
-            backArrow.style.display = 'none';
-        }
+        } 
     }
 }
 

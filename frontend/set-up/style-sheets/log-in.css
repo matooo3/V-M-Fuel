@@ -94,3 +94,18 @@
   border-bottom: 1px solid #ccc;
 }
 
+#reset-line{
+  height: 1px;
+  background-color: #1F2937;
+  width: 80%;
+  margin: 0px 0;    
+}
+
+.reset-btn{
+
+  background-color: #1F2937;
+  color: #FFFFFF;
+  
+}
+
+
