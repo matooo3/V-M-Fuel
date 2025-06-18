@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style-sheets/general.css"/>
+    <link rel="stylesheet" href="../style-sheets/age.css"/>
+    <title>Old?</title>
+</head>
+<body>
+    <div class = landing-container>
+        <div class="arrow-back"> </div>
+
+        <div class = "header-div">
+
+            <h1 class = "text set-up">Set up</h1>
+
+            <div class ="progress-bar">
+                <div id="progress-bar-fill-age"></div>
+            </div>
+
+        </div> 
+
+        <div class="question-div">
+        <h1 class = "text"> When were you born?</h1>
+        </div>
+
+        <div id = selection-div>
+        <div class="date-picker-container">
+            
+            <div class="date-picker">
+
+                <div class="picker-column day">
+                    <div class="picker-highlight"></div>
+                    <div class="picker-scroll" id="dayPicker">
+                        <!-- Day items will be populated by JavaScript -->
+                    </div>
+                    <div class="picker-overlay"></div>
+                </div>
+
+                <div class="picker-column month">
+                    <div class="picker-highlight"></div>
+                    <div class="picker-scroll" id="monthPicker">
+                        <!-- Month items will be populated by JavaScript -->
+                    </div>
+                    <div class="picker-overlay"></div>
+                </div>
+                
+                
+                <div class="picker-column year">
+                    <div class="picker-highlight"></div>
+                    <div class="picker-scroll" id="yearPicker">
+                        <!-- Year items will be populated by JavaScript -->
+                    </div>
+                    <div class="picker-overlay"></div>
+                </div>
+            </div>
+            </div>        
+                    <div class="selected-date" id="selectedDate">
+                April 15, 2024
+            </div>
+
+        </div>
+
+        <!-- space-div -->
+        <div>
+
+        </div>
+
+        <div class ="page-end-div">
+        <button class="next-btn" >Next</button>
+        
+        <div class = "footer-div">
+            <h1 id="footer-text">Already have an account? <span class = "accent-col log-in">Log in</span></h1>
+            <img src="../pictures/VM logo.png" alt="App Logo" class="logo"/>
+        </div>
+        </div>
+
+    </div>   
+     <script src="../scripts/universalPicker.js"></script>
+     <script src="../scripts/script.js"></script>
+</body>
+</html>  

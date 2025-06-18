@@ -1,0 +1,154 @@
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #FFFFFF;
+  overflow-y: hidden;
+ }
+
+.landing-container {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10vh 10vh 35vh 20vh 20vh;
+}
+
+/* pictures */
+.logo {
+  width: 80px;
+  margin: 30px;
+}
+
+.logo-getstarted{
+  width: 120px;
+  margin: 40px;
+}
+
+.arrow-back{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 10px;
+  height: 10px;
+  border-left: 3px solid #1F2937;  
+  border-bottom: 3px solid #1F2937;
+  border-radius: 0 0 0 3px;
+  transform: rotate(45deg);
+  z-index: 100;
+}
+
+/* Text styles */
+h1 {
+  font-size: 1.2rem;
+  color: #1F2937;
+  font-weight: 600;
+}
+
+.text{
+  font-weight: 500; /* 734 */
+}
+
+.accent-col {
+  color: #1BCE86;
+}
+
+#footer-text {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.set-up{
+  font-size: 1.5rem;
+  margin: 10px;
+}
+
+/* Button styles */
+
+/* General */
+button {
+  width: 210px;
+  height: 50px;
+  padding: 15px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Specific buttons */
+.login-btn {
+  background-color: #f1f2f6;
+  color: #1F2937;
+} 
+
+.next-btn {
+  background-color: #1F2937;
+  color: #FFFFFF;
+}
+
+
+/* Div styles */
+
+.header-div{
+  margin: 20px;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.progress-bar{
+    width: 100%;
+    height: 8px;
+    border-radius: 7px;
+    background-color: #F3F4F6;
+}
+
+.question-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+}
+
+.card { 
+  border: transparent solid 2px; 
+  border-radius: 10px;
+  outline: #D9D9D9 solid 1px; 
+  outline-offset: -1px;
+  transition: border-color 0.7s ease, background-color 0.7s ease;
+}
+
+.card.clicked{ 
+  border: #1BCE86 solid 2px; 
+  outline: none; 
+  background-color: #EEFFF6; 
+}
+
+/* .card:hover {
+  border: #1BCE86 solid 1px;
+} */
+
+.footer-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-end-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 45px
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style-sheets/general.css"/>
+    <link rel="stylesheet" href="../style-sheets/weight.css"/>
+    <title>Lets do it!</title>
+</head>
+<body>
+    <div class = landing-container>
+        <div class="arrow-back"> </div>
+
+        <div class = "header-div">
+
+            <h1 class = "text set-up">Set up</h1>
+
+            <div class ="progress-bar">
+                <div id="progress-bar-fill-weight"></div>
+            </div>
+
+        </div> 
+
+        <div class="question-div">
+            <h1 class = "text"> How much do you weigh?</h1>
+        </div>
+
+        <div class="weight-picker-container">
+            <div class="unit-toggle" id="unitToggle">
+                <button class="unit-button active" data-unit="kg">kg</button>
+                <button class="unit-button" data-unit="pounds">pounds</button>
+            </div>
+            
+            <div class="weight-picker">
+                <div class="picker-column whole">
+                    <div class="picker-scroll" id="wholePicker">
+                        <!-- Whole numbers will be populated by JavaScript -->
+                    </div>
+                    <div class="picker-overlay"></div>
+                </div>
+                
+                <div class="decimal-separator">.</div>
+                
+                <div class="picker-column decimal">
+                    <div class="picker-scroll" id="decimalPicker">
+                        <!-- Decimal numbers will be populated by JavaScript -->
+                    </div>
+                    <div class="picker-overlay"></div>
+                </div>
+            </div>
+            
+            <div class="selected-weight" id="selectedWeight">
+                75.5 kg
+            </div>
+        </div>
+
+        <div>
+            
+        </div>
+
+        <div class ="page-end-div">
+        <button class="next-btn" >Next</button>
+        
+        <div class = "footer-div">
+            <h1 id="footer-text">Already have an account? <span class = "accent-col log-in">Log in</span></h1>
+            <img src="../pictures/VM logo.png" alt="App Logo" class="logo"/>
+        </div>
+        </div>
+
+    </div>   
+     <script src="../scripts/universalPicker.js"></script>
+     <script src="../scripts/script.js"></script>
+</body>
+</html>  

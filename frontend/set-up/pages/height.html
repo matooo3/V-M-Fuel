@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style-sheets/general.css"/>
+    <link rel="stylesheet" href="../style-sheets/height.css"/>
+    <title>Wow!</title>
+</head>
+<body>
+    <div class = landing-container>
+        <div class="arrow-back"> </div>
+
+        <div class = "header-div">
+
+            <h1 class = "text set-up">Set up</h1>
+
+            <div class ="progress-bar">
+                <div id="progress-bar-fill-height"></div>
+            </div>
+
+        </div> 
+
+        <div class="question-div">
+        <h1 class = "text">What is your height?</h1>
+        </div>
+
+        <div class="height-picker-container">
+            <div class="unit-toggle" id="unitToggle">
+                <button class="unit-button active" data-unit="cm">cm</button>
+                <button class="unit-button" data-unit="inch">inch</button>
+            </div>
+            
+            <div class="height-picker">
+                <div class="picker-column whole">
+                    <div class="picker-scroll" id="wholePicker">
+                        <!-- Whole numbers will be populated by JavaScript -->
+                    </div>
+                    <div class="picker-overlay"></div>
+                </div>
+                
+                <div class="decimal-separator">.</div>
+                
+                <div class="picker-column decimal">
+                    <div class="picker-scroll" id="decimalPicker">
+                        <!-- Decimal numbers will be populated by JavaScript -->
+                    </div>
+                    <div class="picker-overlay"></div>
+                </div>
+            </div>
+            
+            <div class="selected-height" id="selectedHeight">
+                175.0 cm
+            </div>
+        </div>
+
+        <!-- space-div -->
+        <div>
+
+        </div>
+
+        <div class ="page-end-div">
+        <button class="next-btn" >Next</button>
+        
+        <div class = "footer-div">
+            <h1 id="footer-text">Already have an account? <span class = "accent-col log-in">Log in</span></h1>
+            <img src="../pictures/VM logo.png" alt="App Logo" class="logo"/>
+        </div>
+        </div>
+
+    </div>   
+     <script src="../scripts/universalPicker.js"></script>
+     <script src="../scripts/script.js"></script>
+</body>
+</html>  
