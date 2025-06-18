@@ -168,18 +168,22 @@ app.post("/api/login", (req, res) => {
     });
 });
 
-app.post("/api/register", async (req, res) => {
-    const { username, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const query = "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)";
-    db.query(query, [username, email, hashedPassword, "user"], (err) => {
-        if (err)
-            return res
-                .status(500)
-                .json({ message: "Fehler bei Registrierung" });
-        res.status(201).json({ message: "Benutzer erstellt" });
-    });
+// app.post("/api/register", async (req, res) => {
+//     const { username, email, password } = req.body;
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const query = "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)";
+//     db.query(query, [username, email, hashedPassword, "user"], (err) => {
+//         if (err)
+//             return res
+//                 .status(500)
+//                 .json({ message: "Fehler bei Registrierung" });
+//         res.status(201).json({ message: "Benutzer erstellt" });
+//     });
+// });
+app.post("/api/register", (req, res) => {
+  res.json({ message: "Test register endpoint funktioniert!" });
 });
+
 
 // Beispielgeschützter Endpunkt (nur cook oder admin)
 app.post("/api/dishes", authMiddleware, checkRole("cook"), (req, res) => {
