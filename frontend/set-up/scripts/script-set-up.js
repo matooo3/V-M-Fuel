@@ -12,8 +12,6 @@ const pages = [
 
 let cardDataArray = [];
 
-window.cardDataArray = cardDataArray; // Make it globally accessible
-
 // Store the previous page when navigating to login
 function storePreviousPage() {
     const currentFile = window.location.pathname.split('/').pop();
@@ -385,3 +383,5 @@ cards.forEach(card => {
         this.classList.add('clicked');
     });
 });
+
+window.cardDataArray = cardDataArray;

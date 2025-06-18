@@ -1,3 +1,70 @@
+function getAllValues(type = null) {
+    const generateAgeValues = () => {
+        const currentYear = new Date().getFullYear();
+        const ageValues = [];
+        for (let year = currentYear - 120; year <= currentYear; year++) {
+            for (let month = 0; month < 12; month++) {
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                for (let day = 1; day <= daysInMonth; day++) {
+                    ageValues.push([day, month + 1, year]);
+                }
+            }
+        }
+        return ageValues;
+    };
+
+    const generateHeightValues = () => {
+        const heightValues = [];
+        const units = ['cm', 'inch'];
+        const ranges = {
+            cm: { min: 100, max: 250 },
+            inch: { min: 39, max: 98 }
+        };
+        units.forEach(unit => {
+            const range = ranges[unit];
+            for (let whole = range.min; whole <= range.max; whole++) {
+                for (let decimal = 0; decimal <= 9; decimal++) {
+                    heightValues.push([whole, decimal, unit]);
+                }
+            }
+        });
+        return heightValues;
+    };
+
+    const generateWeightValues = () => {
+        const weightValues = [];
+        const units = ['kg', 'pounds'];
+        const ranges = {
+            kg: { min: 30, max: 200 },
+            pounds: { min: 66, max: 440 }
+        };
+        units.forEach(unit => {
+            const range = ranges[unit];
+            for (let whole = range.min; whole <= range.max; whole++) {
+                for (let decimal = 0; decimal <= 9; decimal++) {
+                    weightValues.push([whole, decimal, unit]);
+                }
+            }
+        });
+        return weightValues;
+    };
+
+    if (type) {
+        switch (type) {
+            case 'age': return generateAgeValues();
+            case 'height': return generateHeightValues();
+            case 'weight': return generateWeightValues();
+            default: return [];
+        }
+    } else {
+        return [
+            ...generateAgeValues(),
+            ...generateHeightValues(),
+            ...generateWeightValues()
+        ];
+    }
+}
+
 class UniversalApplePicker {
     constructor(type, options = {}) {
         this.type = type; // 'age', 'height', 'weight'
@@ -495,17 +562,87 @@ class UniversalApplePicker {
         
         return values;
     }
+
+    // Static method to get all values without needing an instance
+    static getAllValues(type = null) {
+        const values = [];
+        
+        const generateAgeValues = () => {
+            const currentYear = new Date().getFullYear();
+            const ageValues = [];
+            for (let year = currentYear - 120; year <= currentYear; year++) {
+                for (let month = 0; month < 12; month++) {
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        ageValues.push([day, month + 1, year]); // [day, month, year]
+                    }
+                }
+            }
+            return ageValues;
+        };
+
+        const generateHeightValues = () => {
+            const heightValues = [];
+            const units = ['cm', 'inch'];
+            const ranges = {
+                cm: { min: 100, max: 250 },
+                inch: { min: 39, max: 98 }
+            };
+            units.forEach(unit => {
+                const range = ranges[unit];
+                for (let whole = range.min; whole <= range.max; whole++) {
+                    for (let decimal = 0; decimal <= 9; decimal++) {
+                        heightValues.push([whole, decimal, unit]); // [whole, decimal, unit]
+                    }
+                }
+            });
+            return heightValues;
+        };
+
+        const generateWeightValues = () => {
+            const weightValues = [];
+            const units = ['kg', 'pounds'];
+            const ranges = {
+                kg: { min: 30, max: 200 },
+                pounds: { min: 66, max: 440 }
+            };
+            units.forEach(unit => {
+                const range = ranges[unit];
+                for (let whole = range.min; whole <= range.max; whole++) {
+                    for (let decimal = 0; decimal <= 9; decimal++) {
+                        weightValues.push([whole, decimal, unit]); // [whole, decimal, unit]
+                    }
+                }
+            });
+            return weightValues;
+        };
+
+        if (type) {
+            switch (type) {
+                case 'age':
+                    return generateAgeValues();
+                case 'height':
+                    return generateHeightValues();
+                case 'weight':
+                    return generateWeightValues();
+                default:
+                    return [];
+            }
+        } else {
+            // Return all values if no type specified
+            return [
+                ...generateAgeValues(),
+                ...generateHeightValues(),
+                ...generateWeightValues()
+            ];
+        }
+    }
 }
 
 // Global instances
 let pickerInstance;
 
-// Global function to access the array
-function getAllValues() {
-    return pickerInstance?.getAllValues() || [];
-}
-
-// Make it accessible on window object
+// Also make it available globally for backward compatibility
 window.getAllValues = getAllValues;
 
 // Auto-initialize based on page
@@ -520,3 +657,5 @@ document.addEventListener('DOMContentLoaded', () => {
         pickerInstance = new UniversalApplePicker('weight');
     }
 });
+
+export { getAllValues };
