@@ -5,7 +5,7 @@ import loadMeals from './js-pages/meals.js';
 import * as Storage from './storage.js';
 
 // Data of set up pages 
-const scrollData = getAllValuesArray()
+const scrollData = getAllValues()
 
 allData = [...cardDataArray, ...scrollData];
 
