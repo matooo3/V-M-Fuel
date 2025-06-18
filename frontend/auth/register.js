@@ -1,4 +1,4 @@
-const API_BASE = 'https://gfoh.ddns.net:3000';
+const API_BASE = `https://gfoh.ddns.net:${window.port}`;
 
 document.getElementById('register-form').addEventListener('submit', async function (e) {
     e.preventDefault();

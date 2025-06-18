@@ -3,6 +3,9 @@
 const apiBaseUrl = 'https://gfoh.ddns.net:6969/api'; // PER REVERSE PROXY
 // const apiBaseUrl = `${window.location.protocol}//${window.location.hostname}:3000`;
 
+// global port
+window.port = 6969;
+
 // fetching any DATA-ENDPOINT from BACKEND
 async function fetchData(endpoint) {
   try {
