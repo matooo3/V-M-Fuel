@@ -655,7 +655,7 @@ function initNavigation() {
         if (reset) {
             reset.addEventListener('click', function() {
                 // 1. Only replace the personal-data-div content
-                const personalDataDiv = document.getElementById('personal-data-div');
+                const personalDataDiv = document.getElementById('login-form');
                 if (personalDataDiv) {
                     personalDataDiv.innerHTML = `
                         <form>
@@ -691,7 +691,7 @@ function initNavigation() {
 
                             // Show success message in personal-data-div
                             personalDataDiv.innerHTML = `
-                                <div class="personal-data-div">
+                                <div class= "login-form">
                                     <div class = "sign-up" > 
                                     <img src="../pictures/email logo.png" alt="email-logo" id="email-logo"/>
                                     <h1 id = "sign-up-text">Email sent!</h1>

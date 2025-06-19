@@ -96,7 +96,7 @@
 }
 
 /* Adjust the container gap if needed */
-#personal-data-div{
+#login-form{
     display: flex;
     flex-direction: column;
     justify-content: center;
