@@ -56,8 +56,12 @@
     z-index: 1;
 }
 
-.unit-toggle.inch::before {
+.unit-toggle.ft::before {
     transform: translateX(100%);
+}
+
+.unit-toggle.ft ~ .height-picker .decimal-separator {
+    display: none;
 }
 
 .height-picker {

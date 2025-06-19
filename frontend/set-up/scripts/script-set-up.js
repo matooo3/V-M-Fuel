@@ -49,15 +49,20 @@ class UniversalApplePicker {
                 
             case 'height':
                 this.config = {
-                    pickers: ['whole', 'decimal'],
+                    pickers: ['whole', 'decimal'], // 'whole' will be feet, 'decimal' will be inches
                     displayId: 'selectedHeight',
                     hasUnit: true,
-                    units: ['cm', 'inch'],
+                    // units are now 'cm' and 'ft'
+                    units: ['cm', 'ft'],
                     ranges: {
                         cm: { min: 100, max: 250 },
-                        inch: { min: 39, max: 98 }
+                        // ADDED: range for feet and inches
+                        ft: { 
+                            whole: { min: 3, max: 8 }, // Range for feet
+                            decimal: { min: 0, max: 11 } // Range for inches
+                        }
                     },
-                    conversion: 2.54 // cm to inch conversion
+                    conversion: 2.54 // cm to inch conversion remains useful
                 };
                 this.currentUnit = 'cm';
                 this.selectedWhole = 175;
@@ -118,6 +123,34 @@ class UniversalApplePicker {
                 break;
                 
             case 'height':
+                // Logic now handles both 'cm' and 'ft' units differently
+                if (this.currentUnit === 'cm') {
+                    if (pickerType === 'whole') {
+                        const range = this.config.ranges.cm;
+                        items = Array.from({length: range.max - range.min + 1}, (_, i) => {
+                            const value = range.min + i;
+                            return {value: value, text: value};
+                        });
+                    } else if (pickerType === 'decimal') {
+                        items = Array.from({length: 10}, (_, i) => ({value: i, text: i}));
+                    }
+                } else { // currentUnit is 'ft'
+                    if (pickerType === 'whole') { // 'whole' picker now for FEET
+                        const range = this.config.ranges.ft.whole;
+                        items = Array.from({length: range.max - range.min + 1}, (_, i) => {
+                            const value = range.min + i;
+                            return {value: value, text: `${value}'`};
+                        });
+                    } else if (pickerType === 'decimal') { // 'decimal' picker now for INCHES
+                        const range = this.config.ranges.ft.decimal;
+                        items = Array.from({length: range.max - range.min + 1}, (_, i) => {
+                            const value = range.min + i;
+                            return {value: value, text: `${value}"`};
+                        });
+                    }
+                }
+                break;
+            
             case 'weight':
                 if (pickerType === 'whole') {
                     const range = this.config.ranges[this.currentUnit];
@@ -141,26 +174,18 @@ class UniversalApplePicker {
     }
     
     setupEventListeners() {
-        // Unit toggle for height/weight
         if (this.config.hasUnit && this.unitToggle) {
             this.unitToggle.addEventListener('click', (e) => {
-                if (e.target.classList.contains('unit-button')) {
+                if (e.target.classList.contains('unit-button') && e.target.dataset.unit) {
                     this.switchUnit(e.target.dataset.unit);
                 }
             });
         }
         
-        // Picker interactions
         this.config.pickers.forEach(pickerType => {
             const picker = this.pickers[pickerType];
-            
-            // Scroll handling
             picker.addEventListener('scroll', () => this.handleScroll(pickerType));
-            
-            // Click handling
             picker.addEventListener('click', (e) => this.handleClick(e, pickerType));
-            
-            // Wheel handling
             picker.addEventListener('wheel', (e) => this.handleWheel(e, pickerType));
         });
     }
@@ -168,19 +193,32 @@ class UniversalApplePicker {
     switchUnit(newUnit) {
         if (newUnit === this.currentUnit || this.type === 'age') return;
         
-        // Convert current value
-        const currentValue = this.selectedWhole + (this.selectedDecimal / 10);
-        let convertedValue;
-        
+        // CHANGED: Height conversion logic is completely new
         if (this.type === 'height') {
-            if (newUnit === 'inch') {
-                convertedValue = currentValue / this.config.conversion;
-                this.unitToggle.classList.add('inch');
-            } else {
-                convertedValue = currentValue * this.config.conversion;
-                this.unitToggle.classList.remove('inch');
+            if (newUnit === 'ft') { // From cm to ft
+                const totalCm = this.selectedWhole + (this.selectedDecimal / 10);
+                const totalInches = totalCm / this.config.conversion;
+                this.selectedWhole = Math.floor(totalInches / 12); // Feet
+                this.selectedDecimal = Math.round(totalInches % 12); // Inches
+                if (this.selectedDecimal === 12) { // Handle rounding up to 12 inches
+                    this.selectedWhole += 1;
+                    this.selectedDecimal = 0;
+                }
+                this.unitToggle.classList.add('ft');
+            } else { // From ft to cm
+                const totalInches = (this.selectedWhole * 12) + this.selectedDecimal;
+                const totalCm = totalInches * this.config.conversion;
+                this.selectedWhole = Math.floor(totalCm);
+                this.selectedDecimal = Math.round((totalCm % 1) * 10);
+                 if (this.selectedDecimal === 10) { // Handle rounding up to 10 decimals
+                    this.selectedWhole += 1;
+                    this.selectedDecimal = 0;
+                }
+                this.unitToggle.classList.remove('ft');
             }
         } else if (this.type === 'weight') {
+            const currentValue = this.selectedWhole + (this.selectedDecimal / 10);
+            let convertedValue;
             if (newUnit === 'pounds') {
                 convertedValue = currentValue * this.config.conversion;
                 this.unitToggle.classList.add('pounds');
@@ -188,37 +226,35 @@ class UniversalApplePicker {
                 convertedValue = currentValue / this.config.conversion;
                 this.unitToggle.classList.remove('pounds');
             }
+            this.selectedWhole = Math.floor(convertedValue);
+            this.selectedDecimal = Math.round((convertedValue % 1) * 10);
         }
         
         this.currentUnit = newUnit;
-        this.selectedWhole = Math.floor(convertedValue);
-        this.selectedDecimal = Math.round((convertedValue % 1) * 10);
         
-        // Update active button
         document.querySelectorAll('.unit-button').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.unit === newUnit);
         });
         
-        // Repopulate and scroll
-        this.populatePicker('whole');
+        // Repopulate pickers (both for height, as ranges change for both)
+        if(this.type === 'height') {
+            this.populatePicker('whole');
+            this.populatePicker('decimal');
+        } else {
+            this.populatePicker('whole');
+        }
+
         this.updateDisplay();
         this.scrollToSelected();
     }
     
     handleWheel(e, pickerType) {
         e.preventDefault();
-        
         const picker = this.pickers[pickerType];
         const itemHeight = 40;
         const direction = e.deltaY > 0 ? 1 : -1;
-        
-        const currentScroll = picker.scrollTop;
-        const targetScroll = currentScroll + (direction * itemHeight);
-        
-        picker.scrollTo({
-            top: targetScroll,
-            behavior: 'smooth'
-        });
+        const targetScroll = picker.scrollTop + (direction * itemHeight);
+        picker.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
     
     handleScroll(pickerType) {
@@ -226,7 +262,6 @@ class UniversalApplePicker {
         this.scrollTimeout = setTimeout(() => {
             this.updateSelection(pickerType);
         }, 150);
-        
         this.updateItemStyles(pickerType);
     }
     
@@ -242,14 +277,12 @@ class UniversalApplePicker {
         const picker = this.pickers[pickerType];
         const items = picker.querySelectorAll('.picker-item');
         const centerY = picker.scrollTop + picker.clientHeight / 2;
-        
         let closestItem = null;
         let closestDistance = Infinity;
         
         items.forEach(item => {
             const itemY = item.offsetTop + item.offsetHeight / 2;
             const distance = Math.abs(centerY - itemY);
-            
             if (distance < closestDistance) {
                 closestDistance = distance;
                 closestItem = item;
@@ -275,7 +308,6 @@ class UniversalApplePicker {
                     this.updateDaysInMonth();
                 }
                 break;
-                
             case 'height':
             case 'weight':
                 if (pickerType === 'whole') {
@@ -285,22 +317,18 @@ class UniversalApplePicker {
                 }
                 break;
         }
-        
         this.updateDisplay();
     }
     
     updateDaysInMonth() {
         if (this.type !== 'age') return;
-        
         const daysInMonth = this.getDaysInMonth();
         const dayItems = this.pickers.day.querySelectorAll('.picker-item');
-        
         dayItems.forEach((item, index) => {
             const day = index + 1;
             item.style.opacity = day <= daysInMonth ? '1' : '0.3';
             item.style.pointerEvents = day <= daysInMonth ? 'auto' : 'none';
         });
-        
         if (this.selectedDay > daysInMonth) {
             this.selectedDay = daysInMonth;
             this.scrollToValue('day', this.selectedDay);
@@ -315,11 +343,9 @@ class UniversalApplePicker {
         const picker = this.pickers[pickerType];
         const items = picker.querySelectorAll('.picker-item');
         const centerY = picker.scrollTop + picker.clientHeight / 2;
-        
         items.forEach(item => {
             const itemY = item.offsetTop + item.offsetHeight / 2;
             const distance = Math.abs(centerY - itemY);
-            
             if (distance < 20) {
                 item.style.color = '#1d1d1f';
                 item.style.fontWeight = '600';
@@ -339,13 +365,9 @@ class UniversalApplePicker {
     scrollToValue(pickerType, value) {
         const picker = this.pickers[pickerType];
         const targetItem = picker.querySelector(`[data-value="${value}"]`);
-        
         if (targetItem) {
             const targetY = targetItem.offsetTop - picker.clientHeight / 2 + targetItem.offsetHeight / 2;
-            picker.scrollTo({
-                top: targetY,
-                behavior: 'smooth'
-            });
+            picker.scrollTo({ top: targetY, behavior: 'smooth' });
         }
     }
     
@@ -355,8 +377,7 @@ class UniversalApplePicker {
                 let value;
                 switch (this.type) {
                     case 'age':
-                        value = pickerType === 'day' ? this.selectedDay : 
-                               pickerType === 'month' ? this.selectedMonth : this.selectedYear;
+                        value = pickerType === 'day' ? this.selectedDay : pickerType === 'month' ? this.selectedMonth : this.selectedYear;
                         break;
                     case 'height':
                     case 'weight':
@@ -375,12 +396,15 @@ class UniversalApplePicker {
                 const options = { year: 'numeric', month: 'long', day: 'numeric' };
                 this.displayEl.textContent = date.toLocaleDateString('en-US', options);
                 break;
-                
             case 'height':
-                const height = this.selectedWhole + (this.selectedDecimal / 10);
-                this.displayEl.textContent = `${height.toFixed(1)} ${this.currentUnit}`;
+                // CHANGED: Display logic now handles 'ft' format
+                if (this.currentUnit === 'cm') {
+                    const height = this.selectedWhole + (this.selectedDecimal / 10);
+                    this.displayEl.textContent = `${height.toFixed(1)} ${this.currentUnit}`;
+                } else { // 'ft'
+                    this.displayEl.textContent = `${this.selectedWhole}' ${this.selectedDecimal}"`;
+                }
                 break;
-                
             case 'weight':
                 const weight = this.selectedWhole + (this.selectedDecimal / 10);
                 this.displayEl.textContent = `${weight.toFixed(1)} ${this.currentUnit}`;
@@ -402,20 +426,29 @@ class UniversalApplePicker {
         };
     }
     
+    // REWRITTEN: This method now correctly calculates and returns all height values.
     getSelectedHeight() {
-        const height = this.selectedWhole + (this.selectedDecimal / 10);
+        let totalCm, totalInches;
+
+        if (this.currentUnit === 'cm') {
+            totalCm = this.selectedWhole + (this.selectedDecimal / 10);
+            totalInches = totalCm / this.config.conversion;
+        } else { // 'ft'
+            totalInches = (this.selectedWhole * 12) + this.selectedDecimal;
+            totalCm = totalInches * this.config.conversion;
+        }
+        
+        const feet = Math.floor(totalInches / 12);
+        const inchesComponent = Math.round(totalInches % 12);
+
         return {
-            whole: this.selectedWhole,
-            decimal: this.selectedDecimal,
             unit: this.currentUnit,
-            value: height,
             formatted: this.displayEl.textContent,
-            cm: this.currentUnit === 'cm' ? height : height * this.config.conversion,
-            inches: this.currentUnit === 'inch' ? height : height / this.config.conversion,
-            displayString: `${height.toFixed(1)} ${this.currentUnit}`,
-            feet: this.currentUnit === 'inch' ? 
-                `${Math.floor(height / 12)}'${Math.round(height % 12)}"` : 
-                `${Math.floor((height / this.config.conversion) / 12)}'${Math.round((height / this.config.conversion) % 12)}"`
+            cm: parseFloat(totalCm.toFixed(1)),
+            total_inches: parseFloat(totalInches.toFixed(2)),
+            feet: feet,
+            inches: inchesComponent, // The inch part of the ft/in value
+            feet_and_inches_string: `${feet}' ${inchesComponent}"`
         };
     }
     
@@ -441,11 +474,9 @@ class UniversalApplePicker {
         const birthDate = new Date(this.selectedYear, this.selectedMonth, this.selectedDay);
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
-        
         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
             age--;
         }
-        
         return age;
     }
 }
