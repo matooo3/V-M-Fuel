@@ -679,7 +679,7 @@ function initNavigation() {
                     nextBtn.parentNode.replaceChild(newBtn, nextBtn);
                     
                     // Now configure the new button
-                    newBtn.textContent = 'Send Reset Link';
+                    newBtn.textContent = 'Send reset link';
                     newBtn.className = 'reset-btn';
                     
                     // Add the reset functionality for new button
@@ -724,7 +724,7 @@ function initNavigation() {
                             // Show error message
                             emailInput.style.borderColor = 'red';
                             emailInput.style.backgroundColor = '#ffe6e6';
-                            emailInput.placeholder = 'Please enter a valid email address';
+                            emailInput.placeholder = 'Please enter a valid email';
                             emailInput.value = '';
                         }
                     });
