@@ -39,13 +39,28 @@
 }
 
 #sign-up-text{
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
     color: #FFFFFF;
 }
 
 #email-text{
     font-size: 15px;
+}
+
+.email{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 130%;
+}
+
+.line{
+  height: 1px;
+  background-color: #1F2937;
+  width: 23%;
+  margin: 20px 0;    
 }
 
 .data {

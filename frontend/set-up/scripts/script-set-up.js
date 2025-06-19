@@ -658,7 +658,6 @@ function initNavigation() {
                 const personalDataDiv = document.getElementById('personal-data-div');
                 if (personalDataDiv) {
                     personalDataDiv.innerHTML = `
-                        <h1 id="reset-title">Reset Password</h1>
                         <form>
                             <input class = "data" type="email" placeholder="Enter your email address" id="reset-email">
                         <form>
@@ -666,13 +665,9 @@ function initNavigation() {
                 }
 
                 // Transform the email div to just a horizontal line
-                const emailDiv = document.querySelector('.email');
-                if (emailDiv) {
-                    emailDiv.style.height = emailDiv.offsetHeight + 'px';
-                    emailDiv.style.display = 'flex';
-                    emailDiv.style.alignItems = 'center';
-                    emailDiv.style.justifyContent = 'center';
-                    emailDiv.innerHTML = '<div id="reset-line"></div>';
+                const emailText = document.getElementById('email-text');
+                if (emailText) {
+                    emailText.textContent = 'Or reset password';
                 }
 
                 // Event listener for the next button
