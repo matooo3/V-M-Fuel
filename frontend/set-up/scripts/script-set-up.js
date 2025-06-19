@@ -655,24 +655,19 @@ function initNavigation() {
         if (reset) {
             reset.addEventListener('click', function() {
                 // 1. Only replace the personal-data-div content
-                const personalDataDiv = document.getElementById('personal-data-div');
+                const personalDataDiv = document.getElementById('login-form');
                 if (personalDataDiv) {
                     personalDataDiv.innerHTML = `
-                        <h1 id="reset-title">Reset Password</h1>
-                        <div class="data">
-                            <input type="email" placeholder="Enter your email address" id="reset-email">
-                        </div>
+                        <form>
+                            <input class = "data" type="email" placeholder="Enter your email address" id="reset-email">
+                        <form>
                     `;
                 }
 
                 // Transform the email div to just a horizontal line
-                const emailDiv = document.querySelector('.email');
-                if (emailDiv) {
-                    emailDiv.style.height = emailDiv.offsetHeight + 'px';
-                    emailDiv.style.display = 'flex';
-                    emailDiv.style.alignItems = 'center';
-                    emailDiv.style.justifyContent = 'center';
-                    emailDiv.innerHTML = '<div id="reset-line"></div>';
+                const emailText = document.getElementById('email-text');
+                if (emailText) {
+                    emailText.textContent = 'Or reset password';
                 }
 
                 // Event listener for the next button
@@ -684,7 +679,7 @@ function initNavigation() {
                     nextBtn.parentNode.replaceChild(newBtn, nextBtn);
                     
                     // Now configure the new button
-                    newBtn.textContent = 'Send Reset Link';
+                    newBtn.textContent = 'Send reset link';
                     newBtn.className = 'reset-btn';
                     
                     // Add the reset functionality for new button
@@ -696,7 +691,7 @@ function initNavigation() {
 
                             // Show success message in personal-data-div
                             personalDataDiv.innerHTML = `
-                                <div class="personal-data-div">
+                                <div class= "login-form">
                                     <div class = "sign-up" > 
                                     <img src="../pictures/email logo.png" alt="email-logo" id="email-logo"/>
                                     <h1 id = "sign-up-text">Email sent!</h1>
@@ -729,7 +724,7 @@ function initNavigation() {
                             // Show error message
                             emailInput.style.borderColor = 'red';
                             emailInput.style.backgroundColor = '#ffe6e6';
-                            emailInput.placeholder = 'Please enter a valid email address';
+                            emailInput.placeholder = 'Please enter a valid email';
                             emailInput.value = '';
                         }
                     });

@@ -48,3 +48,20 @@
     color: #868686;
     font-weight: 500;
 }
+
+@media (max-height: 700px) {
+
+    .al-card{   
+        width: 60%;
+        height: 80%;
+    }
+
+    .al-text{
+        font-size: 0.8rem;
+    }
+
+    .al-desc{
+        font-size: 0.6rem;
+    }
+
+}
