@@ -25,8 +25,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 300px;
-    height: 50px;
+    width: 250px;
+    height: 60px;
     border-radius: 50px;
     gap: 10px;
     background-color: #1F2937;
@@ -48,17 +48,9 @@
     font-size: 15px;
 }
 
-#personal-data-div{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-}
-
 .data {
-  width: 275px;
-  font-size: 16px;
+  width: 100%;
+  font-size: 14px;
   padding: 16px 0;
   background-color: transparent;
   color: #1F2937; /* Text color when typing */
@@ -94,18 +86,32 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 5px;
 }
 
-.data input {
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 14px;
-  width: 100%;
-}
+@media (max-height: 700px) {
 
-.data input::placeholder {
-  color: #A8A8A8; /* Adjust placeholder text color as needed */
-  opacity: 1;
+    #acc-div {
+        gap: 30px;
+    }
+    #google-logo {
+        width: 25px;
+        height: 25px;
+    }
+
+    #sign-up-text {
+        font-size: 14px;
+    }
+
+    .sign-up{
+        height: 50px;
+        width: 210px;
+    }
+
+    .landing-container {
+        display: grid;
+        justify-items: center;
+        grid-template-columns: 1fr;
+        grid-template-rows: 10vh 10vh 55vh 3vh 20vh;
+        }
 }

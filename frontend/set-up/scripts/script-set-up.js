@@ -659,9 +659,9 @@ function initNavigation() {
                 if (personalDataDiv) {
                     personalDataDiv.innerHTML = `
                         <h1 id="reset-title">Reset Password</h1>
-                        <div class="data">
-                            <input type="email" placeholder="Enter your email address" id="reset-email">
-                        </div>
+                        <form>
+                            <input class = "data" type="email" placeholder="Enter your email address" id="reset-email">
+                        <form>
                     `;
                 }
 

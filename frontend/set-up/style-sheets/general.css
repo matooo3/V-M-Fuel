@@ -152,3 +152,19 @@ button {
   align-items: center;
   gap: 45px
 }
+
+@media (max-height: 700px) {
+    .page-end-div{
+
+        gap: 20px;
+
+    }
+
+    button {
+      width: 190px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+}
