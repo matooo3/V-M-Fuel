@@ -86,7 +86,7 @@ button {
   color: #1F2937;
 } 
 
-.next-btn {
+.next-btn, #next-btn-login, #next-btn-register {
   background-color: #1F2937;
   color: #FFFFFF;
 }
