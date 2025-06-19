@@ -1,3 +1,4 @@
+window.port = 6969;
 const API_BASE = `https://gfoh.ddns.net:${window.port}`;
 
 document.getElementById('login-form').addEventListener('submit', async function (e) {
@@ -16,9 +17,14 @@ document.getElementById('login-form').addEventListener('submit', async function 
     if (res.ok) {
         localStorage.setItem('token', data.token);
         document.getElementById('message').textContent = 'Login erfolgreich!';
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        window.location.href = "../../index.html#home";
+        
     } else {
         document.getElementById('message').textContent = data.message || 'Login fehlgeschlagen.';
     }
+
 });
 
 // Beispiel API-Aufruf mit Token

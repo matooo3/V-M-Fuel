@@ -854,52 +854,7 @@ function initNavigation() {
                     
                     let isValid = true;
                     
-                    // Email validation
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!email) {
-                        emailInput.style.borderColor = 'red';
-                        emailInput.style.backgroundColor = '#ffe6e6';
-                        emailInput.placeholder = 'Email is required';
-                        isValid = false;
-                    } else if (!emailRegex.test(email)) {
-                        emailInput.style.borderColor = 'red';
-                        emailInput.style.backgroundColor = '#ffe6e6';
-                        emailInput.value = '';
-                        emailInput.placeholder = 'Please enter a valid email address';
-                        isValid = false;
-                    }
                     
-                    // Password validation
-                    if (!password) {
-                        passwordInput.style.borderColor = 'red';
-                        passwordInput.style.backgroundColor = '#ffe6e6';
-                        passwordInput.placeholder = 'Password is required';
-                        isValid = false;
-                    } else if (password.length < 6) {
-                        passwordInput.style.borderColor = 'red';
-                        passwordInput.style.backgroundColor = '#ffe6e6';
-                        passwordInput.value = '';
-                        passwordInput.placeholder = 'Password must be at least 6 characters';
-                        isValid = false;
-                    }
-                    
-                    // If validation passes, proceed to next page
-                    if (isValid) {
-                        // Here you would typically validate against a database
-                        // For demo purposes, we'll accept any valid email/password combo
-                        // You can add specific email/password combinations for testing:
-                        
-                        // Example: Check for demo credentials
-                        if (email === 'demo@example.com' && password === 'password123') {
-                            clearPreviousPage(); // Clear stored page after login
-                            window.location.href = '../../index.html';
-                        } else {
-                            // For demo, accept any valid format for now
-                            // In production, this would make an API call to verify credentials
-                            clearPreviousPage(); // Clear stored page after login
-                            window.location.href = '../../index.html';
-                        }
-                    }
 
                 } else {
                     // Normal flow

@@ -29,10 +29,11 @@
                 <div class = "line"></div>
             </div>
 
-            <form id = "login-form">
-                <input class = "data" type="email" placeholder="enter email" required>
-                <input class = "data" type="password" placeholder="enter password" required>
+            <form id="login-form">
+                <input class="data" id="email" type="email" placeholder="enter email" required>
+                <input class="data" id="password" type="password" placeholder="enter password" required>
             </form>
+            <p id="message"></p>
 
         </div>
 
@@ -42,7 +43,7 @@
         </div>
 
         <div class ="page-end-div">
-        <button class="next-btn" type="submit" form="login-form">Log in</button>
+        <button id="next-btn-login" type="submit" form="login-form">Log in</button>
         
         <div class = "footer-div">
             <h1 id="footer-text">Forgot password? <span class = "accent-col reset">Reset password</span></h1>
@@ -52,5 +53,6 @@
 
     </div>   
      <script src="../scripts/script-set-up.js"></script>
+     <script src="../scripts/login.js"></script>
 </body>
 </html>  
