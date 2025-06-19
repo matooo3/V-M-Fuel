@@ -1,3 +1,537 @@
+
+// ==============================
+// =======SCROLL ELEMENTS========
+// ==============================
+
+
+// ===== CLASS DEFINITION =====
+
+class UniversalApplePicker {
+    constructor(type, options = {}) {
+        this.type = type; // 'age', 'height', 'weight'
+        this.options = options;
+        
+        // Initialize based on type
+        this.initializeByType();
+        
+        // Common elements
+        this.displayEl = document.getElementById(this.config.displayId);
+        
+        // Type-specific elements
+        if (this.config.hasUnit) {
+            this.unitToggle = document.getElementById('unitToggle');
+        }
+        
+        this.pickers = {};
+        this.config.pickers.forEach(picker => {
+            this.pickers[picker] = document.getElementById(picker + 'Picker');
+        });
+        
+        this.init();
+    }
+    
+    initializeByType() {
+        switch (this.type) {
+            case 'age':
+                this.config = {
+                    pickers: ['day', 'month', 'year'],
+                    displayId: 'selectedDate',
+                    hasUnit: false,
+                    months: [
+                        'January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'
+                    ]
+                };
+                this.selectedDay = 15;
+                this.selectedMonth = 5; // June (0-indexed)
+                this.selectedYear = 2010;
+                break;
+                
+            case 'height':
+                this.config = {
+                    pickers: ['whole', 'decimal'], // 'whole' will be feet, 'decimal' will be inches
+                    displayId: 'selectedHeight',
+                    hasUnit: true,
+                    // units are now 'cm' and 'ft'
+                    units: ['cm', 'ft'],
+                    ranges: {
+                        cm: { min: 100, max: 250 },
+                        // ADDED: range for feet and inches
+                        ft: { 
+                            whole: { min: 3, max: 8 }, // Range for feet
+                            decimal: { min: 0, max: 11 } // Range for inches
+                        }
+                    },
+                    conversion: 2.54 // cm to inch conversion remains useful
+                };
+                this.currentUnit = 'cm';
+                this.selectedWhole = 175;
+                this.selectedDecimal = 0;
+                break;
+                
+            case 'weight':
+                this.config = {
+                    pickers: ['whole', 'decimal'],
+                    displayId: 'selectedWeight',
+                    hasUnit: true,
+                    units: ['kg', 'pounds'],
+                    ranges: {
+                        kg: { min: 30, max: 200 },
+                        pounds: { min: 66, max: 440 }
+                    },
+                    conversion: 2.20462 // kg to pounds conversion
+                };
+                this.currentUnit = 'kg';
+                this.selectedWhole = 75;
+                this.selectedDecimal = 5;
+                break;
+        }
+    }
+    
+    init() {
+        this.populatePickers();
+        this.setupEventListeners();
+        this.updateDisplay();
+        this.scrollToSelected();
+    }
+    
+    populatePickers() {
+        this.config.pickers.forEach(pickerType => {
+            this.populatePicker(pickerType);
+        });
+    }
+    
+    populatePicker(pickerType) {
+        const picker = this.pickers[pickerType];
+        picker.innerHTML = '';
+        
+        let items = [];
+        
+        switch (this.type) {
+            case 'age':
+                if (pickerType === 'day') {
+                    items = Array.from({length: 31}, (_, i) => ({value: i + 1, text: i + 1}));
+                } else if (pickerType === 'month') {
+                    items = this.config.months.map((month, index) => ({value: index, text: month}));
+                } else if (pickerType === 'year') {
+                    const currentYear = new Date().getFullYear();
+                    items = Array.from({length: 121}, (_, i) => {
+                        const year = currentYear - 120 + i;
+                        return {value: year, text: year};
+                    });
+                }
+                break;
+                
+            case 'height':
+                // Logic now handles both 'cm' and 'ft' units differently
+                if (this.currentUnit === 'cm') {
+                    if (pickerType === 'whole') {
+                        const range = this.config.ranges.cm;
+                        items = Array.from({length: range.max - range.min + 1}, (_, i) => {
+                            const value = range.min + i;
+                            return {value: value, text: value};
+                        });
+                    } else if (pickerType === 'decimal') {
+                        items = Array.from({length: 10}, (_, i) => ({value: i, text: i}));
+                    }
+                } else { // currentUnit is 'ft'
+                    if (pickerType === 'whole') { // 'whole' picker now for FEET
+                        const range = this.config.ranges.ft.whole;
+                        items = Array.from({length: range.max - range.min + 1}, (_, i) => {
+                            const value = range.min + i;
+                            return {value: value, text: `${value}'`};
+                        });
+                    } else if (pickerType === 'decimal') { // 'decimal' picker now for INCHES
+                        const range = this.config.ranges.ft.decimal;
+                        items = Array.from({length: range.max - range.min + 1}, (_, i) => {
+                            const value = range.min + i;
+                            return {value: value, text: `${value}"`};
+                        });
+                    }
+                }
+                break;
+            
+            case 'weight':
+                if (pickerType === 'whole') {
+                    const range = this.config.ranges[this.currentUnit];
+                    items = Array.from({length: range.max - range.min + 1}, (_, i) => {
+                        const value = range.min + i;
+                        return {value: value, text: value};
+                    });
+                } else if (pickerType === 'decimal') {
+                    items = Array.from({length: 10}, (_, i) => ({value: i, text: i}));
+                }
+                break;
+        }
+        
+        items.forEach(item => {
+            const element = document.createElement('div');
+            element.className = 'picker-item';
+            element.textContent = item.text;
+            element.dataset.value = item.value;
+            picker.appendChild(element);
+        });
+    }
+    
+    setupEventListeners() {
+        if (this.config.hasUnit && this.unitToggle) {
+            this.unitToggle.addEventListener('click', (e) => {
+                if (e.target.classList.contains('unit-button') && e.target.dataset.unit) {
+                    this.switchUnit(e.target.dataset.unit);
+                }
+            });
+        }
+        
+        this.config.pickers.forEach(pickerType => {
+            const picker = this.pickers[pickerType];
+            picker.addEventListener('scroll', () => this.handleScroll(pickerType));
+            picker.addEventListener('click', (e) => this.handleClick(e, pickerType));
+            picker.addEventListener('wheel', (e) => this.handleWheel(e, pickerType));
+        });
+    }
+    
+    switchUnit(newUnit) {
+        if (newUnit === this.currentUnit || this.type === 'age') return;
+        
+        // CHANGED: Height conversion logic is completely new
+        if (this.type === 'height') {
+            if (newUnit === 'ft') { // From cm to ft
+                const totalCm = this.selectedWhole + (this.selectedDecimal / 10);
+                const totalInches = totalCm / this.config.conversion;
+                this.selectedWhole = Math.floor(totalInches / 12); // Feet
+                this.selectedDecimal = Math.round(totalInches % 12); // Inches
+                if (this.selectedDecimal === 12) { // Handle rounding up to 12 inches
+                    this.selectedWhole += 1;
+                    this.selectedDecimal = 0;
+                }
+                this.unitToggle.classList.add('ft');
+            } else { // From ft to cm
+                const totalInches = (this.selectedWhole * 12) + this.selectedDecimal;
+                const totalCm = totalInches * this.config.conversion;
+                this.selectedWhole = Math.floor(totalCm);
+                this.selectedDecimal = Math.round((totalCm % 1) * 10);
+                 if (this.selectedDecimal === 10) { // Handle rounding up to 10 decimals
+                    this.selectedWhole += 1;
+                    this.selectedDecimal = 0;
+                }
+                this.unitToggle.classList.remove('ft');
+            }
+        } else if (this.type === 'weight') {
+            const currentValue = this.selectedWhole + (this.selectedDecimal / 10);
+            let convertedValue;
+            if (newUnit === 'pounds') {
+                convertedValue = currentValue * this.config.conversion;
+                this.unitToggle.classList.add('pounds');
+            } else {
+                convertedValue = currentValue / this.config.conversion;
+                this.unitToggle.classList.remove('pounds');
+            }
+            this.selectedWhole = Math.floor(convertedValue);
+            this.selectedDecimal = Math.round((convertedValue % 1) * 10);
+        }
+        
+        this.currentUnit = newUnit;
+        
+        document.querySelectorAll('.unit-button').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.unit === newUnit);
+        });
+        
+        // Repopulate pickers (both for height, as ranges change for both)
+        if(this.type === 'height') {
+            this.populatePicker('whole');
+            this.populatePicker('decimal');
+        } else {
+            this.populatePicker('whole');
+        }
+
+        this.updateDisplay();
+        this.scrollToSelected();
+    }
+    
+    handleWheel(e, pickerType) {
+        e.preventDefault();
+        const picker = this.pickers[pickerType];
+        const itemHeight = 40;
+        const direction = e.deltaY > 0 ? 1 : -1;
+        const targetScroll = picker.scrollTop + (direction * itemHeight);
+        picker.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+    
+    handleScroll(pickerType) {
+        clearTimeout(this.scrollTimeout);
+        this.scrollTimeout = setTimeout(() => {
+            this.updateSelection(pickerType);
+        }, 150);
+        this.updateItemStyles(pickerType);
+    }
+    
+    handleClick(e, pickerType) {
+        if (e.target.classList.contains('picker-item')) {
+            const value = parseInt(e.target.dataset.value);
+            this.setSelection(pickerType, value);
+            this.scrollToValue(pickerType, value);
+        }
+    }
+    
+    updateSelection(pickerType) {
+        const picker = this.pickers[pickerType];
+        const items = picker.querySelectorAll('.picker-item');
+        const centerY = picker.scrollTop + picker.clientHeight / 2;
+        let closestItem = null;
+        let closestDistance = Infinity;
+        
+        items.forEach(item => {
+            const itemY = item.offsetTop + item.offsetHeight / 2;
+            const distance = Math.abs(centerY - itemY);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestItem = item;
+            }
+        });
+        
+        if (closestItem) {
+            const value = parseInt(closestItem.dataset.value);
+            this.setSelection(pickerType, value);
+        }
+    }
+    
+    setSelection(pickerType, value) {
+        switch (this.type) {
+            case 'age':
+                if (pickerType === 'month') {
+                    this.selectedMonth = value;
+                    this.updateDaysInMonth();
+                } else if (pickerType === 'day') {
+                    this.selectedDay = Math.min(value, this.getDaysInMonth());
+                } else if (pickerType === 'year') {
+                    this.selectedYear = value;
+                    this.updateDaysInMonth();
+                }
+                break;
+            case 'height':
+            case 'weight':
+                if (pickerType === 'whole') {
+                    this.selectedWhole = value;
+                } else if (pickerType === 'decimal') {
+                    this.selectedDecimal = value;
+                }
+                break;
+        }
+        this.updateDisplay();
+    }
+    
+    updateDaysInMonth() {
+        if (this.type !== 'age') return;
+        const daysInMonth = this.getDaysInMonth();
+        const dayItems = this.pickers.day.querySelectorAll('.picker-item');
+        dayItems.forEach((item, index) => {
+            const day = index + 1;
+            item.style.opacity = day <= daysInMonth ? '1' : '0.3';
+            item.style.pointerEvents = day <= daysInMonth ? 'auto' : 'none';
+        });
+        if (this.selectedDay > daysInMonth) {
+            this.selectedDay = daysInMonth;
+            this.scrollToValue('day', this.selectedDay);
+        }
+    }
+    
+    getDaysInMonth() {
+        return new Date(this.selectedYear, this.selectedMonth + 1, 0).getDate();
+    }
+    
+    updateItemStyles(pickerType) {
+        const picker = this.pickers[pickerType];
+        const items = picker.querySelectorAll('.picker-item');
+        const centerY = picker.scrollTop + picker.clientHeight / 2;
+        items.forEach(item => {
+            const itemY = item.offsetTop + item.offsetHeight / 2;
+            const distance = Math.abs(centerY - itemY);
+            if (distance < 20) {
+                item.style.color = '#1d1d1f';
+                item.style.fontWeight = '600';
+            } else if (distance < 40) {
+                item.style.color = '#8e8e93';
+                item.style.fontWeight = '400';
+            } else if (distance < 80) {
+                item.style.color = '#c7c7cc';
+                item.style.fontWeight = '400';
+            } else {
+                item.style.color = '#e5e5ea';
+                item.style.fontWeight = '400';
+            }
+        });
+    }
+    
+    scrollToValue(pickerType, value) {
+        const picker = this.pickers[pickerType];
+        const targetItem = picker.querySelector(`[data-value="${value}"]`);
+        if (targetItem) {
+            const targetY = targetItem.offsetTop - picker.clientHeight / 2 + targetItem.offsetHeight / 2;
+            picker.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
+    }
+    
+    scrollToSelected() {
+        setTimeout(() => {
+            this.config.pickers.forEach(pickerType => {
+                let value;
+                switch (this.type) {
+                    case 'age':
+                        value = pickerType === 'day' ? this.selectedDay : pickerType === 'month' ? this.selectedMonth : this.selectedYear;
+                        break;
+                    case 'height':
+                    case 'weight':
+                        value = pickerType === 'whole' ? this.selectedWhole : this.selectedDecimal;
+                        break;
+                }
+                this.scrollToValue(pickerType, value);
+            });
+        }, 100);
+    }
+    
+    updateDisplay() {
+        switch (this.type) {
+            case 'age':
+                const date = new Date(this.selectedYear, this.selectedMonth, this.selectedDay);
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                this.displayEl.textContent = date.toLocaleDateString('en-US', options);
+                break;
+            case 'height':
+                // CHANGED: Display logic now handles 'ft' format
+                if (this.currentUnit === 'cm') {
+                    const height = this.selectedWhole + (this.selectedDecimal / 10);
+                    this.displayEl.textContent = `${height.toFixed(1)} ${this.currentUnit}`;
+                } else { // 'ft'
+                    this.displayEl.textContent = `${this.selectedWhole}' ${this.selectedDecimal}"`;
+                }
+                break;
+            case 'weight':
+                const weight = this.selectedWhole + (this.selectedDecimal / 10);
+                this.displayEl.textContent = `${weight.toFixed(1)} ${this.currentUnit}`;
+                break;
+        }
+    }
+    
+    getSelectedDate() {
+        const date = new Date(this.selectedYear, this.selectedMonth, this.selectedDay);
+        return {
+            day: this.selectedDay,
+            month: this.selectedMonth,
+            year: this.selectedYear,
+            monthName: this.config.months[this.selectedMonth],
+            dateObject: date,
+            formattedDate: this.displayEl.textContent,
+            isoString: date.toISOString().split('T')[0],
+            age: this.calculateAge()
+        };
+    }
+    
+    // REWRITTEN: This method now correctly calculates and returns all height values.
+    getSelectedHeight() {
+        let totalCm, totalInches;
+
+        if (this.currentUnit === 'cm') {
+            totalCm = this.selectedWhole + (this.selectedDecimal / 10);
+            totalInches = totalCm / this.config.conversion;
+        } else { // 'ft'
+            totalInches = (this.selectedWhole * 12) + this.selectedDecimal;
+            totalCm = totalInches * this.config.conversion;
+        }
+        
+        const feet = Math.floor(totalInches / 12);
+        const inchesComponent = Math.round(totalInches % 12);
+
+        return {
+            unit: this.currentUnit,
+            formatted: this.displayEl.textContent,
+            cm: parseFloat(totalCm.toFixed(1)),
+            total_inches: parseFloat(totalInches.toFixed(2)),
+            feet: feet,
+            inches: inchesComponent, // The inch part of the ft/in value
+            feet_and_inches_string: `${feet}' ${inchesComponent}"`
+        };
+    }
+    
+    getSelectedWeight() {
+        const weight = this.selectedWhole + (this.selectedDecimal / 10);
+        return {
+            whole: this.selectedWhole,
+            decimal: this.selectedDecimal,
+            unit: this.currentUnit,
+            value: weight,
+            formatted: this.displayEl.textContent,
+            kg: this.currentUnit === 'kg' ? weight : weight / this.config.conversion,
+            pounds: this.currentUnit === 'pounds' ? weight : weight * this.config.conversion,
+            displayString: `${weight.toFixed(1)} ${this.currentUnit}`,
+            stones: this.currentUnit === 'pounds' ? 
+                `${Math.floor(weight / 14)} st ${Math.round(weight % 14)} lbs` : 
+                `${Math.floor((weight * this.config.conversion) / 14)} st ${Math.round((weight * this.config.conversion) % 14)} lbs`
+        };
+    }
+    
+    calculateAge() {
+        const today = new Date();
+        const birthDate = new Date(this.selectedYear, this.selectedMonth, this.selectedDay);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+}
+
+// ===== AUTO-INITIALIZATION =====
+
+let pickerInstance;
+
+// Auto-initialize based on page
+document.addEventListener('DOMContentLoaded', () => {
+    const currentFile = window.location.pathname.split('/').pop();
+    
+    if (currentFile === 'age.html') {
+
+        pickerInstance = new UniversalApplePicker('age');
+
+    } else if (currentFile === 'height.html') {
+        
+        pickerInstance = new UniversalApplePicker('height');
+
+    } else if (currentFile === 'weight.html') {
+
+        pickerInstance = new UniversalApplePicker('weight');
+
+    }
+});
+
+// Run when page loads
+document.addEventListener('DOMContentLoaded', initNavigation);
+
+// ==============================
+// ======= CARD ELEMENTS ========
+// ==============================
+
+// Event listener for card selection
+const cards = document.querySelectorAll('.card');
+
+cards.forEach(card => {
+    card.addEventListener('click', function() {
+        // Remove selected class from all cards
+        cards.forEach(c => c.classList.remove('clicked'));
+        
+        // Add selected class to clicked card
+        this.classList.add('clicked');
+    });
+});
+
+
+// ==============================
+// ======= NAVIGATION ===========
+// ==============================
+
+
+// ======= SET VARIABLES ========
+
 // connect pages in the onboarding flow
 const pages = [
   'getstarted.html', 
@@ -11,6 +545,9 @@ const pages = [
 ];
 
 let cardDataArray = [];
+
+
+// ======= GET AND SET PREVIOUS AND NEXT PAGES ========
 
 // Store the previous page when navigating to login
 function storePreviousPage() {
@@ -84,6 +621,9 @@ function getPreviousPageNormal(currentIndex) {
     return `../pages/${prevPage}`;
 }
 
+
+// ======= NAVIGATION FUNCTIONALITY ========
+
 // Initialize navigation
 function initNavigation() {
     const currentIndex = getCurrentPageIndex();
@@ -92,7 +632,8 @@ function initNavigation() {
     const backArrow = document.querySelector('.arrow-back');
     const loginBtn = document.querySelector('.login-btn');
 
-    // Handle login span (on all pages except getstarted.html)
+
+    // ======= FROM GENDER TO LOG-IN ========
     if(currentFile !== 'getstarted.html') {
         // Event listener for log in in the footer section
         const text_log_in = document.querySelector('.log-in');
@@ -106,6 +647,8 @@ function initNavigation() {
         }
     }
 
+
+    // ======= FROM LOG-IN TO RESET PASSWORD ========
     if(currentFile === 'log-in.html') {
         const reset = document.querySelector('.reset');
         
@@ -132,9 +675,10 @@ function initNavigation() {
                     emailDiv.innerHTML = '<div id="reset-line"></div>';
                 }
 
-                // Change the next button to "Send Reset Link"
+                // Event listener for the next button
                 const nextBtn = document.querySelector('.next-btn');
                 if (nextBtn) {
+
                     // Clone the button to remove all event listeners
                     const newBtn = nextBtn.cloneNode(true);
                     nextBtn.parentNode.replaceChild(newBtn, nextBtn);
@@ -143,24 +687,26 @@ function initNavigation() {
                     newBtn.textContent = 'Send Reset Link';
                     newBtn.className = 'reset-btn';
                     
-                    // Add the reset functionality
+                    // Add the reset functionality for new button
                     newBtn.addEventListener('click', function() {
                         const emailInput = document.getElementById('reset-email');
                         const email = emailInput.value.trim();
                         
                         if (email && email.includes('@')) {
+
                             // Show success message in personal-data-div
                             personalDataDiv.innerHTML = `
-                                <div class="reset-success">
-                                    <h2>Email Sent!</h2>
-                                    <p>We've sent a password reset link to <strong>${email}</strong></p>
-                                    <p>Please check your email and follow the instructions to reset your password.</p>
+                                <div class="personal-data-div">
+                                    <div class = "sign-up" > 
+                                    <img src="../pictures/email logo.png" alt="email-logo" id="email-logo"/>
+                                    <h1 id = "sign-up-text">Email sent!</h1>
+                                    </div>
                                 </div>
                             `;
                             
                             // Change button to "Back to Login"
                             newBtn.textContent = 'Back to Login';
-                            newBtn.className = 'back-to-login-btn';
+                            newBtn.className = 'reset-btn';
                             
                             // Remove old event listener and add new one
                             const finalBtn = newBtn.cloneNode(true);
@@ -170,15 +716,14 @@ function initNavigation() {
                             finalBtn.addEventListener('click', function() {
                                 window.location.reload();
                             });
-                            
-                            // Update footer text
+                                                        // Update footer text
                             const footerText = document.getElementById('footer-text');
                             if (footerText) {
                                 
-                                footerText.innerHTML = 'Email sent successfully!';
+                                footerText.innerHTML = 'Please check your email!'; // Hide footer text
 
-                                // Email sending functionality
                             }
+
                             
                         } else {
                             // Show error message
@@ -224,13 +769,26 @@ function initNavigation() {
     }
 
     function getCardInfo(){
+
         const selectedCard = document.querySelector('.card.clicked');
+        let cardDataArray = [];
         
         if (selectedCard) {
-            // Get the data attributes from the selected card
-            const cardData = selectedCard.textContent.trim();
-            
-            cardDataArray.push(cardData); // Store card data in array
+
+            if(localStorage.getItem('cardDataArray')) {
+
+                // If cardDataArray already exists in localStorage, retrieve it
+                cardDataArray = JSON.parse(localStorage.getItem('cardDataArray'));
+                cardDataArray.push(selectedCard.textContent.trim()); // Add new card data
+                localStorage.setItem('cardDataArray', JSON.stringify(cardDataArray));
+
+            } else {
+
+                // Get the data attributes from the selected card
+                cardDataArray = [selectedCard.textContent.trim()];
+                localStorage.setItem('cardDataArray', JSON.stringify(cardDataArray));
+
+            }
 
         }
         
@@ -240,6 +798,31 @@ function initNavigation() {
     // Configure next button
     if (nextBtn) {
         nextBtn.addEventListener('click', function() {
+
+            let ageData = [];
+            let weightData = [];
+            let heightData = [];
+
+            if (currentFile === 'age.html'){
+                ageData = pickerInstance.getSelectedDate();
+
+                // Store in localStorage
+                localStorage.setItem('ageData', JSON.stringify(ageData.formattedDate));
+            }
+
+            if (currentFile === 'weight.html') {
+                weightData = pickerInstance.getSelectedWeight();
+
+                // Store in localStorage
+                localStorage.setItem('weightData', JSON.stringify(weightData.formatted));
+            }
+
+            if (currentFile === 'height.html'){
+                heightData = pickerInstance.getSelectedHeight();
+
+                // Store in localStorage
+                localStorage.setItem('heightData', JSON.stringify(heightData.formatted));
+            }
 
             const pagesWithCards = ['goal.html', 'activity-level.html', 'gender.html'];
 
@@ -367,21 +950,3 @@ function initNavigation() {
         } 
     }
 }
-
-// Run when page loads
-document.addEventListener('DOMContentLoaded', initNavigation);
-
-// Event listener for card selection
-const cards = document.querySelectorAll('.card');
-
-cards.forEach(card => {
-    card.addEventListener('click', function() {
-        // Remove selected class from all cards
-        cards.forEach(c => c.classList.remove('clicked'));
-        
-        // Add selected class to clicked card
-        this.classList.add('clicked');
-    });
-});
-
-window.cardDataArray = cardDataArray;

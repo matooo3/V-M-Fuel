@@ -3,15 +3,6 @@ import loadList from './js-pages/list.js';
 import loadPlan from './js-pages/plan.js';
 import loadMeals from './js-pages/meals.js';
 import * as Storage from './storage.js';
-import { getAllValues } from '../set-up/scripts/universalPicker.js';
-
-
-// Data of set up pages 
-const scrollData = getAllValues()
-const cardDataArray = window.cardDataArray || [];
-let allData;
-
-allData = [...cardDataArray, ...scrollData];
 
 // SERVICE-WORKER REGISTRATION
 if ('serviceWorker' in navigator) {
