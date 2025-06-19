@@ -28,7 +28,7 @@
     width: 300px;
     height: 50px;
     border-radius: 50px;
-    gap: 20px;
+    gap: 10px;
     background-color: #1F2937;
 }
 
@@ -56,16 +56,45 @@
     gap: 30px;
 }
 
-.data{
+.data {
+  width: 275px;
+  font-size: 16px;
+  padding: 16px 0;
+  background-color: transparent;
+  color: #1F2937; /* Text color when typing */
+  
+  border: none; /* Remove all default borders */
+  outline: none; /* Remove the focus outline */
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease-in-out;
+
+  background-image: linear-gradient(#1BCE86, #1BCE86), linear-gradient(#e5e5ea, #e5e5ea);
+  
+  /* Position both lines at the bottom of the input */
+  background-position: 0 100%, 0 100%;
+  
+
+  background-size: 0 2px, 100% 1px;
+}
+
+.data:focus {
+
+  background-size: 100% 2px, 100% 1px;
+}
+
+/* Style the placeholder text */
+.data::placeholder {
+   color: #A8A8A8;
+   opacity: 1;
+}
+
+/* Adjust the container gap if needed */
+#personal-data-div{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    padding: 10px;
-    width: 275px;
-    height: 35px;
-    border: #1F2937 solid 1px;
-    border-radius: 20px;
+    align-items: center;
+    gap: 15px;
 }
 
 .data input {
@@ -79,9 +108,4 @@
 .data input::placeholder {
   color: #A8A8A8; /* Adjust placeholder text color as needed */
   opacity: 1;
-}
-
-/* Optional: Show a subtle underline on focus */
-.data input:focus {
-  border-bottom: 1px solid #ccc;
 }
