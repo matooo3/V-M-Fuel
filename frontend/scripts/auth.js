@@ -24,7 +24,7 @@ export async function checkRoleAccess(allowedRoles) {
 
         await new Promise(resolve => setTimeout(resolve, 1));
 
-        alert("Kein Zugriff auf diese Seite.");
+        alert("No access to this page.");
 
         window.location.href = "/frontend/html-pages/unauthorized.html";  // Fehlerseite
     }
