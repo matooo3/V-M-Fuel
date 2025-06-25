@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Cook</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      background: #fff;
+    }
+    h1 {
+      font-size: 5rem;
+      font-weight: bold;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>LET HIM COOK</h1>
+
+  <script type="module">
+    import { checkRoleAccess } from '/frontend/scripts/auth.js';
+    checkRoleAccess(['admin', 'cook']); 
+  </script> 
+
+</body>
+</html>
