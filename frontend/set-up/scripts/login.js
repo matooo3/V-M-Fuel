@@ -1,3 +1,5 @@
+import { parseJwt, getUserFromToken, checkRoleAccess } from '/frontend/scripts/auth.js';
+
 window.port = 6969;
 const API_BASE = `https://gfoh.ddns.net:${window.port}`;
 
@@ -16,13 +18,25 @@ document.getElementById('login-form').addEventListener('submit', async function 
 
     if (res.ok) {
         localStorage.setItem('token', data.token);
-        document.getElementById('message').textContent = 'Login erfolgreich!';
+        document.getElementById('message').textContent = 'Login successful!';
+
+        // Nach dem Login Token analysieren und weiterleiten je nach Rolle
+        const userData = parseJwt(data.token);
 
         await new Promise(resolve => setTimeout(resolve, 1000));
-        window.location.href = "../../index.html#home";
+
+        if (userData.role === 'admin') {
+            window.location.href = "/frontend/auth/admin.html";
+        } else if (userData.role === 'cook') {
+            window.location.href = "/frontend/auth/cook.html";
+        } else {
+            window.location.href = "/frontend/auth/user.html";
+        }
+
+        // window.location.href = "../../index.html#home";
         
     } else {
-        document.getElementById('message').textContent = data.message || 'Login fehlgeschlagen.';
+        document.getElementById('message').textContent = data.message || 'Login failed.';
     }
 
 });
