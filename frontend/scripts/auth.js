@@ -16,8 +16,8 @@ export function getUserFromToken() {
 }
 
 export async function checkRoleAccess(allowedRoles) {
-    const user = getUserFromToken();
-    if (!user || !allowedRoles.includes(user.role)) {
+    const userData = getUserFromToken();
+    if (!userData || !allowedRoles.includes(userData.role)) {
 
         const body = document.getElementsByTagName('body')[0];
         body.innerHTML = "!! ACCESS DENIED !!";
@@ -27,5 +27,21 @@ export async function checkRoleAccess(allowedRoles) {
         alert("No access to this page.");
 
         window.location.href = "/frontend/html-pages/unauthorized.html";  // Fehlerseite
+    }
+}
+
+export function returnUserRole() {
+    const userData = getUserFromToken();
+
+    if(userData) {
+        return userData.role;
+    }
+}
+
+export function requiredUserRole(role) {
+    const userData = getUserFromToken();
+
+    if(userData) {
+         return (userData.role === role);
     }
 }
