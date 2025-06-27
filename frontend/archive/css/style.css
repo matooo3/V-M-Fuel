@@ -1,0 +1,98 @@
+/* farbvariable für standardtheme: */
+:root {
+    --theme-color-green: #64c25de5;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e6e5e5;
+    color: var(--theme-color-green);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    /* overflow: hidden; Der Kollege versteckt die Scrollbars */
+}
+
+
+
+/* --------------NATIVE APP FEELING --------*/
+body {
+    -webkit-user-select: none; /* Deaktiviert das Markieren von Text in Webkit-basierten Browsern (Safari, Chrome) */
+    -moz-user-select: none; /* Für Firefox */
+    -ms-user-select: none; /* Für Internet Explorer */
+    user-select: none; /* Für alle anderen modernen Browser */
+}
+
+html, body {
+    touch-action: manipulation; /* verhindert Pinch-to-zoom teilweise */
+    overscroll-behavior: none;  /* verhindert Scroll-Rückfederung */
+}
+
+/* Kein blauer Tap-Highlight (iOS) */
+a, button, input, textarea, select, div {
+    -webkit-tap-highlight-color: transparent;
+}
+  
+  /* Kein Fokusrahmen bei Buttons, Inputs usw. */
+  button:focus,
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    box-shadow: none;
+}
+/* ----------------------------------------- */
+
+
+
+#app {
+    padding: 20px;
+    margin: 20px;
+    border: #00000036 1px solid;
+    border-radius: 10px;
+
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    flex-grow: 1;
+    flex: 1;
+    
+    /* RELATIV, DASS WIR IN APP ABSOLUTE BAUEN KÖNNEN: */
+    position: relative;
+}
+.btn {
+    padding: 8px;
+    margin: 0; /* necessary margin 0 to avoid shifting */
+    border: 1px solid #00000036;
+    background-color: #f9f9f9;
+    color: #000000;
+    font-size:14px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#main-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 5px 0;
+    margin: 20px;
+}
+
+#main-nav a {
+    color: var(--theme-color-green);
+    text-decoration: none;
+    margin: 10px;
+    padding: 5px 10px;
+    border-radius: 30px;
+}
+

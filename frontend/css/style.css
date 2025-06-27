@@ -1,98 +1,125 @@
-/* farbvariable für standardtheme: */
-:root {
-    --theme-color-green: #64c25de5;
+:root{
+
+    /* ----------------------*/
+    /* General */
+    /* ----------------------*/
+
+    --background-color: white;
+    --main-text-color: #1F2937;
+    --icon-grey-color: #999999; /* Color for navigation bar items (not selected), star and clos icon */ 
+    --accent-color: #E35252;
+
+    /* ----------------------*/
+    /* card colors */
+    /* ----------------------*/
+
+    /* grey */
+    --fill-color: #F3F4F6;
+
+    /* green */
+    --positive-color: #1BCE86;
+    --positive-text-color-lvl1: #065F46;
+
+    /* red */
+    --negative-text-header: #AC1A1A;
+    --blocking-color: #FF7C7C;
+
+
+
 }
 
-body {
+ * {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #e6e5e5;
-    color: var(--theme-color-green);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    height: 100vh;
-    /* overflow: hidden; Der Kollege versteckt die Scrollbars */
+    box-sizing: border-box;
 }
 
-
-
-/* --------------NATIVE APP FEELING --------*/
 body {
-    -webkit-user-select: none; /* Deaktiviert das Markieren von Text in Webkit-basierten Browsern (Safari, Chrome) */
-    -moz-user-select: none; /* Für Firefox */
-    -ms-user-select: none; /* Für Internet Explorer */
-    user-select: none; /* Für alle anderen modernen Browser */
+    font-family: Poppins, sans-serif;
 }
 
-html, body {
-    touch-action: manipulation; /* verhindert Pinch-to-zoom teilweise */
-    overscroll-behavior: none;  /* verhindert Scroll-Rückfederung */
+h1 {
+    color: black;
+    font-size: 24px;
+    margin: 0px;
 }
 
-/* Kein blauer Tap-Highlight (iOS) */
-a, button, input, textarea, select, div {
-    -webkit-tap-highlight-color: transparent;
-}
-  
-  /* Kein Fokusrahmen bei Buttons, Inputs usw. */
-  button:focus,
-  input:focus,
-  textarea:focus,
-  select:focus {
-    outline: none;
-    box-shadow: none;
-}
-/* ----------------------------------------- */
-
-
-
-#app {
-    padding: 20px;
-    margin: 20px;
-    border: #00000036 1px solid;
-    border-radius: 10px;
-
-    background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    flex-grow: 1;
-    flex: 1;
-    
-    /* RELATIV, DASS WIR IN APP ABSOLUTE BAUEN KÖNNEN: */
-    position: relative;
-}
-.btn {
-    padding: 8px;
-    margin: 0; /* necessary margin 0 to avoid shifting */
-    border: 1px solid #00000036;
-    background-color: #f9f9f9;
-    color: #000000;
-    font-size:14px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 10px;
+.green-card{
+    background-color: #EEFFF6;
+    border: 1px solid #BBF7D0;
 }
 
-#main-nav {
+#blocked-items-card{
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+}
+
+#checked-circle{
+    border: 1px solid #D1D5DB;
+}
+
+.subtext{
+    color: #6B7280;
+}
+
+.card{
+    color: #E5E7EB;
+    border-radius: 15px;
+}
+
+input::placeholder {
+    color: #D1D1D1;
+}
+
+ button{
+    border-radius: 15px;
+ }
+
+.settings{
+    width: 30px;
+    margin: 10px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.nav-icons{
+    width: 40px;
+    height: 40px;
+    filter: brightness(0) saturate(100%) invert(61%) sepia(4%) saturate(464%) hue-rotate(178deg) brightness(99%) contrast(92%);
+    transition: filter 0.3s ease;
+}
+
+#main-nav{
+    height: 10vh;
+    color: var(--icon-grey-color);
     display: flex;
     justify-content: center;
-    width: 100%;
-    padding: 5px 0;
-    margin: 20px;
+    align-items: center;
+    gap: 60px;
 }
 
 #main-nav a {
-    color: var(--theme-color-green);
     text-decoration: none;
-    margin: 10px;
-    padding: 5px 10px;
-    border-radius: 30px;
+    position: relative;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
+#main-nav a.active .nav-icons {
+    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%);
+}
+
+#main-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background-color: var(--main-text-color);
+    border-radius: 1px;
+}

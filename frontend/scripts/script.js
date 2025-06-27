@@ -37,6 +37,28 @@ window.addEventListener('hashchange', router);
 // Lädt die Standardseite beim Start:
 window.addEventListener('load', router);
 
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('#main-nav a');
+    
+    function setActive(clickedLink) {
+        // Entferne active Klasse von allen nav-links
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+        
+        // Füge active Klasse zum geklickten Element hinzu
+        clickedLink.classList.add('active');
+    }
+    
+    // Event Listener für jeden nav-link hinzufügen
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Verhindert das Standard-Link-Verhalten
+            setActive(this);
+        });
+    });
+});
+
 // BACKEND-http-Request:
 //
 // export async function getDataDB() {
