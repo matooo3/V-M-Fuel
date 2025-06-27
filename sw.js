@@ -113,7 +113,7 @@ self.addEventListener('activate', e => {
 
 //hybrid!!! !  !!
 // const CACHE_NAME = 'v1';
-const CACHE_MAX_AGE = 30 * 1000; // 15 Sekunden in Millisekunden
+const CACHE_MAX_AGE = 10; // 15 Sekunden in Millisekunden
 
 self.addEventListener('fetch', event => {
   const req = event.request;

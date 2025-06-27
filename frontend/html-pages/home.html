@@ -1,52 +1,24 @@
-<div id="home">
-    <!-- USER INPUT: -->
+   <div id="home">    
+        
+        <img class = "settings" src="/frontend/assets/icons/settings.png" alt="settings">
 
-    <div id="input-container">
-
-        <label class="top-el" for="kg">Gewicht:</label>
-        <input type="number" id="kg" placeholder="kg" min="0">
-
-        <label class="top-el" for="cm">Größe:</label>
-        <input type="number" id="cm" placeholder="cm" min="0">
-
-        <label for="age">Alter:</label>
-        <input type="number" id="age" placeholder="Jahre" min="0">
-
-        <label class="top-el" for="gender">Geschlecht:</label>
-        <select class="btn" name="gender" id="gender">
-            <option value="male">männlich</option>
-            <option value="female">weiblich</option>
-        </select>
-
-        <label class="top-el" for="activity">Aktivitätslevel:</label>
-        <select class="btn" name="activity" id="activity">
-            <option value="1.2">keine Aktivität</option>
-            <option value="1.375">leicht aktiv</option>
-            <option value="1.55">mäßig aktiv</option>
-            <option value="1.725">sehr aktiv</option>
-            <option value="1.9">extrem aktiv</option>
-        </select>
-
-        <label for="goal">Ziel:</label>
-        <select class="btn" name="goal" id="goal">
-            <option value="bulk">Bulk</option>
-            <option value="maintain">Gewicht halten</option>
-            <option value="cut">Cut</option>
-        </select>
-
-        <div id="result-kcal">
-            Test
+        <div id = "greeting-container">
+            <h1>Hi, </h1>
+            <h1>Daniel</h1>
+            <div class = "tag">
+                <img class = "tag-logo" src="/frontend/assets/icons/admin-tag.png" alt="tag">
+                <span class = "tag-text">Admin</span>
+            </div>
         </div>
 
-    </div>
+        <div id="admin-panel">
+            <button class="tab">User</button>
+            <button class="tab active">Standard</button>
+        </div>
+        
+        <div class="progress-circle">
 
-    <!-- Dropdownmenu to change default / kcal here: -->
-    <select class="btn" id="calc-mode-btn">
-        <option value="default">default</option>
-        <option value="kcal">kcal</option>
-    </select>
+            <div class="progress-text">0%</div>
 
-    <button class="btn" id="calc-btn">calc</button>
-
-
-</div> <!-- end-home -->
+        </div>
+</div>  
