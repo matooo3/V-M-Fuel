@@ -18,15 +18,19 @@
       font-weight: bold;
       margin: 0;
     }
+    #cookTest {
+      border: 1px solid black;
+      width: 300px;
+
+    }
   </style>
 </head>
 <body>
   <h1>LET HIM COOK</h1>
+  <div id="cookTest">This is a test</div>
 
-  <script type="module">
-    import { checkRoleAccess } from '/frontend/scripts/auth.js';
-    checkRoleAccess(['admin', 'cook']); 
-  </script> 
+  <script src="/frontend/scripts/role-check/cook.js" type="module"></script>
+  <script src="/frontend/auth/cookTest.js" type="module"></script>
 
 </body>
 </html>
