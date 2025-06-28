@@ -16,48 +16,52 @@ if ('serviceWorker' in navigator) {
 }
 
 const routes = {
-    "home": loadHome,
-    "list": loadList,
-    "plan": loadPlan,
-    "meals": loadMeals    
+  "home": loadHome,
+  "list": loadList,
+  "plan": loadPlan,
+  "meals": loadMeals
 };
 
+function setActiveTab() {
+  const navLinks = document.querySelectorAll('.nav-icons');
+
+  function setActive(clickedLink) {
+
+    // Entferne active Klasse von allen nav-links
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+    });
+
+    // Füge active Klasse zum geklickten Element hinzu
+    clickedLink.classList.add('active');
+  }
+
+  // Event Listener für jeden nav-link hinzufügen
+  navLinks.forEach(link => {
+    link.addEventListener('click', function (event) {
+      setActive(this);
+    });
+  });
+
+}
+
 function router() {
-    const hash = window.location.hash.slice(1);
-    // Fallback auf Home-Seite
-    const baseTab = "initial Page to implement";
-    const loadPage = routes[hash] || baseTab;
-    // Löscht vorherigen Inhalt
-    // document.getElementById('app').innerHTML = '';
-    loadPage();
-    console.log('Page loaded:', hash || 'home');
+  const hash = window.location.hash.slice(1);
+  // Fallback auf Home-Seite
+  const baseTab = "initial Page to implement";
+  const loadPage = routes[hash] || baseTab;
+  // Löscht vorherigen Inhalt
+  // document.getElementById('app').innerHTML = '';
+  setActiveTab();
+  loadPage();
+  console.log('Page loaded:', hash || 'home');
 }
 
 window.addEventListener('hashchange', router);
+
 // Lädt die Standardseite beim Start:
 window.addEventListener('load', router);
 
-document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.querySelectorAll('#main-nav a');
-    
-    function setActive(clickedLink) {
-        // Entferne active Klasse von allen nav-links
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-        });
-        
-        // Füge active Klasse zum geklickten Element hinzu
-        clickedLink.classList.add('active');
-    }
-    
-    // Event Listener für jeden nav-link hinzufügen
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // Verhindert das Standard-Link-Verhalten
-            setActive(this);
-        });
-    });
-});
 
 // BACKEND-http-Request:
 //
@@ -77,10 +81,10 @@ document.addEventListener('DOMContentLoaded', function() {
 //     }
 // }
 
- // --------------- LOAD ALL DATA --------------------
+// --------------- LOAD ALL DATA --------------------
 async function loadData() {
-    const data = await Storage.getDataDB();
-    console.log('Daten aus storage.js:', data);
+  const data = await Storage.getDataDB();
+  console.log('Daten aus storage.js:', data);
 }
 
 await loadData();
@@ -89,7 +93,7 @@ await loadData();
 console.log("--------------DATA LOADED FROM DBBBBB-------------");
 const dishes = await Storage.getDishes();
 dishes.forEach(dish => {
-    console.log(`Dish Name: ${dish.name}`);
+  console.log(`Dish Name: ${dish.name}`);
 });
 
 // EXAMPLE CALL FOR TESTING: (LS)
@@ -100,5 +104,5 @@ const ingredients = dataLS.ingredients;
 
 console.log(dataLS);
 dataLS.dishes.forEach(dish => {
-    console.log(`Dish Name: ${dish.name}`);
+  console.log(`Dish Name: ${dish.name}`);
 });

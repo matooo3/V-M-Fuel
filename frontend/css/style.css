@@ -90,6 +90,10 @@ input::placeholder {
     transition: filter 0.3s ease;
 }
 
+.nav-icons.active {
+    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%);
+}
+
 #main-nav{
     height: 10vh;
     color: var(--icon-grey-color);
@@ -108,11 +112,7 @@ input::placeholder {
     cursor: pointer;
 }
 
-#main-nav a.active .nav-icons {
-    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%);
-}
-
-#main-nav a.active::after {
+#main-nav a:has(.nav-icons.active)::after {
     content: '';
     position: absolute;
     bottom: 0px;
