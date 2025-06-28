@@ -6,9 +6,9 @@
 
     --background-color: white;
     --main-text-color: #1F2937;
-    --icon-grey-color: #999999;
-    /* Color for navigation bar items (not selected), star and clos icon */
+    --icon-grey-color: #999999; /* Color for navigation bar items (not selected), star and clos icon */
     --accent-color: #E35252;
+    --circle-stroke: 12px;
 
     /* ----------------------*/
     /* card colors */
@@ -30,6 +30,10 @@
 
 }
 
+html {
+    font-size: 62.5%;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -37,7 +41,8 @@
 }
 
 body {
-    font-family: Poppins, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
 }
 
 h1 {
@@ -65,9 +70,14 @@ h1 {
 }
 
 .card {
-    color: var(--border-color);
+    border: 1px solid var(--border-color);
     border-radius: 15px;
 }
+
+.drop-shadow{
+    box-shadow: 0 2px 9.8px 0px rgba(0, 0, 0, 0.03);
+}
+
 
 input::placeholder {
     color: #D1D1D1;
@@ -126,8 +136,16 @@ button {
     bottom: 0px;
     left: 50%;
     transform: translateX(-50%);
-    width: 35px;
+    width: 40px;
     height: 2px;
     background-color: var(--main-text-color);
     border-radius: 1px;
+}
+
+.roboto {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
 }
