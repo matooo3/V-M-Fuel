@@ -16,7 +16,7 @@
     <meta name="google" content="notranslate">
     <!-- zoom deaktivieren + no UI-Elements -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    
+
     <!-- Fullscreen auf iOS -->
     <!-- iOS (veraltet, aber optional) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,6 +26,27 @@
     <link rel="apple-touch-icon" href="/frontend/assets/img/logo.png">
     <!------------------------------------------------------------------------------------------>
 
+    <!-- Fonts -->
+    <!-- roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- figtree -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+    <!------------------------------------------------------------------------------------------>
 
     <!-- main css -->
     <link rel="stylesheet" href="./css/style.css">
@@ -33,19 +54,19 @@
     <link rel="stylesheet" href="./css/home.css">
     <link rel="stylesheet" href="./css/list.css">
     <link rel="stylesheet" href="./css/plan.css">
-    <link rel="stylesheet" href="">   
-    
+    <link rel="stylesheet" href="">
+
 </head>
 
 <body>
 
     <div id="app">
 
-    </div> <!-- end-app -->      
+    </div> <!-- end-app -->
 
     <nav id="main-nav">
-        <a href="#home" class="active">
-            <img class="nav-icons" src="/frontend/assets/icons/home.png" alt="home">
+        <a href="#home">
+            <img class="nav-icons active" src="/frontend/assets/icons/home.png" alt="home">
         </a>
         <a href="#list">
             <img class="nav-icons" src="/frontend/assets/icons/list.png" alt="list">
@@ -60,6 +81,6 @@
 
     <script src="/frontend/scripts/role-check/user.js" type="module"></script>
     <script type="module" src="./scripts/script.js"></script>
-    </body>
+</body>
 
 </html>
