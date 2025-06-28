@@ -6,14 +6,15 @@
 
 }
 
+/* divs positioning and icons percentage, font rem */
 
-/* Media queries */
+/* Media queries for font sizes */
 /* ---------------------------------
    Very small phones
    ~320px - 480px width
    ~400px - 480px height
 ---------------------------------- */
-@media (max-width: 480px), (max-height: 480px) {
+@media (max-width: 480px) {
  
 }
 
@@ -21,8 +22,7 @@
    Small to medium smartphones
    ~481px - 600px width/height
 ---------------------------------- */
-@media (min-width: 481px) and (max-width: 600px),
-       (min-height: 481px) and (max-height: 600px) {
+@media (max-width: 600px) {
   
 }
 
@@ -30,8 +30,7 @@
    Medium to large smartphones
    ~601px - 720px width/height
 ---------------------------------- */
-@media (min-width: 601px) and (max-width: 720px),
-       (min-height: 601px) and (max-height: 720px) {
+@media (max-width: 720px) {
   
 }
 
@@ -39,8 +38,7 @@
    Large smartphones and small tablets
    ~721px - 900px width/height
 ---------------------------------- */
-@media (min-width: 721px) and (max-width: 900px),
-       (min-height: 721px) and (max-height: 900px) {
+@media (max-width: 900px) {
   
 }
 
@@ -48,6 +46,6 @@
    Tablets and larger devices
    >900px width/height
 ---------------------------------- */
-@media (min-width: 901px), (min-height: 901px) {
+@media (min-width: 901px) {
  
 }
