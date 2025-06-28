@@ -15,6 +15,7 @@
 
     /* grey */
     --fill-color: #F3F4F6;
+    --border-color: #E5E7EB;
 
     /* green */
     --positive-color: #1BCE86;
@@ -63,7 +64,7 @@ h1 {
 }
 
 .card{
-    color: #E5E7EB;
+    color: var(--border-color);
     border-radius: 15px;
 }
 
@@ -97,6 +98,7 @@ input::placeholder {
 #main-nav{
     height: 10vh;
     color: var(--icon-grey-color);
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: center;
     align-items: center;
