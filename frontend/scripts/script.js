@@ -23,7 +23,7 @@ const routes = {
 };
 
 function setActiveTab() {
-  const navLinks = document.querySelectorAll('.nav-icons');
+  const navLinks = document.querySelectorAll('#main-nav a');
 
   function setActive(clickedLink) {
 

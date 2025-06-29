@@ -6,7 +6,8 @@
 
     --background-color: white;
     --main-text-color: #1F2937;
-    --icon-grey-color: #999999; /* Color for navigation bar items (not selected), star and clos icon */
+    --icon-grey-color: #999999;
+    /* Color for navigation bar items (not selected), star and clos icon */
     --accent-color: #E35252;
     --circle-stroke: 12px;
 
@@ -74,7 +75,7 @@ h1 {
     border-radius: 15px;
 }
 
-.drop-shadow{
+.drop-shadow {
     box-shadow: 0 2px 9.8px 0px rgba(0, 0, 0, 0.03);
 }
 
@@ -102,7 +103,7 @@ button {
     transition: filter 0.3s ease;
 }
 
-.nav-icons.active {
+#main-nav a.active .nav-icons {
     filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(110%);
 }
 
@@ -119,6 +120,7 @@ button {
     align-items: center;
     gap: 45px;
     z-index: 1000;
+    background-color: white;
 }
 
 #main-nav a {
@@ -130,7 +132,8 @@ button {
     cursor: pointer;
 }
 
-#main-nav a:has(.nav-icons.active)::after {
+/* Subline */
+#main-nav a.active::after {
     content: '';
     position: absolute;
     bottom: 0px;
@@ -143,9 +146,9 @@ button {
 }
 
 .roboto {
-  font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
 }
