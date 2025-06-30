@@ -2,7 +2,9 @@
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows:  20vh 6vh 24vh 40vh;
+    grid-template-rows: 20vh 6vh auto;
+    height: 90vh;
+    overflow: hidden;
 
 }
 
@@ -10,15 +12,20 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin: 33px 0px 0px 33px;
-    gap: 4px;
+    margin: 3.3vh 0px 0px 33px;
+}
+
+#greeting-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .tag {
     border: solid 1px #F9BEBE;
     background-color: #FEF2F2;
-    width: 60px;
-    height: 21px;
+    width: 15%;
+    height: 15%;
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -39,7 +46,7 @@
 
 #admin-panel {
     border: solid 1px #EBE5E5;
-    height: 55px;
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -61,16 +68,12 @@
     background-color: var(--accent-color);
 }
 
-h1 {
-    font-size: 3.6rem;
-}
-
 .progress-wrapper {
     grid-row: 3;
     place-self: center;
     position: relative;
-    width: 75%;
-    height: 75%;
+    width: 35%;
+    height: 35%;
 
 }
 
@@ -108,36 +111,130 @@ h1 {
 }
 
 #next-meals {
-    margin: 0px 33px 0px 33px;
+    margin: 0px 33px 33px 33px;
+    /* Added bottom margin */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 400px;
+    /* Important for flexbox shrinking */
+    overflow: hidden;
+    /* Prevent overflow from parent */
 }
 
 #next-meal-text {
-    font-size: 32px;
+    font-size: 3.2rem;
     font-family: 'figtree', sans-serif;
     font-weight: 600;
+    margin-bottom: 15px;
 }
 
 #meals-info {
-    margin: 20px 0px 24px 0px;
-    width: 100%;
-    height: 100%;
+    flex: 1;
+    /* Take remaining space */
+    min-height: 0;
+    /* Allow shrinking */
     display: flex;
     flex-direction: column;
-    justify-content: top;
-    gap: 22px;
+    justify-content: flex-start;
+    gap: 2.2vh;
     overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+}
+
+#next-meal-card {
+    padding: 10px 10px;
+    display: flex;
+    height: 90%;
+    max-height: 80px;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.checkbox:checked {
+    background: var(--positive-color);
+}
+
+.checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#next-meal-info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#next-meal-info-texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.meal-name {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--main-text-color);
+}
+
+.subtext {
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.nutrition-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-left: 15%;
+}
+
+.nutrition-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.nutrition-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 2px 0;
+}
+
+.nutrition-text {
+    font-size: 1.2rem;
 }
 
 /* Webkit browsers (Chrome, Safari) */
 #meals-info::-webkit-scrollbar {
     display: none;
-}
-
-#meal {
-    width: 100%;
-    height: 66px;
 }
 
 #info-stats {
@@ -148,19 +245,197 @@ h1 {
 }
 
 #planned {
+    padding: 6px 15px;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.meals-amount {
+    font-family: 'figtree', sans-serif;
+    font-weight: 500;
 }
 
 #eaten {
+    padding: 8px 15px;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#todays-meals-text {
+    font-size: 2rem;
+    font-family: 'figtree', sans-serif;
+    font-weight: 600;
+    position: sticky;
+    top: 0px;
+    background-color: white;
+}
+
+#todays-meals-container {
+    width: 100%;
+}
+
+.mealcards {
+    padding: 8px 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 85%;
+    max-height: 70px;
+    margin-bottom: 20px;
+    margin-top: -10px;
+    gap: 15px;
+}
+
+.red-point {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+}
+
+.red-point.active {
+    background-color: var(--accent-color);
+}
+
+#todays-calories {
+    margin-left: auto;
+}
+
+#user-managment-container{
+    display: grid;
+    grid-template-rows: 15vh 54vh;
+    height: 64vh;
+    border: 1px solid red;
+     
+}
+
+#user-info{
+    padding: 10px 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+#user-text{
+    font-family: 'figtree', sans-serif;
+    margin-bottom: 2px;
+    margin-top: 5px;
+}
+
+#user-amount{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 2px;
+    margin-bottom: 8px;
+
+}
+
+#user-red-point{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--accent-color);    
+}
+
+.meals-amount-text{
+    font-size: 1.4rem; 
+    color: var(--main-text-color);
+} 
+
+#search-icon{
+    width: 15px;
+    height: 15px;
+    margin: -2px;
+    display: flex;
+    align-items: center;
+}
+
+#search-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    width: 100%;
+    height: 30%;
+    padding: 8px 12px; 
+}
+
+#search-bar input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    flex: 1;
+    background: transparent;
+    line-height: 1; 
+}
+
+#search-bar input::placeholder {
+    color: #D1D1D1;
+    font-size: 1.4rem;
+    font-weight: 300;
+}
+
+.card.user{
+
 }
 
 @media (max-height: 750px) {
 
     html {
         font-size: 8px;
+    }
+
+    #next-meal-text {
+        margin-bottom: 10px;
+    }
+
+}
+
+@media (max-height: 580px) {
+
+    .progress-text {
+        font-size: 2.4rem;
+    }
+
+    .roboto {
+        font-size: 2.8rem;
+    }
+
+
+    .tag {
+        position: absolute;
+        top: 50px;
+        left: 100px;
+        width: 50px;
+        height: 15px;
+    }
+
+    .tag-logo {
+        width: 10px;
+        height: 10px;
+
+    }
+
+    .tab {
+        width: 70px;
+        height: 20px;
+    }
+
+    #next-meal-text {
+        margin-bottom: 5px;
     }
 }
 
