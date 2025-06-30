@@ -48,8 +48,14 @@ body {
 
 h1 {
     color: black;
-    font-size: 24px;
+    font-size: 2.4rem;
     margin: 0px;
+}
+
+h3 {
+    font-size: 1.6rem;
+    color: #1F2937;
+    font-weight: 500;
 }
 
 .green-card {
@@ -68,6 +74,7 @@ h1 {
 
 .subtext {
     color: #6B7280;
+    font-weight: 300;
 }
 
 .card {
@@ -136,7 +143,7 @@ button {
 #main-nav a.active::after {
     content: '';
     position: absolute;
-    bottom: 0px;
+    bottom: 1px;
     left: 50%;
     transform: translateX(-50%);
     width: 40px;
@@ -149,6 +156,37 @@ button {
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
+    font-size: 3.6rem;
     font-style: normal;
     font-variation-settings: "wdth" 100;
+}
+
+@media (max-height: 750px) {
+
+    .settings {
+        transform: scale(80%);
+    }
+
+    .nav-icons {
+        transform: scale(80%);
+    }
+
+    #main-nav a.active::after {
+        width: 30px;
+    }
+
+}
+
+@media (max-height: 580px) {
+
+    .settings {
+        transform: scale(70%);
+    }
+
+
+    #main-nav a {
+        transform: scale(60%);
+        padding: 5px;
+    }
+
 }
