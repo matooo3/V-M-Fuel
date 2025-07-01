@@ -5,6 +5,8 @@ import loadMeals from './js-pages/meals.js';
 import * as Storage from './storage.js';
 
 // SERVICE-WORKER REGISTRATION
+// The service worker registration code is currently disabled for debugging purposes.
+// Uncomment the following block to enable service worker functionality.
 // if ('serviceWorker' in navigator) {
 //   navigator.serviceWorker.register('/sw.js')
 //     .then((registration) => {
