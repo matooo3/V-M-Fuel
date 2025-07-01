@@ -2,13 +2,6 @@
 import * as Storage from '../storage.js';
 import { loadHTMLTemplate } from '../templateLoader.js';
 
-// Initialize neccessary variables
-let deleted_items = [];
-let add_counter = 0;
-let delete_counter = 0;
-let ingredients = [];
-// let generate_counter = 0;
-
 // Main function
 export default async function loadList() {
     const app = document.getElementById('app');
@@ -17,376 +10,277 @@ export default async function loadList() {
     app.innerHTML = html;
 
 
-ingredients = await getAllDishIngredients()
-updateList(ingredients); 
-    
-// Add event listener 
+    // ingredients = await getAllDishIngredients()
+    // updateList(ingredients); 
 
-document.getElementById("restore-btn").addEventListener("click", () => {
+    // Add event listener 
 
-    console.log(ingredients);
-    restore_items();
+    document.getElementById("add-item-btn").addEventListener("click", () => {
 
-});
-
-document.getElementById("order-btn").addEventListener("change", () => {
- 
-    sort_items();
-        
-});
-
-
-// document.getElementById("generate-btn").addEventListener("click", () => {
-
-//     generate_counter += 1;
-//     updateList(items);
-
-// });
-
-document.getElementById("grocery-btn").addEventListener("click", () => {
-
-    own_grocery_list();
-
-});
-
-document.getElementById("delete-all-btn").addEventListener("click", () => {
-
-    delete_counter += 1;
-    delete_all();
-
-});
-
-document.querySelector(".add-more").addEventListener("click", () => {
-
-    add_counter += 1;
-    display_addmore(add_counter);
-
-});
-
-document.getElementById("new-items").addEventListener("click", (event) => {
-
-    event.stopPropagation(); // Prevents that klicking hides the input field always
-
-});
-
-document.getElementById("add-button").addEventListener("click", () => {
-
-    add_items();
-
-});
-
-}
-
-async function getAllDishIngredients() {
-
-    // JSON-Data
-    let data = await Storage.getDataDB();
-    const ingredients = data.ingredients;
-    // calculate_dishes();
-    const dishes = data.dishes;
-    const dishIngredients = data.dishIngredients;
-
-    // Array for ingredients and amounts
-    let ingredientsArray = [];
-
-    // Iterate over all dishes
-    dishes.forEach(dish => {
-
-        const dishId = dish.dish_id;
-
-        // Filter ingredients for the current dish
-        const relatedIngredients = dishIngredients.filter(di => di.dish_id === dishId);
-
-        // Add ingredients and amounts to the array
-        relatedIngredients.forEach(di => {
-
-            // Find the ingredient for the current dish_ingredient element in the ingredients table
-            const ingredient = ingredients.find(ing => ing.ingredient_id === di.ingredient_id);
-
-            if (ingredient) {
-
-                ingredientsArray.push({
-                    name: ingredient.name,
-                    amount: di.amount,
-                    unit_of_measurement: di.unit_of_measurement
-                });
-
-            }
-
-        });
-
-    });
-
-    // console.log(ingredientsArray); // For debugging
-    return ingredientsArray;
-}
-
-
-function updateList(ingredients) {
-
-    // Get checklist
-    const checklist = document.querySelector(".checklist");
-
-    // Empty it for not adding ingredients more than once
-    checklist.innerHTML = "";
-
-    // Add items to checklist
-    ingredients.forEach(ingredient => {
-
-        const li = document.createElement("li");
-        li.innerHTML = `
-            <label class="list-label">
-                <input class="list-input" type="checkbox">
-                <span class="list-bullet"></span>
-                <span class="ingredient-name">${ingredient.name}</span>
-                <input type="text" class="amount" value="${ingredient.amount}" min="0">
-                <input type="text" class="unit_of_measurement" value="${ingredient.unit_of_measurement}" readonly>
-                <button id = "delete-ingredients-button" class="list-btn">
-                    <span id = "close" class = "material-symbols-outlined">
-                        close
-                    </span>
-                </button>
-            </label>
-        `;
-        checklist.appendChild(li);
-
-    });
-
-    // Add event listeners for every delete button
-    const deleteButtons = document.querySelectorAll("#delete-ingredients-button");
-
-    deleteButtons.forEach(button => {
-        button.addEventListener("click", (event) => {
-
-            delete_counter += 1;
-            delete_item(event);
-
-        });
-    });
-
-    const inputs = document.querySelectorAll(".amount");
-
-    inputs.forEach(input => {
-        input.addEventListener("change", (event) => {
-
-            saveValue(event);
-
-        });
-    });
-
-}
-
-function sort_items(){
-        
-    const sort_val = document.getElementById("order-btn").value
-
-        if (sort_val === "food categories") {
-
-            // TODO
-            // sorting according to certain food categroies
-        }
-    
-        if (sort_val === "alphabetic") {
-            
-            ingredients.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())); // lower case variants are getting compared
-            updateList(ingredients);
-    
+        // only allow to open it once:
+        const existingItem = document.getElementById('newItem');
+        if (!existingItem) {
+            addItemToList();
         }
 
+    });
+
+    // Load existing items from storage
+    // const items = Storage.getGroceryListItems();
+    // items.forEach(item => addItem(item));
+    // Add event listeners for quantity control buttons
+    const list = document.querySelector('.grocery-list');
+
+    list.addEventListener('click', changeAmount);
+
+
+    // NEU: Initialisiert die komplette Swipe-Logik für die Liste
+    initializeSwipeToDelete(list);
+}
+
+function addItem(item) {
+    const list = document.querySelector('.grocery-list');
+    const li = document.createElement('li');
+    li.className = 'grocery-item drop-shadow';
+
+    // NEUE HTML-STRUKTUR: Notwendig für die Swipe-Animation.
+    // Der Inhalt wird in '.swipe-content' gepackt und ein '.swipe-delete' Button hinzugefügt.
+    li.innerHTML = `
+        <div class="swipe-delete">Delete</div>
+        <div class="swipe-content">
+            <input class="checkbox checkbox-gl" type="checkbox" />
+            <div class="item-details">
+                <h3>${item.name}</h3>
+                <span class="category subtext">${item.category}</span>
+            </div>
+            <div class="quantity-control">
+                <button class="minus-btn"><img src="/frontend/assets/icons/minus.png" alt="-"></button>
+                <span class="amount">${item.amount}</span><span class="unit">${item.unit}</span>
+                <button class="plus-btn"><img src="/frontend/assets/icons/plus.png" alt="+"></button>
+            </div>
+        </div>
+    `;
+    list.insertBefore(li, list.firstChild);
 }
 
 
-function display_addmore(add_counter){
+function addItemToList() {
+    // Save item to storage
+    // Storage.addGroceryListItem(item);
+    // // Add item to the list in the UI
 
-    // Display input field for adding more items accordingly
-    const inputsDiv = document.getElementById("add-more-inputs");
+    const list = document.querySelector('.grocery-list');
 
-    if(add_counter % 2 == 0){
+    const newItem = document.createElement('li');
 
-        inputsDiv.style.display = "none";
+    newItem.id = 'newItem';
+    newItem.className = 'grocery-item drop-shadow';
+    // Hier soll input felder kommen wo user das item eingeben kann
+    newItem.innerHTML = `
+    <div id="new-item-container">
+        <div class="item-details-add">
+            <input type="text" placeholder="Item Name" />
+            <select>
+                <option value="Protein">Protein</option>
+                <option value="Fruit">Fruit</option>
+                <option value="Dairy">Dairy</option>
+            </select>
+        </div>
+        <div class="quantity-control-add">
+            <input type="number" placeholder="100" />
+            <select>
+                <option value="g">g</option>
+                <option value="pcs">pcs</option>
+                <option value="ml">ml</option>
+            </select>
+        </div>
+    </div>
+    <div class="buttons-container">
+        <button class="cancel-btn">Cancel</button>
+        <button class="save-btn">Save</button>
+    </div>
+    `;
 
+    // Als erstes Kind einfügen:
+    list.insertBefore(newItem, list.firstChild);
+
+    // Füge Event Listener für die Buttons hinzu
+    const saveBtn = newItem.querySelector('.save-btn');
+    const cancelBtn = newItem.querySelector('.cancel-btn');
+    saveBtn.addEventListener('click', saveNewItem);
+    cancelBtn.addEventListener('click', deleteNewItemForm);
+
+
+
+}
+
+function saveNewItem() {
+    // nehme ale input felder von user
+    const newItemContainer = document.getElementById('new-item-container');
+    const itemName = newItemContainer.querySelector('input[type="text"]').value;
+    const amount = newItemContainer.querySelector('input[type="number"]').value;
+    const selects = newItemContainer.querySelectorAll('select');
+    const category = selects[0].value;
+    const unit = selects[1].value;
+
+    // Erstelle neues Item-Objekt
+    const newItem = {
+        id: Date.now(),
+        name: itemName,
+        category: category,
+        amount: parseInt(amount, 10),
+        unit: unit
+    };
+    // Speichere das neue Item in der Storage
+    // Storage.addGroceryListItem(newItem);
+
+    // Füge das neue Item zur Liste hinzu, aber erst, wenn alles eingegeben wurde
+    if (itemName && amount && category && unit) {
+        addItem(newItem);
     } else {
-
-        inputsDiv.style.display = "block";
-
-    }
-
-}
-
-function add_items() {
-    // Get user input
-    const newItemsInput = document.getElementById("new-items");
-    const newIngredientsInput = newItemsInput.value.split(",").map(item => item.trim()).filter(item => item);
-
-    if (newIngredientsInput.length > 0) {
-
-        for (let i = 0; i < newIngredientsInput.length; i++) {
-
-            // Split the input by spaces
-            const parts = split_input(newIngredientsInput[i]);
-
-            console.log(parts);
-
-            // add to ingredients
-            ingredients.push(parts);
-            console.log(ingredients);
-
-        }
-
-        // Sort the array and then update it
-        sort_items();
-        updateList(ingredients);
-
-        newItemsInput.value = ""; // Empty input field
-        document.getElementById("add-more-inputs").style.display = "none"; // Hide input field
-
-    } else {
-
-        alert("Please enter at least one item.");
-
-    }
-}
-
-function split_input(input){
-
-    // define regex
-    const unit_amount_regex = /(\d+)\s*(ml|g|cup|slice|piece)/;
-
-    // extracting amount and unit
-    const unit_amount = input.match(unit_amount_regex);
-
-    // extracting amount
-    const amount = Number(unit_amount[1]);
-
-    // extracting unit
-    const unit_of_measurement = unit_amount[2];
-
-    // extracting name
-    const name = input.replace(unit_amount[0], "");
-
-    return {name, amount, unit_of_measurement};
-
-}
-
-function delete_item(event) {
-
-    let deletedItem = getDeletedItem(event);
-
-    // Add the deleted item to the array of deleted items
-    deleted_items.push(deletedItem);
-
-    // Find the index of the item in the ingredients array
-    const index = ingredients.findIndex(ing => 
-
-        ing.name === deletedItem.name && 
-        ing.amount === deletedItem.amount && 
-        ing.unit_of_measurement === deletedItem.unit_of_measurement
-
-    );
-
-    console.log(index)
-
-    // Remove the item from the ingredients array if found
-    if (index !== -1) {
-
-        ingredients.splice(index, 1); // Remove 1 element from the array
-
-    }
-
-}
-
-function getDeletedItem(event) {
-
-        // Find the parent <li> element of the delete button
-        const listItem = event.target.closest("li"); 
-        listItem.remove(); 
-    
-        // Extract the necessary values from the DOM
-        const name = listItem.querySelector(".ingredient-name").textContent.trim();
-
-        const amount = listItem.querySelector(".amount").value.trim(); 
-        const unit_of_measurement = listItem.querySelector(".unit_of_measurement").value.trim(); 
-    
-        // Create an object containing the deleted item's details
-        const deletedItem = {
-            
-            name: name,
-            amount: Number(amount),
-            unit_of_measurement: unit_of_measurement
-    
-        }
-
-        return deletedItem;
-
-}
-
-
-function restore_items(){
-
-    if (delete_counter > 0){
-
-        // Restore all removed items  
-        ingredients.push(...deleted_items) // ... is a speed operator that spreads the array into its elements
-
-        // Remove all items from deleted_items to prevent the user from generating them twice
-        deleted_items.splice(0, deleted_items.length);
-
-        // Sort them according to selected category and update checklist
-        sort_items();
-        updateList(ingredients);  
-
-    } else {
-
-        alert("You have to delete at least one ingredient to be able to restore ingredients!");
-
-    }
-
-
-}
-
-function delete_all(){
-
-    // Add all items to deleted_items array
-    deleted_items.push(...ingredients);
-
-    // Delete all items from the list
-    ingredients.splice(0, ingredients.length);
-    updateList(ingredients);
-
-}
-
-function own_grocery_list(){
-
-    // Delete all items from the list
-    ingredients.splice(0, ingredients.length);
-    updateList(ingredients);
-
-}
-
-function saveValue(event) {
-
-    // Wert aus Inputfeld holen
-    const input = event.target;
-    const value = input.value.trim();
-
-    // Prüfen, ob der Wert gültig ist
-    if (isNaN(value) || value === "") {
-        alert("Please enter a valid number for amount.");
-        input.value = ""; // Inputfeld zurücksetzen
         return;
     }
 
-    // DOM-Elemente holen, ohne sie zu entfernen!
-    const listItem = input.closest("li");
-    const name = listItem.querySelector(".ingredient-name").textContent.trim();
-    const unit_of_measurement = listItem.querySelector(".unit_of_measurement").value.trim();
 
-    // Zutatenliste aktualisieren
-    ingredients.forEach(ing => {
-        if (ing.name === name && ing.unit_of_measurement === unit_of_measurement) {
-            ing.amount = Number(value);
-        }
-    });
+
+    // Entferne das Eingabeformular
+    deleteNewItemForm();
+
+    // // Aktualisiere die Liste
+    // updateGroceryList();
+    // // Zeige eine Erfolgsmeldung an
+    // const successMessage = document.createElement('div');
+    // successMessage.className = 'success-message';
+    // successMessage.textContent = 'Item successfully added!';
+    // document.body.appendChild(successMessage);
 
 }
 
+function deleteNewItemForm() {
+    const newItem = document.getElementById('newItem');
+    if (newItem) {
+        newItem.remove();
+    }
+}
+
+
+function changeAmount(event) {
+    // NEU: Verhindert, dass beim Klick auf "Delete" die Menge geändert wird.
+    if (event.target.closest('.swipe-delete')) return;
+
+    const btn = event.target.closest('button');
+    // NEU: Genauerer Check, ob der Button wirklich im quantity-control ist.
+    if (!btn || !btn.closest('.quantity-control')) return;
+    event.preventDefault();
+
+    // NEU: Selektor auf '.swipe-content' geändert, da dies der neue Container ist.
+    const itemEl = btn.closest('.swipe-content');
+    const amountSpan = itemEl.querySelector('.amount');
+    if (!amountSpan) return;
+    let amount = parseInt(amountSpan.textContent, 10);
+
+    if (btn.classList.contains('plus-btn')) {
+        amountSpan.textContent = amount + 1;
+    } else if (btn.classList.contains('minus-btn') && amount > 1) {
+        amountSpan.textContent = amount - 1;
+    }
+}
+
+
+
+// -----------------------------------------------------------
+// --------------------- SWIPE TO DELETE ---------------------
+function initializeSwipeToDelete(container) {
+    let isSwiping = false;
+    let startX = 0;
+    let currentX = 0;
+    let swipedItem = null;
+    let swipedContent = null;
+
+    const deleteButtonWidth = 90;
+    const fullSwipeThreshold = 150;
+
+    const deleteItem = (itemToDelete) => {
+        if (!itemToDelete) return;
+
+        itemToDelete.style.maxHeight = `${itemToDelete.offsetHeight}px`;
+        requestAnimationFrame(() => {
+            itemToDelete.classList.add('deleting');
+        });
+
+        itemToDelete.addEventListener('transitionend', () => {
+            itemToDelete.remove();
+            // Hier Logik zum Entfernen aus dem Storage einfügen
+            // z.B. Storage.removeGroceryListItem(itemId);
+        }, { once: true });
+    };
+
+    const closeAllOtherItems = (currentItem) => {
+        container.querySelectorAll('.grocery-item').forEach(item => {
+            if (item !== currentItem) {
+                const content = item.querySelector('.swipe-content');
+                if (content) content.style.transform = 'translateX(0)';
+            }
+        });
+    };
+
+    const onSwipeStart = (e) => {
+        // if (e.target.closest('button') || e.target.closest('.quantity-control')) return;
+        const item = e.target.closest('.grocery-item');
+        if (!item || item.id === 'newItem' || e.target.classList.contains('swipe-delete')) return;
+
+        closeAllOtherItems(item);
+        isSwiping = true;
+        swipedItem = item;
+        swipedContent = item.querySelector('.swipe-content');
+        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        currentX = startX;
+        swipedContent.style.transition = 'none';
+    };
+
+    const onSwipeMove = (e) => {
+        if (!isSwiping || !swipedContent) return;
+
+        currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        let diffX = currentX - startX;
+
+        if (diffX > 0) diffX = 0;
+
+        swipedContent.style.transform = `translateX(${diffX}px)`;
+    };
+
+    const onSwipeEnd = () => {
+        if (!isSwiping || !swipedContent) return;
+
+        isSwiping = false;
+        let diffX = currentX - startX;
+        swipedContent.style.transition = 'transform 0.3s ease-out';
+
+        if (diffX < -fullSwipeThreshold) {
+            swipedContent.style.transform = `translateX(-100%)`;
+            swipedContent.addEventListener('transitionend', () => deleteItem(swipedItem), { once: true });
+        } else if (diffX < -(deleteButtonWidth / 3)) {
+            swipedContent.style.transform = `translateX(-${deleteButtonWidth}px)`;
+        } else {
+            swipedContent.style.transform = 'translateX(0)';
+        }
+    };
+
+    const onDeleteClick = (e) => {
+        if (e.target.classList.contains('swipe-delete')) {
+            const itemToDelete = e.target.closest('.grocery-item');
+            deleteItem(itemToDelete);
+        }
+    };
+
+    container.addEventListener('mousedown', onSwipeStart);
+    document.addEventListener('mousemove', onSwipeMove);
+    document.addEventListener('mouseup', onSwipeEnd);
+
+    container.addEventListener('touchstart', onSwipeStart, { passive: true });
+    document.addEventListener('touchmove', onSwipeMove, { passive: true });
+    document.addEventListener('touchend', onSwipeEnd);
+
+    container.addEventListener('click', onDeleteClick);
+}
+// --------------------- END SWIPE TO DELETE ---------------------
