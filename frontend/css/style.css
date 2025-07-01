@@ -184,9 +184,6 @@ button {
 }
 
 @media (max-width: 370px) {
-    .nav-icons {
-        transform: scale(70%);
-    }
 
     #main-nav{
         gap: 30px;
