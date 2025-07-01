@@ -289,6 +289,6 @@ function initializeCalendar() {
     populateDaysGrid(currentWeek, today, currentMonth);
     
     const dayContent = generateDayContent(currentWeek, currentDay);
-    updateContent(currentDay, dayContent, currentDay);
+    updateContent(currentDay, dayContent);
     addDayEventListeners(dayContent, currentDay);
 }
