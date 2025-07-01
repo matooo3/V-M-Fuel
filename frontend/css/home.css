@@ -326,7 +326,7 @@
 #user-managment-container {
     display: grid;
     grid-template-rows: auto 1fr;
-    height: 64vh;
+    height: 66vh;
 }
 
 #user-info {
