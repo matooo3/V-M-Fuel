@@ -1,0 +1,360 @@
+.list-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 7vh 5vh 5.5vh 6vh auto;
+    height: 90vh;
+    width: 100%;
+    overflow-y: auto;
+    padding: 27px 27px 0 27px;
+    gap: 16px;
+}
+
+.list-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8%;
+}
+
+.list-header h1 {
+    font-size: 2.4rem;
+    font-weight: 500;
+}
+
+.subtext {
+    font-size: 1.4rem;
+}
+
+#search-bar-gl input {
+    width: 100%;
+    padding: 9px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 11px;
+    font-size: 1.6rem;
+    /* color: var(--text-color); */
+    color: #6B7280;
+}
+
+#filter-bar {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filterBtn {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #6B7280;
+    border-radius: 35px;
+    padding: 10px 20px;
+    background-color: var(--fill-color);
+    border: 1px solid transparent;
+    max-height: 4.5rem;
+}
+
+.filterBtn span {
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.filterBtn.active {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+}
+
+#add-item-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    border: none;
+    border-radius: 11px;
+    padding: 14px;
+    font-size: 2.0rem;
+    font-weight: 600;
+    width: 100%;
+    max-height: 46px;
+}
+#add-item-btn img {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+#add-item-btn div {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: -2px;
+}
+
+#add-item-btn:hover {
+    cursor: pointer;
+}
+
+.grocery-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.grocery-item {
+    background-color: white; /* Bleibt für Schatten/Form */
+    border-radius: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    
+    /* WICHTIG: Erforderlich für die Positionierung des Delete-Buttons */
+    position: relative;
+    overflow: hidden;
+    /* Die alten transition, will-change, touch-action etc. sind hier nicht mehr nötig */
+}
+
+.item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.category {
+    font-size: 1.4rem;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 150px;
+    gap: 10px;
+    touch-action: pan-y;
+}
+
+.amount {
+    font-size: 1.6rem;
+    color: #000000;
+    margin-right: -15px;
+}
+.unit {
+    font-size: 1.2rem;
+    color: var(--icon-grey-color);
+    font-weight: 300;
+}
+
+.quantity-control button {
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.6rem;
+    /* line-height: 1; */
+    cursor: pointer;
+}
+
+/* Minus-Button */
+.minus-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--fill-color); 
+    color: #6B7280;          
+}
+.minus-btn img {
+    width: 13px;
+}
+
+/* Plus-Button */
+.plus-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: #fff;
+}
+.plus-btn img {
+    width: 13px;
+}
+
+
+/* -------- NEW ITEM -------- */
+#newItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#newItem input {
+    width: 100%;
+    padding: 9px 14px;
+    border-radius: 11px;
+    font-size: 1.6rem;
+    background-color: var(--background-color);
+    color: var(--main-text-color);
+    border: 1px solid var(--border-color);
+    outline: none;
+}
+/* select */
+#newItem select {
+    width: 100%;
+    padding: 9px 14px;
+    border-radius: 11px;
+    font-size: 1.6rem;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    outline: none;
+}
+
+/* bgrfeuzbzverbizugbdizubgreizbgzebgzebguizebrzgberuzgbeubgerbgzebrg
+eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
+#newItem select option {
+    font-size: 1.6rem;
+    border-radius: 30px;
+    padding: 9px 14px;
+    width: 50%;
+}
+
+#new-item-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+}
+
+/* -------- ITEM NAMES -------- */
+.item-details-add {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-details-add {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 60%;
+}
+
+/* -------- AMOUNT -------- */
+.quantity-control-add {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    /* width: 40%; */
+    gap: 10px;
+    width: 100%;
+    max-width: 60%;
+}
+
+/* #quantity-control-add .buttons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+} */
+
+/* -------- BUTTONS -------- */
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.buttons-container .save-btn {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    border: none;
+    border-radius: 11px;
+    padding: 8px 16px;
+    font-size: 1.6rem;
+    font-weight: 400;
+    cursor: pointer;
+    width: 50%;
+    max-width: 50%;
+}
+
+.buttons-container .cancel-btn {
+    background-color: var(--background-color);
+    color: var(--main-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 11px;
+    padding: 8px 16px;
+    font-size: 1.6rem;
+    font-weight: 400;
+    cursor: pointer;
+    width: 50%;
+    max-width: 50%;
+}
+
+/* Runder Checkbox-Stil */
+.checkbox-gl {
+    top: -10px;
+}
+
+
+/* RESPONSIVE media queries */
+
+
+
+/* ------------------- SWIPE TO DELETE ANIMATION ---------------------*/
+.swipe-content {
+    background-color: white; /* Verdeckt den roten Button */
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative; /* Muss über dem Delete-Button liegen */
+    z-index: 2;
+    transition: transform 0.3s ease-out;
+    cursor: pointer;
+}
+
+/* NEU: Der rote Delete-Button, der dahinter liegt */
+
+.swipe-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 100%;    
+    /* background-color: var(--accent-color); */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.6rem;
+    z-index: 1;
+    cursor: pointer;
+    background-color: var(--accent-color); /* rot */
+    transform: scale(0.975); /* leicht verkleinert, damit es nicht zu groß wirkt */
+    /* border radius nur rechts oben und rechts unten. links soll eckig bleiben */
+    border-radius: 0 15px 15px 0;
+    transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+/* NEU: Klasse für die Lösch-Animation */
+.grocery-item.deleting {
+    transition: opacity 0.3s ease-out, max-height 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+    opacity: 0;
+    max-height: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: -12px; /* gleicht den gap in .grocery-list aus */
+    border: none;
+}
+
+/* Klasse, die wir per JS beim erfolgreichen Swipe hinzufügen */
+.grocery-item.swipe-removing {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+/* am Ende eurer CSS-Datei */
+.grocery-list.swipe-bg {
+    background-color: red;
+}
+
