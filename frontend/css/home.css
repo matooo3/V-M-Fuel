@@ -2,7 +2,7 @@
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 20vh 6vh auto;
+    grid-template-rows: 18vh 6vh auto;
     height: 90vh;
     overflow: hidden;
 
@@ -13,6 +13,7 @@
     flex-direction: column;
     justify-content: flex-start;
     margin: 3.3vh 0px 0px 33px;
+    flex-shrink: 0;
 }
 
 #greeting-text {
@@ -25,7 +26,10 @@
     border: solid 1px #F9BEBE;
     background-color: #FEF2F2;
     width: 15%;
+    min-width: 20px;
+    max-width: 60px;
     height: 15%;
+    min-height: 20px;
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -42,15 +46,23 @@
 .tag-logo {
     width: 12px;
     height: 12px;
+    margin-bottom: 2px;
 }
 
 #admin-panel {
+    grid-row: 2;
     border: solid 1px #EBE5E5;
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+#admin-container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .tab {
@@ -111,22 +123,18 @@
 }
 
 #next-meals {
-    margin: 0px 33px 33px 33px;
-    /* Added bottom margin */
+    margin: 0px 33px 0px 33px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
-    min-height: 0;
-    height: 400px;
-    /* Important for flexbox shrinking */
     overflow: hidden;
-    /* Prevent overflow from parent */
 }
 
 #next-meal-text {
     font-size: 3.2rem;
     font-family: 'figtree', sans-serif;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 #meals-info {
@@ -152,6 +160,7 @@
     max-height: 80px;
     align-items: flex-start;
     gap: 16px;
+    padding-right: 1rem;
 }
 
 .checkbox {
@@ -193,6 +202,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 5px;
+    flex: 1;
 }
 
 .meal-name {
@@ -211,7 +221,7 @@
     justify-content: center;
     align-items: center;
     gap: 24px;
-    margin-left: 15%;
+    margin-right: 1.5rem;
 }
 
 .nutrition-item {
@@ -274,11 +284,15 @@
     font-weight: 600;
     position: sticky;
     top: 0px;
+    margin-bottom: 5px;
     background-color: white;
 }
 
 #todays-meals-container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .mealcards {
@@ -289,8 +303,8 @@
     width: 100%;
     height: 85%;
     max-height: 70px;
-    margin-bottom: 20px;
-    margin-top: -10px;
+    margin-bottom: 10px;
+    margin-top: -15px;
     gap: 15px;
 }
 
@@ -309,27 +323,25 @@
     margin-left: auto;
 }
 
-#user-managment-container{
+#user-managment-container {
     display: grid;
-    grid-template-rows: 15vh 54vh;
+    grid-template-rows: auto 1fr;
     height: 64vh;
-    border: 1px solid red;
-     
 }
 
-#user-info{
-    padding: 10px 40px;
+#user-info {
+    padding: 5px 40px 10px 40px;
     display: flex;
     flex-direction: column;
 }
 
-#user-text{
+#user-text {
     font-family: 'figtree', sans-serif;
     margin-bottom: 2px;
     margin-top: 5px;
 }
 
-#user-amount{
+#user-amount {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -338,19 +350,19 @@
 
 }
 
-#user-red-point{
+#user-red-point {
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background-color: var(--accent-color);    
+    background-color: var(--accent-color);
 }
 
-.meals-amount-text{
-    font-size: 1.4rem; 
+.meals-amount-text {
+    font-size: 1.4rem;
     color: var(--main-text-color);
-} 
+}
 
-#search-icon{
+#search-icon {
     width: 15px;
     height: 15px;
     margin: -2px;
@@ -367,7 +379,7 @@
     border: 1px solid var(--border-color);
     width: 100%;
     height: 30%;
-    padding: 8px 12px; 
+    padding: 8px 12px;
 }
 
 #search-bar input {
@@ -379,7 +391,7 @@
     outline: none;
     flex: 1;
     background: transparent;
-    line-height: 1; 
+    line-height: 1;
 }
 
 #search-bar input::placeholder {
@@ -388,11 +400,103 @@
     font-weight: 300;
 }
 
-.card.user{
+#user-list {
+    padding: 0px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.card.user {
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    height: 55px;
+    flex-shrink: 0;
+    width: 100%;
+    gap: 10px;
+    padding-right: 1rem;
+}
+
+.card.user:last-child {
+    margin-bottom: 10px;
+}
+
+.profile-picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    border-radius: 50%;
+    background-color: #E5E7EB;
+    height: 3.5rem;
+    width: 3.5rem;
+    color: var(--main-text-color)
+}
+
+.user-name {
+    font-size: 1.2rem;
+    color: var(--main-text-color)
+}
+
+.user-email {
+    font-size: 1rem;
+    color: #6B7280;
+}
+
+.user-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+#user-role {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-tag {
+    border: solid 1px #F9BEBE;
+    background-color: #FEF2F2;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.user-tag-logo {
+    width: 1rem;
+    height: 1rem;
+    margin-bottom: 2px;
+}
+
+.user-tag-text {
+    font-size: 1rem;
+    color: var(--accent-color);
+}
+
+#change-role {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+@media (max-height: 850px) {
+
+    #admin-container {
+        margin-top: 10px;
+    }
 
 }
 
-@media (max-height: 750px) {
+@media (max-height: 700px) {
 
     html {
         font-size: 8px;
@@ -402,9 +506,17 @@
         margin-bottom: 10px;
     }
 
+    #admin-panel {
+        border: none;
+    }
+
 }
 
 @media (max-height: 580px) {
+
+    .progress-wrapper {
+        transform: scale(80%);
+    }
 
     .progress-text {
         font-size: 2.4rem;
@@ -417,16 +529,19 @@
 
     .tag {
         position: absolute;
-        top: 50px;
+        top: 48px;
         left: 100px;
         width: 50px;
         height: 15px;
     }
 
+    #home {
+        grid-template-rows: 15vh 8vh auto;
+    }
+
     .tag-logo {
         width: 10px;
         height: 10px;
-
     }
 
     .tab {

@@ -39,6 +39,7 @@ html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 
 body {
@@ -163,7 +164,7 @@ button {
     font-variation-settings: "wdth" 100;
 }
 
-@media (max-height: 750px) {
+@media (max-height: 700px) {
 
     .settings {
         transform: scale(80%);
