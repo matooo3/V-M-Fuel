@@ -37,8 +37,8 @@
 #filter-bar {
     display: flex;
     justify-content: start;
+    align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
 }
 
 .filterBtn {
@@ -50,6 +50,13 @@
     background-color: var(--fill-color);
     border: 1px solid transparent;
     max-height: 4.5rem;
+}
+
+@media (max-width: 400px) {
+    .filterBtn{
+        max-height: 3.5rem;
+        padding: 8px 16px; 
+    }
 }
 
 .filterBtn span {
