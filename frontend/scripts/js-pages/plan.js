@@ -50,7 +50,7 @@ function updateMonthYearDisplay(monthNames, currentMonth, currentYear) {
 }
 
 // Generate day content data
-function generateDayContent(currentWeek, currentDay) {
+function generateDayContent(currentWeek) {
     const dayNames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     
     // Content for each day of the week
