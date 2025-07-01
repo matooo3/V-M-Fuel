@@ -3,8 +3,7 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 18vh 6vh auto;
-    height: 90vh;
-    overflow: hidden;
+    height: calc(100vh - var(--nav-height));
 
 }
 
@@ -12,7 +11,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin: 3.3vh 0px 0px 33px;
+    margin: 2.7vh 27px 0px 27px;
     flex-shrink: 0;
 }
 
@@ -26,7 +25,7 @@
     border: solid 1px #F9BEBE;
     background-color: #FEF2F2;
     width: 15%;
-    min-width: 20px;
+    min-width: 60px;
     max-width: 60px;
     height: 15%;
     min-height: 20px;
@@ -63,6 +62,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    margin-top: 10px;
 }
 
 .tab {
@@ -86,6 +86,7 @@
     position: relative;
     width: 35%;
     height: 35%;
+    max-height: 170px;
 
 }
 
@@ -123,7 +124,7 @@
 }
 
 #next-meals {
-    margin: 0px 33px 0px 33px;
+    margin: 0px 27px 0px 27px;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -137,7 +138,7 @@
     margin-bottom: 10px;
 }
 
-#meals-info {
+#meals-info-db {
     flex: 1;
     /* Take remaining space */
     min-height: 0;
@@ -157,7 +158,6 @@
     padding: 10px 10px;
     display: flex;
     height: 90%;
-    max-height: 80px;
     align-items: flex-start;
     gap: 16px;
     padding-right: 1rem;
@@ -205,7 +205,7 @@
     flex: 1;
 }
 
-.meal-name {
+.meal-name-db {
     font-size: 1.6rem;
     font-weight: 600;
     color: var(--main-text-color);
@@ -216,42 +216,42 @@
     margin: 0;
 }
 
-.nutrition-info {
+.nutrition-info-db {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 24px;
-    margin-right: 1.5rem;
+    margin-right: 15px;
 }
 
-.nutrition-item {
+.nutrition-item-db {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
 }
 
-.nutrition-value {
+.nutrition-value-db {
     font-size: 1.2rem;
     font-weight: 600;
     color: #111827;
     margin: 0 0 2px 0;
 }
 
-.nutrition-text {
+.nutrition-text-db {
     font-size: 1.2rem;
 }
 
 /* Webkit browsers (Chrome, Safari) */
-#meals-info::-webkit-scrollbar {
+#meals-info-db::-webkit-scrollbar {
     display: none;
 }
 
-#info-stats {
+#info-stats-db {
     display: flex;
     justify-content: center;
     gap: 34px;
-    height: 69px;
+    height: 100%;
 }
 
 #planned {
@@ -264,7 +264,7 @@
 
 }
 
-.meals-amount {
+.meals-amount-db {
     font-family: 'figtree', sans-serif;
     font-weight: 500;
 }
@@ -295,27 +295,26 @@
     gap: 15px;
 }
 
-.mealcards {
+.mealcards-db {
     padding: 8px 15px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
     height: 85%;
-    max-height: 70px;
     margin-bottom: 10px;
     margin-top: -15px;
     gap: 15px;
 }
 
-.red-point {
-    width: 10px;
-    height: 10px;
+.red-point-db {
+    min-width: 10px;
+    min-height: 10px;
     border-radius: 50%;
     background-color: var(--border-color);
 }
 
-.red-point.active {
+.red-point-db.active {
     background-color: var(--accent-color);
 }
 
@@ -338,7 +337,7 @@
 #user-text {
     font-family: 'figtree', sans-serif;
     margin-bottom: 2px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 #user-amount {
@@ -362,7 +361,7 @@
     color: var(--main-text-color);
 }
 
-#search-icon {
+#search-icon-db {
     width: 15px;
     height: 15px;
     margin: -2px;
@@ -370,7 +369,7 @@
     align-items: center;
 }
 
-#search-bar {
+#search-bar-db {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -382,7 +381,7 @@
     padding: 8px 12px;
 }
 
-#search-bar input {
+#search-bar-db input {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -394,7 +393,7 @@
     line-height: 1;
 }
 
-#search-bar input::placeholder {
+#search-bar-db input::placeholder {
     color: #D1D1D1;
     font-size: 1.4rem;
     font-weight: 300;
@@ -413,8 +412,9 @@
     display: flex;
     align-items: center;
     border-radius: 6px;
-    height: 55px;
-    flex-shrink: 0;
+    height: 100%;
+    max-height: 70px;
+    min-height: 55px;
     width: 100%;
     gap: 10px;
     padding-right: 1rem;
@@ -429,21 +429,27 @@
     justify-content: center;
     align-items: center;
     margin-left: 1rem;
-    border-radius: 50%;
+    border-radius: 60%;
     background-color: #E5E7EB;
     height: 3.5rem;
-    width: 3.5rem;
+    min-width: 3.5rem;
     color: var(--main-text-color)
 }
 
 .user-name {
     font-size: 1.2rem;
-    color: var(--main-text-color)
+    color: var(--main-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-email {
     font-size: 1rem;
     color: #6B7280;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-data {
@@ -451,12 +457,14 @@
     flex-direction: column;
     justify-content: center;
     flex: 1;
+    min-width: 0;
 }
 
 #user-role {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: fit-content;
     gap: 10px;
 }
 
@@ -465,6 +473,7 @@
     background-color: #FEF2F2;
     width: 6rem;
     height: 2rem;
+    min-width: 5rem; 
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -488,17 +497,9 @@
     height: 1.2rem;
 }
 
-@media (max-height: 850px) {
-
-    #admin-container {
-        margin-top: 10px;
-    }
-
-}
-
 @media (max-height: 700px) {
-
-    html {
+    
+    html{
         font-size: 8px;
     }
 
@@ -519,7 +520,7 @@
     }
 
     .progress-text {
-        font-size: 2.4rem;
+        font-size: 2.8rem;
     }
 
     .roboto {
@@ -553,6 +554,18 @@
         margin-bottom: 5px;
     }
 }
+
+@media (max-width: 380px) {
+
+    .progress-text {
+        font-size: 2.4rem;
+    }
+
+    .nutrition-info-db{
+        margin-right: 0px;
+    }
+}
+
 
 /* Status tag colors 
     --status-fill-color: #FEF2F2;

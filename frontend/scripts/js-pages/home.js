@@ -8,8 +8,29 @@ export default async function loadHome() {
     const html = await loadHTMLTemplate('/frontend/html-pages/home.html');
     app.innerHTML = html;
     updateAdminContainer();
+    // Eventlistener: -------------------------------------------
+    // DOM-Manipulation:
 
-    function updateAdminContainer() {
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function () {
+            // Remove 'active' class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Add 'active' class to the clicked tab
+            this.classList.add('active');
+            // Update the admin-container content
+            updateAdminContainer();
+
+        });
+    });
+
+}
+
+
+
+function updateAdminContainer() {
         const activeTab = document.querySelector('.tab.active');
         const adminContainer = document.getElementById('admin-container');
 
@@ -25,7 +46,7 @@ export default async function loadHome() {
         <div id="next-meals">
             <span id="next-meal-text">Next meal</span>
 
-            <div id="meals-info">
+            <div id="meals-info-db">
                 <div id="next-meal-card" class="card drop-shadow">
                     <input id="checked-circle" class="checkbox" type="checkbox">
 
@@ -35,27 +56,27 @@ export default async function loadHome() {
                             <span class="subtext">Lunch</span>
                         </div>
 
-                        <div class="nutrition-info">
-                            <div class="nutrition-item">
-                                <p class="nutrition-value">1.1g</p>
-                                <p class="subtext nutrition-text">Protein</p>
+                        <div class="nutrition-info-db">
+                            <div class="nutrition-item-db">
+                                <p class="nutrition-value-db">1.1g</p>
+                                <p class="subtext nutrition-text-db">Protein</p>
                             </div>
 
-                            <div class="nutrition-item">
-                                <p class="nutrition-value">22.8g</p>
-                                <p class="subtext nutrition-text">Carbs</p>
+                            <div class="nutrition-item-db">
+                                <p class="nutrition-value-db">22.8g</p>
+                                <p class="subtext nutrition-text-db">Carbs</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="info-stats">
+                <div id="info-stats-db">
                     <div id="planned" class="card drop-shadow">
-                        <h1 class="meals-amount">4</h1>
+                        <h1 class="meals-amount-db">4</h1>
                         <p class="subtext">Meals planned</p>
                     </div>
                     <div id="eaten" class="card drop-shadow">
-                        <h1 class="meals-amount">1</h1>
+                        <h1 class="meals-amount-db">1</h1>
                         <p class="subtext">eaten meals</p>
                     </div>
                 </div>
@@ -63,18 +84,18 @@ export default async function loadHome() {
                 <span id="todays-meals-text">Today's meals</span>
 
                 <div id="todays-meals-container">
-                    <div class="card drop-shadow mealcards">
-                        <div class="red-point"></div>
+                    <div class="card drop-shadow mealcards-db">
+                        <div class="red-point-db"></div>
                         <div id="todays-meal-info">
-                            <h3 class="meal-name">Breakfast</h3>
+                            <h3 class="meal-name-db">Breakfast</h3>
                             <span class="subtext">Avocado Toast with Eggs</span>
                         </div>
                         <h3 id="todays-calories">420ckal</h3>
                     </div>
-                    <div class="card drop-shadow mealcards">
-                        <div class="red-point"></div>
+                    <div class="card drop-shadow mealcards-db">
+                        <div class="red-point-db"></div>
                         <div id="todays-meal-info">
-                            <h3 class="meal-name">Lunch</h3>
+                            <h3 class="meal-name-db">Lunch</h3>
                             <span class="subtext">Chili con carne</span>
                         </div>
                         <h3 id="todays-calories">820ckal</h3>
@@ -92,8 +113,8 @@ export default async function loadHome() {
                     <div id="user-red-point"></div>
                     <span class="subtext meals-amount-text">500</span>
                 </div>
-                <div id="search-bar">
-                    <img id="search-icon" src="/frontend/assets/icons/search-icon.png" alt="search icon">
+                <div id="search-bar-db">
+                    <img id="search-icon-db" src="/frontend/assets/icons/search-icon.png" alt="search icon">
                     <input type="text" placeholder="Search User">
                 </div>
             </div>
@@ -159,26 +180,6 @@ export default async function loadHome() {
         }
     }
 
-    // Eventlistener: -------------------------------------------
-    // DOM-Manipulation:
-
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', function () {
-            // Remove 'active' class from all tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Add 'active' class to the clicked tab
-            this.classList.add('active');
-            // Update the admin-container content
-            updateAdminContainer();
-
-        });
-    });
-
-
-}
 
 
 
