@@ -152,19 +152,19 @@
 
 @media (max-width: 350px) {
     .quantity-control {
-        width: 135px;
+        width: 138px;
     }
 }
 @media (max-width: 337px) {
     .quantity-control {
-        width: 128px;
+        width: 133px;
     }
 }
 
 .amount {
     font-size: 1.6rem;
     color: #000000;
-    margin-right: -15px;
+    margin-right: -12px;
 }
 .unit {
     font-size: 1.2rem;
@@ -212,7 +212,12 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-radius: 0;
 }
+
 #newItem input {
     width: 100%;
     padding: 9px 14px;
