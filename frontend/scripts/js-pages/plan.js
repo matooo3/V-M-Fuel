@@ -290,5 +290,5 @@ function initializeCalendar() {
     
     const dayContent = generateDayContent(currentWeek, currentDay);
     updateContent(currentDay, dayContent);
-    addDayEventListeners(dayContent, currentDay);
+    addDayEventListeners(dayContent);
 }
