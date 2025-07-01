@@ -15,6 +15,13 @@ export default async function loadList() {
 
     // Add event listener 
 
+    const filterButtons = document.querySelectorAll('#filter-bar button');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            setActiveFilterButton(button);
+        });
+    });
+
     document.getElementById("add-item-btn").addEventListener("click", () => {
 
         // only allow to open it once:
@@ -187,9 +194,27 @@ function changeAmount(event) {
 }
 
 
+// -----------------------------------------------------------
+// active class for BUTTONS in filter-bar
+// -----------------------------------------------------------
+
+function setActiveFilterButton(button) {
+    const buttons = document.querySelectorAll('#filter-bar button');
+    buttons.forEach(btn => {
+        if (btn === button) {
+            btn.classList.add('active');
+            btn.classList.remove('notActive');
+        } else {
+            btn.classList.remove('active');
+            btn.classList.add('notActive');
+        }
+    });
+}
 
 // -----------------------------------------------------------
 // --------------------- SWIPE TO DELETE ---------------------
+// -----------------------------------------------------------
+
 function initializeSwipeToDelete(container) {
     let isSwiping = false;
     let startX = 0;
