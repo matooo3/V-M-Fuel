@@ -39,6 +39,9 @@ html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -50,12 +53,13 @@ h1 {
     color: black;
     font-size: 2.4rem;
     margin: 0px;
+    font-weight: medium;
 }
 
 h3 {
     font-size: 1.6rem;
     color: #1F2937;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .green-card {
@@ -75,6 +79,7 @@ h3 {
 .subtext {
     color: #6B7280;
     font-weight: 300;
+    font-size: 14px;
 }
 
 .card {
@@ -161,7 +166,7 @@ button {
     font-variation-settings: "wdth" 100;
 }
 
-@media (max-height: 750px) {
+@media (max-height: 700px) {
 
     .settings {
         transform: scale(80%);
