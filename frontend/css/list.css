@@ -1,3 +1,9 @@
+/* Flex‑Children dürfen unter ihren Inhalt schrumpfen */
+.list-container *,
+#new-item-container * {
+  min-width: 0;
+}
+
 .list-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -56,6 +62,12 @@
     .filterBtn{
         max-height: 3.5rem;
         padding: 8px 16px; 
+    }
+}
+@media (max-width: 357px) {
+    .filterBtn{
+        max-height: 3.0rem;
+        padding: 6px 12px; 
     }
 }
 
@@ -136,6 +148,17 @@
     width: 150px;
     gap: 10px;
     touch-action: pan-y;
+}
+
+@media (max-width: 350px) {
+    .quantity-control {
+        width: 135px;
+    }
+}
+@media (max-width: 337px) {
+    .quantity-control {
+        width: 128px;
+    }
 }
 
 .amount {
