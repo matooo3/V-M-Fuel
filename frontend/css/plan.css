@@ -1,0 +1,203 @@
+#meal-plan {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    height: 100%;
+    min-height: 90vh;
+    padding: 27px 27px 0px 27px;
+}
+
+.list-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8%;
+    margin-bottom: 20px;
+}
+
+.list-header h1 {
+    font-size: 2.4rem;
+    font-weight: 500;
+}
+
+.subtext {
+    font-size: 1.4rem;
+}
+
+.calendar-container {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 15px 15px 10px 15px;
+    width: 100%;
+    min-height: 120px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 30%;
+}
+
+.month-year {
+    color: #6B7280;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.generate-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    height: 90%;
+    width: 30%;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    font-weight: 500;
+    margin-right: 6px;
+}
+
+.days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 8px;
+    place-items: center;
+}
+
+.day-label {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #6B7280;
+    font-weight: 400;
+    padding: 2px 0;
+    width: 28px;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    place-items: center;
+}
+
+.day {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--main-text-color);
+    background: transparent;
+}
+
+.day:hover {
+    background: #f0f0f0;
+}
+
+.day.selected {
+    background: var(--accent-color);
+    color: white;
+}
+
+#content-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding-top: 15px;
+    max-height: calc(90vh - 200px);
+    overflow-y: auto; 
+    gap: 15px;
+    scrollbar-width: none;
+}
+
+#content-section::-webkit-scrollbar {
+    display: none;
+}
+
+.plan-meal-card {
+    height: 145px;
+    width: 100%;
+    padding: 10px 20px 0px 20px;
+}
+
+.meal-header-mp {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+.meal-title-mp{
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--main-text-color);    
+}
+
+.meal-calories-mp{
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--main-text-color);
+}
+
+.nutrition-label-mp{
+    font-size: 1.2rem;
+        display: flex;
+    justify-content: center;
+}
+
+.nutrition-value-mp{
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+}
+
+.nutrition-values-mp{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 5px 40px 10px 40px;
+}
+
+.nutrition-item-mp{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.meal-details-mp{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-mp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.clock-logo-mp{
+    width: 12px;
+    height: 12px;
+    margin-top: -1px;
+}
+
+.users-logo-mp{
+    width: 12px;
+    height: 12px;
+}
+
+.footer-text-mp{
+    color: #6B7280;
+    font-weight: 300;
+    font-size: 1.2rem;
+}

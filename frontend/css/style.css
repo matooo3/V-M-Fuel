@@ -10,6 +10,7 @@
     /* Color for navigation bar items (not selected), star and clos icon */
     --accent-color: #E35252;
     --circle-stroke: 12px;
+    --nav-height: max(10vh, 80px);
 
     /* ----------------------*/
     /* card colors */
@@ -124,7 +125,7 @@ button {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 10vh;
+    height: var(--nav-height);
     color: var(--icon-grey-color);
     border-top: 1px solid var(--border-color);
     display: flex;
@@ -172,14 +173,6 @@ button {
         transform: scale(80%);
     }
 
-    .nav-icons {
-        transform: scale(80%);
-    }
-
-    #main-nav a.active::after {
-        width: 30px;
-    }
-
 }
 
 @media (max-height: 580px) {
@@ -188,10 +181,14 @@ button {
         transform: scale(70%);
     }
 
+}
 
-    #main-nav a {
-        transform: scale(60%);
-        padding: 5px;
+@media (max-width: 370px) {
+    .nav-icons {
+        transform: scale(70%);
     }
 
+    #main-nav{
+        gap: 30px;
+    }
 }
