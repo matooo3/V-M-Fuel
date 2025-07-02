@@ -49,6 +49,9 @@
     background: var(--accent-color);
     color: white;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 90%;
     width: 30%;
     padding: 4px 12px;
@@ -111,7 +114,7 @@
     margin-top: 10px;
     padding-top: 15px;
     max-height: calc(90vh - 200px);
-    overflow-y: auto; 
+    overflow-y: auto;
     gap: 15px;
     scrollbar-width: none;
 }
@@ -121,7 +124,7 @@
 }
 
 .plan-meal-card {
-    height: 145px;
+    min-height: 145px;
     width: 100%;
     padding: 10px 20px 0px 20px;
 }
@@ -132,32 +135,33 @@
     align-items: flex-start;
     margin-bottom: 8px;
 }
-.meal-title-mp{
-    font-size: 1.6rem;
-    font-weight: 500;
-    color: var(--main-text-color);    
-}
 
-.meal-calories-mp{
+.meal-title-mp {
     font-size: 1.6rem;
     font-weight: 500;
     color: var(--main-text-color);
 }
 
-.nutrition-label-mp{
+.meal-calories-mp {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--main-text-color);
+}
+
+.nutrition-label-mp {
     font-size: 1.2rem;
-        display: flex;
+    display: flex;
     justify-content: center;
 }
 
-.nutrition-value-mp{
+.nutrition-value-mp {
     font-size: 1.2rem;
     font-weight: 500;
     display: flex;
     justify-content: center;
 }
 
-.nutrition-values-mp{
+.nutrition-values-mp {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -165,39 +169,56 @@
     padding: 5px 40px 10px 40px;
 }
 
-.nutrition-item-mp{
+.nutrition-item-mp {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.meal-details-mp{
+.meal-details-mp {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
 }
 
-.footer-mp{
+.footer-mp {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 4px;
 }
 
-.clock-logo-mp{
+.clock-logo-mp {
     width: 12px;
     height: 12px;
     margin-top: -1px;
 }
 
-.users-logo-mp{
+.users-logo-mp {
     width: 12px;
     height: 12px;
 }
 
-.footer-text-mp{
+.footer-text-mp {
     color: #6B7280;
     font-weight: 300;
     font-size: 1.2rem;
+}
+
+@media (max-width: 400px) {
+
+    .nutrition-values-mp {
+
+        gap: 0px;
+
+    }
+
+}
+
+@media (max-width: 370px) {
+
+    .nutrition-values-mp {
+        padding: 5px 20px 10px 20px;
+    }
 }
