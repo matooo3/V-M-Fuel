@@ -64,10 +64,15 @@
     justify-content: start;
     align-items: center;
     gap: 20px;
-    scrollbar-width: none; 
+    scrollbar-width: none; /* Hides scrollbar in Firefox */
+    -ms-overflow-style: none; /* Hides scrollbar in Internet Explorer */
     overflow-x: auto;
 }
 
+#filter-bar-p::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in WebKit browsers */
+}
+}
 .filterBtn-p.active-p {
     background-color: var(--accent-color);
     color: var(--background-color);
