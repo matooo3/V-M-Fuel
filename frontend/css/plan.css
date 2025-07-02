@@ -7,14 +7,14 @@
     padding: 27px 27px 0px 27px;
 }
 
-.list-header {
+.list-header-pl {
     display: flex;
     flex-direction: column;
-    gap: 8%;
+    gap: 6px;
     margin-bottom: 20px;
 }
 
-.list-header h1 {
+.list-header-pl h1 {
     font-size: 2.4rem;
     font-weight: 500;
 }
