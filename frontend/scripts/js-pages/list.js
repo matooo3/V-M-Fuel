@@ -17,9 +17,11 @@ export default async function loadList() {
 
     // add event listener to settings class
     const settingsButton = document.querySelector('.settings');
-    settingsButton.addEventListener('click', function () {
-        window.location.href = '/frontend/html-pages/settings.html';
-    });
+    if (settingsButton) {
+        settingsButton.addEventListener('click', function () {
+            window.location.href = '/frontend/html-pages/settings.html';
+        });
+    }
 
     const filterButtons = document.querySelectorAll('#filter-bar button');
     filterButtons.forEach(button => {
