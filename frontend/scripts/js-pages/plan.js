@@ -248,10 +248,10 @@ function populateDaysGrid(currentWeek, today, currentMonth) {
         if (date.toDateString() === today.toDateString()) {
             dayElement.classList.add('selected');
         }
-        
+
         // Style days from other months differently
         if (date.getMonth() !== currentMonth) {
-            dayElement.style.color = '#ccc';
+           dayElement.classList.add('other-month'); 
         }
         
         daysGrid.appendChild(dayElement);
@@ -272,6 +272,7 @@ function addDayEventListeners(dayContent) {
     document.querySelectorAll('.day').forEach(dayElement => {
         dayElement.addEventListener('click', function() {
             document.querySelectorAll('.day').forEach(d => d.classList.remove('selected'));
+
             this.classList.add('selected');
             
             const day = parseInt(this.getAttribute('data-day'));

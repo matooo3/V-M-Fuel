@@ -1,10 +1,8 @@
 #home {
-
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 18vh 6vh auto;
     height: calc(100vh - var(--nav-height));
-
 }
 
 #greeting-container {
@@ -62,7 +60,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 .tab {
@@ -473,7 +471,7 @@
     background-color: #FEF2F2;
     width: 6rem;
     height: 2rem;
-    min-width: 5rem; 
+    min-width: 5rem;
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -497,23 +495,41 @@
     height: 1.2rem;
 }
 
+@media (max-height: 750px) {
+    #admin-panel {
+        border: none;
+    }
+
+    .tab {
+        transform: scale(80%);
+    }
+}
+
 @media (max-height: 700px) {
-    
-    html{
-        font-size: 8px;
+
+    .roboto {
+        font-size: 3rem;
+    }
+
+    #admin-container {
+        margin-top: 0px;
+    }
+
+    .tab {
+        transform: scale(80%);
+    }
+
+    .tag-text {
+        font-size: 0.8rem;
     }
 
     #next-meal-text {
         margin-bottom: 10px;
     }
 
-    #admin-panel {
-        border: none;
-    }
-
 }
 
-@media (max-height: 580px) {
+@media (max-height: 650px) {
 
     .progress-wrapper {
         transform: scale(80%);
@@ -523,15 +539,11 @@
         font-size: 2.8rem;
     }
 
-    .roboto {
-        font-size: 2.8rem;
-    }
-
 
     .tag {
         position: absolute;
-        top: 48px;
-        left: 100px;
+        top: 65px;
+        left: 120px;
         width: 50px;
         height: 15px;
     }
@@ -540,20 +552,31 @@
         grid-template-rows: 15vh 8vh auto;
     }
 
+    #admin-container {
+        margin-top: -20px;
+    }
+
     .tag-logo {
         width: 10px;
         height: 10px;
     }
 
-    .tab {
-        width: 70px;
-        height: 20px;
-    }
+}
 
-    #next-meal-text {
-        margin-bottom: 5px;
+@media (max-height: 580px) {
+
+    #greeting-container {
+        margin: 5px 27px 0px 27px;
+    }
+    .tag {
+        position: absolute;
+        top: 50px;
+        left: 120px;
+        width: 50px;
+        height: 15px;
     }
 }
+
 
 @media (max-width: 380px) {
 
@@ -561,7 +584,7 @@
         font-size: 2.4rem;
     }
 
-    .nutrition-info-db{
+    .nutrition-info-db {
         margin-right: 0px;
     }
 }

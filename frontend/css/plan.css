@@ -103,6 +103,10 @@
     background: #f0f0f0;
 }
 
+.other-month{
+    color: #ccc;
+}
+
 .day.selected {
     background: var(--accent-color);
     color: white;
