@@ -374,3 +374,13 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     background-color: red;
 }
 
+@media (max-width: 350px) {
+.quantity-control {
+width: 138px;
+}
+}
+@media (max-width: 337px) {
+.quantity-control {
+width: 133px;
+}
+}
