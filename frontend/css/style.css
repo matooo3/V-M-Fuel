@@ -80,7 +80,7 @@ h3 {
 .subtext {
     color: #6B7280;
     font-weight: 300;
-    font-size: 14px;
+    font-size: 1.4rem;
 }
 
 .card {
@@ -105,7 +105,7 @@ button {
     width: 30px;
     margin: 10px;
     position: absolute;
-    top: 20px;
+    top: 15px;
     right: 20px;
 }
 
@@ -167,21 +167,6 @@ button {
     font-variation-settings: "wdth" 100;
 }
 
-@media (max-height: 700px) {
-
-    .settings {
-        transform: scale(80%);
-    }
-
-}
-
-@media (max-height: 580px) {
-
-    .settings {
-        transform: scale(70%);
-    }
-
-}
 
 @media (max-width: 370px) {
 
