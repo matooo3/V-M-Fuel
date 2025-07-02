@@ -72,7 +72,7 @@
 #filter-bar-p::-webkit-scrollbar {
     display: none; /* Hides scrollbar in WebKit browsers */
 }
-}
+
 .filterBtn-p.active-p {
     background-color: var(--accent-color);
     color: var(--background-color);
