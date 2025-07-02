@@ -10,6 +10,12 @@ export default async function loadPlan() {
     
     // Initialize calendar after HTML is loaded
     initializeCalendar();
+
+    // add event listener to settings class
+    const settingsButton = document.querySelector('.settings');
+    settingsButton.addEventListener('click', function () {
+        window.location.href = '/frontend/html-pages/settings.html';
+    });
 }
 
 // Get current date and calculate current week

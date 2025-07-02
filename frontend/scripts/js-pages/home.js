@@ -26,6 +26,12 @@ export default async function loadHome() {
         });
     });
 
+    // add event listener to settings class
+    const settingsButton = document.querySelector('.settings');
+    settingsButton.addEventListener('click', function () {
+        window.location.href = '/frontend/html-pages/settings.html';
+    });
+
 }
 
 

@@ -18,6 +18,11 @@
     font-family: inherit;
 }
 
+.settings-container a {
+    text-decoration: none;
+    color: var(--main-text-color);
+}
+
 .settings-container h1 {
     font-size: 1.8rem;
     font-weight: 500;
@@ -399,3 +404,4 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     display: none;
     /* Chrome, Safari and Opera */
 }
+
