@@ -7,12 +7,12 @@
 .list-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 7vh 7vh 5.5vh 6vh auto;
+    grid-template-rows: 5vh 4vh 5.5vh 5.5vh auto;
     height: 90vh;
     width: 100%;
     overflow-y: auto;
     padding: 27px 27px 0 27px;
-    gap: 16px;
+    gap: 12px;
 }
 
 .list-header {
