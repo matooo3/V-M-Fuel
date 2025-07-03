@@ -22,11 +22,17 @@
 
     /* green */
     --positive-color: #1BCE86;
-    --positive-text-color-lvl1: #065F46;
+    --positive-text-header: #065F46;
+    --positive-fill-color: #EEFFF6;
+    --positive-border-color: #BBF7D0;
+
+
 
     /* red */
     --negative-text-header: #AC1A1A;
     --blocking-color: #FF7C7C;
+    --blocking-fill-color: #FEF2F2;
+    --blocking-border-color: #FECACA;
 
 
 
@@ -99,6 +105,7 @@ input::placeholder {
 
 button {
     border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .settings {

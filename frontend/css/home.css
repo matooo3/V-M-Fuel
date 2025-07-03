@@ -11,6 +11,7 @@
     justify-content: flex-start;
     margin: 2.7vh 27px 0px 27px;
     flex-shrink: 0;
+    gap: 5px;
 }
 
 #greeting-text {

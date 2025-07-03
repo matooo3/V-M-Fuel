@@ -1,5 +1,7 @@
 <div class="meals-container">
+
     <img class="settings" src="/frontend/assets/icons/settings.png" alt="settings">
+
     <div class="meals-header">
         <h1>Preferences</h1>
         <span class="subtext subtext-p">Customize your meals</span>
@@ -13,6 +15,111 @@
         <button class="filterBtn-p subtext active-p">All</button>
         <button class="filterBtn-p subtext notActive-p">Meals</button>
         <button class="filterBtn-p long-text subtext notActive-p">Ingredients</button>
+    </div>
+
+    <div id="summary-p">
+
+        <div id="preferred">
+            <div class="header-boxes-p">
+                <div id="green-point-p"></div>
+                <span class="header-preferred-p">Preferred</span>
+            </div>
+
+            <div class="subtext-boxes-p">
+                <span>0 meal</span>
+                <span>0 ingredients</span>
+            </div>
+        </div>
+
+        <div id="blocked">
+            <div class="header-boxes-p">
+                <div id="red-point-p"></div>
+                <span class="header-blocked-p">Blocked</span>
+            </div>
+
+            <div class="subtext-boxes-p">
+                <span>0 meal</span>
+                <span>0 ingredients</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="food-p">
+        <div class="food-separation">
+            <div class="headerblock-p">
+                <span class="header-list-p">Meals</span>
+                <button class="add-item-p" id="add-meal-p">
+                    <img id="plus-preferences" src="/frontend/assets/icons/plus-preferences.png" alt="+">
+                </button>
+            </div>
+            <div id="dishes-list-p">
+                <div class="card drop-shadow dish-card-p">
+                    <div class="first-row-of-dish">
+                        <div class="descr-p">
+                            <h3 class="title-p">Avocado Toast with Eggs</h3>
+                            <div class="dish-info-p">
+                                <p class="subtext">420 ckal</p>
+                                <div class="subtext-point"></div>
+                                <p class="subtext">10 min</p>
+                            </div>
+                        </div>
+                        <div class="preference-buttons">
+                            <button class="like" data-meal="meal-1">
+                                <svg class="star-icon" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2l2.4 4.8 5.6.8-4 3.9.9 5.5L12 14.8 7.1 17l.9-5.5-4-3.9 5.6-.8L12 2z" />
+                                </svg>
+                            </button>
+                            <button class="dislike" data-meal="meal-1">
+                                <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tags-container-p">
+                        <button class="tag-p">bulk</button>
+                        <button class="tag-p">maintenance</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="food-separation">
+            <div class="headerblock-p">
+                <span class="header-list-p">Ingredients</span>
+                <button class="add-item-p" id="add-ingredient-p">
+                    <img id="plus-preferences" src="/frontend/assets/icons/plus-prefernces.png" alt="+">
+                </button>
+            </div>
+            <div id="ingredients-list-p">
+                <div class="card drop-shadow ingredient-card-p">
+
+                    <div class="descr-p">
+                        <h3 class="title-p">Avocado</h3>
+                        <p class="subtext">Fruit</p>
+                    </div>
+
+                    <div class="preference-buttons">
+                        <button class="like" data-meal="ingredient-1">
+                            <svg class="star-icon" viewBox="0 0 24 24">
+                                <path d="M12 2l2.4 4.8 5.6.8-4 3.9.9 5.5L12 14.8 7.1 17l.9-5.5-4-3.9 5.6-.8L12 2z" />
+                            </svg>
+                        </button>
+                        <button class="dislike" data-meal="ingredient-1">
+                            <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
