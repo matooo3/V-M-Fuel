@@ -1,6 +1,6 @@
 <div class="meals-container">
 
-    <img class="settings" src="/frontend/assets/icons/settings.png" alt="settings">
+    <img class="settings" src="/frontend/assets/icons/settings.svg" alt="settings">
 
     <div class="meals-header">
         <h1>Preferences</h1>
@@ -50,7 +50,7 @@
             <div class="headerblock-p">
                 <span class="header-list-p">Meals</span>
                 <button class="add-item-p" id="add-meal-p">
-                    <img id="plus-preferences" src="/frontend/assets/icons/plus-preferences.png" alt="+">
+                    <img id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+">
                 </button>
             </div>
             <div id="dishes-list-p">
@@ -66,10 +66,7 @@
                         </div>
                         <div class="preference-buttons">
                             <button class="like" data-meal="meal-1">
-                                <svg class="star-icon" viewBox="0 0 24 24">
-                                    <path
-                                        d="M12 2l2.4 4.8 5.6.8-4 3.9.9 5.5L12 14.8 7.1 17l.9-5.5-4-3.9 5.6-.8L12 2z" />
-                                </svg>
+                                <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
                             </button>
                             <button class="dislike" data-meal="meal-1">
                                 <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
@@ -88,11 +85,11 @@
             </div>
         </div>
 
-        <div id="food-separation">
+        <div class="food-separation">
             <div class="headerblock-p">
                 <span class="header-list-p">Ingredients</span>
                 <button class="add-item-p" id="add-ingredient-p">
-                    <img id="plus-preferences" src="/frontend/assets/icons/plus-prefernces.png" alt="+">
+                    <img id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+">
                 </button>
             </div>
             <div id="ingredients-list-p">
@@ -104,11 +101,9 @@
                     </div>
 
                     <div class="preference-buttons">
-                        <button class="like" data-meal="ingredient-1">
-                            <svg class="star-icon" viewBox="0 0 24 24">
-                                <path d="M12 2l2.4 4.8 5.6.8-4 3.9.9 5.5L12 14.8 7.1 17l.9-5.5-4-3.9 5.6-.8L12 2z" />
-                            </svg>
-                        </button>
+                            <button class="like" data-meal="ingredient-1">
+                                <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
+                            </button>
                         <button class="dislike" data-meal="ingredient-1">
                             <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">

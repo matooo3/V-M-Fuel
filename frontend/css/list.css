@@ -2,6 +2,7 @@
 .list-container *,
 #new-item-container * {
     min-width: 0;
+    font-family: inherit;
 }
 
 .list-container {
@@ -121,15 +122,12 @@
 }
 
 .grocery-item {
-    background-color: white;
-    /* Bleibt für Schatten/Form */
+    background-color: transparent; /* Make container transparent */
     border-radius: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-
-    /* WICHTIG: Erforderlich für die Positionierung des Delete-Buttons */
+    box-shadow: none; /* Remove shadow from container */
     position: relative;
-    overflow: hidden;
-    /* Die alten transition, will-change, touch-action etc. sind hier nicht mehr nötig */
+    overflow: hidden; /* Keep hidden to clip the delete button */
+    transition: none; /* Remove transition from container */
 }
 
 .item-details {
@@ -210,6 +208,7 @@
     outline: none;
     box-shadow: none;
     border-radius: 0;
+    overflow: visible;
 }
 
 #newItem input {
@@ -328,29 +327,28 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 
 
 /* ------------------- SWIPE TO DELETE ANIMATION ---------------------*/
+/* The actual card content that will slide */
 .swipe-content {
     background-color: white;
-    /* Verdeckt den roten Button */
     padding: 12px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
-    /* Muss über dem Delete-Button liegen */
     z-index: 2;
-    transition: transform 0.3s ease-out;
     cursor: pointer;
+    border-radius: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease-out, border-radius 0.3s ease-out; 
 }
 
-/* NEU: Der rote Delete-Button, der dahinter liegt */
-
+/* Delete button - starts with 0 width, grows dynamically */
 .swipe-delete {
     position: absolute;
     top: 0;
     right: 0;
-    width: 80px;
+    width: 0px; /* Start with 0 width */
     height: 100%;
-    /* background-color: var(--accent-color); */
     color: white;
     display: flex;
     justify-content: center;
@@ -360,12 +358,23 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     z-index: 1;
     cursor: pointer;
     background-color: var(--accent-color);
-    /* rot */
-    transform: scale(0.975);
-    /* leicht verkleinert, damit es nicht zu groß wirkt */
-    /* border radius nur rechts oben und rechts unten. links soll eckig bleiben */
+    border-radius: 0; /* No border radius to prevent bleeding */
+    opacity: 0; /* Start invisible */
+    transition: width 0.3s ease-out, opacity 0.3s ease-out;
+    overflow: hidden; /* Hide text when width is 0 */
+}
+
+/* Use a pseudo-element for the red background */
+.swipe-delete::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 15px; /* Start the red background 15px from the left */
+    background-color: var(--accent-color);
     border-radius: 0 15px 15px 0;
-    transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+    z-index: -1;
 }
 
 /* NEU: Klasse für die Lösch-Animation */

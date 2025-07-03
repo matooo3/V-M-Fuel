@@ -91,11 +91,11 @@ function generateDayContent(currentWeek) {
 
             <div class="meal-details-mp">
                 <div class="footer-mp">
-                    <img class="clock-logo-mp" src="/frontend/assets/icons/clock.png" alt="clock">
+                    <img class="clock-logo-mp" src="/frontend/assets/icons/clock.svg" alt="clock">
                     <p class="footer-text-mp">10 min</p>
                 </div>
                 <div class="footer-mp">
-                    <img class="users-logo-mp" src="/frontend/assets/icons/users.png" alt="users">
+                    <img class="users-logo-mp" src="/frontend/assets/icons/users.svg" alt="users">
                     <p class="footer-text-mp">1 serving</p>
                 </div>
             </div>
@@ -130,11 +130,11 @@ function generateDayContent(currentWeek) {
 
             <div class="meal-details-mp">
                 <div class="footer-mp">
-                    <img class="clock-logo-mp" src="/frontend/assets/icons/clock.png" alt="clock">
+                    <img class="clock-logo-mp" src="/frontend/assets/icons/clock.svg" alt="clock">
                     <p class="footer-text-mp">10 min</p>
                 </div>
                 <div class="footer-mp">
-                    <img class="users-logo-mp" src="/frontend/assets/icons/users.png" alt="users">
+                    <img class="users-logo-mp" src="/frontend/assets/icons/users.svg" alt="users">
                     <p class="footer-text-mp">1 serving</p>
                 </div>
             </div>
@@ -169,11 +169,11 @@ function generateDayContent(currentWeek) {
 
             <div class="meal-details-mp">
                 <div class="footer-mp">
-                    <img class="clock-logo-mp" src="/frontend/assets/icons/clock.png" alt="clock">
+                    <img class="clock-logo-mp" src="/frontend/assets/icons/clock.svg" alt="clock">
                     <p class="footer-text-mp">10 min</p>
                 </div>
                 <div class="footer-mp">
-                    <img class="users-logo-mp" src="/frontend/assets/icons/users.png" alt="users">
+                    <img class="users-logo-mp" src="/frontend/assets/icons/users.svg" alt="users">
                     <p class="footer-text-mp">1 serving</p>
                 </div>
             </div>
@@ -208,11 +208,11 @@ function generateDayContent(currentWeek) {
 
             <div class="meal-details-mp">
                 <div class="footer-mp">
-                    <img class="clock-logo-mp" src="/frontend/assets/icons/clock.png" alt="clock">
+                    <img class="clock-logo-mp" src="/frontend/assets/icons/clock.svg" alt="clock">
                     <p class="footer-text-mp">10 min</p>
                 </div>
                 <div class="footer-mp">
-                    <img class="users-logo-mp" src="/frontend/assets/icons/users.png" alt="users">
+                    <img class="users-logo-mp" src="/frontend/assets/icons/users.svg" alt="users">
                     <p class="footer-text-mp">1 serving</p>
                 </div>
             </div>

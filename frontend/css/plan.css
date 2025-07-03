@@ -118,7 +118,6 @@
     flex-direction: column;
     margin-top: 10px;
     padding-top: 15px;
-    max-height: calc(90vh - 200px);
     overflow-y: auto;
     gap: 15px;
     scrollbar-width: none;
@@ -130,8 +129,10 @@
 
 .plan-meal-card {
     min-height: 145px;
+    height: fit-content;
     width: 100%;
-    padding: 10px 20px 0px 20px;
+    padding: 10px 20px;
+    flex-shrink: 0;
 }
 
 .meal-header-mp {
@@ -226,4 +227,23 @@
     .nutrition-values-mp {
         padding: 5px 20px 10px 20px;
     }
+
+    .meal-calories-mp {
+    font-size: 1.4rem;
 }
+.generate-btn{
+    font-size: 1.2rem;
+}
+}
+
+@media (max-width: 340px) {
+
+.meal-calories-mp {
+    font-size: 1.2rem;
+}
+
+.generate-btn{
+    font-size: 1.1rem;
+}
+}
+

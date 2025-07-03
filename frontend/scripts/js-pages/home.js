@@ -39,41 +39,50 @@ export default async function loadHome() {
 
 
 function updateAdminContainer() {
-        const activeTab = document.querySelector('.tab.active');
-        const adminContainer = document.getElementById('admin-container');
+    const activeTab = document.querySelector('.tab.active');
+    const adminContainer = document.getElementById('admin-container');
 
-        if (activeTab && activeTab.textContent.trim() === 'Standard') {
-            adminContainer.innerHTML = `<div class="progress-wrapper">
+    if (activeTab && activeTab.textContent.trim() === 'Standard') {
+        adminContainer.innerHTML = `<div class="progress-wrapper">
             <svg class="progress-svg" viewBox="0 0 200 200">
                 <circle class="progress-circle-background" cx="100" cy="100" r="90"></circle>
                 <circle class="progress-bar" cx="100" cy="100" r="90"></circle>
             </svg>
-            <div class="progress-text">36.1%</div>
+            <div class="progress-text">1000 ckal</div>
         </div>
 
         <div id="next-meals">
             <span id="next-meal-text">Next meal</span>
 
-            <div id="meals-info-db">
-                <div id="next-meal-card" class="card drop-shadow">
-                    <input id="checked-circle" class="checkbox" type="checkbox">
+            <div class="meals-info-db">
+                <div class="card drop-shadow next-meal-card-db">
+                    <div class = "first-row-db">
+                        <input id="checked-circle" class="checkbox" type="checkbox">
 
-                    <div id="next-meal-info">
-                        <div id="next-meal-info-texts">
-                            <h3 class="meal-name">Chili con carne</h3>
-                            <span class="subtext">Lunch</span>
+                        <div class ="next-meal-info">
+                            <div class="next-meal-info-texts">
+                                <h3 class="meal-name">Chili con carne</h3>
+                                <span class="subtext">Lunch</span>
+                            </div>
+
+                            <span class="calories-db">
+                                830ckal
+                            </span>
                         </div>
+                    </div>
 
-                        <div class="nutrition-info-db">
-                            <div class="nutrition-item-db">
-                                <p class="nutrition-value-db">1.1g</p>
-                                <p class="subtext nutrition-text-db">Protein</p>
-                            </div>
-
-                            <div class="nutrition-item-db">
-                                <p class="nutrition-value-db">22.8g</p>
-                                <p class="subtext nutrition-text-db">Carbs</p>
-                            </div>
+                    <div class="nutrition-values-db">
+                        <div class="nutrition-item-mp">
+                            <p class="nutrition-value-mp">11g</p>
+                            <p class="nutrition-label-mp subtext">Protein</p>
+                        </div>
+                        <div class="nutrition-item-mp">
+                            <p class="nutrition-value-mp">22.8g</p>
+                            <p class="nutrition-label-mp subtext">Carbs</p>
+                        </div>
+                        <div class="nutrition-item-mp">
+                            <p class="nutrition-value-mp">0.3g</p>
+                            <p class="nutrition-label-mp subtext">Fat</p>
                         </div>
                     </div>
                 </div>
@@ -84,8 +93,8 @@ function updateAdminContainer() {
                         <p class="subtext">Meals planned</p>
                     </div>
                     <div id="eaten" class="card drop-shadow">
-                        <h1 class="meals-amount-db">1</h1>
-                        <p class="subtext">eaten meals</p>
+                        <h1 class="meals-amount-db">36%</h1>
+                        <p class="subtext">daily goal</p>
                     </div>
                 </div>
 
@@ -94,25 +103,25 @@ function updateAdminContainer() {
                 <div id="todays-meals-container">
                     <div class="card drop-shadow mealcards-db">
                         <div class="red-point-db"></div>
-                        <div id="todays-meal-info">
+                        <div class="todays-meal-info">
                             <h3 class="meal-name-db">Breakfast</h3>
                             <span class="subtext">Avocado Toast with Eggs</span>
                         </div>
-                        <h3 id="todays-calories">420ckal</h3>
+                        <h3 class="todays-calories">420ckal</h3>
                     </div>
                     <div class="card drop-shadow mealcards-db">
                         <div class="red-point-db"></div>
-                        <div id="todays-meal-info">
+                        <div class="todays-meal-info">
                             <h3 class="meal-name-db">Lunch</h3>
                             <span class="subtext">Chili con carne</span>
                         </div>
-                        <h3 id="todays-calories">820ckal</h3>
+                        <h3 class="todays-calories">820ckal</h3>
                     </div>                                  
                 </div>
             </div>
         </div>`;
-        } else {
-            adminContainer.innerHTML = `
+    } else {
+        adminContainer.innerHTML = `
             <div id="user-managment-container">
             <div id="user-info">
                 <h1 id="user-text">User management</h1>
@@ -122,7 +131,7 @@ function updateAdminContainer() {
                     <span class="subtext meals-amount-text">500</span>
                 </div>
                 <div id="search-bar-db">
-                    <img id="search-icon-db" src="/frontend/assets/icons/search-icon.png" alt="search icon">
+                    <img id="search-icon-db" src="/frontend/assets/icons/search-icon.svg" alt="search icon">
                     <input type="text" placeholder="Search User">
                 </div>
             </div>
@@ -137,10 +146,10 @@ function updateAdminContainer() {
                     </div>
                     <div id="user-role">
                         <div class="user-tag">
-                            <img class="user-tag-logo" src="/frontend/assets/icons/admin-tag.png" alt="tag">
+                            <img class="user-tag-logo" src="/frontend/assets/icons/admin-tag.svg" alt="tag">
                             <span class="user-tag-text">Admin</span>
                         </div>
-                        <img id="change-role" src="/frontend/assets/icons/change-role.png" alt="change role">
+                        <img id="change-role" src="/frontend/assets/icons/change-role.svg" alt="change role">
                     </div>
                 </div>
                 <div class="card user">
@@ -153,10 +162,10 @@ function updateAdminContainer() {
                     </div>
                     <div id="user-role">
                         <div class="user-tag">
-                            <img class="user-tag-logo" src="/frontend/assets/icons/admin-tag.png" alt="tag">
+                            <img class="user-tag-logo" src="/frontend/assets/icons/admin-tag.svg" alt="tag">
                             <span class="user-tag-text">Admin</span>
                         </div>
-                        <img id="change-role" src="/frontend/assets/icons/change-role.png" alt="change role">
+                        <img id="change-role" src="/frontend/assets/icons/change-role.svg" alt="change role">
                     </div>
                 </div>
                 <div class="card user">
@@ -185,8 +194,8 @@ function updateAdminContainer() {
                 </div>
             </div>
         </div>`;
-        }
     }
+}
 
 
 

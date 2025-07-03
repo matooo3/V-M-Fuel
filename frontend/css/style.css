@@ -9,6 +9,7 @@
     --icon-grey-color: #999999;
     /* Color for navigation bar items (not selected), star and clos icon */
     --accent-color: #E35252;
+    --accent-background: #FEF2F2;
     --circle-stroke: 12px;
     --nav-height: max(10vh, 80px);
 

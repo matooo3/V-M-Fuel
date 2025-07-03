@@ -693,7 +693,7 @@ function initNavigation() {
                             personalDataDiv.innerHTML = `
                                 <div class= "login-form">
                                     <div class = "sign-up" > 
-                                    <img src="../pictures/email logo.png" alt="email-logo" id="email-logo"/>
+                                    <img src="../pictures/email logo.svg" alt="email-logo" id="email-logo"/>
                                     <h1 id = "sign-up-text">Email sent!</h1>
                                     </div>
                                 </div>

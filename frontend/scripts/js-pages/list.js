@@ -1,6 +1,7 @@
 // ./pages/list.js
 import * as Storage from '../storage.js';
 import { loadHTMLTemplate } from '../templateLoader.js';
+import { CustomSelect } from '/frontend/scripts/drop-down.js';
 
 // Main function
 export default async function loadList() {
@@ -69,13 +70,13 @@ function addItem(item) {
                 <span class="category subtext">${item.category}</span>
             </div>
             <div class="quantity-control">
-                <button class="minus-btn"><img src="/frontend/assets/icons/minus.png" alt="-"></button>
+                <button class="minus-btn"><img src="/frontend/assets/icons/minus.svg" alt="-"></button>
                 <span class="amount">${item.amount}</span><span class="unit">${item.unit}</span>
-                <button class="plus-btn"><img src="/frontend/assets/icons/plus.png" alt="+"></button>
+                <button class="plus-btn"><img src="/frontend/assets/icons/plus.svg" alt="+"></button>
             </div>
         </div>
     `;
-    list.insertBefore(li, list.firstChild);
+    list.insertBefore(li, list.firstChild)
 }
 
 
@@ -95,19 +96,31 @@ function addItemToList() {
     <div id="new-item-container">
         <div class="item-details-add">
             <input type="text" placeholder="Item Name" />
-            <select>
-                <option value="Protein">Protein</option>
-                <option value="Fruit">Fruit</option>
-                <option value="Dairy">Dairy</option>
-            </select>
+            <div class="custom-select">
+                <div class="select-trigger">
+                    <span class="select-text">Protein</span>
+                    <div class="select-arrow"></div>
+                </div>
+                <div class="select-dropdown">
+                    <div class="select-option" data-value="Protein">Protein</div>
+                    <div class="select-option" data-value="Fruit">Fruit</div>
+                    <div class="select-option" data-value="Dairy">Dairy</div>
+                </div>
+            </div>
         </div>
         <div class="quantity-control-add">
             <input type="number" placeholder="100" />
-            <select>
-                <option value="g">g</option>
-                <option value="pcs">pcs</option>
-                <option value="ml">ml</option>
-            </select>
+            <div class="custom-select">
+                <div class="select-trigger">
+                    <span class="select-text">Select Unit</span>
+                    <div class="select-arrow"></div>
+                </div>
+                <div class="select-dropdown">
+                    <div class="select-option" data-value="g">g</div>
+                    <div class="select-option" data-value="pcs">pcs</div>
+                    <div class="select-option" data-value="ml">ml</div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="buttons-container">
@@ -118,6 +131,12 @@ function addItemToList() {
 
     // Als erstes Kind einfügen:
     list.insertBefore(newItem, list.firstChild);
+
+    // Initialize custom select
+    const customSelects = newItem.querySelectorAll('.custom-select');
+    customSelects.forEach(selectElement => {
+        new CustomSelect(selectElement);
+    });
 
     // Füge Event Listener für die Buttons hinzu
     const saveBtn = newItem.querySelector('.save-btn');
@@ -130,15 +149,20 @@ function addItemToList() {
 }
 
 function saveNewItem() {
-    // nehme ale input felder von user
     const newItemContainer = document.getElementById('new-item-container');
     const itemName = newItemContainer.querySelector('input[type="text"]').value;
     const amount = newItemContainer.querySelector('input[type="number"]').value;
-    const selects = newItemContainer.querySelectorAll('select');
-    const category = selects[0].value;
-    const unit = selects[1].value;
+    
+    // Get values from the custom selects by reading the displayed text
+    const customSelects = newItemContainer.querySelectorAll('.custom-select');
+    const categoryText = customSelects[0].querySelector('.select-text').textContent;
+    const unitText = customSelects[1].querySelector('.select-text').textContent;
+    
+    // Check if actual values were selected (not the default placeholder text)
+    const category = (categoryText !== 'Select Category' && categoryText !== 'Protein') ? categoryText : categoryText;
+    const unit = (unitText !== 'Select Unit' && unitText !== 'g') ? unitText : unitText;
 
-    // Erstelle neues Item-Objekt
+    // Create new item object
     const newItem = {
         id: Date.now(),
         name: itemName,
@@ -146,20 +170,19 @@ function saveNewItem() {
         amount: parseInt(amount, 10),
         unit: unit
     };
-    // Speichere das neue Item in der Storage
+
+    // Save the new item to storage (uncomment when ready)
     // Storage.addGroceryListItem(newItem);
 
-    // Füge das neue Item zur Liste hinzu, aber erst, wenn alles eingegeben wurde
+    // Add the new item to the list, but only if all fields are filled
     if (itemName && amount && category && unit) {
         addItem(newItem);
+        // Remove the input form
+        deleteNewItemForm();
     } else {
+        alert('Please fill out all fields!'); // Optional: Error message
         return;
     }
-
-
-
-    // Entferne das Eingabeformular
-    deleteNewItemForm();
 
     // // Aktualisiere die Liste
     // updateGroceryList();
@@ -229,6 +252,7 @@ function initializeSwipeToDelete(container) {
     let currentX = 0;
     let swipedItem = null;
     let swipedContent = null;
+    let deleteButton = null;
 
     const deleteButtonWidth = 90;
     const fullSwipeThreshold = 150;
@@ -243,8 +267,8 @@ function initializeSwipeToDelete(container) {
 
         itemToDelete.addEventListener('transitionend', () => {
             itemToDelete.remove();
-            // Hier Logik zum Entfernen aus dem Storage einfügen
-            // z.B. Storage.removeGroceryListItem(itemId);
+            // Here add logic to remove from storage
+            // e.g. Storage.removeGroceryListItem(itemId);
         }, { once: true });
     };
 
@@ -252,13 +276,50 @@ function initializeSwipeToDelete(container) {
         container.querySelectorAll('.grocery-item').forEach(item => {
             if (item !== currentItem) {
                 const content = item.querySelector('.swipe-content');
-                if (content) content.style.transform = 'translateX(0)';
+                const deleteBtn = item.querySelector('.swipe-delete');
+                if (content) {
+                    content.style.transform = 'translateX(0)';
+                    // Reset border radius when closing
+                    content.style.borderRadius = '15px';
+                }
+                if (deleteBtn) {
+                    // Reset delete button
+                    deleteBtn.style.width = '0px';
+                    deleteBtn.style.opacity = '0';
+                }
             }
         });
     };
 
+    const updateDeleteButton = (diffX) => {
+        if (!deleteButton) return;
+        
+        const revealedWidth = Math.abs(diffX);
+        
+        if (revealedWidth > 10) { // Start showing after 10px of swipe
+            deleteButton.style.width = `${revealedWidth}px`;
+            deleteButton.style.opacity = '1';
+        } else {
+            deleteButton.style.width = '0px';
+            deleteButton.style.opacity = '0';
+        }
+    };
+
+    const updateBorderRadius = (diffX) => {
+        if (!swipedContent) return;
+        
+        const revealedWidth = Math.abs(diffX);
+        
+        if (revealedWidth > 5) { // Start changing border radius after 5px of swipe
+            // Remove right border radius when swiping
+            swipedContent.style.borderRadius = '15px 0 0 15px';
+        } else {
+            // Restore full border radius when not swiping
+            swipedContent.style.borderRadius = '15px';
+        }
+    };
+
     const onSwipeStart = (e) => {
-        // if (e.target.closest('button') || e.target.closest('.quantity-control')) return;
         const item = e.target.closest('.grocery-item');
         if (!item || item.id === 'newItem' || e.target.classList.contains('swipe-delete')) return;
 
@@ -266,8 +327,18 @@ function initializeSwipeToDelete(container) {
         isSwiping = true;
         swipedItem = item;
         swipedContent = item.querySelector('.swipe-content');
+        deleteButton = item.querySelector('.swipe-delete');
         startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
         currentX = startX;
+        
+        // Prepare the delete button
+        if (deleteButton) {
+            deleteButton.style.width = '0px';
+            deleteButton.style.opacity = '0';
+            deleteButton.style.transition = 'none';
+        }
+        
+        // Apply transition to the sliding content only
         swipedContent.style.transition = 'none';
     };
 
@@ -279,7 +350,14 @@ function initializeSwipeToDelete(container) {
 
         if (diffX > 0) diffX = 0;
 
+        // Transform the content
         swipedContent.style.transform = `translateX(${diffX}px)`;
+        
+        // Update delete button width to match revealed space
+        updateDeleteButton(diffX);
+        
+        // Update border radius based on swipe position
+        updateBorderRadius(diffX);
     };
 
     const onSwipeEnd = () => {
@@ -287,15 +365,40 @@ function initializeSwipeToDelete(container) {
 
         isSwiping = false;
         let diffX = currentX - startX;
-        swipedContent.style.transition = 'transform 0.3s ease-out';
+        
+        // Apply transition to the sliding content
+        swipedContent.style.transition = 'transform 0.3s ease-out, border-radius 0.3s ease-out';
+        
+        // Apply transition to delete button
+        if (deleteButton) {
+            deleteButton.style.transition = 'width 0.3s ease-out, opacity 0.3s ease-out';
+        }
 
         if (diffX < -fullSwipeThreshold) {
+            // Swipe the content completely off screen
             swipedContent.style.transform = `translateX(-100%)`;
+            swipedContent.style.borderRadius = '15px 0 0 15px'; // Keep right corners square
+            if (deleteButton) {
+                deleteButton.style.width = '100%';
+                deleteButton.style.opacity = '1';
+            }
             swipedContent.addEventListener('transitionend', () => deleteItem(swipedItem), { once: true });
         } else if (diffX < -(deleteButtonWidth / 3)) {
+            // Partially reveal delete button
             swipedContent.style.transform = `translateX(-${deleteButtonWidth}px)`;
+            swipedContent.style.borderRadius = '15px 0 0 15px'; // Right corners square
+            if (deleteButton) {
+                deleteButton.style.width = `${deleteButtonWidth}px`;
+                deleteButton.style.opacity = '1';
+            }
         } else {
+            // Snap back to original position
             swipedContent.style.transform = 'translateX(0)';
+            swipedContent.style.borderRadius = '15px'; // Restore full border radius
+            if (deleteButton) {
+                deleteButton.style.width = '0px';
+                deleteButton.style.opacity = '0';
+            }
         }
     };
 
