@@ -10,6 +10,12 @@ export default async function loadMeals() {
     const html = await loadHTMLTemplate('/frontend/html-pages/meals.html');
     app.innerHTML = html;
 
+    // Settings Eventlistener
+    const settingsButton = document.querySelector('.settings');
+    settingsButton.addEventListener('click', function () {
+        window.location.href = '/frontend/html-pages/settings.html';
+    });
+
     // filter bar (Meals, Ingredients)
     const filterButtons = document.querySelectorAll('#filter-bar-p button');
     filterButtons.forEach(button => {
