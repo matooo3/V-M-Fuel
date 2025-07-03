@@ -12,7 +12,7 @@
     justify-content: space-between;
     padding: 12px 16px; /* CHANGE PADDING HERE */
     background-color: white !important; /* FORCE WHITE BACKGROUND - CHANGE HERE */
-    border: 2px solid var(--border-color); /* CHANGE BORDER COLOR & SIZE HERE */
+    border: 1px solid var(--border-color); /* CHANGE BORDER COLOR & SIZE HERE */
     border-radius: 10px; /* CHANGE BORDER RADIUS HERE */
     cursor: pointer;
     font-size: 16px; /* CHANGE FONT SIZE HERE */
@@ -116,5 +116,6 @@
     .select-option {
         padding: 10px 12px; /* Smaller padding on mobile */
         font-size: 14px; /* Smaller font on mobile */
+        border-bottom: 1px solid var(--border-color);
     }
 }
