@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px; /* CHANGE PADDING HERE */
-    background-color: white !important; /* FORCE WHITE BACKGROUND - CHANGE HERE */
+    background-color: white; /* FORCE WHITE BACKGROUND - CHANGE HERE */
     border: 1px solid var(--border-color); /* CHANGE BORDER COLOR & SIZE HERE */
     border-radius: 10px; /* CHANGE BORDER RADIUS HERE */
     cursor: pointer;
@@ -23,13 +23,13 @@
 }
 
 .select-trigger:hover {
-    border-color: var(--accent-color); /* !important; CHANGE HOVER BORDER COLOR HERE */
-    background-color: white !important; /* KEEP WHITE BACKGROUND ON HOVER */
+    border-color: none; /* !important; CHANGE HOVER BORDER COLOR HERE */
+    background-color: white; /* KEEP WHITE BACKGROUND ON HOVER */
 }
 
 .select-trigger.active {
-    border-color: var(--accent-color) !important; /* CHANGE ACTIVE BORDER COLOR HERE */
-    background-color: white !important; /* KEEP WHITE BACKGROUND WHEN ACTIVE */
+    border-color: none; /* CHANGE ACTIVE BORDER COLOR HERE */
+    background-color: white; /* KEEP WHITE BACKGROUND WHEN ACTIVE */
 }
 
 .select-arrow {
@@ -51,11 +51,11 @@
     top: 100%;
     left: 0;
     right: 0;
-    background-color: white !important; /* FORCE WHITE BACKGROUND */
-    border: 2px solid var(--accent-color); /* CHANGE DROPDOWN BORDER COLOR & SIZE HERE */
+    background-color: white; /* FORCE WHITE BACKGROUND */
+    border: none; /* CHANGE DROPDOWN BORDER COLOR & SIZE HERE */
     border-radius: 10px; /* CHANGE DROPDOWN BORDER RADIUS HERE */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* CHANGE DROPDOWN SHADOW HERE */
-    z-index: 9999 !important; /* HIGH Z-INDEX TO APPEAR ABOVE EVERYTHING */
+    z-index: 9999; /* HIGH Z-INDEX TO APPEAR ABOVE EVERYTHING */
     max-height: 200px; /* CHANGE MAX HEIGHT OF DROPDOWN HERE */
     overflow-y: auto;
     opacity: 0;
@@ -65,16 +65,16 @@
 }
 
 .select-dropdown.active {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .select-option {
     padding: 12px 16px; /* CHANGE OPTION PADDING HERE */
     cursor: pointer;
     font-size: 16px; /* CHANGE OPTION FONT SIZE HERE */
-    color: var(--main-text-color) !important; /* FORCE DARK TEXT COLOR */
+    color: var(--main-text-color); /* FORCE DARK TEXT COLOR */
     background-color: white; /* FORCE WHITE BACKGROUND */
     transition: background-color 0.2s ease; /* CHANGE OPTION HOVER ANIMATION SPEED HERE */
     border: none;
@@ -83,13 +83,13 @@
 }
 
 .select-option:hover {
-    background-color: var(--accent-background) !important; /* LIGHT BLUE HOVER - CHANGE HERE */
-    color: var(--main-text-color)  !important; /* KEEP DARK TEXT ON HOVER */
+    background-color: var(--accent-background); /* LIGHT BLUE HOVER - CHANGE HERE */
+    color: var(--main-text-color) ; /* KEEP DARK TEXT ON HOVER */
 }
 
 .select-option.selected {
-    background-color: var(--accent-color) !important; /* SELECTED BACKGROUND - CHANGE HERE */
-    color: white !important; /* WHITE TEXT FOR SELECTED OPTION */
+    background-color: var(--accent-color); /* SELECTED BACKGROUND - CHANGE HERE */
+    color: white; /* WHITE TEXT FOR SELECTED OPTION */
 }
 
 .select-option:first-child {

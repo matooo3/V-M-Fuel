@@ -152,12 +152,12 @@ function saveNewItem() {
     const newItemContainer = document.getElementById('new-item-container');
     const itemName = newItemContainer.querySelector('input[type="text"]').value;
     const amount = newItemContainer.querySelector('input[type="number"]').value;
-    
+
     // Get values from the custom selects by reading the displayed text
     const customSelects = newItemContainer.querySelectorAll('.custom-select');
     const categoryText = customSelects[0].querySelector('.select-text').textContent;
     const unitText = customSelects[1].querySelector('.select-text').textContent;
-    
+
     // Check if actual values were selected (not the default placeholder text)
     const category = (categoryText !== 'Select Category' && categoryText !== 'Protein') ? categoryText : categoryText;
     const unit = (unitText !== 'Select Unit' && unitText !== 'g') ? unitText : unitText;
@@ -293,9 +293,9 @@ function initializeSwipeToDelete(container) {
 
     const updateDeleteButton = (diffX) => {
         if (!deleteButton) return;
-        
+
         const revealedWidth = Math.abs(diffX);
-        
+
         if (revealedWidth > 10) { // Start showing after 10px of swipe
             deleteButton.style.width = `${revealedWidth}px`;
             deleteButton.style.opacity = '1';
@@ -305,17 +305,22 @@ function initializeSwipeToDelete(container) {
         }
     };
 
+
     const updateBorderRadius = (diffX) => {
         if (!swipedContent) return;
-        
+
         const revealedWidth = Math.abs(diffX);
-        
-        if (revealedWidth > 5) { // Start changing border radius after 5px of swipe
-            // Remove right border radius when swiping
+
+        if (revealedWidth > 5) {
+            // When swiping left, only remove the right border radius
+            // Keep the left border radius intact to maintain the visual border
             swipedContent.style.borderRadius = '15px 0 0 15px';
+            // Also ensure the content doesn't get clipped on the left
+            swipedContent.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
         } else {
             // Restore full border radius when not swiping
             swipedContent.style.borderRadius = '15px';
+            swipedContent.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
         }
     };
 
@@ -330,14 +335,14 @@ function initializeSwipeToDelete(container) {
         deleteButton = item.querySelector('.swipe-delete');
         startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
         currentX = startX;
-        
+
         // Prepare the delete button
         if (deleteButton) {
             deleteButton.style.width = '0px';
             deleteButton.style.opacity = '0';
             deleteButton.style.transition = 'none';
         }
-        
+
         // Apply transition to the sliding content only
         swipedContent.style.transition = 'none';
     };
@@ -352,10 +357,10 @@ function initializeSwipeToDelete(container) {
 
         // Transform the content
         swipedContent.style.transform = `translateX(${diffX}px)`;
-        
+
         // Update delete button width to match revealed space
         updateDeleteButton(diffX);
-        
+
         // Update border radius based on swipe position
         updateBorderRadius(diffX);
     };
@@ -365,10 +370,10 @@ function initializeSwipeToDelete(container) {
 
         isSwiping = false;
         let diffX = currentX - startX;
-        
+
         // Apply transition to the sliding content
         swipedContent.style.transition = 'transform 0.3s ease-out, border-radius 0.3s ease-out';
-        
+
         // Apply transition to delete button
         if (deleteButton) {
             deleteButton.style.transition = 'width 0.3s ease-out, opacity 0.3s ease-out';

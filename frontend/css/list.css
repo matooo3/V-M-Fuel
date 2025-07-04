@@ -128,7 +128,9 @@
     position: relative;
     overflow: hidden; /* Keep hidden to clip the delete button */
     transition: none; /* Remove transition from container */
+    border: 1px solid var(--border-color);
 }
+
 
 .item-details {
     flex: 1;
@@ -335,10 +337,9 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     align-items: center;
     justify-content: space-between;
     position: relative;
-    z-index: 2;
+    z-index: 0;
     cursor: pointer;
     border-radius: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease-out, border-radius 0.3s ease-out; 
 }
 
