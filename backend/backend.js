@@ -156,7 +156,8 @@ app.post("/api/login", (req, res) => {
 
         const token = jwt.sign(
             {
-                id: user.id,
+                id: user.user_id,
+                username: user.username,
                 email: user.email,
                 role: user.role,
             },
