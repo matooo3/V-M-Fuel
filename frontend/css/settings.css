@@ -73,12 +73,14 @@
 #settings-item-1 {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 8px;
 }
 
 .user-details-settings {
     display: flex;
     flex-direction: row;
+    width: 100%;
     gap: 16px;
 }
 
@@ -139,6 +141,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     flex-direction: column;
     gap: 8px;
     margin-top: 1%;
+    width: 50%;
 }
 
 .right-column-settings {
@@ -146,6 +149,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     flex-direction: column;
     gap: 8px;
     margin-top: 1%;
+    width: 50%;
 }
 
 .input-container {
@@ -198,7 +202,8 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     font-size: 1.2rem;
 }
 
-.card-st {
+/* ------------- CARD SELECT GREEN (START) ------------------ */
+.card-st-activity {
     border: transparent solid 2px;
     border-radius: 10px;
     outline: #D9D9D9 solid 1px;
@@ -206,11 +211,28 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     transition: border-color 0.7s ease, background-color 0.7s ease;
 }
 
-.card-st.clicked-st {
+.card-st-activity.clicked-st-activity {
     border: #1BCE86 solid 2px;
     outline: none;
     background-color: #EEFFF6;
 }
+
+
+.card-st-goal {
+    border: transparent solid 2px;
+    border-radius: 10px;
+    outline: #D9D9D9 solid 1px;
+    outline-offset: -1px;
+    transition: border-color 0.7s ease, background-color 0.7s ease;
+}
+
+.card-st-goal.clicked-st-goal {
+    border: #1BCE86 solid 2px;
+    outline: none;
+    background-color: #EEFFF6;
+}
+
+/* ------------- CARD SELECT GREEN (END) ------------------ */
 
 @media (max-height: 700px) {
 
