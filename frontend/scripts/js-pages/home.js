@@ -1,13 +1,21 @@
 // ./pages/home.js
 
 import { loadHTMLTemplate } from '../templateLoader.js';
+import * as Storage from '/frontend/scripts/storage.js';
+import * as Auth from '/frontend/scripts/auth.js';
+
 
 export default async function loadHome() {
     const app = document.getElementById('app');
     // LOAD app html-code
     const html = await loadHTMLTemplate('/frontend/html-pages/home.html');
     app.innerHTML = html;
+
+    //load user greeting! (eventlistener DOM loaded)
+    // document.addEventListener('DOMContentLoaded', renderUserGreeting);
+
     updateAdminContainer();
+
     // Eventlistener: -------------------------------------------
     // DOM-Manipulation:
 
@@ -27,176 +35,218 @@ export default async function loadHome() {
     });
 
     // add event listener to settings class
+    loadSettingsEventListener();
+
+    setTimeout(() => {
+        renderUserGreeting();
+    }, 1);
+
+
+}
+
+function loadSettingsEventListener() {
     const settingsButton = document.querySelector('.settings');
     if (settingsButton) {
         settingsButton.addEventListener('click', function () {
             window.location.href = '/frontend/html-pages/settings.html';
         });
     }
-
 }
 
-
-
-function updateAdminContainer() {
+async function updateAdminContainer() {
     const activeTab = document.querySelector('.tab.active');
     const adminContainer = document.getElementById('admin-container');
 
     if (activeTab && activeTab.textContent.trim() === 'Standard') {
-        adminContainer.innerHTML = `<div class="progress-wrapper">
-            <svg class="progress-svg" viewBox="0 0 200 200">
-                <circle class="progress-circle-background" cx="100" cy="100" r="90"></circle>
-                <circle class="progress-bar" cx="100" cy="100" r="90"></circle>
-            </svg>
-            <div class="progress-text">1000 ckal</div>
-        </div>
-
-        <div id="next-meals">
-            <span id="next-meal-text">Next meal</span>
-
-            <div class="meals-info-db">
-                <div class="card drop-shadow next-meal-card-db">
-                    <div class = "first-row-db">
-                        <input id="checked-circle" class="checkbox" type="checkbox">
-
-                        <div class ="next-meal-info">
-                            <div class="next-meal-info-texts">
-                                <h3 class="meal-name">Chili con carne</h3>
-                                <span class="subtext">Lunch</span>
-                            </div>
-
-                            <span class="calories-db">
-                                830kcal
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="nutrition-values-db">
-                        <div class="nutrition-item-mp">
-                            <p class="nutrition-value-mp">11g</p>
-                            <p class="nutrition-label-mp subtext">Protein</p>
-                        </div>
-                        <div class="nutrition-item-mp">
-                            <p class="nutrition-value-mp">22.8g</p>
-                            <p class="nutrition-label-mp subtext">Carbs</p>
-                        </div>
-                        <div class="nutrition-item-mp">
-                            <p class="nutrition-value-mp">0.3g</p>
-                            <p class="nutrition-label-mp subtext">Fat</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="info-stats-db">
-                    <div id="planned" class="card drop-shadow">
-                        <h1 class="meals-amount-db">4</h1>
-                        <p class="subtext">Meals planned</p>
-                    </div>
-                    <div id="eaten" class="card drop-shadow">
-                        <h1 class="meals-amount-db">36%</h1>
-                        <p class="subtext">daily goal</p>
-                    </div>
-                </div>
-
-                <span id="todays-meals-text">Today's meals</span>
-
-                <div id="todays-meals-container">
-                    <div class="card drop-shadow mealcards-db">
-                        <div class="red-point-db"></div>
-                        <div class="todays-meal-info">
-                            <h3 class="meal-name-db">Breakfast</h3>
-                            <span class="subtext">Avocado Toast with Eggs</span>
-                        </div>
-                        <h3 class="todays-calories">420ckal</h3>
-                    </div>
-                    <div class="card drop-shadow mealcards-db">
-                        <div class="red-point-db"></div>
-                        <div class="todays-meal-info">
-                            <h3 class="meal-name-db">Lunch</h3>
-                            <span class="subtext">Chili con carne</span>
-                        </div>
-                        <h3 class="todays-calories">820ckal</h3>
-                    </div>                                  
-                </div>
-            </div>
-        </div>`;
+        const html = await loadHTMLTemplate('/frontend/html-pages/homeStandard.html');
+        adminContainer.innerHTML = html;
     } else {
-        adminContainer.innerHTML = `
-            <div id="user-managment-container">
-            <div id="user-info">
-                <h1 id="user-text">User management</h1>
-                <div id="user-amount">
-                    <span class="subtext meals-amount-text">Total users</span>
-                    <div id="user-red-point"></div>
-                    <span class="subtext meals-amount-text">500</span>
-                </div>
-                <div id="search-bar-db">
-                    <img id="search-icon-db" src="/frontend/assets/icons/search-icon.svg" alt="search icon">
-                    <input type="text" placeholder="Search User">
-                </div>
-            </div>
-            <div id="user-list">
-                <div class="card user">
-                    <div class="profile-picture">
-                        <span>DM</span>
-                    </div>
-                    <div class="user-data">
-                        <span class="user-name">Daniel Mehler</span>
-                        <span class="user-email">daniel.mehler@gmail.com</span>
-                    </div>
-                    <div id="user-role">
-                        <div class="user-tag">
-                            <img class="user-tag-logo" src="/frontend/assets/icons/admin-tag.svg" alt="tag">
-                            <span class="user-tag-text">Admin</span>
-                        </div>
-                        <img id="change-role" src="/frontend/assets/icons/change-role.svg" alt="change role">
-                    </div>
-                </div>
-                <div class="card user">
-                    <div class="profile-picture">
-                        <span>DM</span>
-                    </div>
-                    <div class="user-data">
-                        <span class="user-name">Daniel Mehler</span>
-                        <span class="user-email">daniel.mehler@gmail.com</span>
-                    </div>
-                    <div id="user-role">
-                        <div class="user-tag">
-                            <img class="user-tag-logo" src="/frontend/assets/icons/admin-tag.svg" alt="tag">
-                            <span class="user-tag-text">Admin</span>
-                        </div>
-                        <img id="change-role" src="/frontend/assets/icons/change-role.svg" alt="change role">
-                    </div>
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-                <div class="card user">
-                </div>
-            </div>
-        </div>`;
+        const html = await loadHTMLTemplate('/frontend/html-pages/homeRoles.html');
+        adminContainer.innerHTML = html;
+        renderUserList();
     }
 }
 
+// -----------------LOAD USER GREETING ---------------------
+function renderUserGreeting() {
+    const user = Auth.getUserFromToken();
+    const container = document.getElementById('greeting-container');
+
+    console.log("User data loaded:", user);
+
+    container.innerHTML = `
+        <div id="greeting-text">
+            <span class="roboto">Hi,</span>
+            <span class="roboto">${user.username}</span>
+        </div>
+        <div id="card-um${getRoleNumber(user.role)}" class="tag">
+            <img class="tag-logo" src="/frontend/assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
+            <span id="text-um${getRoleNumber(user.role)}" class="tag-text">${enumToDisplay(user.role)}</span>
+        </div>
+        `;
+}
+// ------------------------------------------------------------
+//
+
+//
+// --------------------------------------------------------------------------------------------
+// --------------- LOAD USER DATA FROM DATABASE AND RENDER THEM IN <ul> as <li> ---------------
+// --------------------------------------------------------------------------------------------
+//
+
+//
+// --------- HELPER FUNCTIONS ------------
+function getRoleNumber(role) {
+    if (role === "user") {
+        return 1;
+    }
+    if (role === "cook") {
+        return 2;
+    }
+    if (role === "admin") {
+        return 3;
+    }
+}
+
+function enumToDisplay(role) {
+    if (role === "user") {
+        return "User";
+    }
+    if (role === "cook") {
+        return "Chef";
+    }
+    if (role === "admin") {
+        return "Admin";
+    }
+}
+function displayToEnum(display) {
+    if (display === "User") return "user";
+    if (display === "Chef") return "cook";
+    if (display === "Admin") return "admin";
+}
+
+function getInitials(name) {
+    return name
+        .split(" ")
+        .map(part => part[0].toUpperCase())
+        .join("")
+        .slice(0, 2);
+}
+// ----------------------------------------------------
+//
+
+//
+// ----------- RENDER USER MANAGEMENT LIST ------------
+async function renderUserList() {
+    const userListContainer = document.getElementById("user-list");
+    userListContainer.innerHTML = "";
+
+    const users = await Storage.getUsers();
+
+    users.forEach(user => {
+        const initials = getInitials(user.username);
+        const userItem = document.createElement("li");
+        userItem.classList.add("card", "user");
+
+        userItem.innerHTML = `
+            <div class="profile-picture">
+                <span>${initials}</span>
+            </div>
+            <div class="user-data">
+                <span class="user-name">${user.username}</span>
+                <span class="user-email">${user.email}</span>
+            </div>
+            <div id="user-role">
+                <div class="user-tag" id="card-um${getRoleNumber(user.role)}">
+                    <img class="user-tag-logo" src="/frontend/assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
+                    <span id="text-um${getRoleNumber(user.role)}" class="user-tag-text">${enumToDisplay(user.role)}</span>
+                </div>
+                <img id="change-role" src="/frontend/assets/icons/change-role.svg" alt="change role">
+            </div>
+        `;
+
+        userListContainer.appendChild(userItem);
+    });
+
+    // Update the total users count
+    renderTotalUsers();
+
+    // add eventlistener for change role button
+    const changeRoleButtons = document.querySelectorAll("#change-role");
+    changeRoleButtons.forEach(button => {
+        button.addEventListener("click", changeUserRole);
+    });
+}
+// -----------------------END-----------------------------
+//
+
+//
+// ----------------- CHANGE USER ROLE --------------------
+function denyAdminRoleChange(role, targetName, TargetEmail) {
+    if (role === "admin") {
+        // wenn es der user selbst ist, dann kann er seine Rolle nicht ändern
+        const user = Auth.getUserFromToken();
+
+    
+        if (user.email === TargetEmail) { // sich selbst
+            alert("You cannot change your own role.");
+            throw new Error("Admin role change denied for self.");
+        } else {
+            if(!(user.name ==="admin") && !(user.email === "admin@admin.com")) { // super-user darf admin degradieren
+                alert("You cannot change the role of an admin.");
+                throw new Error("Admin role change denied for super user.");
+            }
+        }
+    }
+}
+
+async function changeUserRole(event) {
+    const userItem = event.target.closest(".user");
+    const name = userItem.querySelector(".user-name").textContent;
+    const email = userItem.querySelector(".user-email").textContent;
+    const role = userItem.querySelector(".user-tag-text").textContent;
+    const roleFormatted = displayToEnum(role);
+
+    denyAdminRoleChange(roleFormatted, name, email);
 
 
+    // get next role in array
+    const indexNewRole = getRoleNumber(roleFormatted) % 3;
+    const arrayOfRoles = ["user", "cook", "admin"];
 
+    const newRole = arrayOfRoles[indexNewRole];
+
+    await Storage.changeUserRoleInDB(newRole, email);
+
+    renderUserList();
+    renderUserGreeting();
+
+}
+// ------------------- DB UPDATED -------------------
+// 
+
+//
+// ----------------- TOTAL USERS --------------------
+function getTotalUsers() {
+    // greife auf <ul> zu und zähle die <li> Elemente
+    const userList = document.getElementById("user-list");
+
+    if (userList) {
+        return userList.querySelectorAll("li").length;
+    }
+
+    return 0;
+}
+
+function renderTotalUsers() {
+    
+    const totalUsersAmount = document.getElementById("total-users-amount");
+    if (totalUsersAmount) {
+        totalUsersAmount.textContent = getTotalUsers();
+    }
+}
+//
+// --------------------------------------------------------------------------------------------
+// ---------------                               END                            ---------------
+// --------------------------------------------------------------------------------------------
+//

@@ -7,7 +7,7 @@ const apiBaseUrl = 'https://gfoh.ddns.net:6969/api'; // PER REVERSE PROXY
 window.port = 6969;
 
 // fetching any DATA-ENDPOINT from BACKEND
-async function fetchData(endpoint) {
+export async function fetchData(endpoint) {
   try {
     const response = await fetch(`${apiBaseUrl}${endpoint}`);
 
@@ -24,4 +24,26 @@ async function fetchData(endpoint) {
   }
 }
 
-export { fetchData };
+export async function postData(endpoint, data, token) {
+  try {
+    const response = await fetch(`${apiBaseUrl}${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Fehler beim Senden von ${endpoint}: ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    return result;
+
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

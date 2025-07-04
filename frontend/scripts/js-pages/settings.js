@@ -1,3 +1,5 @@
+import * as Auth from "/frontend/scripts/auth.js";
+
 // ==============================
 // ======= CARD ELEMENTS ========
 // ==============================
@@ -27,3 +29,6 @@ goalCards.forEach(card => {
         this.classList.add('clicked-st-goal');
     });
 });
+
+// Logout
+document.getElementById('logout-btn').addEventListener('click', Auth.logout);
