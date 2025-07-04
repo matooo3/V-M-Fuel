@@ -90,7 +90,7 @@ export function getDataLS() {
 // ------------------------------------- MAIN ------------------------------------
 export async function getData() { 
     //if internet
-    getDataDB();
+    return await getDataDB();
 
 
     //if no internet
