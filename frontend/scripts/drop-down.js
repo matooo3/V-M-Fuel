@@ -14,11 +14,11 @@ export class CustomSelect {
     }
 
     init() {
-        console.log('Initializing custom select:', this.element); // DEBUG
+        debugLog('Initializing custom select:', this.element); // DEBUG
 
         // Toggle dropdown on trigger click
         this.trigger.addEventListener('click', (e) => {
-            console.log('Trigger clicked'); // DEBUG
+            debugLog('Trigger clicked'); // DEBUG
             e.stopPropagation();
             this.toggle();
         });
