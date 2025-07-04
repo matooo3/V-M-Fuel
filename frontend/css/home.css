@@ -61,11 +61,11 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    margin-top: 0px;
+    margin-top: 10px;
 }
 
 .tab {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: medium;
     border: none;
     background-color: transparent;
@@ -115,9 +115,10 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    text-align: center;
     transform: translate(-50%, -50%);
     color: var(--accent-color);
-    font-size: 3.2rem;
+    font-size: 2.8rem;
     font-weight: bold;
     font-family: 'figtree', sans-serif;
 }
@@ -137,7 +138,7 @@
     margin-bottom: 10px;
 }
 
-#meals-info-db {
+.meals-info-db {
     flex: 1;
     /* Take remaining space */
     min-height: 0;
@@ -153,13 +154,22 @@
     /* IE/Edge */
 }
 
-#next-meal-card {
-    padding: 10px 10px;
+.next-meal-card-db {
+    padding: 10px 15px 10px 15px;
     display: flex;
+    flex-direction: column;
     height: 90%;
-    align-items: flex-start;
-    gap: 16px;
-    padding-right: 1rem;
+    gap: 6px;
+}
+
+.first-row-db {
+    display: flex;
+    gap: 10px; 
+}
+
+.nutrition-values-db {
+    display: flex;
+    justify-content: space-around;
 }
 
 .checkbox {
@@ -190,13 +200,14 @@
     font-weight: bold;
 }
 
-#next-meal-info {
+.next-meal-info {
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
     width: 100%;
+    gap: 15px;
 }
 
-#next-meal-info-texts {
+.next-meal-info-texts {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -215,12 +226,9 @@
     margin: 0;
 }
 
-.nutrition-info-db {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    margin-right: 15px;
+.calories-db {
+    font-size: 1.6rem;
+    color: var(--main-text-color);
 }
 
 .nutrition-item-db {
@@ -265,7 +273,7 @@
 
 .meals-amount-db {
     font-family: 'figtree', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 #eaten {
@@ -317,7 +325,7 @@
     background-color: var(--accent-color);
 }
 
-#todays-calories {
+.todays-calories {
     margin-left: auto;
 }
 
@@ -536,10 +544,6 @@
         transform: scale(80%);
     }
 
-    .progress-text {
-        font-size: 2.8rem;
-    }
-
 
     .tag {
         position: absolute;
@@ -569,6 +573,7 @@
     #greeting-container {
         margin: 5px 27px 0px 27px;
     }
+
     .tag {
         position: absolute;
         top: 50px;
@@ -582,13 +587,14 @@
 @media (max-width: 380px) {
 
     .progress-text {
-        font-size: 2.4rem;
+        font-size: 2rem;
     }
 
-    .nutrition-info-db {
-        margin-right: 0px;
+    .tab {
+        font-size: 1.4rem;
     }
 }
+
 
 
 /* Status tag colors 
