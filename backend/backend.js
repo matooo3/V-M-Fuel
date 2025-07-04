@@ -9,7 +9,7 @@ const axios = require("axios");
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const JWT_SECRET = "dein_starkes_geheimes_passwort_123!";
+const JWT_SECRET = "dein_starkes_geheimes_passwort_123!u";
 
 // Lade die geheime Konfigurationsdatei aus dem Home-Verzeichnis
 const homeDirectory = os.homedir(); // Holt das Home-Verzeichnis des Benutzers
