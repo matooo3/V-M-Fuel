@@ -476,8 +476,8 @@
 }
 
 .user-tag {
-    border: solid 1px #F9BEBE;
-    background-color: #FEF2F2;
+    border: solid 1px #F9BEBE; /**/
+    background-color: #FEF2F2; /**/
     width: 6rem;
     height: 2rem;
     min-width: 5rem;
@@ -496,8 +496,43 @@
 
 .user-tag-text {
     font-size: 1rem;
+    color: var(--accent-color); /**/
+}
+
+/* --------------------------------------------------------------- */
+/* ---------------------- USER MANAGEMENT ------------------------ */
+/* --------------------------------------------------------------- */
+/* user */
+#card-um1 {
+    border: solid 1px var(--positive-border-color);
+    background-color: var(--positive-fill-color);
+}
+
+#text-um1 {
+    color: var(--positive-color);
+}
+/* cook */
+#card-um2 {
+    border: solid 1px #C7CDFF;
+    background-color: #F2EEFF;
+}
+
+#text-um2 {
+    color: #7F8DFF;
+}
+/* admin */
+#card-um3 {
+    border: solid 1px #F9BEBE;
+    background-color: #FEF2F2;
+}
+
+#text-um3 {
     color: var(--accent-color);
 }
+/* --------------------------------------------------------------- */
+/* ---------------------- USER MANAGEMENT ------------------------ */
+/* --------------------------------------------------------------- */
+
 
 #change-role {
     width: 1.2rem;

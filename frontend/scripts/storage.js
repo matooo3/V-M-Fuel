@@ -1,7 +1,8 @@
-import * as api from './api.js';
+import * as Api from './api.js';
+import { getUserFromToken } from './auth.js';
 
 // generic save-function, so if we change from LS to IndexedDB we can easily modify that here
-function saveToLS(key, data) {
+export function saveToLS(key, data) {
     if (data) {
       localStorage.setItem(key, JSON.stringify(data));
     }
@@ -10,37 +11,37 @@ function saveToLS(key, data) {
 
 // ---------------------- get() ----------------------------------
 // get DISHES
-async function getDishes() {
-  const dishes = await api.fetchData('/dishes');
+export async function getDishes() {
+    const dishes = await Api.fetchData('/dishes');
     // saveToLS('dishes', dishes);
-  return dishes;
+    return dishes;
 }
 
 
 // get DISH INGREDIENTS
-async function getDishIngredients() {
-    const dishIngredients = await api.fetchData('/dish_ingredients');
+export async function getDishIngredients() {
+    const dishIngredients = await Api.fetchData('/dish_ingredients');
     //   saveToLS('dishIngredients', dishIngredients);
     return dishIngredients;
 }
 
 // get INGREDIENTS
-async function getIngredients() {
-  const ingredients = await api.fetchData('/ingredients');
+export async function getIngredients() {
+  const ingredients = await Api.fetchData('/ingredients');
 //     saveToLS('ingredients', ingredients);
   return ingredients;
 }
 
 // get USERS
-async function getUsers() {
-  const users = await api.fetchData('/users');
+export async function getUsers() {
+  const users = await Api.fetchData('/users');
 //     saveToLS('users', users);
   return users;
 }
 
 // get USER-DISHES
-async function getUserDishes() {
-  const userDishes = await api.fetchData('/user_dishes');
+export async function getUserDishes() {
+  const userDishes = await Api.fetchData('/user_dishes');
 //     saveToLS('userDishes', userDishes);
   return userDishes;
 }
@@ -52,7 +53,7 @@ async function getUserDishes() {
 
 // ------------------------------- GET DATA DB (MAIN) -----------------------------
 // get ALL DATA (main function)
-async function getDataDB() {
+export async function getDataDB() {
 
     const dishes = await getDishes();
     const ingredients = await getIngredients();
@@ -73,7 +74,7 @@ async function getDataDB() {
 // -------------------------------------------------------------------------------
 
 // ------------------------------- GET DATA LS (2. MAIN) -------------------------
-function getDataLS() {
+export function getDataLS() {
     const storedData = localStorage.getItem('data');
     if (!storedData) return null; // Falls keine Daten gespeichert sind, gib null zurück
 
@@ -87,9 +88,9 @@ function getDataLS() {
 // -------------------------------------------------------------------------------
 
 // ------------------------------------- MAIN ------------------------------------
-async function getData() { 
+export async function getData() { 
     //if internet
-    getDataDB();
+    return await getDataDB();
 
 
     //if no internet
@@ -97,12 +98,44 @@ async function getData() {
 }
 //---------------------------------------------------------------------------------
 
-async function setData() {
+export async function setData() {
     saveToLS();
     saveToDB();
 }
 
-// export all
-export { getDataDB, getDishes, getIngredients, getUsers, 
-         getUserDishes, getDishIngredients, setData, 
-         getDataLS, getData };
+// ---------------------------------------------------------------
+// CHANGE USER ROLE IN DB
+
+export async function getUserIDFromDB(email) {
+    const users = await Api.fetchData('/users');
+    const user = users.find(u => u.email === email);
+
+    if (!user) {
+        throw new Error('Benutzer nicht gefunden');
+    }
+
+    return user.user_id;
+}
+
+export async function changeUserRoleInDB(role, email) {
+    try {
+        // 1. User aus DB (Email → userId)
+        const userId = await getUserIDFromDB(email);
+
+        // 2. Auth-Token holen
+        const token = localStorage.getItem('token'); // oder dein Token-Handling
+        if (!token) {
+            throw new Error('Token nicht gefunden');
+        }
+
+        // 3. Anfrage an Backend
+        const userData = { userId, role };
+        const result = await Api.postData('/set-role', userData, token);
+
+        alert('Rolle erfolgreich geändert NEEEWW8!');
+
+
+    } catch (error) {
+        alert('Fehler beim Rollenwechsel: ' + error.message);
+    }
+}

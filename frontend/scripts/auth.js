@@ -15,6 +15,12 @@ export function getUserFromToken() {
     return parseJwt(token);
 }
 
+// Logout
+export function logout() {
+    localStorage.removeItem('token');
+    location.reload();
+}
+
 export async function checkRoleAccess(allowedRoles) {
     const userData = getUserFromToken();
     if (!userData || !allowedRoles.includes(userData.role)) {

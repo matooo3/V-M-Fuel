@@ -185,6 +185,7 @@
                             <option value="kj">Off</option>
                         </select>
                     </div>
+
                     <div class="app-settings-row">
                         <div class="app-settings-label">
                             <h3 class="al-text-st">Language</h3>
@@ -194,6 +195,14 @@
                             <option value="english">English</option>
                             <option value="german">German</option>
                         </select>
+                    </div>
+
+                    <div class="app-settings-row">
+                        <div class="app-settings-label">
+                            <h3 class="al-text-st">Logout</h3>
+                            <p class="al-desc-st al-desc-st-2">Log out of your account</p>
+                        </div>
+                        <button id="logout-btn" class="logout-btn">Logout</button>
                     </div>
                 </div> <!-- end-app-settings-container -->
             </div>
@@ -221,7 +230,8 @@
     </div> <!-- end-app -->
 
 
-    <script src="/frontend/scripts/js-pages/settings.js"></script>
+    <script src="/frontend/scripts/role-check/user.js" type="module"></script>
+    <script type="module" src="/frontend/scripts/js-pages/settings.js"></script>
     <!-- <script type="module" src="/frontend/scripts/script.js"></script> -->
 </body>
 
