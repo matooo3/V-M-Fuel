@@ -14,11 +14,9 @@ export class CustomSelect {
     }
 
     init() {
-        debugLog('Initializing custom select:', this.element); // DEBUG
 
         // Toggle dropdown on trigger click
         this.trigger.addEventListener('click', (e) => {
-            debugLog('Trigger clicked'); // DEBUG
             e.stopPropagation();
             this.toggle();
         });
