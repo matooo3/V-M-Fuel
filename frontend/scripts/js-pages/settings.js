@@ -1,4 +1,4 @@
-import * as Auth from "/frontend/scripts/auth.js";
+import * as Auth from "../auth.js";
 
 // ==============================
 // ======= CARD ELEMENTS ========
