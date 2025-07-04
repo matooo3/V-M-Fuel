@@ -66,7 +66,7 @@ function updateAdminContainer() {
                             </div>
 
                             <span class="calories-db">
-                                830ckal
+                                830kcal
                             </span>
                         </div>
                     </div>
