@@ -5,6 +5,8 @@ import loadMeals from './js-pages/meals.js';
 import * as Storage from './storage.js';
 import * as Auth from './auth.js';
 
+const valid = await Auth.checkSessionTokenValid();
+
 // AUTHENTICATION
 setInterval(async () => {
   console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
