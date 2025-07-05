@@ -1,24 +1,31 @@
-import loadHome from './js-pages/home.js';
-import loadList from './js-pages/list.js';
-import loadPlan from './js-pages/plan.js';
-import loadMeals from './js-pages/meals.js';
-import * as Storage from './storage.js';
-import * as Auth from './auth.js';
+import loadHome from "./js-pages/home.js";
+import loadList from "./js-pages/list.js";
+import loadPlan from "./js-pages/plan.js";
+import loadMeals from "./js-pages/meals.js";
+import * as Storage from "./storage.js";
+import * as Auth from "./auth.js";
 
 const valid = await Auth.checkSessionTokenValid();
+if (!valid) {
+    console.warn(
+        `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt11111111111`
+    );
+} else {
+    console.log(`[TokenCheck] ✅ Alles in Ordnung11111111111111`);
+}
 
 // AUTHENTICATION
 setInterval(async () => {
-  console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
-  const valid = await Auth.checkSessionTokenValid();
-  if (!valid) {
-    console.warn(`[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`);
-  } else {
-    console.log(`[TokenCheck] ✅ Alles in Ordnung`);
-  }
+    console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
+    const valid = await Auth.checkSessionTokenValid();
+    if (!valid) {
+        console.warn(
+            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
+        );
+    } else {
+        console.log(`[TokenCheck] ✅ Alles in Ordnung`);
+    }
 }, 5 * 60 * 1000); // alle 5 Minuten
-
-
 
 // SERVICE-WORKER REGISTRATION
 // The service worker registration code is currently disabled for debugging purposes.
@@ -34,52 +41,49 @@ setInterval(async () => {
 // }
 
 const routes = {
-  "home": loadHome,
-  "list": loadList,
-  "plan": loadPlan,
-  "meals": loadMeals
+    home: loadHome,
+    list: loadList,
+    plan: loadPlan,
+    meals: loadMeals,
 };
 
 function setActiveTab() {
-  const navLinks = document.querySelectorAll('#main-nav a');
+    const navLinks = document.querySelectorAll("#main-nav a");
 
-  function setActive(clickedLink) {
+    function setActive(clickedLink) {
+        // Entferne active Klasse von allen nav-links
+        navLinks.forEach((link) => {
+            link.classList.remove("active");
+        });
 
-    // Entferne active Klasse von allen nav-links
-    navLinks.forEach(link => {
-      link.classList.remove('active');
+        // Füge active Klasse zum geklickten Element hinzu
+        clickedLink.classList.add("active");
+    }
+
+    // Event Listener für jeden nav-link hinzufügen
+    navLinks.forEach((link) => {
+        link.addEventListener("click", function (event) {
+            setActive(this);
+        });
     });
-
-    // Füge active Klasse zum geklickten Element hinzu
-    clickedLink.classList.add('active');
-  }
-
-  // Event Listener für jeden nav-link hinzufügen
-  navLinks.forEach(link => {
-    link.addEventListener('click', function (event) {
-      setActive(this);
-    });
-  });
-
 }
 
 function router() {
-  const hash = window.location.hash.slice(1);
-  // Fallback auf Home-Seite
-  const baseTab = "initial Page to implement";
-  const loadPage = routes[hash] || baseTab;
-  // Löscht vorherigen Inhalt
-  // document.getElementById('app').innerHTML = '';
-  setActiveTab();
-  loadPage();
-  console.log('Page loaded:', hash || 'home');
+    const hash = window.location.hash.slice(1);
+    // Fallback auf Home-Seite
+    const baseTab = "initial Page to implement";
+    const loadPage = routes[hash] || baseTab;
+    // Löscht vorherigen Inhalt
+    // document.getElementById('app').innerHTML = '';
+    setActiveTab();
+    loadPage();
+    console.log("Page loaded:", hash || "home");
 }
 
-window.addEventListener('hashchange', router);
+window.addEventListener("hashchange", router);
 
 // Lädt die Standardseite beim Start:
-window.addEventListener('load', router);
-
+window.addEventListener("load", router);
 
 // BACKEND-http-Request:
 //
@@ -101,8 +105,8 @@ window.addEventListener('load', router);
 
 // --------------- LOAD ALL DATA --------------------
 async function loadData() {
-  const data = await Storage.getDataDB();
-  console.log('Daten aus storage.js:', data);
+    const data = await Storage.getDataDB();
+    console.log("Daten aus storage.js:", data);
 }
 
 await loadData();
@@ -110,8 +114,8 @@ await loadData();
 // EXAMPLE CALL FOR TESTING: (DB)
 console.log("--------------DATA LOADED FROM DBBBBB-------------");
 const dishes = await Storage.getDishes();
-dishes.forEach(dish => {
-  console.log(`Dish Name: ${dish.name}`);
+dishes.forEach((dish) => {
+    console.log(`Dish Name: ${dish.name}`);
 });
 
 // EXAMPLE CALL FOR TESTING: (LS)
@@ -121,8 +125,8 @@ const dataLS = Storage.getDataLS();
 const ingredients = dataLS.ingredients;
 
 console.log(dataLS);
-dataLS.dishes.forEach(dish => {
-  console.log(`Dish Name: ${dish.name}`);
+dataLS.dishes.forEach((dish) => {
+    console.log(`Dish Name: ${dish.name}`);
 });
 
 // EXAMPLE CALL FOR TESTING: (DISHES WITH INGREDIENTS)
