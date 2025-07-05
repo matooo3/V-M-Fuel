@@ -7,12 +7,15 @@ import * as Auth from './auth.js';
 
 // AUTHENTICATION
 setInterval(async () => {
+  console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
   const valid = await Auth.checkSessionTokenValid();
   if (!valid) {
-    // Falls hier noch was passieren soll, kannst du das ergänzen.
-    // logout() wird ja schon in checkSessionTokenValid() aufgerufen.
+    console.warn(`[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`);
+  } else {
+    console.log(`[TokenCheck] ✅ Alles in Ordnung`);
   }
-}, 1 * 60 * 1000); // alle 1 Minuten
+}, 5 * 60 * 1000); // alle 5 Minuten
+
 
 
 // SERVICE-WORKER REGISTRATION

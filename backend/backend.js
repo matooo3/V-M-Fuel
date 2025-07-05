@@ -201,7 +201,7 @@ app.post("/api/login", (req, res) => {
                 role: user.role,
             },
             JWT_SECRET,
-            { expiresIn: "5m" }
+            { expiresIn: "1w" }
         );
 
         res.json({ token });
