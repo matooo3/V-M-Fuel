@@ -108,8 +108,49 @@ app.get("/api/user_dishes", (req, res) => {
     });
 });
 
+// API-Endpunkt: Gerichte mit ihren Zutaten abrufen (JOIN-basiert, effizient)
+app.get("/api/dishes_full", (req, res) => {
+    const query = `
+        SELECT 
+            d.id AS dish_id,
+            d.name AS dish_name,
+            i.name AS ingredient_name
+        FROM dishes d
+        JOIN dish_ingredients di ON di.dish_id = d.id
+        JOIN ingredients i ON i.id = di.ingredient_id
+        ORDER BY d.id
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Fehler bei der Abfrage von dishes_full:", err);
+            res.status(500).send("Serverfehler bei /api/dishes_full");
+        } else {
+            // Umwandeln in: [{ id: ..., name: ..., ingredients: [...] }]
+            const dishMap = {};
+
+            results.forEach(row => {
+                const id = row.dish_id;
+                if (!dishMap[id]) {
+                    dishMap[id] = {
+                        id,
+                        name: row.dish_name,
+                        ingredients: []
+                    };
+                }
+                dishMap[id].ingredients.push(row.ingredient_name);
+            });
+
+            const dishesWithIngredients = Object.values(dishMap);
+            res.json(dishesWithIngredients);
+        }
+    });
+});
+
+
 /////////////////////////////////////////////////////////////////////////////////////
 // Middleware: Auth & Rollenprüfung
+/////////////////////////////////////////////////////////////////////////////////////
 function authMiddleware(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) return res.status(401).json({ message: "Token fehlt" });

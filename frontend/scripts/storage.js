@@ -46,6 +46,14 @@ export async function getUserDishes() {
   return userDishes;
 }
 
+// get dishes with ingredients
+export async function getDishesWithIngredients() {
+    const dishesWithIngredients = await Api.fetchData('/dishes_full');
+    // saveToLS('dishesWithIngredients', dishesWithIngredients); // optional
+    return dishesWithIngredients;
+}
+
+
 
 // -----------------------------------END------------------------------------------
 

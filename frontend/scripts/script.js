@@ -108,3 +108,8 @@ console.log(dataLS);
 dataLS.dishes.forEach(dish => {
   console.log(`Dish Name: ${dish.name}`);
 });
+
+// EXAMPLE CALL FOR TESTING: (DISHES WITH INGREDIENTS)
+console.log("--------------DISHES WITH INGREDIENTS-------------");
+const dishesWithIngredients = await Storage.getDishesWithIngredients();
+console.log("HIER SIND DIE FULL_DISHES:", dishesWithIngredients);
