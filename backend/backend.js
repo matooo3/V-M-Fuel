@@ -127,9 +127,9 @@ function authMiddleware(req, res, next) {
 function checkRole(requiredRole) {
     return function (req, res, next) {
         if (!req.user)
-            return res.status(401).json({ message: "Nicht eingeloggt" });
+            return res.status(401).json({ message: "Not logged in" });
         if (req.user.role !== requiredRole && req.user.role !== "admin") {
-            return res.status(403).json({ message: "Nicht erlaubt" });
+            return res.status(403).json({ message: "Not allowed" });
         }
         next();
     };
@@ -142,7 +142,7 @@ app.post("/api/login", (req, res) => {
 
     db.query(query, [email], async (err, results) => {
         if (err || results.length === 0) {
-            return res.status(401).json({ message: "Ungültige Login-Daten" });
+            return res.status(401).json({ message: "Invalid login credentials" });
         }
 
         const user = results[0];
@@ -151,7 +151,7 @@ app.post("/api/login", (req, res) => {
             user.password_hash
         );
         if (!passwordMatch) {
-            return res.status(401).json({ message: "Falsches Passwort" });
+            return res.status(401).json({ message: "Wrong password!" });
         }
 
         const token = jwt.sign(
@@ -177,8 +177,8 @@ app.post("/api/register", async (req, res) => {
         if (err)
             return res
                 .status(500)
-                .json({ message: "Fehler bei Registrierung" });
-        res.status(201).json({ message: "Benutzer erstellt" });
+                .json({ message: "Error during registration" });
+        res.status(201).json({ message: "User created" });
     });
 });
 // app.post("/api/register", (req, res) => {
@@ -192,7 +192,7 @@ app.post("/api/dishes", authMiddleware, checkRole("cook"), (req, res) => {
     const query = "INSERT INTO dishes (name) VALUES (?)";
     db.query(query, [name], (err, result) => {
         if (err)
-            return res.status(500).json({ message: "Fehler beim Hinzufügen" });
+            return res.status(500).json({ message: "Error adding dish" });
         res.status(201).json({ id: result.insertId, name });
     });
 });
@@ -201,7 +201,7 @@ app.post("/api/dishes", authMiddleware, checkRole("cook"), (req, res) => {
 app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
     const { userId, role } = req.body;
     if (!["admin", "cook", "user"].includes(role)) {
-        return res.status(400).json({ message: "Ungültige Rolle" });
+        return res.status(400).json({ message: "Invalid role" });
     }
 
     const query = 'UPDATE users SET role = ? WHERE user_id = ?';
@@ -210,8 +210,8 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
         if (err)
             return res
                 .status(500)
-                .json({ message: "Fehler beim Rollen-Update" });
-        res.json({ message: "Rolle aktualisiert" });
+                .json({ message: "Error updating role" });
+        res.json({ message: "Role updated" });
     });
 });
 /////////////////////////////////////////////////////////////////////////////////////

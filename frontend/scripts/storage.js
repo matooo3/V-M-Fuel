@@ -132,7 +132,7 @@ export async function changeUserRoleInDB(role, email) {
         const userData = { userId, role };
         const result = await Api.postData('/set-role', userData, token);
 
-        alert('Rolle erfolgreich geändert NEEEWW8!');
+        alert('Rolle erfolgreich geändert!');
 
 
     } catch (error) {
