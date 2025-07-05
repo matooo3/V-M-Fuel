@@ -341,12 +341,18 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     font-family: inherit;
 }
 
-.app-settings-buttons #save-settings-btn {
+.app-settings-buttons #save-settings-btn, #logout-btn {
     background-color: var(--accent-color);
     color: var(--background-color);
     border: none;
     font-weight: 500;
     font-family: inherit;
+}
+#logout-btn {
+    height: 2.7rem;
+    border-radius: 7px;
+    font-size: 1.2rem;
+    width: 8rem;
 }
 
 /* ---------- HEADER & FOOTER FIXED ---------- */
