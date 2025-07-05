@@ -26,26 +26,35 @@ export async function fetchData(endpoint) {
 
 // GET with token (Authorization-Header)
 export async function fetchDataWithToken(endpoint, token) {
-  try {
-    const response = await fetch(`${apiBaseUrl}${endpoint}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
+  console.log(`[fetchDataWithToken] ➜ Endpoint: ${endpoint}, Token:`, token);
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch ${endpoint}: ${response.statusText}`);
+  const response = await fetch(`${apiBaseUrl}${endpoint}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
     }
+  });
 
-    const data = await response.json();
-    return data;
+  console.log(`[fetchDataWithToken] ⇐ Status: ${response.status}`);
 
-  } catch (error) {
-    console.error(error);
-    return null;
+  if (response.status === 403) {
+    // Token abgelaufen oder ungültig
+    console.log("403");
+    throw new Error('Token abgelaufen oder ungültig (403 Forbidden)');
   }
+
+  if (!response.ok) {
+    console.log("other error");
+    throw new Error(`Fehler beim Abrufen von ${endpoint}: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  console.log(`[fetchDataWithToken] ✅ Erfolgreich geladen:`, data);
+  return data;
 }
+
+
+
 
 export async function postData(endpoint, data, token) {
   try {

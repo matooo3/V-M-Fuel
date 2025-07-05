@@ -58,18 +58,36 @@ export function requiredUserRole(role) {
 
 export async function checkSessionTokenValid() {
   const token = localStorage.getItem('token');
-  if (!token) return false;
+  if (!token) {
+    console.log("[checkSessionTokenValid] Kein Token gefunden");
+    return false;
+  }
 
   try {
-    const response = await fetchDataWithToken('/check-token', token);
+    const response = await Api.fetchDataWithToken('/check-token', token);
 
-    if (!response?.valid) throw new Error('Token not valid');
+    // if (!response.valid) {
+    //   console.warn("[checkSessionTokenValid] ❌ Token ungültig oder abgelaufen – Nutzer wird ausgeloggt");
+    //   logout();
+    //   return false;
+    // }
 
+    console.log("[checkSessionTokenValid] ✅ Token gültig");
     return true;
 
   } catch (err) {
-    console.warn("Session token check failed:", err.message);
-    logout();
-    return false;
+    if (err.message.includes('403')) {
+      console.warn("[checkSessionTokenValid] ❌ Token abgelaufen – Nutzer wird ausgeloggt");
+      logout();
+      return false;
+    }
+
+    // Andere Fehler, z.B. Netzwerkproblem, Server nicht erreichbar
+    console.warn("[checkSessionTokenValid] ⚠️ Server nicht erreichbar – Tokenstatus unbekannt, Nutzer bleibt eingeloggt");
+    return true;
   }
 }
+
+
+
+
