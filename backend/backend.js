@@ -112,13 +112,13 @@ app.get("/api/user_dishes", (req, res) => {
 app.get("/api/dishes_full", (req, res) => {
     const query = `
         SELECT 
-            d.id AS dish_id,
+            d.dish_id AS dish_id,
             d.name AS dish_name,
             i.name AS ingredient_name
         FROM dishes d
-        JOIN dish_ingredients di ON di.dish_id = d.id
-        JOIN ingredients i ON i.id = di.ingredient_id
-        ORDER BY d.id
+        JOIN dish_ingredients di ON di.dish_id = d.dish_id
+        JOIN ingredients i ON i.ingredient_id = di.ingredient_id
+        ORDER BY d.dish_id
     `;
 
     db.query(query, (err, results) => {
@@ -126,9 +126,7 @@ app.get("/api/dishes_full", (req, res) => {
             console.error("Fehler bei der Abfrage von dishes_full:", err);
             res.status(500).send("Serverfehler bei /api/dishes_full");
         } else {
-            // Umwandeln in: [{ id: ..., name: ..., ingredients: [...] }]
             const dishMap = {};
-
             results.forEach(row => {
                 const id = row.dish_id;
                 if (!dishMap[id]) {
