@@ -265,3 +265,4 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server läuft auf http://172.18.45.1:${PORT}`);
 });
+//test 050725
