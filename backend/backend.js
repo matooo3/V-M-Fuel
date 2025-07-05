@@ -201,7 +201,7 @@ app.post("/api/login", (req, res) => {
                 role: user.role,
             },
             JWT_SECRET,
-            { expiresIn: "2h" }
+            { expiresIn: "30m" }
         );
 
         res.json({ token });
@@ -223,6 +223,12 @@ app.post("/api/register", async (req, res) => {
 // app.post("/api/register", (req, res) => {
 //   res.json({ message: "Test register endpoint funktioniert!" });
 // });
+
+// Check if token is valid
+app.get("/api/check-token", authMiddleware, (req, res) => {
+    res.status(200).json({ valid: true, user: req.user });
+});
+
 
 
 // Beispielgeschützter Endpunkt (nur cook oder admin)
