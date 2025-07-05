@@ -3,6 +3,17 @@ import loadList from './js-pages/list.js';
 import loadPlan from './js-pages/plan.js';
 import loadMeals from './js-pages/meals.js';
 import * as Storage from './storage.js';
+import * as Auth from './auth.js';
+
+// AUTHENTICATION
+setInterval(async () => {
+  const valid = await Auth.checkSessionTokenValid();
+  if (!valid) {
+    // Falls hier noch was passieren soll, kannst du das ergänzen.
+    // logout() wird ja schon in checkSessionTokenValid() aufgerufen.
+  }
+}, 5 * 60 * 1000); // alle 5 Minuten
+
 
 // SERVICE-WORKER REGISTRATION
 // The service worker registration code is currently disabled for debugging purposes.

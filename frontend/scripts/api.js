@@ -24,6 +24,29 @@ export async function fetchData(endpoint) {
   }
 }
 
+// GET with token (Authorization-Header)
+export async function fetchDataWithToken(endpoint, token) {
+  try {
+    const response = await fetch(`${apiBaseUrl}${endpoint}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${endpoint}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
 export async function postData(endpoint, data, token) {
   try {
     const response = await fetch(`${apiBaseUrl}${endpoint}`, {
