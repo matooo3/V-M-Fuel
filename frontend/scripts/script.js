@@ -12,7 +12,7 @@ setInterval(async () => {
     // Falls hier noch was passieren soll, kannst du das ergänzen.
     // logout() wird ja schon in checkSessionTokenValid() aufgerufen.
   }
-}, 5 * 60 * 1000); // alle 5 Minuten
+}, 1 * 60 * 1000); // alle 1 Minuten
 
 
 // SERVICE-WORKER REGISTRATION
