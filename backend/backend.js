@@ -267,7 +267,7 @@ app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
         if (err) {
             console.error(err);
             return res
-                .status(500)
+                .status(509)
                 .json({ message: "Failed to add meal." });
         }
 
@@ -275,7 +275,7 @@ app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
             if (err2) {
                 console.error(err2);
                 return res
-                    .status(500)
+                    .status(508)
                     .json({ message: "Fehler beim Hinzufügen der Zutaten" });
             }
 
