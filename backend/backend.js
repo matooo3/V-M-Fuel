@@ -279,7 +279,7 @@ app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
                     .json({ message: "Fehler beim Hinzufügen der Zutaten" });
             }
 
-            res.status(201).json({
+            return res.status(201).json({
                 message: "Gericht erfolgreich hinzugefügt",
                 dishId,
             });
