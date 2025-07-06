@@ -127,13 +127,13 @@ app.get("/api/dishes_full", (req, res) => {
             res.status(500).send("Serverfehler bei /api/dishes_full");
         } else {
             const dishMap = {};
-            results.forEach(row => {
+            results.forEach((row) => {
                 const id = row.dish_id;
                 if (!dishMap[id]) {
                     dishMap[id] = {
                         id,
                         name: row.dish_name,
-                        ingredients: []
+                        ingredients: [],
                     };
                 }
                 dishMap[id].ingredients.push(row.ingredient_name);
@@ -144,7 +144,6 @@ app.get("/api/dishes_full", (req, res) => {
         }
     });
 });
-
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Middleware: Auth & Rollenprüfung
@@ -181,7 +180,9 @@ app.post("/api/login", (req, res) => {
 
     db.query(query, [email], async (err, results) => {
         if (err || results.length === 0) {
-            return res.status(401).json({ message: "Invalid login credentials" });
+            return res
+                .status(401)
+                .json({ message: "Invalid login credentials" });
         }
 
         const user = results[0];
@@ -211,7 +212,8 @@ app.post("/api/login", (req, res) => {
 app.post("/api/register", async (req, res) => {
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const query = "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)";
+    const query =
+        "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)";
     db.query(query, [username, email, hashedPassword, "user"], (err) => {
         if (err)
             return res
@@ -229,19 +231,6 @@ app.get("/api/check-token", authMiddleware, (req, res) => {
     res.status(200).json({ valid: true, user: req.user });
 });
 
-
-
-// Beispielgeschützter Endpunkt (nur cook oder admin)
-app.post("/api/dishes", authMiddleware, checkRole("cook"), (req, res) => {
-    const { name } = req.body;
-    const query = "INSERT INTO dishes (name) VALUES (?)";
-    db.query(query, [name], (err, result) => {
-        if (err)
-            return res.status(500).json({ message: "Error adding dish" });
-        res.status(201).json({ id: result.insertId, name });
-    });
-});
-
 // Admin-Rollen-Zuweisung
 app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
     const { userId, role } = req.body;
@@ -249,16 +238,89 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
         return res.status(400).json({ message: "Invalid role" });
     }
 
-    const query = 'UPDATE users SET role = ? WHERE user_id = ?';
+    const query = "UPDATE users SET role = ? WHERE user_id = ?";
 
     db.query(query, [role, userId], (err) => {
         if (err)
-            return res
-                .status(500)
-                .json({ message: "Error updating role" });
+            return res.status(500).json({ message: "Error updating role" });
         res.json({ message: "Role updated" });
     });
 });
+
+// -------------- ADD MEAL -----------------
+// Beispielgeschützter Endpunkt (nur cook oder admin)
+// app.post("/api/dishes", authMiddleware, checkRole("cook"), (req, res) => {
+//     const { name } = req.body;
+//     const query = "INSERT INTO dishes (name) VALUES (?)";
+//     db.query(query, [name], (err, result) => {
+//         if (err)
+//             return res.status(500).json({ message: "Error adding dish" });
+//         res.status(201).json({ id: result.insertId, name });
+//     });
+// });
+
+// Beispielgeschützter Endpunkt (nur cook oder admin)
+app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
+    const data = req.body;
+
+    setDishesTable(data, (err, dishId) => {
+        if (err) {
+            console.error(err);
+            return res
+                .status(500)
+                .json({ message: "Failed to add meal." });
+        }
+
+        setDishIngredientTable(dishId, data.ingredients, (err2) => {
+            if (err2) {
+                console.error(err2);
+                return res
+                    .status(500)
+                    .json({ message: "Fehler beim Hinzufügen der Zutaten" });
+            }
+
+            res.status(201).json({
+                message: "Gericht erfolgreich hinzugefügt",
+                dishId,
+            });
+        });
+    });
+});
+
+function setDishesTable(data, callback) {
+    const { name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredients, instructions } = data;
+
+    const sql = `INSERT INTO dishes 
+    (name, preparation, vm_score, meal_category, preparation_time_in_min, total_calories, total_protein, total_fat, total_carbs, tags) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    const values = [ name, instructions, vmScore, category, time, calories, protein, fat, carbs, tags ];
+
+    db.query(sql, values, (err, result) => {
+        if (err) return callback(err);
+        callback(null, result.insertId);
+    });
+}
+
+function setDishIngredientTable(dishId, ingredients, callback) {
+    if (!Array.isArray(ingredients) || ingredients.length === 0)
+        return callback(null);
+
+    const sql = `INSERT INTO dish_ingredients (dish_id, ingredient_id, unit_of_measurement, amount) VALUES ?`;
+
+    const values = ingredients.map((ing) => [
+        dishId,
+        ing.ingredient_id,
+        ing.unit_of_measurement,
+        ing.amount
+    ]);
+
+    db.query(sql, [values], (err, result) => {
+        if (err) return callback(err);
+        callback(null);
+    });
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 // Starte den Server
