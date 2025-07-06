@@ -148,6 +148,6 @@ export async function addNewDishToDB(data) {
         const result = await Api.postData("/add-dishes", data, token);
         
     } catch (error) {
-      alert("Failed to add new dish!")
+      alert("Failed to add new dish: " + error.message);
     }
 }
