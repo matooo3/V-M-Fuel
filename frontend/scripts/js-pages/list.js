@@ -95,7 +95,7 @@ function addItemToList() {
     newItem.innerHTML = `
     <div id="new-item-container">
         <div class="item-details-add">
-            <input type="text" placeholder="Item Name" />
+            <input id="name-gl" type="text" placeholder="Item Name" />
             <div class="custom-select">
                 <div class="select-trigger">
                     <span class="select-text">Protein</span>
@@ -109,7 +109,7 @@ function addItemToList() {
             </div>
         </div>
         <div class="quantity-control-add">
-            <input type="number" placeholder="100" />
+            <input id="number-gl" type="number" placeholder="100" />
             <div class="custom-select">
                 <div class="select-trigger">
                     <span class="select-text">Select Unit</span>

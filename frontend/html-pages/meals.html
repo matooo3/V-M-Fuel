@@ -12,9 +12,9 @@
     </div>
 
     <div id="filter-bar-p">
-        <button class="filterBtn-p subtext active-p">All</button>
-        <button class="filterBtn-p subtext notActive-p">Meals</button>
-        <button class="filterBtn-p long-text subtext notActive-p">Ingredients</button>
+        <button class="filterBtn-p active-p">All</button>
+        <button class="filterBtn-p notActive-p">Meals</button>
+        <button class="filterBtn-p long-text notActive-p">Ingredients</button>
     </div>
 
     <div id="summary-p">
@@ -44,7 +44,6 @@
         </div>
 
     </div>
-
     <div id="food-p">
         <div class="food-separation">
             <div class="headerblock-p">
@@ -101,9 +100,9 @@
                     </div>
 
                     <div class="preference-buttons">
-                            <button class="like" data-meal="ingredient-1">
-                                <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
-                            </button>
+                        <button class="like" data-meal="ingredient-1">
+                            <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
+                        </button>
                         <button class="dislike" data-meal="ingredient-1">
                             <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -117,4 +116,163 @@
         </div>
     </div>
 
+</div>
+
+<div class="overlay hidden" id="editMealOverlay">
+    <div class="edit-meal-card">
+        <div class="card-header-p">
+            <button class="close-btn" id="closeMealBtn">
+                <img src="/frontend/assets/icons/close-settings.svg" alt="Close">
+            </button>
+            <h1 class="card-title-o-p">Add Meal</h1>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group">
+                <label class="form-label">Meal Name</label>
+                <input type="text" class="form-input" id="mealName-p" placeholder="Enter meal name">
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <label class="form-label">Time (min)</label>
+                    <input type="number" class="form-input" id="time-p" placeholder="0">
+                </div>
+                <div class="form-col">
+                    <label class="form-label">VM Score</label>
+                    <input type="number" class="form-input" id="vmScore-p" placeholder="0">
+                </div>
+            </div>
+
+            <div class="form-group category">
+                <label class="form-label">Category</label>
+                <div class="custom-select">
+                    <div class="select-trigger">
+                        <span class="select-text" id="category-p">Protein</span>
+                        <div class="select-arrow"></div>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="Breakfast">Breakfast</div>
+                        <div class="select-option" data-value="Lunch">Lunch</div>
+                        <div class="select-option" data-value="Dinner">Dinner</div>
+                        <div class="select-option" data-value="Snack">Snack</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group tags">
+                <label class="form-label">Tags</label>
+                <div class="tags-container" id="tagsContainer">
+                    <!-- Tags will be added here dynamically -->
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" class="form-input" id="tagInput" placeholder="Add tag" style="flex: 1;">
+                    <button class="add-tag-btn" id="addTagBtn">
+                        <img src="/frontend/assets/icons/plus-preferences.svg" alt="+">
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group instructions">
+                <label class="form-label">Cooking Instructions</label>
+                <textarea class="instructions-area" id="instructions-p"
+                    placeholder="Enter cooking instructions..."></textarea>
+            </div>
+
+            <div class="form-group ingredients">
+                <div class="section-header-p">
+                    <label class="form-label ingredient">Ingredients</label>
+                    <div id="search-bar-ingr">
+                        <img id="search-icon-db" src="/frontend/assets/icons/search-icon.svg" alt="search icon">
+                        <input type="text" class="form-input" id="search-ingredients" placeholder="Search Ingredient"
+                            style="flex: 1;">
+                    </div>
+                </div>
+                <ul id="ingredientsContainer">
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-actions-p">
+            <button class="add-button-p" id="addBtn-p">Add</button>
+        </div>
+    </div>
+</div>
+
+<div class="overlay hidden" id="editIngredientOverlay">
+    <div class="edit-ingredient-card">
+        <div class="card-header-p">
+            <button class="close-btn" id="closeIngredientBtn">
+                <img src="/frontend/assets/icons/close-settings.svg" alt="Close">
+            </button>
+            <h1 class="card-title-o-p">Add Ingredient</h1>
+        </div>
+
+        <div class="form-section-ingredient">
+            <div class="form-group">
+                <label class="form-label">Ingredient Name</label>
+                <input type="text" class="form-input" id="ingredientName-p" placeholder="Enter ingredient name">
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <label class="form-label">Calories (per unit)</label>
+                    <input type="number" class="form-input" id="ingredientCalories-p" placeholder="0">
+                </div>
+            </div>
+
+            <div class="nutrition-grid">
+                <div class="form-group">
+                    <label class="form-label">Protein (g)</label>
+                    <input type="number" class="form-input" id="ingredientProtein-p" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Fat (g)</label>
+                    <input type="number" class="form-input" id="ingredientFat-p" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Carbs (g)</label>
+                    <input type="number" class="form-input" id="ingredientCarbs-p" placeholder="0">
+                </div>
+            </div>
+
+            <div class="form-group category">
+                <label class="form-label">Category</label>
+                <div class="custom-select">
+                    <div class="select-trigger">
+                        <span class="select-text" id="ingredientCategory-p">Select Category</span>
+                        <div class="select-arrow"></div>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="Fruits">Fruits</div>
+                        <div class="select-option" data-value="Protein">Protein</div>
+                        <div class="select-option" data-value="Dairy">Dairy</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Unit</label>
+                <div class="custom-select">
+                    <div class="select-trigger">
+                        <span class="select-text" id="ingredientUnit-p">Select Unit</span>
+                        <div class="select-arrow"></div>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="pieces">pieces</div>
+                        <div class="select-option" data-value="g">grams</div>
+                        <div class="select-option" data-value="ml">milliliters</div>
+                        <div class="select-option" data-value="cups">cups</div>
+                        <div class="select-option" data-value="tbsp">tablespoons</div>
+                        <div class="select-option" data-value="tsp">teaspoons</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions-ingredients">
+            <button class="add-button-p" id="addIngredientSubmitBtn">Add</button>
+        </div>
+    </div>
 </div>

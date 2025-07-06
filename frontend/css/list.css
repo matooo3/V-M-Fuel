@@ -31,9 +31,9 @@
 
 #search-bar-gl input {
     width: 100%;
-    padding: 9px 14px;
+    padding: 6px 14px;
     border: 1px solid var(--border-color);
-    border-radius: 11px;
+    border-radius: 12px;
     font-size: 1.6rem;
     /* color: var(--text-color); */
     color: #6B7280;
@@ -119,6 +119,10 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+}
+
+.grocery-list:last-child{
+    margin-bottom: 10px;
 }
 
 .grocery-item {
@@ -217,7 +221,7 @@
     width: 100%;
     padding: 9px 14px;
     border-radius: 11px;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     background-color: var(--background-color);
     color: var(--main-text-color);
     border: 1px solid var(--border-color);
@@ -225,7 +229,7 @@
 }
 
 /* select */
-#newItem select {
+/* #newItem select {
     width: 100%;
     padding: 9px 14px;
     border-radius: 11px;
@@ -235,14 +239,17 @@
     outline: none;
 }
 
-/* bgrfeuzbzverbizugbdizubgreizbgzebgzebguizebrzgberuzgbeubgerbgzebrg
-eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 #newItem select option {
     font-size: 1.6rem;
     border-radius: 30px;
     padding: 9px 14px;
     width: 50%;
-}
+} 
+*/
+
+/* #name-gl::placeholder, #number-gl::placeholder {
+    font-size: 1.4rem; 
+} */
 
 #new-item-container {
     display: flex;

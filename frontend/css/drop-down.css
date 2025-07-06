@@ -15,11 +15,15 @@
     border: 1px solid var(--border-color); /* CHANGE BORDER COLOR & SIZE HERE */
     border-radius: 10px; /* CHANGE BORDER RADIUS HERE */
     cursor: pointer;
-    font-size: 16px; /* CHANGE FONT SIZE HERE */
+    font-size: 1.4rem; /* CHANGE FONT SIZE HERE */
     color: var(--main-text-color); /* CHANGE TEXT COLOR HERE */
     transition: all 0.3s ease; /* CHANGE ANIMATION SPEED HERE */
     user-select: none;
     min-height: 20px; /* Ensure minimum height */
+}
+
+.select-text{
+    font-size: 1.4rem;
 }
 
 .select-trigger:hover {

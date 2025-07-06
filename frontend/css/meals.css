@@ -1,5 +1,6 @@
 .meals-container * {
     min-width: 0;
+    font-family: inherit;
 }
 
 .meals-container {
@@ -47,15 +48,19 @@
 
 #search-bar-p input {
     width: 100%;
-    padding: 9px 14px;
+    padding: 6px 14px;
     border: 1px solid var(--border-color);
-    border-radius: 11px;
+    border-radius: 12px;
     font-size: 1.6rem;
     color: var(--main-text-color);
 }
 
 #search-bar-p input:focus {
     outline: none;
+}
+
+#search-bar-p input::placeholder {
+    font-size: 1.6rem;
 }
 
 #filter-bar-p {
@@ -227,6 +232,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
 .first-row-of-dish {
@@ -347,20 +353,432 @@
 }
 
 /* INGREDIENTS */
+
 .ingredient-card-p {
     min-height: 55px;
     width: 100%;
     display: flex;
     padding: 10px 15px;
+    margin-bottom: 10px;
 }
 
-@media(max-width: 360px){
+@media(max-width: 360px) {
 
-    #blocked{
+    #blocked {
         font-size: 1rem;
     }
 
-    #preferred{
+    #preferred {
         font-size: 1rem;
     }
+}
+
+
+/* overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    height: calc(100vh - var(--nav-height));
+}
+
+.edit-meal-card {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    right: 2vh;
+    background: white;
+    border-radius: 20px;
+    width: 450px;
+    max-width: 90vw;
+    height: calc(90vh - var(--nav-height));
+    overflow: auto;
+    color: var(--main-text-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    font-family: inherit;
+}
+
+.edit-ingredient-card {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 20px;
+    width: 400px;
+    max-width: 90vw;
+    height: calc(80vh - var(--nav-height));
+    overflow: auto;
+    color: var(--main-text-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    font-family: inherit;
+}
+
+.card-header-p {
+    padding: 25px 30px 20px;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px rgba(48, 48, 48, 0.1);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.card-title-o-p {
+    font-size: 2rem;
+    font-weight: 500;
+    color: black;
+    font-family: inherit;
+}
+
+.form-section {
+    padding: 20px 30px 0px 30px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.form-section-ingredient {
+    padding: 20px 30px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0px;
+}
+
+
+.form-group.tags {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 30px;
+}
+
+.form-group.ingredients {
+    padding-bottom: 0px;
+}
+
+.form-group.instructions {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 30px;
+}
+
+.form-group.category {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 30px;
+}
+
+.form-label {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: black;
+    margin-bottom: 8px;
+    font-family: inherit;
+}
+
+.form-label.ingredient {
+    margin-bottom: 10px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 10px;
+    max-height: 35px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1.4rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+    background: white;
+}
+
+.form-input::placeholder {
+    color: #D1D1D1;
+    font-weight: 200;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-col {
+    flex: 1;
+}
+
+.nutrition-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.nutrition-grid .form-group {
+    min-width: 0;
+    /* Shrinking */
+}
+
+.nutrition-grid .form-label {
+    white-space: nowrap;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--main-text-color);
+    margin-bottom: 8px;
+    font-family: inherit;
+    overflow: hidden;
+    /* Overflow */
+    text-overflow: ellipsis;
+}
+
+.nutrition-grid .form-input {
+    width: 100%;
+    min-width: 0;
+    /* Shrinking */
+    padding: 12px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1.4rem;
+    transition: border-color 0.2s ease;
+    background: white;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.tag-o-p {
+    background-color: var(--fill-color);
+    color: #6B7280;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tag-remove {
+    background: none;
+    border: none;
+    color: #6B7280;
+    cursor: pointer;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.add-tag-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.2s ease;
+}
+
+.add-tag-btn:hover {
+    background-color: var(--accent-color);
+}
+
+.section-header-p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+#search-bar-ingr {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 5px;
+    gap: 5px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    width: 100%;
+    height: 35px;
+    padding: 8px 12px;
+}
+
+#search-bar-ingr input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1.6rem;
+}
+
+#ingredientsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 300px;
+    overflow: auto;
+}
+
+#ingredientsContainer:last-child {
+    padding-bottom: 15px;
+}
+
+.card.ingredient {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 10px;
+    width: 100%;
+    min-height: 50px;
+    list-style-type: none;
+}
+
+.ingredient-amount-p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    gap: 10px;
+}
+
+.form-input.ingredient {
+    height: 30px;
+    width: 60px;
+    text-align: center;
+    padding: 2px;
+}
+
+.amount-text-p {
+    font-size: 1.4rem;
+    color: var(--main-text-color);
+    min-width: 40px;
+    text-align: center;
+}
+
+.ingredient-text-p {
+    font-size: 1.4rem;
+    color: var(--main-text-color);
+}
+
+
+.instructions-area {
+    width: 100%;
+    min-height: 100px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1.4rem;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.instructions-area:focus {
+    outline: none;
+}
+
+.instructions-area::placeholder {
+    color: #D1D1D1;
+    font-weight: 200;
+}
+
+.form-actions-p {
+    padding: 20px 0px;
+    border-top: 1px solid #f0f0f0;
+    box-shadow: 0 -2px 5px rgba(48, 48, 48, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    height: 10vh;
+}
+
+.form-actions-ingredients {
+    padding: 20px 0px;
+    border-top: 1px solid #f0f0f0;
+    box-shadow: 0 -2px 5px rgba(48, 48, 48, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    height: 7vh;
+}
+
+
+.add-button-p {
+    min-height: 35px;
+    width: fit-content;
+    min-width: 100px;
+    padding: 0px 10px;
+    border-radius: 20px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.instruction-item {
+    margin-bottom: 15px;
+}
+
+.instruction-text {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #666;
+    margin-bottom: 5px;
 }

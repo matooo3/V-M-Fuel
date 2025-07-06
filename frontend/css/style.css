@@ -52,6 +52,11 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 
+input, textarea, [contenteditable="true"] {
+    user-select: text;
+    -webkit-user-select: text;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
@@ -138,7 +143,8 @@ button {
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 5px 0px 0px 0px;
     gap: 45px;
     z-index: 1000;
     background-color: white;
@@ -164,6 +170,20 @@ button {
     height: 2px;
     background-color: var(--main-text-color);
     border-radius: 1px;
+}
+
+.nav-overlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height); 
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 1000;
 }
 
 .roboto {

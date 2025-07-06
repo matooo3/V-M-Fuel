@@ -1,5 +1,12 @@
 // ./pages/meals.js
 import { loadHTMLTemplate } from '../templateLoader.js';
+import { CustomSelect } from '/frontend/scripts/drop-down.js';
+import { getIngredients, addNewDishToDB, getDishes} from '../storage.js';
+
+
+// global ingredientsArry
+let ingredientsArray = await getIngredients();
+let dishesArray = await getDishes();
 
 // Main function
 export default async function loadMeals() {
@@ -36,6 +43,92 @@ export default async function loadMeals() {
         button.addEventListener('click', toggleRejected);
     });
 
+    //dropdown menu
+    const customSelects = document.querySelectorAll('.custom-select');
+    customSelects.forEach(select => {
+        new CustomSelect(select);
+    });
+
+    // -----------------------------------------------------------
+    // Add Meal Overlay
+    // -----------------------------------------------------------
+    document.getElementById('add-meal-p').addEventListener('click', showEditMeal);
+    document.getElementById('closeMealBtn').addEventListener('click', hideEditMeal);
+    document.getElementById('addBtn-p').addEventListener('click', saveMeal);
+
+    // Tag functionality
+    document.getElementById('addTagBtn').addEventListener('click', addTag);
+    document.getElementById('tagInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addTag();
+        }
+    });
+
+    // Close overlay when clicking outside
+    document.getElementById('editMealOverlay').addEventListener('click', function (e) {
+        if (e.target === this) {
+            hideEditMeal();
+        }
+    });
+
+    document.getElementById('navOverlay').addEventListener('click', function (e) {
+        hideEditMeal();
+    });
+
+    // Allow Enter key to add tags
+    document.getElementById('tagInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addTag();
+        }
+    });
+
+    // Close overlay when clicking outside
+    document.getElementById('editMealOverlay').addEventListener('click', function (e) {
+        if (e.target === this) {
+            hideEditMeal();
+        }
+    });
+
+    // search bar for ingredients
+    const searchInput = document.getElementById('search-ingredients');
+    const ingredientsList = document.getElementById('ingredientsContainer');
+
+    searchInput.addEventListener('input', () => {
+        searchBar(searchInput, ingredientsList);
+    });
+
+    // -----------------------------------------------------------
+    // Ingredients Overlay
+    // -----------------------------------------------------------
+    document.getElementById('add-ingredient-p').addEventListener('click', showEditIngredient);
+    document.getElementById('closeIngredientBtn').addEventListener('click', hideEditIngredient);
+    document.getElementById('addIngredientSubmitBtn').addEventListener('click', saveIngredient);
+
+    // Close overlay when clicking outside
+    document.getElementById('editIngredientOverlay').addEventListener('click', function (e) {
+        if (e.target === this) {
+            hideEditIngredient();
+        }
+    });
+
+    document.getElementById('navOverlay').addEventListener('click', function (e) {
+        hideEditIngredient();
+    });
+
+}
+
+// Load food content
+function loadDishesAndIngredients() {
+
+    dishesArray.forEach(() => {
+        addMealCard(dishesArray.name, dishesArray.total_calories, dishesArray.preparation_time_in_min, dishesArray.tags);
+    });
+
+    ingredientsArray.forEach(() => {
+        addIngredientCard(ingredientsArray.name, ingredientsArray.category);
+    });
 }
 
 // -----------------------------------------------------------
@@ -61,43 +154,252 @@ function setActiveFilterButton(button) {
 // -----------------------------------------------------------
 
 function toggleFavorite(event) {
-   const button = event.currentTarget;
-   button.classList.toggle('favorited');
-   
-   // Dislike-Button deaktivieren wenn Like aktiviert wird
-   if (button.classList.contains('favorited')) {
-       const mealId = button.dataset.meal;
-       const dislikeButton = document.querySelector(`[data-meal="${mealId}"].dislike`);
-       if (dislikeButton) {
-           dislikeButton.classList.remove('rejected');
-       }
-   }
+    const button = event.currentTarget;
+    button.classList.toggle('favorited');
+
+    // Dislike-Button deaktivieren wenn Like aktiviert wird
+    if (button.classList.contains('favorited')) {
+        const mealId = button.dataset.meal;
+        const dislikeButton = document.querySelector(`[data-meal="${mealId}"].dislike`);
+        if (dislikeButton) {
+            dislikeButton.classList.remove('rejected');
+        }
+    }
 }
 
 function toggleRejected(event) {
-   const button = event.currentTarget;
-   button.classList.toggle('rejected');
-   
-   // Like-Button deaktivieren wenn Dislike aktiviert wird
-   if (button.classList.contains('rejected')) {
-       const mealId = button.dataset.meal;
-       const likeButton = document.querySelector(`[data-meal="${mealId}"].like`);
-       if (likeButton) {
-           likeButton.classList.remove('favorited');
-       }
-   }
+    const button = event.currentTarget;
+    button.classList.toggle('rejected');
+
+    // Like-Button deaktivieren wenn Dislike aktiviert wird
+    if (button.classList.contains('rejected')) {
+        const mealId = button.dataset.meal;
+        const likeButton = document.querySelector(`[data-meal="${mealId}"].like`);
+        if (likeButton) {
+            likeButton.classList.remove('favorited');
+        }
+    }
 }
 
 // -----------------------------------------------------------
-// Add dishes functionality
+// Overlay
 // -----------------------------------------------------------
 
+// Ingredients search
+async function loadIngredients() {
+    const list = document.getElementById('ingredientsContainer');
+    ingredientsArray.forEach(ingredient => {
+        const uom = extractUnit(ingredient.Unit_of_Measurement);
+        list.innerHTML += `
+    <li class="card ingredient">
+      <input class="checkbox" type="checkbox">
+      <span class="ingredient-text-p">${ingredient.name}</span>
+      <div class="ingredient-amount-p">
+        <input type="number" class="form-input ingredient" placeholder="0">
+        <span class="amount-text-p">${uom}</span>
+      </div>
+    </li>
+  `;
+    });
+}
+
+function extractUnit(uom) {
+    if (!uom) return '';
+    return uom.replace(/[0-9]/g, '').toLowerCase();
+}
+
+function searchBar(searchInput, list) {
+    const query = searchInput.value.toLowerCase();
+    const items = list.querySelectorAll('li.card.ingredient');
+
+    items.forEach(item => {
+        const nameSpan = item.querySelector('.ingredient-text-p');
+        const name = nameSpan ? nameSpan.textContent.toLowerCase() : '';
+        if (name.includes(query)) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function getCheckedIngredientData() {
+    const checkboxes = document.querySelectorAll('#ingredientsContainer .checkbox');
+    const checkedData = [];
+
+    checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+
+            // get parent li element
+            const ingredientItem = checkbox.closest('.card.ingredient');
+
+            // get input field
+            const numberInput = ingredientItem.querySelector('.form-input.ingredient');
+            const amount = parseFloat(numberInput.value) || 0;
+
+            // [index, amount]
+            checkedData.push([index, amount]);
+        }
+    });
+
+    return checkedData;
+}
+
+function calculateIngredientsData() {
+
+    const checkedData = getCheckedIngredientData();
+
+    let totalCalories = 0;
+    let totalProtein = 0;
+    let totalCarbs = 0;
+    let totalFat = 0;
+    let ingredients = [];
+
+    checkedData.forEach(tuple => {
+        const [indexIng, amount] = tuple;
+        totalCalories += ingredientsArray[indexIng].calories_per_UoM * amount;
+        totalProtein += ingredientsArray[indexIng].protein_per_UoM * amount;
+        totalCarbs += ingredientsArray[indexIng].carbs_per_UoM * amount;
+        totalFat += ingredientsArray[indexIng].fat_per_UoM * amount;
+        let uom = extractUnit(ingredientsArray[indexIng].Unit_of_Measurement)
+        ingredients.push({
+            ingredient_id: ingredientsArray[indexIng].ingredient_id,
+            unit_of_measurement: uom,
+            amount: amount,
+        });
+
+    });
+
+    return {
+        calories: totalCalories,
+        protein: totalProtein,
+        carbs: totalFat,
+        fat: totalCarbs,
+        ingredients: ingredients,
+    };
+}
+
+
+// Show and hide Overlays
+
+function showEditMeal() {
+    document.getElementById('navOverlay').classList.remove('hidden');
+    document.getElementById('editMealOverlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    loadIngredients();
+
+}
+
+function hideEditMeal() {
+    document.getElementById('navOverlay').classList.add('hidden');
+    document.getElementById('editMealOverlay').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+function showEditIngredient() {
+    document.getElementById('navOverlay').classList.remove('hidden');
+    document.getElementById('editIngredientOverlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function hideEditIngredient() {
+    document.getElementById('navOverlay').classList.add('hidden');
+    document.getElementById('editIngredientOverlay').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+
+// Add Tag
+function addTag() {
+    const tagInput = document.getElementById('tagInput');
+    const tagValue = tagInput.value.trim();
+
+    if (tagValue) {
+        const tagsContainer = document.getElementById('tagsContainer');
+        const tagElement = document.createElement('div');
+        tagElement.className = 'tag-o-p';
+        tagElement.innerHTML = `
+                    <span>${tagValue}</span>
+                    <button class="tag-remove">
+                    <img src="/frontend/assets/icons/remove-tag.svg" alt="">
+                    </button>
+                `;
+        tagsContainer.appendChild(tagElement);
+        tagInput.value = '';
+
+        const removeTag = document.querySelector(".tag-remove");
+        removeTag.addEventListener("click", function () {
+            removeTag.parentElement.remove();
+        });
+    }
+}
+
+function validateMealForm() {
+    const errors = [];
+
+    // 1. Meal Name validation
+    const mealName = document.getElementById('mealName-p').value.trim();
+    if (!mealName) {
+        errors.push({ field: 'mealName-p', message: 'Please enter a meal name' });
+    }
+
+    // 2. Time validation
+    const time = document.getElementById('time-p').value.trim();
+    if (!time || isNaN(time) || parseInt(time) <= 0) {
+        errors.push({ field: 'time-p', message: 'Please enter a valid cooking time' });
+    }
+
+    // 3. VM Score validation
+    const vmScore = document.getElementById('vmScore-p').value.trim();
+    if (!vmScore || isNaN(vmScore)) {
+        errors.push({ field: 'vmScore-p', message: 'Please enter a valid VM score' });
+    }
+
+    // 4. Category validation
+    const category = document.getElementById('category-p').textContent.trim();
+    if (!category || category === 'Select Category' || category === 'Protein') {
+        errors.push({ field: 'category-p', message: 'Please select a category' });
+    }
+
+    // 5. Cooking Instructions validation
+    const instructions = document.getElementById('instructions-p').value.trim();
+    if (!instructions) {
+        errors.push({ field: 'instructions-p', message: 'Please enter cooking instructions' });
+    }
+
+    // 6. Ingredients validation - at least one checked
+    const checkedCheckboxes = document.querySelectorAll('#ingredientsContainer .checkbox:checked');
+    if (checkedCheckboxes.length === 0) {
+        errors.push({ field: 'ingredientsContainer', message: 'Please select at least one ingredient' });
+    }
+
+    // 7. Validate checked ingredients have amounts
+    checkedCheckboxes.forEach((checkbox, index) => {
+        const ingredientItem = checkbox.closest('.card.ingredient');
+        const amountInput = ingredientItem.querySelector('.form-input.ingredient');
+        const amount = amountInput.value.trim();
+        const ingredientName = ingredientItem.querySelector('.ingredient-text-p').textContent;
+
+        if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+            errors.push({
+                field: amountInput,
+                message: `Please enter a valid amount for ${ingredientName}`
+            });
+        }
+    });
+
+    return errors;
+}
+
+
+// Add dishes functionality
 function addMealCard(name, calories, time, tags = [], containerId = 'dishes-list-p') {
 
-    const dataId = `meal-${name.toLowerCase().replace(/\s+/g, '-')}`;  
+    const dataId = `meal-${name.toLowerCase().replace(/\s+/g, '-')}`;
 
     const tagsHTML = tags.map(tag => `<button class="tag-p">${tag}</button>`).join('');
-    
+
     const cardHTML = `
         <div class="card drop-shadow dish-card-p">
             <div class="first-row-of-dish">
@@ -109,52 +411,125 @@ function addMealCard(name, calories, time, tags = [], containerId = 'dishes-list
                         <p class="subtext">${time} min</p>
                     </div>
                 </div>
-                <div class="preference-buttons">
-                    <button class="like" data-meal="${dataId}">
-                        <svg class="star-icon" viewBox="0 0 24 24">
-                            <path d="M12 2l2.4 4.8 5.6.8-4 3.9.9 5.5L12 14.8 7.1 17l.9-5.5-4-3.9 5.6-.8L12 2z" />
-                        </svg>
-                    </button>
-                    <button class="dislike" data-meal="${dataId}">
-                        <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                </div>
+                    <div class="preference-buttons">
+                        <button class="like" data-meal="${dataId}">
+                            <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
+                        </button>
+                        <button class="dislike" data-meal="${dataId}">
+                            <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
             </div>
             <div class="tags-container-p">
                 ${tagsHTML}
             </div>
         </div>
     `;
-    
+
     // Add before other cards
     const container = document.getElementById(containerId);
     container.insertAdjacentHTML('beforeend', cardHTML);
-    
+
     const newCard = container.lastElementChild;
     const likeBtn = newCard.querySelector('.like');
     const dislikeBtn = newCard.querySelector('.dislike');
-    
+
     likeBtn.addEventListener('click', toggleFavorite);
     dislikeBtn.addEventListener('click', toggleRejected);
 }
 
 
+// Save Meal
+function saveMeal() {
+
+    // Validate form
+    const validationErrors = validateMealForm();
+
+    if (validationErrors.length > 0) {
+        // Show first error and focus field
+        const firstError = validationErrors[0];
+        alert(firstError.message);
+
+        // Focus the problematic field
+        if (typeof firstError.field === 'string') {
+            const field = document.getElementById(firstError.field);
+            if (field) field.focus();
+        } else if (firstError.field.focus) {
+            firstError.field.focus(); // For input elements
+        }
+
+        return; // Stop execution
+    }
+
+    // save data variables
+    const ingredientData = calculateIngredientsData();
+
+    const name = document.getElementById('mealName-p').value;
+    const calories = ingredientData.calories;
+    const protein = ingredientData.protein;
+    const fat = ingredientData.fat;
+    const carbs = ingredientData.carbs;
+    const time = document.getElementById('time-p').value;
+    const vmScore = document.getElementById('vmScore-p').value;
+    const category = document.getElementById('category-p').textContent.trim();
+    const tags = Array.from(document.querySelectorAll('.tag-o-p span')).map(tag => tag.textContent);
+    const instructions = document.getElementById('instructions-p').value;
+
+    const mealData = {
+        name,
+        calories,
+        protein,
+        fat,
+        carbs,
+        time,
+        vmScore,
+        category,
+        tags,
+        ingredientData,
+        instructions
+    };
+
+    // Add dish to DB
+    addNewDishToDB({ name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredientData, instructions });
+
+    // Add dish to UI
+    addMealCard(mealData.name, mealData.calories, mealData.time, mealData.tags);
+
+    // hide UI and clear form
+    hideEditMeal();
+    clearForm();
+}
 
 
+function clearForm() {
+    document.getElementById('mealName-p').value = '';
+    document.getElementById('time-p').value = '';
+    document.getElementById('vmScore-p').value = '';
+    document.getElementById('instructions-p').value = '';
 
-// -----------------------------------------------------------
+    // Clear tags
+    document.getElementById('tagsContainer').innerHTML = '';
+
+    // Clear ingredients
+    document.getElementById('ingredientsContainer').innerHTML = '';
+
+    // Reset category to default
+    const categoryElement = document.getElementById('category-p');
+    if (categoryElement) {
+        categoryElement.textContent = 'Select Category';
+    }
+}
+
+
 // Add ingredients functionality
-// -----------------------------------------------------------
-
-
 function addIngredientCard(name, category, containerId = 'ingredients-list-p') {
 
     const dataId = `ingredient-${name.toLowerCase().replace(/\s+/g, '-')}`;
-    
+
     const cardHTML = `
         <div class="card drop-shadow ingredient-card-p">
             <div class="descr-p">
@@ -164,9 +539,7 @@ function addIngredientCard(name, category, containerId = 'ingredients-list-p') {
 
             <div class="preference-buttons">
                 <button class="like" data-meal="${dataId}">
-                    <svg class="star-icon" viewBox="0 0 24 24">
-                        <path d="M12 2l2.4 4.8 5.6.8-4 3.9.9 5.5L12 14.8 7.1 17l.9-5.5-4-3.9 5.6-.8L12 2z" />
-                    </svg>
+                    <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
                 </button>
                 <button class="dislike" data-meal="${dataId}">
                     <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
@@ -178,15 +551,90 @@ function addIngredientCard(name, category, containerId = 'ingredients-list-p') {
             </div>
         </div>
     `;
-    
+
     // Add before other cards
     const container = document.getElementById(containerId);
     container.insertAdjacentHTML('beforeend', cardHTML);
-    
+
     const newCard = container.lastElementChild;
     const likeBtn = newCard.querySelector('.like');
     const dislikeBtn = newCard.querySelector('.dislike');
-    
+
     likeBtn.addEventListener('click', toggleFavorite);
     dislikeBtn.addEventListener('click', toggleRejected);
+}
+
+// validate ingredient data
+function validateIngredientData(data) {
+    if (!data.name || data.name.trim() === '') {
+        alert('Please enter an ingredient name.');
+        document.getElementById('ingredientName-p').focus();
+        return false;
+    }
+
+    if (!data.category || data.category.trim() === '' || data.category === 'Select Category') {
+        alert('Please select a category.');
+        document.getElementById('ingredientCategory-p').focus();
+        return false;
+    }
+
+    const numericFields = ['protein', 'fat', 'carbs', 'calories'];
+    for (const field of numericFields) {
+        if (data[field] === '' || isNaN(data[field])) {
+            alert(`Please enter a valid number for ${field}.`);
+            document.getElementById(`ingredient${capitalizeFirstLetter(field)}-p`).focus();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// Helper function
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
+// Save Ingredient
+function saveIngredient() {
+
+    // Validate data
+    validateIngredientData();
+
+    // save data variables
+    const name = document.getElementById('ingredientName-p').value.trim();
+    const category = document.getElementById('ingredientCategory-p').textContent.trim();
+    const protein = document.getElementById('ingredientProtein-p').value.trim();
+    const fat = document.getElementById('ingredientFat-p').value.trim();
+    const carbs = document.getElementById('ingredientCarbs-p').value.trim();
+    const calories = document.getElementById('ingredientCalories-p').value.trim();
+
+    const ingredientData = {
+        name,
+        category,
+        protein,
+        fat,
+        carbs,
+        calories
+    };
+
+    // Add ingredient to DB
+    addNewIngredientToDB({ name, category, protein, fat, carbs, calories })
+
+    // Add ingredient to UI
+    addIngredientCard(ingredientData.name, ingredientData.category);
+
+    // hide UI and clear form
+    hideEditIngredient();
+    clearIngredientForm();
+}
+
+function clearIngredientForm() {
+    document.getElementById('ingredientName-p').value = '';
+    document.getElementById('ingredientProtein-p').value = '';
+    document.getElementById('ingredientFat-p').value = '';
+    document.getElementById('ingredientCarbs-p').value = '';
+    document.getElementById('ingredientCalories-p').value = '';
+    document.getElementById('ingredientCategory-p').textContent = 'Select Category';
 }

@@ -32,7 +32,7 @@ export class CustomSelect {
 
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
-            if (!this.element.contains(e.target)) {
+            if (!this.element.contains(e.target) && this.isOpen) {
                 this.close();
             }
         });
