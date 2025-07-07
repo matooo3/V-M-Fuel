@@ -5,28 +5,6 @@ import loadMeals from "./js-pages/meals.js";
 import * as Storage from "./storage.js";
 import * as Auth from "./auth.js";
 
-const valid = await Auth.checkSessionTokenValid();
-if (!valid) {
-    console.warn(
-        `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt11111111111`
-    );
-} else {
-    console.log(`[TokenCheck] ✅ Alles in Ordnung11111111111111`);
-}
-
-// AUTHENTICATION
-setInterval(async () => {
-    console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
-    const valid = await Auth.checkSessionTokenValid();
-    if (!valid) {
-        console.warn(
-            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
-        );
-    } else {
-        console.log(`[TokenCheck] ✅ Alles in Ordnung`);
-    }
-}, 5 * 60 * 1000); // alle 5 Minuten
-
 // SERVICE-WORKER REGISTRATION
 // The service worker registration code is currently disabled for debugging purposes.
 // Uncomment the following block to enable service worker functionality.
@@ -47,36 +25,49 @@ const routes = {
     meals: loadMeals,
 };
 
+function initialLoad() {
+    router();
+}
+
+initialLoad();
+
 function setActiveTab() {
     const navLinks = document.querySelectorAll("#main-nav a");
 
-    function setActive(clickedLink) {
-        // Entferne active Klasse von allen nav-links
-        navLinks.forEach((link) => {
-            link.classList.remove("active");
-        });
+    function setActiveFromHash() {
+        const currentHash = window.location.hash;
 
-        // Füge active Klasse zum geklickten Element hinzu
-        clickedLink.classList.add("active");
+        navLinks.forEach((link) => {
+            if (link.getAttribute("href") === currentHash) {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
     }
 
-    // Event Listener für jeden nav-link hinzufügen
-    navLinks.forEach((link) => {
-        link.addEventListener("click", function (event) {
-            setActive(this);
-        });
-    });
+    // Setze beim Initialisieren sofort den aktiven Tab
+    setActiveFromHash();
+
+    // Reagiere global auf Hashänderungen
+    window.addEventListener("hashchange", setActiveFromHash);
 }
 
-function router() {
+
+async function router() {
+    // Wenn kein Hash vorhanden ist, setze "#home" als Standard
+    if (!window.location.hash || window.location.hash === "") {
+        window.history.replaceState(null, null, "#home");
+    }
+
     const hash = window.location.hash.slice(1);
-    // Fallback auf Home-Seite
-    const baseTab = "initial Page to implement";
+
+    // const baseTab = "initial Page to implement";
+    const baseTab = loadHome;
     const loadPage = routes[hash] || baseTab;
-    // Löscht vorherigen Inhalt
     // document.getElementById('app').innerHTML = '';
+    await loadPage();
     setActiveTab();
-    loadPage();
     console.log("Page loaded:", hash || "home");
 }
 
@@ -133,3 +124,25 @@ dataLS.dishes.forEach((dish) => {
 console.log("--------------DISHES WITH INGREDIENTS-------------");
 const dishesWithIngredients = await Storage.getDishesWithIngredients();
 console.log("HERE ARE THE FULL_DISHES:", dishesWithIngredients);
+
+const valid = await Auth.checkSessionTokenValid();
+if (!valid) {
+    console.warn(
+        `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt11111111111`
+    );
+} else {
+    console.log(`[TokenCheck] ✅ Alles in Ordnung11111111111111`);
+}
+
+// AUTHENTICATION
+setInterval(async () => {
+    console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
+    const valid = await Auth.checkSessionTokenValid();
+    if (!valid) {
+        console.warn(
+            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
+        );
+    } else {
+        console.log(`[TokenCheck] ✅ Alles in Ordnung`);
+    }
+}, 5 * 60 * 1000); // alle 5 Minuten
