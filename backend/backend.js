@@ -263,8 +263,8 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
 app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
     let { name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredientsData, instructions } = req.body;
 
-    carbs =3;
-    tags = "test";
+    // carbs = 3;
+    // tags = "test";
 
     const dishesData = { name, calories, protein, fat, carbs, time, vmScore, category, tags, instructions };
 
