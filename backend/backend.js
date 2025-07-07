@@ -261,10 +261,10 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
 
 // Beispielgeschützter Endpunkt (nur cook oder admin)
 app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
-    const { name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredientsData, instructions } = req.body;
+    let { name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredientsData, instructions } = req.body;
 
     carbs =3;
-    tags = ["test"];
+    tags = "test";
 
     const dishesData = { name, calories, protein, fat, carbs, time, vmScore, category, tags, instructions };
 
