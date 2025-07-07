@@ -261,12 +261,12 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
 
 // Beispielgeschützter Endpunkt (nur cook oder admin)
 app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
-    let { name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredients, instructions } = req.body;
+    let { name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredients, preparation } = req.body;
 
     // carbs = 3;
     // tags = "test";
 
-    const dishesData = { name, calories, protein, fat, carbs, time, vmScore, category, tags, instructions };
+    const dishesData = { name, calories, protein, fat, carbs, time, vmScore, category, tags, preparation };
 
     setDishesTable(dishesData, (err, dishId) => {
         if (err) {
@@ -293,13 +293,13 @@ app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
 });
 
 function setDishesTable(dishesData, callback) {
-    const { name, calories, protein, fat, carbs, time, vmScore, category, tags, instructions } = dishesData;
+    const { name, calories, protein, fat, carbs, time, vmScore, category, tags, preparation } = dishesData;
 
     const sql = `INSERT INTO dishes 
     (name, preparation, vm_score, meal_category, preparation_time_in_min, total_calories, total_protein, total_fat, total_carbs, tags) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    const values = [ name, instructions, vmScore, category, time, calories, protein, fat, carbs, tags ];
+    const values = [ name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags ];
 
     db.query(sql, values, (err, result) => {
         if (err) return callback(err);
