@@ -1,14 +1,11 @@
 // ./pages/meals.js
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { CustomSelect } from '/frontend/scripts/drop-down.js';
-import { getIngredients, addNewDishToDB, getDishes } from '../storage.js';
-
+import { getIngredients, addNewIngredientToDB, addNewDishToDB, getDishes } from '../storage.js';
+import { initializeSwipeToDelete } from './list.js';
 
 let ingredientsArray = await getIngredients();
 let dishesArray = await getDishes();
-
-console.log(`Hello ${ingredientsArray}`);
-console.log(`Hello ${dishesArray}`);
 
 // Main function
 export default async function loadMeals() {
@@ -20,7 +17,7 @@ export default async function loadMeals() {
     app.innerHTML = html;
 
 
-    loadDishesAndIngredients(ingredientsArray, dishesArray);
+    loadDishesAndIngredients();
 
     // Settings Eventlistener
     const settingsButton = document.querySelector('.settings');
@@ -122,17 +119,21 @@ export default async function loadMeals() {
         hideEditIngredient();
     });
 
+    // Swipe-to-Delete
+    const dishesContainer = document.getElementById('dishes-list-p');
+    initializeSwipeToDelete(dishesContainer);
+
 }
 
 // Load food content
-async function loadDishesAndIngredients(ingredientsArray, dishesArray) {
+async function loadDishesAndIngredients() {
 
-    dishesArray.forEach(() => {
-        addMealCard(dishesArray.name, dishesArray.total_calories, dishesArray.preparation_time_in_min, dishesArray.tags);
+    dishesArray.forEach(dish => {
+        addMealCard(dish.name, dish.total_calories, dish.preparation_time_in_min, JSON.parse(dish.tags));
     });
 
-    ingredientsArray.forEach(() => {
-        addIngredientCard(ingredientsArray.name, ingredientsArray.category);
+    ingredientsArray.forEach(ing => {
+        addIngredientCard(ing.name, ing.category);
     });
 }
 
@@ -197,12 +198,12 @@ async function loadIngredients() {
         const uom = extractUnit(ingredient.Unit_of_Measurement);
         list.innerHTML += `
     <li class="card ingredient">
-      <input class="checkbox" type="checkbox">
-      <span class="ingredient-text-p">${ingredient.name}</span>
-      <div class="ingredient-amount-p">
-        <input type="number" class="form-input ingredient" placeholder="0">
-        <span class="amount-text-p">${uom}</span>
-      </div>
+            <input class="checkbox" type="checkbox">
+            <span class="ingredient-text-p">${ingredient.name}</span>
+            <div class="ingredient-amount-p">
+                <input type="number" class="form-input ingredient" placeholder="0">
+                <span class="amount-text-p">${uom}</span>
+            </div>
     </li>
   `;
     });
@@ -262,14 +263,11 @@ function calculateIngredientsData() {
 
     checkedData.forEach(tuple => {
 
-        console.log("Hello");
-        console.log(ingredientsArray[indexIng]);
-
         const [indexIng, amount] = tuple;
-        totalCalories += ingredientsArray[indexIng].calories_per_UoM * amount;
-        totalProtein += ingredientsArray[indexIng].protein_per_UoM * amount;
-        totalCarbs += ingredientsArray[indexIng].carbs_per_UoM * amount;
-        totalFat += ingredientsArray[indexIng].fat_per_UoM * amount;
+        totalCalories += ingredientsArray[indexIng].calories_per_UoM / 100 * amount;
+        totalProtein += ingredientsArray[indexIng].protein_per_UoM / 100 * amount;
+        totalCarbs += ingredientsArray[indexIng].carbs_per_UoM / 100 * amount;
+        totalFat += ingredientsArray[indexIng].fats_per_UoM / 100 * amount;
         let uom = extractUnit(ingredientsArray[indexIng].Unit_of_Measurement);
         ingredients.push({
             ingredient_id: ingredientsArray[indexIng].ingredient_id,
@@ -410,6 +408,8 @@ function addMealCard(name, calories, time, tags = [], containerId = 'dishes-list
     const tagsHTML = tags.map(tag => `<button class="tag-p">${tag}</button>`).join('');
 
     const cardHTML = `
+    <li class="swipe-container">
+        <div class="swipe-delete">Delete</div>
         <div class="card drop-shadow dish-card-p">
             <div class="first-row-of-dish">
                 <div class="descr-p">
@@ -420,23 +420,24 @@ function addMealCard(name, calories, time, tags = [], containerId = 'dishes-list
                         <p class="subtext">${time} min</p>
                     </div>
                 </div>
-                    <div class="preference-buttons">
-                        <button class="like" data-meal="${dataId}">
-                            <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
-                        </button>
-                        <button class="dislike" data-meal="${dataId}">
-                            <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                        </button>
-                    </div>
+                <div class="preference-buttons">
+                    <button class="like" data-meal="${dataId}">
+                        <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
+                    </button>
+                    <button class="dislike" data-meal="${dataId}">
+                        <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
             </div>
             <div class="tags-container-p">
                 ${tagsHTML}
             </div>
         </div>
+    </li>
     `;
 
     // Add before other cards
@@ -485,29 +486,21 @@ function saveMeal() {
     const time = document.getElementById('time-p').value;
     const vmScore = document.getElementById('vmScore-p').value;
     const category = document.getElementById('category-p').textContent.trim();
-    const tags = JSON.stringify(Array.from(document.querySelectorAll('.tag-o-p span')).map(tag => tag.textContent));
+    const tagsArray = Array.from(document.querySelectorAll('.tag-o-p span')).map(tag => tag.textContent);
     const ingredients = ingredientData.ingredients;
-    const instructions = document.getElementById('instructions-p').value;
+    const preparation = document.getElementById('instructions-p').value;
+
+    const tags = JSON.stringify(tagsArray);
 
     const mealData = {
-        name,
-        calories,
-        protein,
-        fat,
-        carbs,
-        time,
-        vmScore,
-        category,
-        tags,
-        ingredients,
-        instructions
+        name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags, ingredients
     };
 
     // Add dish to DB
-    addNewDishToDB({ name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredients, instructions });
+    addNewDishToDB(mealData);
 
     // Add dish to UI
-    addMealCard(mealData.name, mealData.calories, mealData.time, mealData.tags);
+    addMealCard(name, calories, time, tagsArray);
 
     // hide UI and clear form
     hideEditMeal();
@@ -588,15 +581,6 @@ function validateIngredientData(data) {
         return false;
     }
 
-    const numericFields = ['protein', 'fat', 'carbs', 'calories'];
-    for (const field of numericFields) {
-        if (data[field] === '' || isNaN(data[field])) {
-            alert(`Please enter a valid number for ${field}.`);
-            document.getElementById(`ingredient${capitalizeFirstLetter(field)}-p`).focus();
-            return false;
-        }
-    }
-
     return true;
 }
 
@@ -609,28 +593,38 @@ function capitalizeFirstLetter(str) {
 // Save Ingredient
 function saveIngredient() {
 
-    // Validate data
-    validateIngredientData();
-
     // save data variables
     const name = document.getElementById('ingredientName-p').value.trim();
     const category = document.getElementById('ingredientCategory-p').textContent.trim();
     const protein = document.getElementById('ingredientProtein-p').value.trim();
-    const fat = document.getElementById('ingredientFat-p').value.trim();
+    const fats = document.getElementById('ingredientFat-p').value.trim();
     const carbs = document.getElementById('ingredientCarbs-p').value.trim();
     const calories = document.getElementById('ingredientCalories-p').value.trim();
+    const compare = document.getElementById('ingredientUnit-p').textContent.trim();
+    let uom = document.getElementById('ingredientUnit-p').textContent.trim();
+
+    if (compare === 'grams' || compare === 'milliliters') {
+
+        uom = `100 ${document.getElementById('ingredientUnit-p').textContent.trim()}`;
+
+    }
+
 
     const ingredientData = {
         name,
-        category,
-        protein,
-        fat,
+        uom,
+        calories,
         carbs,
-        calories
+        fats,
+        protein,
+        category
     };
 
+    // Validate data
+    validateIngredientData(ingredientData);
+
     // Add ingredient to DB
-    addNewIngredientToDB({ name, category, protein, fat, carbs, calories })
+    addNewIngredientToDB(ingredientData)
 
     // Add ingredient to UI
     addIngredientCard(ingredientData.name, ingredientData.category);
