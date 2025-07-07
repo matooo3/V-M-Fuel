@@ -261,12 +261,9 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
 
 // Beispielgeschützter Endpunkt (nur cook oder admin)
 app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
-    let { name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredients, preparation } = req.body;
+    const { name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags, ingredients } = req.body;
 
-    // carbs = 3;
-    // tags = "test";
-
-    const dishesData = { name, calories, protein, fat, carbs, time, vmScore, category, tags, preparation };
+    const dishesData = { name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags, ingredients };
 
     setDishesTable(dishesData, (err, dishId) => {
         if (err) {
@@ -295,13 +292,13 @@ app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
 function setDishesTable(dishesData, callback) {
     const { name, calories, protein, fat, carbs, time, vmScore, category, tags, preparation } = dishesData;
 
-    const sql = `INSERT INTO dishes 
+    const query = `INSERT INTO dishes 
     (name, preparation, vm_score, meal_category, preparation_time_in_min, total_calories, total_protein, total_fat, total_carbs, tags) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const values = [ name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags ];
 
-    db.query(sql, values, (err, result) => {
+    db.query(query, values, (err, result) => {
         if (err) return callback(err);
         callback(null, result.insertId);
     });
@@ -311,7 +308,7 @@ function setDishIngredientTable(dishId, ingredients, callback) {
     if (!Array.isArray(ingredients) || ingredients.length === 0)
         return callback(null);
 
-    const sql = `INSERT INTO dish_ingredients (dish_id, ingredient_id, unit_of_measurement, amount) VALUES ?`;
+    const query = `INSERT INTO dish_ingredients (dish_id, ingredient_id, unit_of_measurement, amount) VALUES ?`;
 
     const values = ingredients.map((ing) => [
         dishId,
@@ -320,11 +317,33 @@ function setDishIngredientTable(dishId, ingredients, callback) {
         ing.amount
     ]);
 
-    db.query(sql, [values], (err, result) => {
+    db.query(query, [values], (err, result) => {
         if (err) return callback(err);
         callback(null);
     });
 }
+
+app.post("/api/add-ingredients", authMiddleware, checkRole("cook"), (req, res) => {
+
+    const { name, uom, calories, carbs, fats, protein, category } = req.body;
+
+    const query = `INSERT INTO ingredients 
+    (name, Unit_of_Measurement, calories_per_UoM, carbs_per_UoM, fats_per_UoM, protein_per_UoM, category) 
+    VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+    const values = [ name, uom, calories, carbs, fats, protein, category ];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+                console.error(err);
+                return res
+                    .status(510)
+                    .json({ message: "Fehler bei add ingredients" });
+            }
+    });
+    
+});
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 

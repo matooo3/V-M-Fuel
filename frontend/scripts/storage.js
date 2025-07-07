@@ -151,3 +151,27 @@ export async function addNewDishToDB(data) {
       alert("Failed to add new dish: " + error.message);
     }
 }
+
+export async function deleteDishFromDB(dishID) {
+
+}
+
+export async function addNewIngredientToDB(data) {
+    try {
+        // 1. Auth-Token holen
+        const token = localStorage.getItem("token");
+        if (!token) {
+            throw new Error("Token nicht gefunden");
+        }
+
+        // 2. Anfrage an Backend
+        const result = await Api.postData("/add-ingredients", data, token);
+        
+    } catch (error) {
+      alert("Failed to add new dish: " + error.message);
+    }
+}
+
+export async function deleteIngredientFromDB(dishID) {
+    
+}
