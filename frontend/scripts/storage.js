@@ -133,6 +133,19 @@ export async function changeUserRoleInDB(role, email) {
     }
 }
 
+export async function deleteUserFromDB(userID) {
+    try {
+        // 1. Auth-Token holen
+        const token = Auth.getUserToken();
+
+        // 2. Anfrage an Backend
+        const result = await Api.postData("/delete-user", { userID }, token);
+        
+    } catch (error) {
+      alert("Failed to delete user: " + error.message);
+    }
+}
+
 //  -------------- ADD DISH & INGREDIENT -----------------------
 export async function addNewDishToDB(data) {
     try {
