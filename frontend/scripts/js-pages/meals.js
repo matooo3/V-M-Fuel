@@ -1,12 +1,14 @@
 // ./pages/meals.js
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { CustomSelect } from '/frontend/scripts/drop-down.js';
-import { getIngredients, addNewDishToDB, getDishes} from '../storage.js';
+import { getIngredients, addNewDishToDB, getDishes } from '../storage.js';
 
 
-// global ingredientsArry
 let ingredientsArray = await getIngredients();
 let dishesArray = await getDishes();
+
+console.log(`Hello ${ingredientsArray}`);
+console.log(`Hello ${dishesArray}`);
 
 // Main function
 export default async function loadMeals() {
@@ -16,6 +18,9 @@ export default async function loadMeals() {
     // LOAD app html-code
     const html = await loadHTMLTemplate('/frontend/html-pages/meals.html');
     app.innerHTML = html;
+
+
+    loadDishesAndIngredients(ingredientsArray, dishesArray);
 
     // Settings Eventlistener
     const settingsButton = document.querySelector('.settings');
@@ -120,7 +125,7 @@ export default async function loadMeals() {
 }
 
 // Load food content
-function loadDishesAndIngredients() {
+async function loadDishesAndIngredients(ingredientsArray, dishesArray) {
 
     dishesArray.forEach(() => {
         addMealCard(dishesArray.name, dishesArray.total_calories, dishesArray.preparation_time_in_min, dishesArray.tags);
@@ -256,12 +261,16 @@ function calculateIngredientsData() {
     let ingredients = [];
 
     checkedData.forEach(tuple => {
+
+        console.log("Hello");
+        console.log(ingredientsArray[indexIng]);
+
         const [indexIng, amount] = tuple;
         totalCalories += ingredientsArray[indexIng].calories_per_UoM * amount;
         totalProtein += ingredientsArray[indexIng].protein_per_UoM * amount;
         totalCarbs += ingredientsArray[indexIng].carbs_per_UoM * amount;
         totalFat += ingredientsArray[indexIng].fat_per_UoM * amount;
-        let uom = extractUnit(ingredientsArray[indexIng].Unit_of_Measurement)
+        let uom = extractUnit(ingredientsArray[indexIng].Unit_of_Measurement);
         ingredients.push({
             ingredient_id: ingredientsArray[indexIng].ingredient_id,
             unit_of_measurement: uom,
@@ -273,8 +282,8 @@ function calculateIngredientsData() {
     return {
         calories: totalCalories,
         protein: totalProtein,
-        carbs: totalFat,
-        fat: totalCarbs,
+        carbs: totalCarbs,
+        fat: totalFat,
         ingredients: ingredients,
     };
 }
@@ -396,7 +405,7 @@ function validateMealForm() {
 // Add dishes functionality
 function addMealCard(name, calories, time, tags = [], containerId = 'dishes-list-p') {
 
-    const dataId = `meal-${name.toLowerCase().replace(/\s+/g, '-')}`;
+    const dataId = `meal-${name}`;
 
     const tagsHTML = tags.map(tag => `<button class="tag-p">${tag}</button>`).join('');
 
@@ -476,7 +485,8 @@ function saveMeal() {
     const time = document.getElementById('time-p').value;
     const vmScore = document.getElementById('vmScore-p').value;
     const category = document.getElementById('category-p').textContent.trim();
-    const tags = Array.from(document.querySelectorAll('.tag-o-p span')).map(tag => tag.textContent);
+    const tags = JSON.stringify(Array.from(document.querySelectorAll('.tag-o-p span')).map(tag => tag.textContent));
+    const ingredients = ingredientData.ingredients;
     const instructions = document.getElementById('instructions-p').value;
 
     const mealData = {
@@ -489,12 +499,12 @@ function saveMeal() {
         vmScore,
         category,
         tags,
-        ingredientData,
+        ingredients,
         instructions
     };
 
     // Add dish to DB
-    addNewDishToDB({ name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredientData, instructions });
+    addNewDishToDB({ name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredients, instructions });
 
     // Add dish to UI
     addMealCard(mealData.name, mealData.calories, mealData.time, mealData.tags);
@@ -528,7 +538,7 @@ function clearForm() {
 // Add ingredients functionality
 function addIngredientCard(name, category, containerId = 'ingredients-list-p') {
 
-    const dataId = `ingredient-${name.toLowerCase().replace(/\s+/g, '-')}`;
+    const dataId = `ingredient-${name}`;
 
     const cardHTML = `
         <div class="card drop-shadow ingredient-card-p">
