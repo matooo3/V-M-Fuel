@@ -1,4 +1,4 @@
-#home {
+#home-container {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 18vh 6vh auto;
