@@ -1,5 +1,5 @@
 import * as Api from "./api.js";
-import { getUserFromToken } from "./auth.js";
+import * as Auth from "./auth.js";
 
 // generic save-function, so if we change from LS to IndexedDB we can easily modify that here
 export function saveToLS(key, data) {
@@ -121,10 +121,7 @@ export async function changeUserRoleInDB(role, email) {
         const userId = await getUserIDFromDB(email);
 
         // 2. Auth-Token holen
-        const token = localStorage.getItem("token"); // oder dein Token-Handling
-        if (!token) {
-            throw new Error("Token nicht gefunden");
-        }
+        const token = Auth.getUserToken();
 
         // 3. Anfrage an Backend
         const userData = { userId, role };
@@ -136,42 +133,57 @@ export async function changeUserRoleInDB(role, email) {
     }
 }
 
+//  -------------- ADD DISH & INGREDIENT -----------------------
 export async function addNewDishToDB(data) {
     try {
         // 1. Auth-Token holen
-        const token = localStorage.getItem("token"); // oder dein Token-Handling
-        if (!token) {
-            throw new Error("Token nicht gefunden");
-        }
+        const token = Auth.getUserToken();
 
         // 2. Anfrage an Backend
-        const result = await Api.postData("/add-dishes", data, token);
+        const result = await Api.postData("/add-dish", data, token);
         
     } catch (error) {
       alert("Failed to add new dish: " + error.message);
     }
 }
 
-export async function deleteDishFromDB(dishID) {
-
-}
 
 export async function addNewIngredientToDB(data) {
     try {
         // 1. Auth-Token holen
-        const token = localStorage.getItem("token");
-        if (!token) {
-            throw new Error("Token nicht gefunden");
-        }
+        const token = Auth.getUserToken();
 
         // 2. Anfrage an Backend
-        const result = await Api.postData("/add-ingredients", data, token);
+        const result = await Api.postData("/add-ingredient", data, token);
         
     } catch (error) {
       alert("Failed to add new dish: " + error.message);
     }
 }
 
-export async function deleteIngredientFromDB(dishID) {
-    
+//  ----------------- DELETE DISH & INGREDIENT -----------------
+export async function deleteDishFromDB(dishID) {
+    try {
+        // 1. Auth-Token holen
+        const token = Auth.getUserToken();
+
+        // 2. Anfrage an Backend
+        const result = await Api.postData("/delete-dish", dishID, token);
+        
+    } catch (error) {
+      alert("Failed to delete dish: " + error.message);
+    }
+}
+
+export async function deleteIngredientFromDB(ingredientID) {
+    try {
+        // 1. Auth-Token holen
+        const token = Auth.getUserToken();
+
+        // 2. Anfrage an Backend
+        const result = await Api.postData("/delete-ingredient", ingredientID, token);
+        
+    } catch (error) {
+      alert("Failed to delete dish: " + error.message);
+    }
 }
