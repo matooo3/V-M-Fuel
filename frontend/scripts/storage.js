@@ -157,7 +157,7 @@ export async function addNewIngredientToDB(data) {
         const result = await Api.postData("/add-ingredient", data, token);
         
     } catch (error) {
-      alert("Failed to add new dish: " + error.message);
+      alert("Failed to add new ingredient: " + error.message);
     }
 }
 
