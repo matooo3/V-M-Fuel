@@ -289,7 +289,7 @@ app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
     });
 });
 
-function setDishesTable(data, callback) {
+function setDishesTable(dishesData, callback) {
     const { name, calories, protein, fat, carbs, time, vmScore, category, tags, instructions } = dishesData;
 
     const sql = `INSERT INTO dishes 
