@@ -261,7 +261,7 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
 
 // Beispielgeschützter Endpunkt (nur cook oder admin)
 app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
-    let { name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredientsData, instructions } = req.body;
+    let { name, calories, protein, fat, carbs, time, vmScore, category, tags, ingredients, instructions } = req.body;
 
     // carbs = 3;
     // tags = "test";
@@ -276,7 +276,7 @@ app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
                 .json({ message: "Failed to add meal." });
         }
 
-        setDishIngredientTable(dishId, ingredientsData, (err2) => {
+        setDishIngredientTable(dishId, ingredients, (err2) => {
             if (err2) {
                 console.error(err2);
                 return res
@@ -307,13 +307,13 @@ function setDishesTable(dishesData, callback) {
     });
 }
 
-function setDishIngredientTable(dishId, ingredientsData, callback) {
-    if (!Array.isArray(ingredientsData) || ingredientsData.length === 0)
+function setDishIngredientTable(dishId, ingredients, callback) {
+    if (!Array.isArray(ingredients) || ingredients.length === 0)
         return callback(null);
 
     const sql = `INSERT INTO dish_ingredients (dish_id, ingredient_id, unit_of_measurement, amount) VALUES ?`;
 
-    const values = ingredientsData.map((ing) => [
+    const values = ingredients.map((ing) => [
         dishId,
         ing.ingredient_id,
         ing.unit_of_measurement,
