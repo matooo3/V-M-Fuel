@@ -140,9 +140,10 @@ export async function deleteUserFromDB(userID) {
 
         // 2. Anfrage an Backend
         const result = await Api.postData("/delete-user", { userID }, token);
-        
+        return result; // Return the API response
     } catch (error) {
-      alert("Failed to delete user: " + error.message);
+        alert("Failed to delete user: " + error.message);
+        return false; // Indicate failure
     }
 }
 
