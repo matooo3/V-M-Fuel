@@ -168,7 +168,7 @@ export async function deleteDishFromDB(dishID) {
         const token = Auth.getUserToken();
 
         // 2. Anfrage an Backend
-        const result = await Api.postData("/delete-dish", dishID, token);
+        const result = await Api.postData("/delete-dish", { dishID }, token);
         
     } catch (error) {
       alert("Failed to delete dish: " + error.message);
@@ -181,7 +181,7 @@ export async function deleteIngredientFromDB(ingredientID) {
         const token = Auth.getUserToken();
 
         // 2. Anfrage an Backend
-        const result = await Api.postData("/delete-ingredient", ingredientID, token);
+        const result = await Api.postData("/delete-ingredient", { ingredientID }, token);
         
     } catch (error) {
       alert("Failed to delete ingredient: " + error.message);

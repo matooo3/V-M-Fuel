@@ -345,11 +345,11 @@ app.post("/api/add-ingredient", authMiddleware, checkRole("cook"), (req, res) =>
 });
 
 app.post("/api/delete-dish", authMiddleware, checkRole("cook"), (req, res) => {
-    const dish_id = req.body;
+    const { dishID } = req.body;
 
     const query = `DELETE FROM dishes WHERE dish_id = ?`;
 
-    db.query(query, [dish_id], (err, result) => {
+    db.query(query, [dishID], (err, result) => {
         if (err) {
             console.error("Error deleting dish:", err);
             return res.status(500).json({ message: "Error deleting dish" });
@@ -367,11 +367,11 @@ app.post("/api/delete-dish", authMiddleware, checkRole("cook"), (req, res) => {
 
 
 app.post("/api/delete-ingredient", authMiddleware, checkRole("cook"), (req, res) => {
-    const ingredient_id = req.body;
+    const { ingredientID } = req.body;
 
     const query = `DELETE FROM ingredients WHERE ingredient_id = ?`;
 
-    db.query(query, [ingredient_id], (err, result) => {
+    db.query(query, [ingredientID], (err, result) => {
         if (err) {
             console.error("Error deleting ingredient:", err);
             return res.status(500).json({ message: "Error deleting ingredient" });
