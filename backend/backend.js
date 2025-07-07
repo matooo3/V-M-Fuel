@@ -260,7 +260,7 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
 // });
 
 // Beispielgeschützter Endpunkt (nur cook oder admin)
-app.post("/api/add-dishes", authMiddleware, checkRole("cook"), (req, res) => {
+app.post("/api/add-dish", authMiddleware, checkRole("cook"), (req, res) => {
     const { name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags, ingredients } = req.body;
 
     const dishesData = { name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags, ingredients };
@@ -323,7 +323,7 @@ function setDishIngredientTable(dishId, ingredients, callback) {
     });
 }
 
-app.post("/api/add-ingredients", authMiddleware, checkRole("cook"), (req, res) => {
+app.post("/api/add-ingredient", authMiddleware, checkRole("cook"), (req, res) => {
 
     const { name, uom, calories, carbs, fats, protein, category } = req.body;
 
@@ -342,6 +342,49 @@ app.post("/api/add-ingredients", authMiddleware, checkRole("cook"), (req, res) =
             }
     });
     
+});
+
+app.post("/api/delete-dish", authMiddleware, checkRole("cook"), (req, res) => {
+    const dish_id = req.body;
+
+    const query = `DELETE FROM dishes WHERE dish_id = ?`;
+
+    db.query(query, [dish_id], (err, result) => {
+        if (err) {
+            console.error("Error deleting dish:", err);
+            return res.status(500).json({ message: "Error deleting dish" });
+        }
+
+        // Check if any row was actually deleted
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Dish not found" });
+        }
+
+        // Successful deletion
+        return res.status(200).json({ message: "Dish successfully deleted" });
+    });
+});
+
+
+app.post("/api/delete-ingredient", authMiddleware, checkRole("cook"), (req, res) => {
+    const ingredient_id = req.body;
+
+    const query = `DELETE FROM ingredients WHERE ingredient_id = ?`;
+
+    db.query(query, [ingredient_id], (err, result) => {
+        if (err) {
+            console.error("Error deleting ingredient:", err);
+            return res.status(500).json({ message: "Error deleting ingredient" });
+        }
+
+        // Check if any row was actually deleted
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Ingredient not found" });
+        }
+
+        // Successful deletion
+        return res.status(200).json({ message: "Ingredient successfully deleted" });
+    });
 });
 
 
