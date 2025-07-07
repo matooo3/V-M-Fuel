@@ -247,6 +247,27 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
     });
 });
 
+app.post("/api/delete-user", authMiddleware, checkRole("admin"), (req, res) => {
+    const { userID } = req.body;
+
+    const query = `DELETE FROM users WHERE user_id = ?`;
+
+    db.query(query, [userID], (err, result) => {
+        if (err) {
+            console.error("Error deleting user:", err);
+            return res.status(500).json({ message: "Error deleting user" });
+        }
+
+        // Check if any row was actually deleted
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Successful deletion
+        return res.status(200).json({ message: "User successfully deleted" });
+    });
+});
+
 // -------------- ADD MEAL -----------------
 // Beispielgeschützter Endpunkt (nur cook oder admin)
 // app.post("/api/dishes", authMiddleware, checkRole("cook"), (req, res) => {
@@ -388,8 +409,8 @@ app.post("/api/delete-ingredient", authMiddleware, checkRole("cook"), (req, res)
 });
 
 
-/////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////////
 // Starte den Server
 app.listen(PORT, () => {
     console.log(`Server läuft auf http://172.18.45.1:${PORT}`);
