@@ -184,6 +184,6 @@ export async function deleteIngredientFromDB(ingredientID) {
         const result = await Api.postData("/delete-ingredient", ingredientID, token);
         
     } catch (error) {
-      alert("Failed to delete dish: " + error.message);
+      alert("Failed to delete ingredient: " + error.message);
     }
 }
