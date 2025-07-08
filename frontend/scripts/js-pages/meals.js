@@ -8,7 +8,6 @@ import { searchULs } from '../searchBar.js';
 
 let ingredientsArray = await Storage.getIngredients();
 let dishesArray = await Storage.getDishes();
-initializeCounters();
 
 // Main function
 export default async function loadMeals() {
@@ -207,23 +206,6 @@ function filterPreferenceContent(button) {
 
 
 // Initialize counters from localStorage on page load
-function initializeCounters() {
-    const counters = {
-        ingredientsPreferred: 'ingredientsPreferred',
-        ingredientsBlocked: 'ingredientsBlocked', 
-        mealsPreferred: 'mealsPreferred',
-        mealsBlocked: 'mealsBlocked'
-    };
-
-    Object.entries(counters).forEach(([elementId, storageKey]) => {
-        const element = document.getElementById(elementId);
-        if (element) {
-            const savedValue = localStorage.getItem(storageKey) || '0';
-            element.textContent = savedValue;
-        }
-    });
-}
-
 function toggleFavorite(event) {
     const button = event.currentTarget;
     const mealId = button.dataset.meal;
@@ -293,10 +275,10 @@ function updateElementCounter(element, isAdding, storageKey) {
         const newValue = isAdding ? currentValue + 1 : currentValue - 1;
         const finalValue = Math.max(0, newValue);
 
-        element.textContent = finalValue;
+        // element.textContent = finalValue;
         
         // Save to localStorage
-        localStorage.setItem(storageKey, finalValue.toString());
+        // localStorage.setItem(storageKey, finalValue.toString());
 
     }
 }
