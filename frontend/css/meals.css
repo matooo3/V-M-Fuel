@@ -228,11 +228,11 @@
     justify-content: center;
 }
 
-dishes-list-p{
+#dishes-list-p{
     list-style-type: none;
 }
 
-ingredients-list-p{
+#ingredients-list-p{
     list-style-type: none;
 }
 
