@@ -1,5 +1,5 @@
 import { loadHTMLTemplate } from '../templateLoader.js';
-
+import * as Settings from './settings.js';
 
 // Integration into your loadPlan function:
 export default async function loadPlan() {
@@ -11,11 +11,8 @@ export default async function loadPlan() {
     // Initialize calendar after HTML is loaded
     initializeCalendar();
 
-    // add event listener to settings class
-    const settingsButton = document.querySelector('.settings');
-    settingsButton.addEventListener('click', function () {
-        window.location.href = '/frontend/html-pages/settings.html';
-    });
+    // Settings Event Listener
+    Settings.loadSettingsEventListener();
 }
 
 // Get current date and calculate current week

@@ -2,8 +2,10 @@ import loadHome from "./js-pages/home.js";
 import loadList from "./js-pages/list.js";
 import loadPlan from "./js-pages/plan.js";
 import loadMeals from "./js-pages/meals.js";
+import loadSettings from "./js-pages/settings.js";
 import * as Storage from "./storage.js";
 import * as Auth from "./auth.js";
+import * as Role from "./roleRouting.js";
 
 const valid = await Auth.checkSessionTokenValid();
 if (!valid) {
@@ -45,9 +47,11 @@ const routes = {
     list: loadList,
     plan: loadPlan,
     meals: loadMeals,
+    settings: loadSettings
 };
 
 function initialLoad() {
+    Role.renderUserRoleColors();
     router();
 }
 
@@ -90,6 +94,9 @@ async function router() {
     // document.getElementById('app').innerHTML = '';
     await loadPage();
     setActiveTab();
+    if(hash !== "settings") {
+        showNavbar();
+    }
     console.log("Page loaded:", hash || "home");
 }
 
@@ -147,3 +154,9 @@ console.log("--------------DISHES WITH INGREDIENTS-------------");
 const dishesWithIngredients = await Storage.getDishesWithIngredients();
 console.log("HERE ARE THE FULL_DISHES:", dishesWithIngredients);
 
+export function showNavbar() {
+    const navbar = document.getElementById('main-nav');
+    if (navbar) {
+        navbar.style.display = 'flex';
+    }
+}

@@ -1,238 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="settings-container">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M&V Nutrition</title>
+    <!-- ------------------ SETTINGS HEADER ------------------- -->
+    <div class="fixed-header">
+        <div class="settings-header">
+            <h1>Settings</h1>
+            <button id="close-settings-btn" class="close-btn">
+                <a href="/frontend/index.html#home">
+                    <img src="/frontend/assets/icons/close-settings.svg" alt="Close">
+                </a>
+            </button>
+        </div>
 
-    <!-- Favicon -->
-    <link rel="icon" href="/frontend/assets/img/logo.svg" type="image/svg">
+        <div class="settings-hr">
+            <hr>
+        </div>
+    </div>
 
-
-    <!------------------------------------------------------------------------------------------>
-    <!-- PWA-settings -->
-    <!-- <link rel="manifest" href="manifest.json"> -->
-    <meta name="google" content="notranslate">
-    <!-- zoom deaktivieren + no UI-Elements -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-
-    <!-- Fullscreen auf iOS -->
-    <!-- iOS (veraltet, aber optional) -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <!-- Standard für moderne Browser -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="/frontend/assets/img/logo.svg">
-    <!------------------------------------------------------------------------------------------>
-
-    <!-- Fonts -->
-    <!-- roboto -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-    <!-- poppins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-
-    <!-- figtree -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
-        rel="stylesheet">
-    <!------------------------------------------------------------------------------------------>
-
-    <!-- main css -->
-    <link rel="stylesheet" href="/frontend/css/style.css">
-    <!-- sub css -->
-    <link rel="stylesheet" href="/frontend/css/home.css">
-    <link rel="stylesheet" href="/frontend/css/list.css">
-    <link rel="stylesheet" href="/frontend/css/plan.css">
-    <link rel="stylesheet" href="/frontend/css/meals.css">
-    <link rel="stylesheet" href="/frontend/css/settings.css">
-
-</head>
-
-<body>
-    <div class="app">
-
-        <div class="settings-container">
-
-            <!-- ------------------ SETTINGS HEADER ------------------- -->
-            <div class="fixed-header">
-                <div class="settings-header">
-                    <h1>Settings</h1>
-                    <button id="close-settings-btn" class="close-btn">
-                        <a href="/frontend/index.html#home">
-                            <img src="/frontend/assets/icons/close-settings.svg" alt="Close">
-                        </a>
-                    </button>
+    <div class="scrollable-content-st">
+        <div class="settings-item" id="settings-item-1">
+            <h1>Personal Data</h1>
+            <div class="user-details-settings">
+                <div class="left-column-settings">
+                    <div class="input-container">
+                        <label class="subtext subtext-st" for="height">Height</label>
+                        <input type="text" id="height" placeholder="" name="height">
+                    </div>
+                    <div class="input-container">
+                        <label class="subtext subtext-st" for="weight">Weight</label>
+                        <input type="text" id="weight" placeholder="" name="weight">
+                    </div>
                 </div>
 
-                <div class="settings-hr">
-                    <hr>
-                </div>
-            </div>
-
-            <div class="scrollable-content-st">
-                <div class="settings-item" id="settings-item-1">
-                    <h1>Personal Data</h1>
-                    <div class="user-details-settings">
-                        <div class="left-column-settings">
-                            <div class="input-container">
-                                <label class="subtext subtext-st" for="height">Height</label>
-                                <input type="text" id="height" placeholder="" name="height">
-                            </div>
-                            <div class="input-container">
-                                <label class="subtext subtext-st" for="weight">Weight</label>
-                                <input type="text" id="weight" placeholder="" name="weight">
-                            </div>
-                        </div>
-
-                        <div class="right-column-settings">
-                            <div class="input-container">
-                                <label class="subtext subtext-st" for="age">Age</label>
-                                <input type="text" id="age" name="age" placeholder="">
-                            </div>
-                            <div class="input-container">
-                                <label class="subtext subtext-st" for="sex">Sex</label>
-                                <select id="sex" name="sex">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div> <!-- end-user-details-settings -->
-                </div> <!-- end-settings-item-1 -->
-
-                <!-- activity level: cards with überschrift and description: very low, low, moderate, active -->
-                <div id="activity-container" class="settings-item selection-div-st">
-                    <h1>Activity Level</h1>
-                    <div class="card-st-activity al-card-st">
-                        <h3 class="al-text-st">very low</h3>
-                        <h3 class="al-desc-st">"I spend most of my time sitting and rarely
-                            do any physical activity."</h3>
+                <div class="right-column-settings">
+                    <div class="input-container">
+                        <label class="subtext subtext-st" for="age">Age</label>
+                        <input type="text" id="age" name="age" placeholder="">
                     </div>
-
-                    <div class="card-st-activity al-card-st">
-                        <h3 class="al-text-st">low</h3>
-                        <h3 class="al-desc-st">"I get some light movement in daily life, but I
-                            don't exercise regularly."</h3>
-                    </div>
-
-                    <div class="card-st-activity al-card-st">
-                        <h3 class="al-text-st">moderate</h3>
-                        <h3 class="al-desc-st">"I move regularly and exercise 1–2 times per week."</h3>
-                    </div>
-
-                    <div class="card-st-activity al-card-st">
-                        <h3 class="al-text-st">active</h3>
-                        <h3 class="al-desc-st">"I exercise 3–4 times per week or have a physically
-                            active lifestyle (eg. construction work)."</h3>
-                    </div>
-
-                    <div class="card-st-activity al-card-st">
-                        <h3 class="al-text-st">very active</h3>
-                        <h3 class="al-desc-st">"I work out almost every day, train intensely, or have
-                            a physically demanding job."</h3>
-                    </div>
-
-                </div>
-
-                <div id="goal-container" class="settings-item selection-div-st">
-                    <h1>Goal</h1>
-                    <div class="card-st-goal al-card-st goal-card-st">
-                        <h3 class="al-text-st">Lose weight</h3>
-                    </div>
-
-                    <div class="card-st-goal al-card-st goal-card-st">
-                        <h3 class="al-text-st">Maintain weight</h3>
-                    </div>
-
-                    <div class="card-st-goal al-card-st goal-card-st">
-                        <h3 class="al-text-st">Gain weight</h3>
-                    </div>
-
-                </div>
-
-                <!-- ------------------ APP SETTINGS ------------------- -->
-                <div class="app-settings-container settings-item">
-                    <h1>App Settings</h1>
-                    <div class="app-settings-row">
-                        <div class="app-settings-label">
-                            <h3 class="al-text-st">Theme</h3>
-                            <p class="al-desc-st">Choose light or dark mode</p>
-                        </div>
-                        <select id="theme-select" name="theme-select">
-                            <option value="light">Light</option>
-                            <option value="dark">Dark</option>
+                    <div class="input-container">
+                        <label class="subtext subtext-st" for="sex">Sex</label>
+                        <select id="sex" name="sex">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
                         </select>
                     </div>
+                </div>
+            </div> <!-- end-user-details-settings -->
+        </div> <!-- end-settings-item-1 -->
 
-                    <div class="app-settings-row">
-                        <div class="app-settings-label">
-                            <h3 class="al-text-st">Calorie Mode</h3>
-                            <p class="al-desc-st">Choose calorie mode</p>
-                        </div>
-                        <select id="calorie-mode-select" name="calorie-mode-select">
-                            <option value="kcal">On</option>
-                            <option value="kj">Off</option>
-                        </select>
-                    </div>
-
-                    <div class="app-settings-row">
-                        <div class="app-settings-label">
-                            <h3 class="al-text-st">Language</h3>
-                            <p class="al-desc-st al-desc-st-2">Choose your language</p>
-                        </div>
-                        <select id="language-select" name="language-select">
-                            <option value="english">English</option>
-                            <option value="german">German</option>
-                        </select>
-                    </div>
-
-                    <div class="app-settings-row">
-                        <div class="app-settings-label">
-                            <h3 class="al-text-st">Logout</h3>
-                            <p class="al-desc-st al-desc-st-2">Log out of your account</p>
-                        </div>
-                        <button id="logout-btn" class="logout-btn">Logout</button>
-                    </div>
-                </div> <!-- end-app-settings-container -->
+        <!-- activity level: cards with überschrift and description: very low, low, moderate, active -->
+        <div id="activity-container" class="settings-item selection-div-st">
+            <h1>Activity Level</h1>
+            <div class="card-st-activity al-card-st">
+                <h3 class="al-text-st">very low</h3>
+                <h3 class="al-desc-st">"I spend most of my time sitting and rarely
+                    do any physical activity."</h3>
             </div>
 
-
-
-
-            <!-- ------------------ SETTINGS FOOTER ------------------- -->
-            <div class="fixed-footer">
-                <div class="settings-hr">
-                    <hr>
-                </div>
-
-                <!-- cancel button and save button -->
-                <div class="app-settings-buttons">
-                    <button id="cancel-settings-btn"><a href="/frontend/index.html#home">Cancel</a></button>
-                    <button id="save-settings-btn">Save</button>
-                </div>
+            <div class="card-st-activity al-card-st">
+                <h3 class="al-text-st">low</h3>
+                <h3 class="al-desc-st">"I get some light movement in daily life, but I
+                    don't exercise regularly."</h3>
             </div>
 
+            <div class="card-st-activity al-card-st">
+                <h3 class="al-text-st">moderate</h3>
+                <h3 class="al-desc-st">"I move regularly and exercise 1–2 times per week."</h3>
+            </div>
+
+            <div class="card-st-activity al-card-st">
+                <h3 class="al-text-st">active</h3>
+                <h3 class="al-desc-st">"I exercise 3–4 times per week or have a physically
+                    active lifestyle (eg. construction work)."</h3>
+            </div>
+
+            <div class="card-st-activity al-card-st">
+                <h3 class="al-text-st">very active</h3>
+                <h3 class="al-desc-st">"I work out almost every day, train intensely, or have
+                    a physically demanding job."</h3>
+            </div>
+
+        </div>
+
+        <div id="goal-container" class="settings-item selection-div-st">
+            <h1>Goal</h1>
+            <div class="card-st-goal al-card-st goal-card-st">
+                <h3 class="al-text-st">Lose weight</h3>
+            </div>
+
+            <div class="card-st-goal al-card-st goal-card-st">
+                <h3 class="al-text-st">Maintain weight</h3>
+            </div>
+
+            <div class="card-st-goal al-card-st goal-card-st">
+                <h3 class="al-text-st">Gain weight</h3>
+            </div>
+
+        </div>
+
+        <!-- ------------------ APP SETTINGS ------------------- -->
+        <div class="app-settings-container settings-item">
+            <h1>App Settings</h1>
+            <div class="app-settings-row">
+                <div class="app-settings-label">
+                    <h3 class="al-text-st">Theme</h3>
+                    <p class="al-desc-st">Choose light or dark mode</p>
+                </div>
+                <select id="theme-select" name="theme-select">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+
+            <div class="app-settings-row">
+                <div class="app-settings-label">
+                    <h3 class="al-text-st">Calorie Mode</h3>
+                    <p class="al-desc-st">Choose calorie mode</p>
+                </div>
+                <select id="calorie-mode-select" name="calorie-mode-select">
+                    <option value="kcal">On</option>
+                    <option value="kj">Off</option>
+                </select>
+            </div>
+
+            <div class="app-settings-row">
+                <div class="app-settings-label">
+                    <h3 class="al-text-st">Language</h3>
+                    <p class="al-desc-st al-desc-st-2">Choose your language</p>
+                </div>
+                <select id="language-select" name="language-select">
+                    <option value="english">English</option>
+                    <option value="german">German</option>
+                </select>
+            </div>
+
+            <div class="app-settings-row">
+                <div class="app-settings-label">
+                    <h3 class="al-text-st">Logout</h3>
+                    <p class="al-desc-st al-desc-st-2">Log out of your account</p>
+                </div>
+                <button id="logout-btn" class="logout-btn">Logout</button>
+            </div>
+        </div> <!-- end-app-settings-container -->
+    </div>
 
 
-        </div> <!-- end-settings-container -->
-
-    </div> <!-- end-app -->
 
 
-    <script src="/frontend/scripts/role-check/user.js" type="module"></script>
-    <script type="module" src="/frontend/scripts/js-pages/settings.js"></script>
-    <!-- <script type="module" src="/frontend/scripts/script.js"></script> -->
-</body>
+    <!-- ------------------ SETTINGS FOOTER ------------------- -->
+    <div class="fixed-footer">
+        <div class="settings-hr">
+            <hr>
+        </div>
 
-</html>
+        <!-- cancel button and save button -->
+        <div class="app-settings-buttons">
+            <button id="cancel-settings-btn"><a href="/frontend/index.html#home">Cancel</a></button>
+            <button id="save-settings-btn">Save</button>
+        </div>
+    </div>
+
+
+
+</div> <!-- end-settings-container -->
