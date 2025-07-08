@@ -8,7 +8,7 @@
     </div>
 
     <div id="search-bar-p">
-        <input type="text" class="subtext" placeholder="Search meals or ingredients">
+        <input type="text" class="subtext" id="search-preferences" placeholder="Search meals or ingredients">
     </div>
 
     <div id="filter-bar-p">
@@ -26,8 +26,8 @@
             </div>
 
             <div class="subtext-boxes-p">
-                <span>0 meal</span>
-                <span>0 ingredients</span>
+                <span><span id="mealsPreferred">0</span> meals</span>
+                <span><span id="ingredientsPreferred">0</span> ingredients</span>
             </div>
         </div>
 
@@ -38,34 +38,34 @@
             </div>
 
             <div class="subtext-boxes-p">
-                <span>0 meal</span>
-                <span>0 ingredients</span>
+                <span><span id="mealsBlocked">0</span> meal</span>
+                <span><span id="ingredientsBlocked">0</span> ingredients</span>
             </div>
         </div>
 
     </div>
     <div id="food-p">
-        <div class="food-separation">
+        <div class="food-separation" id="meals-preferences">
             <div class="headerblock-p">
                 <span class="header-list-p">Meals</span>
                 <button class="add-item-p" id="add-meal-p">
                     <img id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+">
                 </button>
             </div>
-            <div class="dishes-list-p">
-            </div>
+            <ul id="dishes-list-p">
+            </ul>
         </div>
 
-        <div class="food-separation">
+        <div class="food-separation" id="ingredients-preferences">
             <div class="headerblock-p">
                 <span class="header-list-p">Ingredients</span>
                 <button class="add-item-p" id="add-ingredient-p">
                     <img id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+">
                 </button>
             </div>
-            <div id="ingredients-list-p">
+            <ul id="ingredients-list-p">
 
-            </div>
+            </ul>
         </div>
     </div>
 
