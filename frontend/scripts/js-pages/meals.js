@@ -8,6 +8,7 @@ import { searchULs } from '../searchBar.js';
 
 let ingredientsArray = await Storage.getIngredients();
 let dishesArray = await Storage.getDishes();
+initializeCounters();
 
 // Main function
 export default async function loadMeals() {
@@ -182,7 +183,7 @@ function filterPreferenceContent(button) {
     const ingredients = document.querySelector('#ingredients-preferences');
     const meals = document.querySelector('#meals-preferences');
     const filter = button.textContent.trim();
-    const prefIngt = document.getElementById('ingredientssPreferredWhole');
+    const prefIngt = document.getElementById('ingredientsPreferredWhole');
     const blockedIng = document.getElementById('ingredientsBlockedWhole');
     const prefMeal = document.getElementById('mealsPreferredWhole');
     const blockedMeal = document.getElementById('mealsBlockedWhole');
@@ -205,10 +206,27 @@ function filterPreferenceContent(button) {
 // -----------------------------------------------------------
 
 
+// Initialize counters from localStorage on page load
+function initializeCounters() {
+    const counters = {
+        ingredientsPreferred: 'ingredientsPreferred',
+        ingredientsBlocked: 'ingredientsBlocked', 
+        mealsPreferred: 'mealsPreferred',
+        mealsBlocked: 'mealsBlocked'
+    };
+
+    Object.entries(counters).forEach(([elementId, storageKey]) => {
+        const element = document.getElementById(elementId);
+        if (element) {
+            const savedValue = localStorage.getItem(storageKey) || '0';
+            element.textContent = savedValue;
+        }
+    });
+}
+
 function toggleFavorite(event) {
     const button = event.currentTarget;
     const mealId = button.dataset.meal;
-    const wasActive = button.classList.contains('favorited');
 
     button.classList.toggle('favorited');
 
@@ -253,27 +271,33 @@ function updateCounter(id, type, isAdding) {
         const blockedElement = document.getElementById('ingredientsBlocked');
 
         if (type === 'favorited') {
-            updateElementCounter(prefElement, isAdding);
+            updateElementCounter(prefElement, isAdding, 'ingredientsPreferred');
         } else if (type === 'rejected') {
-            updateElementCounter(blockedElement, isAdding);
+            updateElementCounter(blockedElement, isAdding, 'ingredientsBlocked');
         }
     } else if (meal) {
         const prefElement = document.getElementById('mealsPreferred');
         const blockedElement = document.getElementById('mealsBlocked');
 
         if (type === 'favorited') {
-            updateElementCounter(prefElement, isAdding);
+            updateElementCounter(prefElement, isAdding, 'mealsPreferred');
         } else if (type === 'rejected') {
-            updateElementCounter(blockedElement, isAdding);
+            updateElementCounter(blockedElement, isAdding, 'mealsBlocked');
         }
     }
 }
 
-function updateElementCounter(element, isAdding) {
+function updateElementCounter(element, isAdding, storageKey) {
     if (element) {
         const currentValue = Number(element.textContent) || 0;
         const newValue = isAdding ? currentValue + 1 : currentValue - 1;
-        element.textContent = Math.max(0, newValue); // Prevent negative values
+        const finalValue = Math.max(0, newValue);
+
+        element.textContent = finalValue;
+        
+        // Save to localStorage
+        localStorage.setItem(storageKey, finalValue.toString());
+
     }
 }
 
