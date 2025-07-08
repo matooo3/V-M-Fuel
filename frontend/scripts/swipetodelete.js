@@ -120,7 +120,6 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
     const onDeleteClick = (e) => {
         if (e.target.classList.contains('swipe-delete')) {
             const itemToDelete = e.target.closest(card);
-            console.log(itemToDelete);
             deleteItem(itemToDelete);
         }
     };
