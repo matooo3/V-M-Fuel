@@ -273,7 +273,7 @@ function updateElementCounter(element, isAdding, storageKey) {
     if (element) {
         const currentValue = Number(element.textContent) || 0;
         const newValue = isAdding ? currentValue + 1 : currentValue - 1;
-        const finalValue = Math.max(0, newValue);
+        element.textContent = Math.max(0, newValue); 
 
         // element.textContent = finalValue;
         
