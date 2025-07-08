@@ -218,7 +218,7 @@
     background-color: var(--accent-color);
     min-height: 22px;
     min-width: 22px;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
 }
