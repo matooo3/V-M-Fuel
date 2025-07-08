@@ -1,8 +1,9 @@
 // ./pages/home.js
 
 import { loadHTMLTemplate } from '../templateLoader.js';
-import * as Storage from '/frontend/scripts/storage.js';
+import * as Storage from '../storage.js';
 import * as Auth from '/frontend/scripts/auth.js';
+import { initializeSwipeToDelete } from '../swipetodelete.js';
 
 
 export default async function loadHome() {
@@ -149,6 +150,8 @@ async function renderUserList() {
         userItem.classList.add("card", "user");
 
         userItem.innerHTML = `
+        <div class="swipe-delete">Delete</div>
+        <div class="swipe-content">
             <div class="profile-picture">
                 <span>${initials}</span>
             </div>
@@ -163,6 +166,7 @@ async function renderUserList() {
                 </div>
                 <img id="change-role" src="/frontend/assets/icons/change-role.svg" alt="change role">
             </div>
+        </div>
         `;
 
         userListContainer.appendChild(userItem);
@@ -171,11 +175,20 @@ async function renderUserList() {
     // Update the total users count
     renderTotalUsers();
 
+    if (userListContainer){
+         initializeSwipeToDelete(userListContainer, '.card.user', nothing);
+    
+    }
+
     // add eventlistener for change role button
     const changeRoleButtons = document.querySelectorAll("#change-role");
     changeRoleButtons.forEach(button => {
         button.addEventListener("click", changeUserRole);
     });
+}
+
+function nothing(){
+    
 }
 // -----------------------END-----------------------------
 //

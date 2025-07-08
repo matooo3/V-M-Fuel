@@ -226,19 +226,21 @@
 
 /* DISHES */
 .dish-card-p {
-    min-height: 110px;
-    width: 100%;
-    padding: 10px 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    background-color: transparent; /* Make container transparent */
+    border-radius: 15px;
+    box-shadow: none; /* Remove shadow from container */
+    position: relative;
+    overflow: hidden; /* Keep hidden to clip the delete button */
     margin-bottom: 20px;
+    border: 1px solid var(--border-color);
 }
+
 
 .first-row-of-dish {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
+    width: 100%;
     gap: 16px;
 }
 
@@ -272,7 +274,6 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-left: auto;
     flex-shrink: 0;
 }
 
@@ -355,11 +356,13 @@
 /* INGREDIENTS */
 
 .ingredient-card-p {
-    min-height: 55px;
-    width: 100%;
-    display: flex;
-    padding: 10px 15px;
+    background-color: transparent;
+    border-radius: 15px;
+    box-shadow: none;
+    position: relative;
+    overflow: hidden;
     margin-bottom: 10px;
+    border: 1px solid var(--border-color);
 }
 
 @media(max-width: 360px) {
@@ -781,4 +784,87 @@
     line-height: 1.4;
     color: #666;
     margin-bottom: 5px;
+}
+
+/* -------------------------- */
+/* Swipe to delete adapations */
+/* -------------------------- */
+
+/* The actual card content that will slide */
+
+.dish-card-p .swipe-content {
+    background-color: white;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+    z-index: 0;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: transform 0.3s ease-out, border-radius 0.3s ease-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Re-applies the drop-shadow look */
+}
+
+/* NEW: Style for the ingredient swipe content */
+.ingredient-card-p .swipe-content {
+    background-color: white;
+    padding: 10px 15px;
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 0;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: transform 0.3s ease-out, border-radius 0.3s ease-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Delete button - applies to BOTH card types */
+.dish-card-p .swipe-delete, .ingredient-card-p .swipe-delete{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0px; /* Start with 0 width */
+    height: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.6rem;
+    z-index: 1;
+    cursor: pointer;
+    background-color: var(--accent-color);
+    border-radius: 0; /* No border radius to prevent bleeding */
+    opacity: 0; /* Start invisible */
+    transition: width 0.3s ease-out, opacity 0.3s ease-out;
+    overflow: hidden; /* Hide text when width is 0 */
+}
+
+/* Pseudo-element for the red background with correct border-radius */
+.dish-card-p .swipe-delete::before, .ingredient-card-p .swipe-delete::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 15px;
+    background-color: var(--accent-color);
+    border-radius: 0 15px 15px 0;
+    z-index: -1;
+}
+
+/* Class for the deleting animation - applies to BOTH card types */
+.dish-card-p.deleting, .ingredient-card-p.deleting{
+    transition: opacity 0.3s ease-out, max-height 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+    opacity: 0;
+    max-height: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border: none;
 }

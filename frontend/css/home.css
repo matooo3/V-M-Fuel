@@ -416,15 +416,58 @@
 }
 
 .card.user {
+    position: relative;
+    overflow: hidden; /* Important for clipping the delete button */
+    background-color: transparent;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    margin-bottom: 10px; /* Keep gap between items */
+    min-height: 55px;
+}
+
+.card.user .swipe-content {
     display: flex;
     align-items: center;
-    border-radius: 6px;
-    height: 100%;
-    max-height: 70px;
+    background-color: white; /* Or original card background */
     min-height: 55px;
-    width: 100%;
     gap: 10px;
-    padding-right: 1rem;
+    padding: 0px 1rem 0px 0px;
+    position: relative;
+    z-index: 0;
+    cursor: pointer;
+    transition: transform 0.3s ease-out, border-radius 0.3s ease-out;
+}
+
+.card.user .swipe-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0px;
+    height: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.6rem;
+    z-index: 1;
+    cursor: pointer;
+    background-color: var(--accent-color);
+    opacity: 0;
+    transition: width 0.3s ease-out, opacity 0.3s ease-out;
+    overflow: hidden;
+}
+
+/* Class for the deleting animation */
+.card.user.deleting {
+    transition: opacity 0.3s ease-out, max-height 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+    opacity: 0;
+    max-height: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: -10px; /* Compensate for the original margin-bottom */
+    border: none;
 }
 
 .card.user:last-child {
