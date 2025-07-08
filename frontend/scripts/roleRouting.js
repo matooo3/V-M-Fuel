@@ -23,7 +23,7 @@ export function renderUserRoleColors() {
             document.documentElement.style.setProperty('--accent-color', roleColors.admin);
             break;
         default:
-            // document.documentElement.style.setProperty('--accent-color', '#00BFFF');
+            document.documentElement.style.setProperty('--accent-color', roleColors.user);
     }
 }
 
