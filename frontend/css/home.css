@@ -1,7 +1,8 @@
 #home-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 18vh 6vh auto;
+    /* grid-template-rows: 18vh 6vh auto; */
+    grid-template-rows: 14vh auto;
     height: calc(100vh - var(--nav-height));
 }
 
@@ -693,3 +694,8 @@
     --progress-fill-collor: #FEF2F2;
     --progress-border-color: #F9BEBE;
     */
+
+/*  HIDDEN ADMIN PANEL  */
+.hidden-admin-panel {
+    display: none !important;
+}

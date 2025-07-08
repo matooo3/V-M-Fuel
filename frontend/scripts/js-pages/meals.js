@@ -2,9 +2,9 @@
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { CustomSelect } from '/frontend/scripts/drop-down.js';
 import * as Storage from '../storage.js';
-import { initializeSwipeToDelete } from '../swipetodelete.js';
-import { requiredUserRole } from '../auth.js';
 import { searchULs } from '../searchBar.js';
+import * as Role from '../roleRouting.js';
+import * as Settings from './settings.js';
 
 let ingredientsArray = await Storage.getIngredients();
 let dishesArray = await Storage.getDishes();
@@ -18,33 +18,19 @@ export default async function loadMeals() {
     const html = await loadHTMLTemplate('/frontend/html-pages/meals.html');
     app.innerHTML = html;
 
+    Role.renderCookButtons();
+    Role.renderUserRoleColors();
+
     ingredientsArray = await Storage.getIngredients();
     dishesArray = await Storage.getDishes();
 
     //load all dishes and ingredients
     loadDishesAndIngredients();
 
-    if (requiredUserRole('cook') || requiredUserRole('admin')) {
-        const ingredientslist = document.getElementById('ingredients-list-p');
-        let ingredientCard = '.ingredient-card-p'
-        if (ingredientslist) {
-            initializeSwipeToDelete(ingredientslist, ingredientCard, Storage.deleteIngredientFromDB);
-        }
-    }
+    Role.allowSwipeForCook();
 
-    if (requiredUserRole('cook') || requiredUserRole('admin')) {
-        const dishlist = document.querySelector('#dishes-list-p');
-        let dishCard = '.dish-card-p'
-        if (dishlist) {
-            initializeSwipeToDelete(dishlist, dishCard, Storage.deleteDishFromDB);
-        }
-    }
-
-    // Settings Eventlistener
-    const settingsButton = document.querySelector('.settings');
-    settingsButton.addEventListener('click', function () {
-        window.location.href = '/frontend/html-pages/settings.html';
-    });
+    // Settings Event Listener
+    Settings.loadSettingsEventListener();
 
     // filter bar (Meals, Ingredients)
     const filterButtons = document.querySelectorAll('#filter-bar-p button');

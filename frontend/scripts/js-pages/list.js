@@ -3,6 +3,7 @@ import * as Storage from '../storage.js';
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { CustomSelect } from '/frontend/scripts/drop-down.js';
 import { searchULs } from '../searchBar.js';
+import * as Settings from './settings.js';
 
 // Main function
 export default async function loadList() {
@@ -17,13 +18,8 @@ export default async function loadList() {
 
     // Add event listener 
 
-    // add event listener to settings class
-    const settingsButton = document.querySelector('.settings');
-    if (settingsButton) {
-        settingsButton.addEventListener('click', function () {
-            window.location.href = '/frontend/html-pages/settings.html';
-        });
-    }
+    // Settings Event Listener
+    Settings.loadSettingsEventListener();
 
     const filterButtons = document.querySelectorAll('#filter-bar button');
     filterButtons.forEach(button => {

@@ -141,7 +141,7 @@ button {
     height: var(--nav-height);
     color: var(--icon-grey-color);
     border-top: 1px solid var(--border-color);
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: flex-start;
     padding: 5px 0px 0px 0px;

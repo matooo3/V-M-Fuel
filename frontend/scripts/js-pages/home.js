@@ -3,7 +3,9 @@
 import { loadHTMLTemplate } from '../templateLoader.js';
 import * as Storage from '../storage.js';
 import * as Auth from '/frontend/scripts/auth.js';
-import { initializeSwipeToDelete } from '../swipetodelete.js';
+import * as Swipe from '../swipetodelete.js';
+import * as Role from '../roleRouting.js';
+import * as Settings from './settings.js';
 
 
 export default async function loadHome() {
@@ -14,6 +16,9 @@ export default async function loadHome() {
 
     //load user greeting! (eventlistener DOM loaded)
     // document.addEventListener('DOMContentLoaded', renderUserGreeting);
+
+    Role.renderAdminPanel();
+    Role.renderUserRoleColors();
 
     updateAdminContainer();
 
@@ -35,8 +40,9 @@ export default async function loadHome() {
         });
     });
 
-    // add event listener to settings class
-    loadSettingsEventListener();
+
+    // Settings Event Listener
+    Settings.loadSettingsEventListener();
 
     setTimeout(() => {
         renderUserGreeting();
@@ -45,14 +51,6 @@ export default async function loadHome() {
 
 }
 
-function loadSettingsEventListener() {
-    const settingsButton = document.querySelector('.settings');
-    if (settingsButton) {
-        settingsButton.addEventListener('click', function () {
-            window.location.href = '/frontend/html-pages/settings.html';
-        });
-    }
-}
 
 async function updateAdminContainer() {
     const activeTab = document.querySelector('.tab.active');
@@ -176,7 +174,7 @@ async function renderUserList() {
     renderTotalUsers();
 
     if (userListContainer){
-         initializeSwipeToDelete(userListContainer, '.card.user', nothing);
+        Swipe.initializeSwipeToDelete(userListContainer, '.card.user', nothing);
     
     }
 
