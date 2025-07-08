@@ -546,7 +546,7 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
 
     const cardHTML = `
         <div class="card drop-shadow ingredient-card-p">
-            <span style="display: none;">${ingredientID}</span>
+            <span class="item-id">${ingredientID}</span>
             <div class="swipe-delete">Delete</div>
             <div class="swipe-content">
                 <div class="descr-p">
