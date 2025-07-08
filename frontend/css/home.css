@@ -430,7 +430,6 @@
     display: flex;
     align-items: center;
     background-color: white; /* Or original card background */
-    border-radius: 6px; /* Match the parent's original radius */
     min-height: 55px;
     gap: 10px;
     padding: 0px 1rem 0px 0px;
@@ -438,7 +437,6 @@
     z-index: 0;
     cursor: pointer;
     transition: transform 0.3s ease-out, border-radius 0.3s ease-out;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08); /* Re-apply a subtle shadow if needed */
 }
 
 .card.user .swipe-delete {
@@ -456,7 +454,6 @@
     z-index: 1;
     cursor: pointer;
     background-color: var(--accent-color);
-    border-radius: 0 6px 6px 0; /* Match card's border radius */
     opacity: 0;
     transition: width 0.3s ease-out, opacity 0.3s ease-out;
     overflow: hidden;

@@ -195,6 +195,10 @@ button {
     font-variation-settings: "wdth" 100;
 }
 
+.item-id{
+    display: none;
+}
+
 
 @media (max-width: 370px) {
 

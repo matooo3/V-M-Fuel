@@ -1,11 +1,11 @@
 // ./pages/meals.js
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { CustomSelect } from '/frontend/scripts/drop-down.js';
-import { getIngredients, addNewIngredientToDB, addNewDishToDB, getDishes } from '../storage.js';
+import * as Storage from '../storage.js';
 import { initializeSwipeToDelete } from '../swipetodelete.js';
 
-let ingredientsArray = await getIngredients();
-let dishesArray = await getDishes();
+let ingredientsArray = await Storage.getIngredients();
+let dishesArray = await Storage.getDishes();
 
 // Main function
 export default async function loadMeals() {
@@ -22,13 +22,13 @@ export default async function loadMeals() {
     const ingredientslist = document.getElementById('ingredients-list-p');
     let ingredientCard = '.ingredient-card-p'
     if (ingredientslist) {
-        initializeSwipeToDelete(ingredientslist, ingredientCard, removeDishFromDB);
+        initializeSwipeToDelete(ingredientslist, ingredientCard, Storage.deleteIngredientFromDB);
     }
 
     const dishlist = document.querySelector('.dishes-list-p');
     let dishCard = '.dish-card-p'
     if (dishlist){
-        initializeSwipeToDelete(dishlist, dishCard, removeIngredientFromDB);
+        initializeSwipeToDelete(dishlist, dishCard, Storage.deleteDishFromDB);
     }
 
     // Settings Eventlistener
@@ -131,14 +131,6 @@ export default async function loadMeals() {
         hideEditIngredient();
     });
 
-}
-
-function removeDishFromDB(){
-
-}
-
-function removeIngredientFromDB(){
-    
 }
 
 // Load food content
@@ -427,7 +419,7 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '.di
     <div class="card drop-shadow dish-card-p">
         <div class="swipe-delete">Delete</div>
         <div class="swipe-content">
-            <span style="display: none;">${dishID}</span>
+            <span class="item-id">${dishID}</span>
             <div class="first-row-of-dish">
                 <div class="descr-p">
                     <h3 class="title-p">${name}</h3>
@@ -513,7 +505,7 @@ function saveMeal() {
     };
 
     // Add dish to DB
-    addNewDishToDB(mealData);
+    Storage.addNewDishToDB(mealData);
 
     let lastDishId = dishesArray[dishesArray.length-1].dish_id;
     let dishID = lastDishId + 1;
@@ -554,8 +546,8 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
 
     const cardHTML = `
         <div class="card drop-shadow ingredient-card-p">
-            <div class="swipe-delete">Delete</div>
             <span style="display: none;">${ingredientID}</span>
+            <div class="swipe-delete">Delete</div>
             <div class="swipe-content">
                 <div class="descr-p">
                     <h3 class="title-p">${name}</h3>
@@ -645,7 +637,7 @@ function saveIngredient() {
     validateIngredientData(ingredientData);
 
     // Add ingredient to DB
-    addNewIngredientToDB(ingredientData);
+    Storage.addNewIngredientToDB(ingredientData);
 
     let lastIngredientId = ingredientsArray[ingredientsArray.length-1].ingredient_id;
     let ingredientId = lastIngredientId + 1;

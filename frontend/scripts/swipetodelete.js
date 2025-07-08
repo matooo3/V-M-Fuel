@@ -1,4 +1,4 @@
-export function initializeSwipeToDelete(container, Card, removeFromDB) {
+export function initializeSwipeToDelete(container, card, removeFromDB) {
     let isSwiping = false;
     let startX = 0;
     let currentX = 0;
@@ -19,12 +19,14 @@ export function initializeSwipeToDelete(container, Card, removeFromDB) {
 
         itemToDelete.addEventListener('transitionend', () => {
             itemToDelete.remove();
-            removeFromDB();
+            let id = itemToDelete.querySelector('.item-id').textContent.trim();
+            id = parseInt(id, 10);
+            removeFromDB(id);
         }, { once: true });
     };
 
     const closeAllOtherItems = (currentItem) => {
-        container.querySelectorAll(Card).forEach(item => {
+        container.querySelectorAll(card).forEach(item => {
             if (item !== currentItem) {
                 const content = item.querySelector('.swipe-content');
                 const deleteBtn = item.querySelector('.swipe-delete');
@@ -52,20 +54,8 @@ export function initializeSwipeToDelete(container, Card, removeFromDB) {
         }
     };
 
-    const updateBorderRadius = (diffX) => {
-        if (!swipedContent) return;
-        const revealedWidth = Math.abs(diffX);
-        if (revealedWidth > 5) {
-            swipedContent.style.borderRadius = '15px 0 0 15px';
-            swipedContent.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
-        } else {
-            swipedContent.style.borderRadius = '15px';
-            swipedContent.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
-        }
-    };
-
     const onSwipeStart = (e) => {
-        const item = e.target.closest(Card);
+        const item = e.target.closest(card);
         if (!item || e.target.closest('button') || e.target.closest('object') || e.target.classList.contains('swipe-delete')) return;
 
         closeAllOtherItems(item);
@@ -93,7 +83,6 @@ export function initializeSwipeToDelete(container, Card, removeFromDB) {
         if (diffX > 0) diffX = 0;
         swipedContent.style.transform = `translateX(${diffX}px)`;
         updateDeleteButton(diffX);
-        updateBorderRadius(diffX);
     };
 
     const onSwipeEnd = () => {
@@ -131,7 +120,8 @@ export function initializeSwipeToDelete(container, Card, removeFromDB) {
 
     const onDeleteClick = (e) => {
         if (e.target.classList.contains('swipe-delete')) {
-            const itemToDelete = e.target.closest(Card);
+            const itemToDelete = e.target.closest(card);
+            console.log(itemToDelete);
             deleteItem(itemToDelete);
         }
     };
