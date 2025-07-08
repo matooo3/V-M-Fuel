@@ -182,9 +182,21 @@ function filterPreferenceContent(button) {
     const ingredients = document.querySelector('#ingredients-preferences');
     const meals = document.querySelector('#meals-preferences');
     const filter = button.textContent.trim();
+    const prefIngt = document.getElementById('ingredientssPreferredWhole');
+    const blockedIng = document.getElementById('ingredientsBlockedWhole');
+    const prefMeal = document.getElementById('mealsPreferredWhole');
+    const blockedMeal = document.getElementById('mealsBlockedWhole');
 
     ingredients.style.display = filter === 'Meals' ? 'none' : '';
     meals.style.display = filter === 'Ingredients' ? 'none' : '';
+    
+    // Hide ingredient counters when showing meals
+    prefIngt.style.display = filter === 'Meals' ? 'none' : '';
+    blockedIng.style.display = filter === 'Meals' ? 'none' : '';
+    
+    // Hide meal counters when showing ingredients
+    prefMeal.style.display = filter === 'Ingredients' ? 'none' : '';
+    blockedMeal.style.display = filter === 'Ingredients' ? 'none' : '';
 }
 
 
@@ -197,9 +209,9 @@ function toggleFavorite(event) {
     const button = event.currentTarget;
     const mealId = button.dataset.meal;
     const wasActive = button.classList.contains('favorited');
-    
+
     button.classList.toggle('favorited');
-    
+
     // Deactivate dislike button if like button is activated
     if (button.classList.contains('favorited')) {
         const dislikeButton = document.querySelector(`[data-meal="${mealId}"].dislike`);
@@ -216,9 +228,9 @@ function toggleFavorite(event) {
 function toggleRejected(event) {
     const button = event.currentTarget;
     const mealId = button.dataset.meal;
-    
+
     button.classList.toggle('rejected');
-    
+
     // Deactivate like button if dislike button is activated
     if (button.classList.contains('rejected')) {
         const likeButton = document.querySelector(`[data-meal="${mealId}"].like`);
@@ -235,11 +247,11 @@ function toggleRejected(event) {
 function updateCounter(id, type, isAdding) {
     const ingredient = id.match(/^ingredient-(.+)$/);
     const meal = id.match(/^meal-(.+)$/);
-    
+
     if (ingredient) {
         const prefElement = document.getElementById('ingredientsPreferred');
         const blockedElement = document.getElementById('ingredientsBlocked');
-        
+
         if (type === 'favorited') {
             updateElementCounter(prefElement, isAdding);
         } else if (type === 'rejected') {
@@ -248,7 +260,7 @@ function updateCounter(id, type, isAdding) {
     } else if (meal) {
         const prefElement = document.getElementById('mealsPreferred');
         const blockedElement = document.getElementById('mealsBlocked');
-        
+
         if (type === 'favorited') {
             updateElementCounter(prefElement, isAdding);
         } else if (type === 'rejected') {
