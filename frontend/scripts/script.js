@@ -5,7 +5,7 @@ import loadMeals from "./js-pages/meals.js";
 import loadSettings from "./js-pages/settings.js";
 import * as Storage from "./storage.js";
 import * as Auth from "./auth.js";
-import * as Role from './roleRouting.js';
+import * as Role from "./roleRouting.js";
 
 const valid = await Auth.checkSessionTokenValid();
 if (!valid) {
