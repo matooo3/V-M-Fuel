@@ -112,7 +112,7 @@
     background-color: var(--positive-fill-color);
     color: var(--positive-color);
     min-height: 65px;
-    flex: 1;
+    width: 50%;
     padding: 10px 12px;
     font-size: 1.2rem;
 }
@@ -126,9 +126,13 @@
     background-color: var(--blocking-fill-color);
     color: var(--blocking-color);
     min-height: 65px;
-    flex: 1;
+    width: 50%;
     padding: 10px 12px;
     font-size: 1.2rem;
+}
+
+.subtext-boxes-p span {
+    white-space: nowrap;
 }
 
 .header-boxes-p {
@@ -366,6 +370,17 @@
     border: 1px solid var(--border-color);
 }
 
+@media(max-width: 400px) {
+
+    #blocked {
+        font-size: 1.1rem;
+    }
+
+    #preferred {
+        font-size: 1.1rem;
+    }
+}
+
 @media(max-width: 360px) {
 
     #blocked {
@@ -376,6 +391,7 @@
         font-size: 1rem;
     }
 }
+
 
 
 /* overlay */
