@@ -2,6 +2,7 @@
 import * as Storage from '../storage.js';
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { CustomSelect } from '/frontend/scripts/drop-down.js';
+import { searchULs } from '../searchBar.js';
 
 // Main function
 export default async function loadList() {
@@ -49,8 +50,11 @@ export default async function loadList() {
 
     list.addEventListener('click', changeAmount);
 
+    const searchInputGro = 'search-groceries';
+    const groceryList = ['.grocery-list'];
+    searchULs(searchInputGro, groceryList);
 
-    // NEU: Initialisiert die komplette Swipe-Logik für die Liste
+    // Initialize swipe to delete
     initializeSwipeToDelete(list);
 }
 
@@ -233,14 +237,30 @@ function setActiveFilterButton(button) {
     const buttons = document.querySelectorAll('#filter-bar button');
     buttons.forEach(btn => {
         if (btn === button) {
+
+            filterListContent(button);
+
             btn.classList.add('active');
             btn.classList.remove('notActive');
+
         } else {
+
             btn.classList.remove('active');
             btn.classList.add('notActive');
+
         }
     });
 }
+
+function filterListContent(button) {
+    const filterText = button.textContent.trim();
+    
+    document.querySelectorAll('.grocery-list li').forEach(item => {
+        const category = item.querySelector('.category').textContent.trim();
+        item.style.display = filterText === 'All' || category.includes(filterText) ? '' : 'none';
+    });
+}
+
 
 // -----------------------------------------------------------
 // --------------------- SWIPE TO DELETE ---------------------

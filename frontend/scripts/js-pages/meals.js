@@ -3,9 +3,12 @@ import { loadHTMLTemplate } from '../templateLoader.js';
 import { CustomSelect } from '/frontend/scripts/drop-down.js';
 import * as Storage from '../storage.js';
 import { initializeSwipeToDelete } from '../swipetodelete.js';
+import { requiredUserRole } from '../auth.js';
+import { searchULs } from '../searchBar.js';
 
 let ingredientsArray = await Storage.getIngredients();
 let dishesArray = await Storage.getDishes();
+initializeCounters();
 
 // Main function
 export default async function loadMeals() {
@@ -16,19 +19,26 @@ export default async function loadMeals() {
     const html = await loadHTMLTemplate('/frontend/html-pages/meals.html');
     app.innerHTML = html;
 
+    ingredientsArray = await Storage.getIngredients();
+    dishesArray = await Storage.getDishes();
+
     //load all dishes and ingredients
     loadDishesAndIngredients();
 
-    const ingredientslist = document.getElementById('ingredients-list-p');
-    let ingredientCard = '.ingredient-card-p'
-    if (ingredientslist) {
-        initializeSwipeToDelete(ingredientslist, ingredientCard, Storage.deleteIngredientFromDB);
+    if (requiredUserRole('cook') || requiredUserRole('admin')) {
+        const ingredientslist = document.getElementById('ingredients-list-p');
+        let ingredientCard = '.ingredient-card-p'
+        if (ingredientslist) {
+            initializeSwipeToDelete(ingredientslist, ingredientCard, Storage.deleteIngredientFromDB);
+        }
     }
 
-    const dishlist = document.querySelector('.dishes-list-p');
-    let dishCard = '.dish-card-p'
-    if (dishlist){
-        initializeSwipeToDelete(dishlist, dishCard, Storage.deleteDishFromDB);
+    if (requiredUserRole('cook') || requiredUserRole('admin')) {
+        const dishlist = document.querySelector('#dishes-list-p');
+        let dishCard = '.dish-card-p'
+        if (dishlist) {
+            initializeSwipeToDelete(dishlist, dishCard, Storage.deleteDishFromDB);
+        }
     }
 
     // Settings Eventlistener
@@ -105,13 +115,14 @@ export default async function loadMeals() {
         }
     });
 
-    // search bar for ingredients
-    const searchInput = document.getElementById('search-ingredients');
-    const ingredientsList = document.getElementById('ingredientsContainer');
+    // search bars
+    const searchInput = 'search-preferences';
+    const searchableLists = ['#dishes-list-p', '#ingredients-list-p'];
+    searchULs(searchInput, searchableLists);
 
-    searchInput.addEventListener('input', () => {
-        searchBar(searchInput, ingredientsList);
-    });
+    const searchInputIng = 'search-ingredients';
+    const ingredientsList = ['#ingredientsContainer'];
+    searchULs(searchInputIng, ingredientsList);
 
     // -----------------------------------------------------------
     // Ingredients Overlay
@@ -153,13 +164,40 @@ function setActiveFilterButton(button) {
     const buttons = document.querySelectorAll('#filter-bar-p button');
     buttons.forEach(btn => {
         if (btn === button) {
+
+            filterPreferenceContent(button);
+
             btn.classList.add('active-p');
             btn.classList.remove('notActive-p');
+
         } else {
+
             btn.classList.remove('active-p');
             btn.classList.add('notActive-p');
+
         }
     });
+}
+
+function filterPreferenceContent(button) {
+    const ingredients = document.querySelector('#ingredients-preferences');
+    const meals = document.querySelector('#meals-preferences');
+    const filter = button.textContent.trim();
+    const prefIngt = document.getElementById('ingredientsPreferredWhole');
+    const blockedIng = document.getElementById('ingredientsBlockedWhole');
+    const prefMeal = document.getElementById('mealsPreferredWhole');
+    const blockedMeal = document.getElementById('mealsBlockedWhole');
+
+    ingredients.style.display = filter === 'Meals' ? 'none' : '';
+    meals.style.display = filter === 'Ingredients' ? 'none' : '';
+    
+    // Hide ingredient counters when showing meals
+    prefIngt.style.display = filter === 'Meals' ? 'none' : '';
+    blockedIng.style.display = filter === 'Meals' ? 'none' : '';
+    
+    // Hide meal counters when showing ingredients
+    prefMeal.style.display = filter === 'Ingredients' ? 'none' : '';
+    blockedMeal.style.display = filter === 'Ingredients' ? 'none' : '';
 }
 
 
@@ -167,33 +205,103 @@ function setActiveFilterButton(button) {
 // Like/Dislike functionality
 // -----------------------------------------------------------
 
+
+// Initialize counters from localStorage on page load
+function initializeCounters() {
+    const counters = {
+        ingredientsPreferred: 'ingredientsPreferred',
+        ingredientsBlocked: 'ingredientsBlocked', 
+        mealsPreferred: 'mealsPreferred',
+        mealsBlocked: 'mealsBlocked'
+    };
+
+    Object.entries(counters).forEach(([elementId, storageKey]) => {
+        const element = document.getElementById(elementId);
+        if (element) {
+            const savedValue = localStorage.getItem(storageKey) || '0';
+            element.textContent = savedValue;
+        }
+    });
+}
+
 function toggleFavorite(event) {
     const button = event.currentTarget;
+    const mealId = button.dataset.meal;
+
     button.classList.toggle('favorited');
 
-    // Dislike-Button deaktivieren wenn Like aktiviert wird
+    // Deactivate dislike button if like button is activated
     if (button.classList.contains('favorited')) {
-        const mealId = button.dataset.meal;
         const dislikeButton = document.querySelector(`[data-meal="${mealId}"].dislike`);
-        if (dislikeButton) {
+        if (dislikeButton && dislikeButton.classList.contains('rejected')) {
             dislikeButton.classList.remove('rejected');
+            updateCounter(mealId, 'rejected', false); // Remove from rejected
         }
+        updateCounter(mealId, 'favorited', true); // Add to favorited
+    } else {
+        updateCounter(mealId, 'favorited', false); // Remove from favorited
     }
 }
 
 function toggleRejected(event) {
     const button = event.currentTarget;
+    const mealId = button.dataset.meal;
+
     button.classList.toggle('rejected');
 
-    // Like-Button deaktivieren wenn Dislike aktiviert wird
+    // Deactivate like button if dislike button is activated
     if (button.classList.contains('rejected')) {
-        const mealId = button.dataset.meal;
         const likeButton = document.querySelector(`[data-meal="${mealId}"].like`);
-        if (likeButton) {
+        if (likeButton && likeButton.classList.contains('favorited')) {
             likeButton.classList.remove('favorited');
+            updateCounter(mealId, 'favorited', false); // Remove from favorited
+        }
+        updateCounter(mealId, 'rejected', true); // Add to rejected
+    } else {
+        updateCounter(mealId, 'rejected', false); // Remove from rejected
+    }
+}
+
+function updateCounter(id, type, isAdding) {
+    const ingredient = id.match(/^ingredient-(.+)$/);
+    const meal = id.match(/^meal-(.+)$/);
+
+    if (ingredient) {
+        const prefElement = document.getElementById('ingredientsPreferred');
+        const blockedElement = document.getElementById('ingredientsBlocked');
+
+        if (type === 'favorited') {
+            updateElementCounter(prefElement, isAdding, 'ingredientsPreferred');
+        } else if (type === 'rejected') {
+            updateElementCounter(blockedElement, isAdding, 'ingredientsBlocked');
+        }
+    } else if (meal) {
+        const prefElement = document.getElementById('mealsPreferred');
+        const blockedElement = document.getElementById('mealsBlocked');
+
+        if (type === 'favorited') {
+            updateElementCounter(prefElement, isAdding, 'mealsPreferred');
+        } else if (type === 'rejected') {
+            updateElementCounter(blockedElement, isAdding, 'mealsBlocked');
         }
     }
 }
+
+function updateElementCounter(element, isAdding, storageKey) {
+    if (element) {
+        const currentValue = Number(element.textContent) || 0;
+        const newValue = isAdding ? currentValue + 1 : currentValue - 1;
+        const finalValue = Math.max(0, newValue);
+
+        element.textContent = finalValue;
+        
+        // Save to localStorage
+        localStorage.setItem(storageKey, finalValue.toString());
+
+    }
+}
+
+
 
 // -----------------------------------------------------------
 // Overlay
@@ -220,21 +328,6 @@ async function loadIngredients() {
 function extractUnit(uom) {
     if (!uom) return '';
     return uom.replace(/[0-9]/g, '').toLowerCase();
-}
-
-function searchBar(searchInput, list) {
-    const query = searchInput.value.toLowerCase();
-    const items = list.querySelectorAll('li.card.ingredient');
-
-    items.forEach(item => {
-        const nameSpan = item.querySelector('.ingredient-text-p');
-        const name = nameSpan ? nameSpan.textContent.toLowerCase() : '';
-        if (name.includes(query)) {
-            item.style.display = '';
-        } else {
-            item.style.display = 'none';
-        }
-    });
 }
 
 function getCheckedIngredientData() {
@@ -409,14 +502,14 @@ function validateMealForm() {
 
 
 // REPLACE the existing addMealCard function with this updated version
-function addMealCard(name, dishID, calories, time, tags = [], containerId = '.dishes-list-p') {
+function addMealCard(name, dishID, calories, time, tags = [], containerId = '#dishes-list-p') {
 
     const dataId = `meal-${name}`;
 
     const tagsHTML = tags.map(tag => `<button class="tag-p">${tag}</button>`).join('');
 
     const cardHTML = `
-    <div class="card drop-shadow dish-card-p">
+    <li class="card drop-shadow dish-card-p">
         <div class="swipe-delete">Delete</div>
         <div class="swipe-content">
             <span class="item-id">${dishID}</span>
@@ -446,7 +539,7 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '.di
                 ${tagsHTML}
             </div>
         </div>
-    </div>
+    </li>
     `;
 
     // Add before other cards
@@ -507,7 +600,7 @@ function saveMeal() {
     // Add dish to DB
     Storage.addNewDishToDB(mealData);
 
-    let lastDishId = dishesArray[dishesArray.length-1].dish_id;
+    let lastDishId = dishesArray[dishesArray.length - 1].dish_id;
     let dishID = lastDishId + 1;
 
     // Add dish to UI
@@ -545,7 +638,7 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
     const dataId = `ingredient-${name}`;
 
     const cardHTML = `
-        <div class="card drop-shadow ingredient-card-p">
+        <li class="card drop-shadow ingredient-card-p">
             <span class="item-id">${ingredientID}</span>
             <div class="swipe-delete">Delete</div>
             <div class="swipe-content">
@@ -567,13 +660,13 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
                     </button>
                 </div>
             </div>
-        </div>
+        </li>
     `;
 
     // Add before other cards
     const container = document.getElementById(containerId);
     // Add a check to prevent errors if the container doesn't exist
-    if (!container) return; 
+    if (!container) return;
 
     container.insertAdjacentHTML('beforeend', cardHTML);
 
@@ -639,7 +732,7 @@ function saveIngredient() {
     // Add ingredient to DB
     Storage.addNewIngredientToDB(ingredientData);
 
-    let lastIngredientId = ingredientsArray[ingredientsArray.length-1].ingredient_id;
+    let lastIngredientId = ingredientsArray[ingredientsArray.length - 1].ingredient_id;
     let ingredientId = lastIngredientId + 1;
 
     // Add ingredient to UI
