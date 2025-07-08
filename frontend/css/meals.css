@@ -228,6 +228,13 @@
     justify-content: center;
 }
 
+dishes-list-p{
+    list-style-type: none;
+}
+
+ingredients-list-p{
+    list-style-type: none;
+}
 
 /* DISHES */
 .dish-card-p {
