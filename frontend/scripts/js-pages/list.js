@@ -246,7 +246,7 @@ function setActiveFilterButton(button) {
 // --------------------- SWIPE TO DELETE ---------------------
 // -----------------------------------------------------------
 
-export function initializeSwipeToDelete(container) {
+function initializeSwipeToDelete(container) {
     let isSwiping = false;
     let startX = 0;
     let currentX = 0;

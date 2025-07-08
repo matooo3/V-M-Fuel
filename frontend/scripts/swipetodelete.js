@@ -1,136 +1,146 @@
-class SwipeToDelete {
-    constructor(listId, options = {}) {
-        this.list = document.getElementById(listId);
-        this.options = {
-            swipeThreshold: 100,
-            animationDuration: 300,
-            onDelete: options.onDelete || null,
-            ...options
-        };
-        
-        this.init();
-    }
+export function initializeSwipeToDelete(container, Card, removeFromDB) {
+    let isSwiping = false;
+    let startX = 0;
+    let currentX = 0;
+    let swipedItem = null;
+    let swipedContent = null;
+    let deleteButton = null;
 
-    init() {
-        if (!this.list) {
-            console.error('List element not found');
-            return;
-        }
+    const deleteButtonWidth = 90;
+    const fullSwipeThreshold = 150;
 
-        this.bindEvents();
-    }
+    const deleteItem = (itemToDelete) => {
+        if (!itemToDelete) return;
 
-    bindEvents() {
-        this.list.addEventListener('mousedown', this.handleStart.bind(this));
-        this.list.addEventListener('touchstart', this.handleStart.bind(this), { passive: false });
-        
-        document.addEventListener('mousemove', this.handleMove.bind(this));
-        document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
-        
-        document.addEventListener('mouseup', this.handleEnd.bind(this));
-        document.addEventListener('touchend', this.handleEnd.bind(this));
-    }
+        itemToDelete.style.maxHeight = `${itemToDelete.offsetHeight}px`;
+        requestAnimationFrame(() => {
+            itemToDelete.classList.add('deleting');
+        });
 
-    handleStart(e) {
-        const swipeContent = e.target.closest('.swipe-content');
-        if (!swipeContent) return;
+        itemToDelete.addEventListener('transitionend', () => {
+            itemToDelete.remove();
+            removeFromDB();
+        }, { once: true });
+    };
 
-        this.activeElement = swipeContent;
-        this.startX = this.getClientX(e);
-        this.currentX = this.startX;
-        this.isDragging = true;
-
-        swipeContent.classList.add('swiping');
-        e.preventDefault();
-    }
-
-    handleMove(e) {
-        if (!this.isDragging || !this.activeElement) return;
-
-        this.currentX = this.getClientX(e);
-        const deltaX = this.currentX - this.startX;
-
-        // Only allow left swipes (negative deltaX)
-        if (deltaX < 0) {
-            const translateX = Math.max(deltaX, -this.options.swipeThreshold * 2);
-            this.activeElement.style.transform = `translateX(${translateX}px)`;
-        }
-
-        e.preventDefault();
-    }
-
-    handleEnd(e) {
-        if (!this.isDragging || !this.activeElement) return;
-
-        const deltaX = this.currentX - this.startX;
-        const shouldDelete = deltaX < -this.options.swipeThreshold;
-
-        this.activeElement.classList.remove('swiping');
-
-        if (shouldDelete) {
-            this.deleteItem(this.activeElement);
-        } else {
-            // Snap back to original position
-            this.activeElement.style.transform = 'translateX(0)';
-        }
-
-        this.resetState();
-    }
-
-    deleteItem(swipeContent) {
-        const listItem = swipeContent.closest('.swipe-container');
-        
-        // Animate out
-        swipeContent.style.transform = 'translateX(-100%)';
-        
-        setTimeout(() => {
-            if (this.options.onDelete) {
-                this.options.onDelete(listItem);
+    const closeAllOtherItems = (currentItem) => {
+        container.querySelectorAll(Card).forEach(item => {
+            if (item !== currentItem) {
+                const content = item.querySelector('.swipe-content');
+                const deleteBtn = item.querySelector('.swipe-delete');
+                if (content) {
+                    content.style.transform = 'translateX(0)';
+                    content.style.borderRadius = '15px';
+                }
+                if (deleteBtn) {
+                    deleteBtn.style.width = '0px';
+                    deleteBtn.style.opacity = '0';
+                }
             }
-            
-            // Remove the item with a smooth height transition
-            listItem.style.height = listItem.offsetHeight + 'px';
-            listItem.style.overflow = 'hidden';
-            listItem.style.transition = 'height 0.3s ease';
-            
-            setTimeout(() => {
-                listItem.style.height = '0px';
-                listItem.style.padding = '0px';
-                listItem.style.margin = '0px';
-                listItem.style.borderWidth = '0px';
-            }, 10);
-            
-            setTimeout(() => {
-                listItem.remove();
-            }, 300);
-        }, this.options.animationDuration);
-    }
+        });
+    };
 
-    getClientX(e) {
-        return e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    }
+    const updateDeleteButton = (diffX) => {
+        if (!deleteButton) return;
+        const revealedWidth = Math.abs(diffX);
+        if (revealedWidth > 10) {
+            deleteButton.style.width = `${revealedWidth}px`;
+            deleteButton.style.opacity = '1';
+        } else {
+            deleteButton.style.width = '0px';
+            deleteButton.style.opacity = '0';
+        }
+    };
 
-    resetState() {
-        this.isDragging = false;
-        this.activeElement = null;
-        this.startX = 0;
-        this.currentX = 0;
-    }
+    const updateBorderRadius = (diffX) => {
+        if (!swipedContent) return;
+        const revealedWidth = Math.abs(diffX);
+        if (revealedWidth > 5) {
+            swipedContent.style.borderRadius = '15px 0 0 15px';
+            swipedContent.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
+        } else {
+            swipedContent.style.borderRadius = '15px';
+            swipedContent.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
+        }
+    };
 
-    addItem(content) {
-        const li = document.createElement('li');
-        li.className = 'swipe-container';
-        li.innerHTML = `
-            <div class="swipe-delete">Delete</div>
-            ${content}
-        `;
-        this.list.appendChild(li);
-    }
+    const onSwipeStart = (e) => {
+        const item = e.target.closest(Card);
+        if (!item || e.target.closest('button') || e.target.closest('object') || e.target.classList.contains('swipe-delete')) return;
 
-    destroy() {
-        document.removeEventListener('mousemove', this.handleMove);
-        document.removeEventListener('touchmove', this.handleMove);
-        document.removeEventListener('mouseup', this.handleEnd);
-        document.removeEventListener('touchend', this.handleEnd);
-    }
+        closeAllOtherItems(item);
+        isSwiping = true;
+        swipedItem = item;
+        swipedContent = item.querySelector('.swipe-content');
+        deleteButton = item.querySelector('.swipe-delete');
+        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        currentX = startX;
+
+        if (deleteButton) {
+            deleteButton.style.width = '0px';
+            deleteButton.style.opacity = '0';
+            deleteButton.style.transition = 'none';
+        }
+        if (swipedContent) {
+            swipedContent.style.transition = 'none';
+        }
+    };
+
+    const onSwipeMove = (e) => {
+        if (!isSwiping || !swipedContent) return;
+        currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        let diffX = currentX - startX;
+        if (diffX > 0) diffX = 0;
+        swipedContent.style.transform = `translateX(${diffX}px)`;
+        updateDeleteButton(diffX);
+        updateBorderRadius(diffX);
+    };
+
+    const onSwipeEnd = () => {
+        if (!isSwiping || !swipedContent) return;
+        isSwiping = false;
+        let diffX = currentX - startX;
+        swipedContent.style.transition = 'transform 0.3s ease-out, border-radius 0.3s ease-out';
+        if (deleteButton) {
+            deleteButton.style.transition = 'width 0.3s ease-out, opacity 0.3s ease-out';
+        }
+        if (diffX < -fullSwipeThreshold) {
+            swipedContent.style.transform = `translateX(-100%)`;
+            swipedContent.style.borderRadius = '15px 0 0 15px';
+            if (deleteButton) {
+                deleteButton.style.width = '100%';
+                deleteButton.style.opacity = '1';
+            }
+            swipedContent.addEventListener('transitionend', () => deleteItem(swipedItem), { once: true });
+        } else if (diffX < -(deleteButtonWidth / 3)) {
+            swipedContent.style.transform = `translateX(-${deleteButtonWidth}px)`;
+            swipedContent.style.borderRadius = '15px 0 0 15px';
+            if (deleteButton) {
+                deleteButton.style.width = `${deleteButtonWidth}px`;
+                deleteButton.style.opacity = '1';
+            }
+        } else {
+            swipedContent.style.transform = 'translateX(0)';
+            swipedContent.style.borderRadius = '15px';
+            if (deleteButton) {
+                deleteButton.style.width = '0px';
+                deleteButton.style.opacity = '0';
+            }
+        }
+    };
+
+    const onDeleteClick = (e) => {
+        if (e.target.classList.contains('swipe-delete')) {
+            const itemToDelete = e.target.closest(Card);
+            deleteItem(itemToDelete);
+        }
+    };
+
+    container.addEventListener('mousedown', onSwipeStart);
+    document.addEventListener('mousemove', onSwipeMove);
+    document.addEventListener('mouseup', onSwipeEnd);
+    container.addEventListener('touchstart', onSwipeStart, { passive: true });
+    document.addEventListener('touchmove', onSwipeMove, { passive: true });
+    document.addEventListener('touchend', onSwipeEnd);
+    container.addEventListener('click', onDeleteClick);
 }

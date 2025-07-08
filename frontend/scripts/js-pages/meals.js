@@ -2,7 +2,7 @@
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { CustomSelect } from '/frontend/scripts/drop-down.js';
 import { getIngredients, addNewIngredientToDB, addNewDishToDB, getDishes } from '../storage.js';
-import { initializeSwipeToDelete } from './list.js';
+import { initializeSwipeToDelete } from '../swipetodelete.js';
 
 let ingredientsArray = await getIngredients();
 let dishesArray = await getDishes();
@@ -16,8 +16,20 @@ export default async function loadMeals() {
     const html = await loadHTMLTemplate('/frontend/html-pages/meals.html');
     app.innerHTML = html;
 
-
+    //load all dishes and ingredients
     loadDishesAndIngredients();
+
+    const ingredientslist = document.getElementById('ingredients-list-p');
+    let ingredientCard = '.ingredient-card-p'
+    if (ingredientslist) {
+        initializeSwipeToDelete(ingredientslist, ingredientCard, removeDishFromDB);
+    }
+
+    const dishlist = document.querySelector('.dishes-list-p');
+    let dishCard = '.dish-card-p'
+    if (dishlist){
+        initializeSwipeToDelete(dishlist, dishCard, removeIngredientFromDB);
+    }
 
     // Settings Eventlistener
     const settingsButton = document.querySelector('.settings');
@@ -119,21 +131,25 @@ export default async function loadMeals() {
         hideEditIngredient();
     });
 
-    // Swipe-to-Delete
-    const dishesContainer = document.getElementById('dishes-list-p');
-    initializeSwipeToDelete(dishesContainer);
+}
 
+function removeDishFromDB(){
+
+}
+
+function removeIngredientFromDB(){
+    
 }
 
 // Load food content
 async function loadDishesAndIngredients() {
 
     dishesArray.forEach(dish => {
-        addMealCard(dish.name, dish.total_calories, dish.preparation_time_in_min, JSON.parse(dish.tags));
+        addMealCard(dish.name, dish.dish_id, dish.total_calories, dish.preparation_time_in_min, JSON.parse(dish.tags));
     });
 
     ingredientsArray.forEach(ing => {
-        addIngredientCard(ing.name, ing.category);
+        addIngredientCard(ing.name, ing.ingredient_id, ing.category);
     });
 }
 
@@ -400,17 +416,18 @@ function validateMealForm() {
 }
 
 
-// Add dishes functionality
-function addMealCard(name, calories, time, tags = [], containerId = 'dishes-list-p') {
+// REPLACE the existing addMealCard function with this updated version
+function addMealCard(name, dishID, calories, time, tags = [], containerId = '.dishes-list-p') {
 
     const dataId = `meal-${name}`;
 
     const tagsHTML = tags.map(tag => `<button class="tag-p">${tag}</button>`).join('');
 
     const cardHTML = `
-    <li class="swipe-container">
+    <div class="card drop-shadow dish-card-p">
         <div class="swipe-delete">Delete</div>
-        <div class="card drop-shadow dish-card-p">
+        <div class="swipe-content">
+            <span style="display: none;">${dishID}</span>
             <div class="first-row-of-dish">
                 <div class="descr-p">
                     <h3 class="title-p">${name}</h3>
@@ -437,11 +454,11 @@ function addMealCard(name, calories, time, tags = [], containerId = 'dishes-list
                 ${tagsHTML}
             </div>
         </div>
-    </li>
+    </div>
     `;
 
     // Add before other cards
-    const container = document.getElementById(containerId);
+    const container = document.querySelector(containerId);
     container.insertAdjacentHTML('beforeend', cardHTML);
 
     const newCard = container.lastElementChild;
@@ -451,7 +468,6 @@ function addMealCard(name, calories, time, tags = [], containerId = 'dishes-list
     likeBtn.addEventListener('click', toggleFavorite);
     dislikeBtn.addEventListener('click', toggleRejected);
 }
-
 
 // Save Meal
 function saveMeal() {
@@ -499,8 +515,11 @@ function saveMeal() {
     // Add dish to DB
     addNewDishToDB(mealData);
 
+    let lastDishId = dishesArray[dishesArray.length-1].dish_id;
+    let dishID = lastDishId + 1;
+
     // Add dish to UI
-    addMealCard(name, calories, time, tagsArray);
+    addMealCard(name, dishID, calories, time, tagsArray);
 
     // hide UI and clear form
     hideEditMeal();
@@ -529,34 +548,41 @@ function clearForm() {
 
 
 // Add ingredients functionality
-function addIngredientCard(name, category, containerId = 'ingredients-list-p') {
+function addIngredientCard(name, ingredientID, category, containerId = 'ingredients-list-p') {
 
     const dataId = `ingredient-${name}`;
 
     const cardHTML = `
         <div class="card drop-shadow ingredient-card-p">
-            <div class="descr-p">
-                <h3 class="title-p">${name}</h3>
-                <p class="subtext">${category}</p>
-            </div>
+            <div class="swipe-delete">Delete</div>
+            <span style="display: none;">${ingredientID}</span>
+            <div class="swipe-content">
+                <div class="descr-p">
+                    <h3 class="title-p">${name}</h3>
+                    <p class="subtext">${category}</p>
+                </div>
 
-            <div class="preference-buttons">
-                <button class="like" data-meal="${dataId}">
-                    <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
-                </button>
-                <button class="dislike" data-meal="${dataId}">
-                    <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
+                <div class="preference-buttons">
+                    <button class="like" data-meal="${dataId}">
+                        <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
+                    </button>
+                    <button class="dislike" data-meal="${dataId}">
+                        <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     `;
 
     // Add before other cards
     const container = document.getElementById(containerId);
+    // Add a check to prevent errors if the container doesn't exist
+    if (!container) return; 
+
     container.insertAdjacentHTML('beforeend', cardHTML);
 
     const newCard = container.lastElementChild;
@@ -582,11 +608,6 @@ function validateIngredientData(data) {
     }
 
     return true;
-}
-
-// Helper function
-function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 
@@ -624,10 +645,13 @@ function saveIngredient() {
     validateIngredientData(ingredientData);
 
     // Add ingredient to DB
-    addNewIngredientToDB(ingredientData)
+    addNewIngredientToDB(ingredientData);
+
+    let lastIngredientId = ingredientsArray[ingredientsArray.length-1].ingredient_id;
+    let ingredientId = lastIngredientId + 1;
 
     // Add ingredient to UI
-    addIngredientCard(ingredientData.name, ingredientData.category);
+    addIngredientCard(ingredientData.name, ingredientId, ingredientData.category);
 
     // hide UI and clear form
     hideEditIngredient();
