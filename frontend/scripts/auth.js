@@ -27,21 +27,37 @@ export function getUserFromToken() {
 // Logout
 export function logout() {
     localStorage.removeItem("token");
-    location.reload();
+
+    // reload site 
+    // location.reload();
+
+
+    alert("Your session has expired. You are being logged out.");
+    window.location.href = "/frontend/html-pages/unauthorized.html";
 }
 
 export async function checkRoleAccess(allowedRoles) {
-    const userData = getUserFromToken();
-    if (!userData || !allowedRoles.includes(userData.role)) {
-        const body = document.getElementsByTagName("body")[0];
-        body.innerHTML = "!! ACCESS DENIED !!";
-
-        await new Promise((resolve) => setTimeout(resolve, 1));
-
-        alert("No access to this page.");
-
-        window.location.href = "/frontend/html-pages/unauthorized.html"; // Fehlerseite
+    try {
+        const userData = getUserFromToken();
+        if (!userData || !allowedRoles.includes(userData.role)) {
+            redirectToUnauthorizedPage();
+        }
+    } catch (error) {
+        // TOKEN NOT FOUND ERROR
+        console.warn("Access denied because no token was found. Redirecting...");
+        redirectToUnauthorizedPage();
     }
+}
+
+export async function redirectToUnauthorizedPage() {
+    const body = document.getElementsByTagName("body")[0];
+    body.innerHTML = "!! ACCESS DENIED !!";
+
+    await new Promise((resolve) => setTimeout(resolve, 1)); // sonst ist content noch sichtbar
+
+    alert("No access to this page.");
+
+    window.location.href = "/frontend/html-pages/unauthorized.html"; // Fehlerseite
 }
 
 export function returnUserRole() {

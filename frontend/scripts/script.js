@@ -5,6 +5,28 @@ import loadMeals from "./js-pages/meals.js";
 import * as Storage from "./storage.js";
 import * as Auth from "./auth.js";
 
+const valid = await Auth.checkSessionTokenValid();
+if (!valid) {
+    console.warn(
+        `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt11111111111`
+    );
+} else {
+    console.log(`[TokenCheck] ✅ Alles in Ordnung11111111111111`);
+}
+
+// AUTHENTICATION
+setInterval(async () => {
+    console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
+    const valid = await Auth.checkSessionTokenValid();
+    if (!valid) {
+        console.warn(
+            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
+        );
+    } else {
+        console.log(`[TokenCheck] ✅ Alles in Ordnung`);
+    }
+}, 5 * 60 * 1000); // alle 5 Minuten
+
 // SERVICE-WORKER REGISTRATION
 // The service worker registration code is currently disabled for debugging purposes.
 // Uncomment the following block to enable service worker functionality.
@@ -125,24 +147,3 @@ console.log("--------------DISHES WITH INGREDIENTS-------------");
 const dishesWithIngredients = await Storage.getDishesWithIngredients();
 console.log("HERE ARE THE FULL_DISHES:", dishesWithIngredients);
 
-const valid = await Auth.checkSessionTokenValid();
-if (!valid) {
-    console.warn(
-        `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt11111111111`
-    );
-} else {
-    console.log(`[TokenCheck] ✅ Alles in Ordnung11111111111111`);
-}
-
-// AUTHENTICATION
-setInterval(async () => {
-    console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
-    const valid = await Auth.checkSessionTokenValid();
-    if (!valid) {
-        console.warn(
-            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
-        );
-    } else {
-        console.log(`[TokenCheck] ✅ Alles in Ordnung`);
-    }
-}, 5 * 60 * 1000); // alle 5 Minuten
