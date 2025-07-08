@@ -94,7 +94,7 @@ async function router() {
     // document.getElementById('app').innerHTML = '';
     await loadPage();
     setActiveTab();
-    if(!(hash === "settings")) {
+    if(hash !== "settings") {
         showNavbar();
     }
     console.log("Page loaded:", hash || "home");
