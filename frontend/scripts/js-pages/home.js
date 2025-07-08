@@ -1,7 +1,7 @@
 // ./pages/home.js
 
 import { loadHTMLTemplate } from '../templateLoader.js';
-import * as Storage from '/frontend/scripts/storage.js';
+import * as Storage from '../storage.js';
 import * as Auth from '/frontend/scripts/auth.js';
 import { initializeSwipeToDelete } from '../swipetodelete.js';
 
