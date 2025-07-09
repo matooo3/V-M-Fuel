@@ -191,7 +191,7 @@ async function renderUserList() {
 }
 
 function deleteUser(user_id) {
-    Storage.deleteUserFromDB(id);
+    Storage.deleteUserFromDB(user_id);
     renderTotalUsers();
 }
 
