@@ -33,7 +33,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
         //     window.location.href = "/frontend/auth/user.html";
         // }
 
-        window.location.href = "/frontend/index.html";
+        window.location.href = "../index.html";
 
         // window.location.href = "../../index.html#home";
         
