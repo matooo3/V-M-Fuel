@@ -28,7 +28,7 @@ export async function fetchData(endpoint) {
         error?.message?.includes("Service Unavailable")) {
       await new Promise(resolve => setTimeout(resolve, 1000));
       console.log("❌❌❌❌ Retrying fetch for " + endpoint + " due to 503... ❌❌❌❌");
-      fetchData(endpoint);
+      return await fetchData(endpoint);
     }
 
     return null;
