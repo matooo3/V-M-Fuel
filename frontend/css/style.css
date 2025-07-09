@@ -104,11 +104,6 @@ h3 {
     box-shadow: 0 2px 9.8px 0px rgba(0, 0, 0, 0.03);
 }
 
-
-input::placeholder {
-    color: #D1D1D1;
-}
-
 button {
     border-radius: 15px;
     font-family: 'Poppins', sans-serif;

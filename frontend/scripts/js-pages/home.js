@@ -6,6 +6,7 @@ import * as Auth from '/frontend/scripts/auth.js';
 import * as Swipe from '../swipetodelete.js';
 import * as Role from '../roleRouting.js';
 import * as Settings from './settings.js';
+import * as Search from '../searchBar.js'
 
 
 export default async function loadHome() {
@@ -47,7 +48,6 @@ export default async function loadHome() {
     setTimeout(() => {
         renderUserGreeting();
     }, 1);
-
 
 }
 
@@ -173,9 +173,9 @@ async function renderUserList() {
     // Update the total users count
     renderTotalUsers();
 
-    if (userListContainer){
+    if (userListContainer) {
         Swipe.initializeSwipeToDelete(userListContainer, '.card.user', nothing);
-    
+
     }
 
     // add eventlistener for change role button
@@ -183,10 +183,15 @@ async function renderUserList() {
     changeRoleButtons.forEach(button => {
         button.addEventListener("click", changeUserRole);
     });
+
+    
+    const searchInputUser = "user-search-bar";
+    const userList = ['#user-list'];
+    Search.searchULs(searchInputUser, userList);
 }
 
-function nothing(){
-    
+function nothing() {
+
 }
 // -----------------------END-----------------------------
 //
@@ -198,12 +203,12 @@ function denyAdminRoleChange(role, targetName, TargetEmail) {
         // wenn es der user selbst ist, dann kann er seine Rolle nicht ändern
         const user = Auth.getUserFromToken();
 
-    
+
         if (user.email === TargetEmail) { // sich selbst
             alert("You cannot change your own role.");
             throw new Error("Admin role change denied for self.");
         } else {
-            if(!(user.name ==="admin") && !(user.email === "admin@admin.com")) { // super-user darf admin degradieren
+            if (!(user.name === "admin") && !(user.email === "admin@admin.com")) { // super-user darf admin degradieren
                 alert("You cannot change the role of an admin.");
                 throw new Error("Admin role change denied for super user.");
             }
@@ -250,7 +255,7 @@ function getTotalUsers() {
 }
 
 function renderTotalUsers() {
-    
+
     const totalUsersAmount = document.getElementById("total-users-amount");
     if (totalUsersAmount) {
         totalUsersAmount.textContent = getTotalUsers();
