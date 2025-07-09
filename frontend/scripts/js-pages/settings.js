@@ -84,9 +84,9 @@ export function hideNavbar() {
 export function referenceToLastHash() {
     const lastHash = getLastHash();
     if (lastHash) {
-        window.location.href = lastHash;
+        window.location.hash = lastHash;
     } else {
-        window.location.href = '#home';
+        window.location.hash = '#home';
     }
 }
 
