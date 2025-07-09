@@ -80,12 +80,12 @@ export function allowSwipeForCook() {
 }
 
 function deleteIngredient(id){
+    Meals.deleteIngredientCounter();
     Storage.deleteIngredientFromDB(id);
-    Meals.deleteIngredientCounter(id);
 }
 
 
 function deleteIDish(id){
+    Meals.deleteDishCounter();
     Storage.deleteDishFromDB(id);
-    Meals.deleteDishCounter(id);
 }
