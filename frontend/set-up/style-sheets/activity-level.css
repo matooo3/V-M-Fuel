@@ -1,67 +1,71 @@
  .landing-container {
-    display: grid;
-    justify-items: center;
-    grid-template-columns: 1fr;
-    grid-template-rows: 10vh 10vh 48vh 7vh 20vh;
-}
+     display: grid;
+     justify-items: center;
+     grid-template-columns: 1fr;
+     grid-template-rows: 10vh 10vh 48vh 7vh 20vh;
+ }
 
 
-#progress-bar-fill-al {
-    width: 68%;
-    height: 8px;
-    border-radius: 7px;
-    background-color: #1BCE86;
-}
+ #progress-bar-fill-al {
+     width: 68%;
+     height: 8px;
+     border-radius: 7px;
+     background-color: #1BCE86;
+ }
 
-#selection-div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    gap: 20px;
-}
+ #selection-div {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: flex-start;
+     width: 100%;
+     height: 100%;
+     gap: 20px;
+ }
 
-.al-card{   
-    width: 70%;
-    height: 100%;
-}
+ .al-card {
+     display: flex;
+     flex-direction: column;
+     gap: 4px;
+     width: 70%;
+     max-height: 55px;
+     padding: 10px 10px;
+ }
 
-.al-text{
-    position: relative;
-    top: 0;      
-    left: 0;     
-    margin-top: 4px;
-    margin-left: 7px;
-    font-size: 1rem;
-    font-weight: 500;
-}
+ .al-text {
+     font-size: 1rem;
+     font-weight: 500;
+ }
 
-.al-desc{
-    position: relative;
-    top: 0;      
-    left: 0;     
-    margin-top: 2px;
-    margin-left: 10px;
-    font-size: 0.8rem;
-    color: #868686;
-    font-weight: 500;
-}
+ .al-desc {
+     margin-top: 2px;
+     font-size: 0.8rem;
+     color: #868686;
+     font-weight: 500;
+ }
 
-@media (max-height: 700px) {
+ @media (max-height: 805px) {
 
-    .al-card{   
-        width: 60%;
-        height: 80%;
-    }
+     .al-card {
+         height: 80%;
+     }
 
-    .al-text{
-        font-size: 0.8rem;
-    }
+     .al-text {
+         font-size: 0.9rem;
+     }
 
-    .al-desc{
-        font-size: 0.6rem;
-    }
+     .al-desc {
+         font-size: 0.8rem;
+     }
 
-}
+     #selection-div {
+         gap: 12px;
+     }
+
+ }
+
+ @media (min-height: 720px) {
+     .al-card {
+        min-height: 55px;
+     }
+ }
