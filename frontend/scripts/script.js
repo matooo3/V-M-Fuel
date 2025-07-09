@@ -57,7 +57,7 @@ function initialLoad() {
 
 initialLoad();
 
-let previousHash = "#plan";
+let previousHash = window.location.hash || "#home";
 
 export function updateLastHash() {
     const currentHash = window.location.hash;
