@@ -45,8 +45,13 @@ export async function checkRoleAccess(allowedRoles) {
     } catch (error) {
         // TOKEN NOT FOUND ERROR
         console.warn("Access denied because no token was found. Redirecting...");
-        redirectToUnauthorizedPage();
+        // redirectToUnauthorizedPage(); // !!!! DONT DELETE THIS
+        redirectToGetStartedPage();
     }
+}
+
+export function redirectToGetStartedPage() {
+    window.location.href = "/frontend/set-up/pages/getstarted.html";
 }
 
 export async function redirectToUnauthorizedPage() {
