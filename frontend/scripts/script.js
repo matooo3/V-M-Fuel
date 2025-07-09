@@ -57,6 +57,20 @@ function initialLoad() {
 
 initialLoad();
 
+let previousHash = window.location.hash || "#home";
+
+export function updateLastHash() {
+    const currentHash = window.location.hash;
+
+    if (currentHash !== "#settings") {
+        previousHash = currentHash;
+    }
+}
+
+export function getLastHash() {    
+    return previousHash;
+}
+
 function setActiveTab() {
     const navLinks = document.querySelectorAll("#main-nav a");
 
@@ -94,9 +108,10 @@ async function router() {
     // document.getElementById('app').innerHTML = '';
     await loadPage();
     setActiveTab();
-    if(hash !== "settings") {
+    if (hash !== "settings") {
         showNavbar();
     }
+    updateLastHash();
     console.log("Page loaded:", hash || "home");
 }
 
