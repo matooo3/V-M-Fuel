@@ -6,7 +6,7 @@ import * as Auth from '/frontend/scripts/auth.js';
 import * as Swipe from '../swipetodelete.js';
 import * as Role from '../roleRouting.js';
 import * as Settings from './settings.js';
-import * as Search from '../searchBar.js'
+import * as Search from '../searchBar.js';
 
 
 export default async function loadHome() {
