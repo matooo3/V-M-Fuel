@@ -5,7 +5,6 @@
     grid-template-rows: auto 1fr;
     width: 100%;
     overflow-y: auto;
-    padding: 27px 27px 0 27px;
     height: calc(100vh - var(--nav-height));
 }
 
@@ -15,6 +14,7 @@
     justify-content: flex-start;
     flex-shrink: 0;
     gap: 5px;
+    padding: 20px 27px 0px 27px;
 }
 
 #greeting-text {
@@ -51,21 +51,23 @@
 }
 
 #admin-panel {
+    border: 1px solid var(--border-color);
+    padding: 0px 27px 0px 27px;
     grid-row: 2;
-    height: 100%;
     width: 100%;
-    margin-bottom: 10px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    height: 55px;
 }
 
 #admin-container {
+    padding: 0px 27px 0px 27px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    height: 100%; 
-    min-height: 0;
+    flex-shrink: 0;
 }
 
 .tab {
@@ -84,12 +86,13 @@
 }
 
 .progress-wrapper {
-    grid-row: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     place-self: center;
     position: relative;
-    width: 35%;
-    height: 190;
-
+    width: 140px;
+    min-height: 170px;
 }
 
 .progress-svg {
@@ -141,14 +144,13 @@
 }
 
 .meals-info-db {
-    flex: 1;
     /* Take remaining space */
-    min-height: 0;
+    min-height: 500px;
     /* Allow shrinking */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 2.2vh;
+    gap: 22px;
     overflow-y: auto;
     scrollbar-width: none;
     /* Firefox */
@@ -166,7 +168,7 @@
 
 .first-row-db {
     display: flex;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .nutrition-values-db {
@@ -302,6 +304,8 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    height: fit-content;
+    flex-shrink: 0;
 }
 
 .mealcards-db {
@@ -331,14 +335,19 @@
     margin-left: auto;
 }
 
+#standard-container{
+    margin-top: 10px;
+}
+
 #user-managment-container {
     display: grid;
     grid-template-rows: auto 1fr;
-    height: 66vh;
+    min-height: 66vh;
+    margin-top: 20px;
 }
 
 #user-info {
-    padding: 5px 40px 10px 40px;
+    padding: 0px 12px;
     display: flex;
     flex-direction: column;
 }
@@ -346,7 +355,6 @@
 #user-text {
     font-family: 'figtree', sans-serif;
     margin-bottom: 2px;
-    margin-top: 10px;
 }
 
 #user-amount {
@@ -388,6 +396,7 @@
     width: 100%;
     height: 30%;
     padding: 8px 12px;
+    margin-bottom: 5px;
 }
 
 #search-bar-db input {
@@ -410,18 +419,25 @@
 }
 
 #user-list {
-    padding: 0px 40px;
+    padding: 0px 12px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     height: 100%;
     overflow-y: auto;
     list-style-type: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#my-element::-webkit-scrollbar {
+    display: none;
 }
 
 .card.user {
     position: relative;
-    overflow: hidden; /* Important for clipping the delete button */
+    overflow: hidden;
+    /* Important for clipping the delete button */
     background-color: transparent;
     box-shadow: none;
     border: 1px solid var(--border-color);
@@ -432,7 +448,8 @@
 .card.user .swipe-content {
     display: flex;
     align-items: center;
-    background-color: white; /* Or original card background */
+    background-color: white;
+    /* Or original card background */
     min-height: 55px;
     gap: 10px;
     padding: 0px 1rem 0px 0px;
@@ -469,7 +486,8 @@
     max-height: 0 !important;
     padding-top: 0;
     padding-bottom: 0;
-    margin-bottom: -10px; /* Compensate for the original margin-bottom */
+    margin-bottom: -10px;
+    /* Compensate for the original margin-bottom */
     border: none;
 }
 
@@ -528,8 +546,10 @@
 }
 
 .user-tag {
-    border: solid 1px #F9BEBE; /**/
-    background-color: #FEF2F2; /**/
+    border: solid 1px #F9BEBE;
+    /**/
+    background-color: #FEF2F2;
+    /**/
     width: 6rem;
     height: 2rem;
     min-width: 5rem;
@@ -548,7 +568,8 @@
 
 .user-tag-text {
     font-size: 1rem;
-    color: var(--accent-color); /**/
+    color: var(--accent-color);
+    /**/
 }
 
 /* --------------------------------------------------------------- */
@@ -563,6 +584,7 @@
 #text-um1 {
     color: var(--positive-color);
 }
+
 /* cook */
 #card-um2 {
     border: solid 1px #C7CDFF;
@@ -572,6 +594,7 @@
 #text-um2 {
     color: #7F8DFF;
 }
+
 /* admin */
 #card-um3 {
     border: solid 1px #F9BEBE;
@@ -581,6 +604,7 @@
 #text-um3 {
     color: var(--accent-color);
 }
+
 /* --------------------------------------------------------------- */
 /* ---------------------- USER MANAGEMENT ------------------------ */
 /* --------------------------------------------------------------- */
@@ -590,119 +614,6 @@
     width: 1.2rem;
     height: 1.2rem;
 }
-
-/* @media (max-height: 875px) {
-    #admin-panel {
-        border: none;
-    }
-}
-
-@media (max-height: 750px) {
-    #admin-panel {
-        border: none;
-    }
-
-    .tab {
-        transform: scale(80%);
-    }
-}
-
-@media (max-height: 700px) {
-
-    .roboto {
-        font-size: 3rem;
-    }
-
-    #admin-container {
-        margin-top: 0px;
-    }
-
-    .tab {
-        transform: scale(80%);
-    }
-
-    .tag-text {
-        font-size: 0.8rem;
-    }
-
-    #next-meal-text {
-        margin-bottom: 10px;
-    }
-
-}
-
-@media (max-height: 650px) {
-
-    .progress-wrapper {
-        transform: scale(80%);
-    }
-
-
-    .tag {
-        position: absolute;
-        top: 65px;
-        left: 120px;
-        width: 50px;
-        height: 15px;
-    }
-
-    #home {
-        grid-template-rows: 15vh 8vh auto;
-    }
-
-    #admin-container {
-        margin-top: -20px;
-    }
-
-    .tag-logo {
-        width: 10px;
-        height: 10px;
-    }
-
-}
-
-@media (max-height: 580px) {
-
-    #greeting-container {
-        margin: 5px 27px 0px 27px;
-    }
-
-    .tag {
-        position: absolute;
-        top: 50px;
-        left: 120px;
-        width: 50px;
-        height: 15px;
-    }
-}
-
-
-@media (max-width: 380px) {
-
-    .progress-text {
-        font-size: 2rem;
-    }
-
-    .tab {
-        font-size: 1.4rem;
-    }
-} */
-
-
-
-/* Status tag colors 
-    --status-fill-color: #FEF2F2;
-    --status-border-color: #F9BEBE;
-    --status-text-color: #E35252;
-
-    Progress div colors 
-    --progress-text-color-lvl1: #5F0606;
-    --progress-text-color-lvl2: #960505;
-    --progress-bar-color: #F7BBBB;
-    --progress-bar-color-lvl2: #E35252;
-    --progress-fill-collor: #FEF2F2;
-    --progress-border-color: #F9BEBE;
-    */
 
 /*  HIDDEN ADMIN PANEL  */
 .hidden-admin-panel {

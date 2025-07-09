@@ -34,7 +34,7 @@ export function renderAdminPanel() {
 
     if (user && user.role === 'admin') {
         const homeContainer = document.querySelector("#home-container");
-        homeContainer.style.gridTemplateRows = "auto 7vh 1fr";
+        homeContainer.style.gridTemplateRows = "auto auto 1fr";
         adminPanel.classList.remove('hidden-admin-panel');
         
     } else {
