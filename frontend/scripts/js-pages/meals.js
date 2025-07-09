@@ -523,7 +523,7 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '#di
 }
 
 // Save Meal
-function saveMeal() {
+async function saveMeal() {
 
     // Validate form
     const validationErrors = validateMealForm();
@@ -567,9 +567,10 @@ function saveMeal() {
 
     // Add dish to DB
     Storage.addNewDishToDB(mealData);
-
-    let lastDishId = dishesArray[dishesArray.length - 1].dish_id;
-    let dishID = lastDishId + 1;
+    
+    dishesArray = await Storage.getDishes();
+    let lastDish = dishesArray[dishesArray.length - 1];
+    let dishID = lastDish.dish_id
 
     // Add dish to UI
     addMealCard(name, dishID, calories, time, tagsArray);
@@ -665,7 +666,7 @@ function validateIngredientData(data) {
 
 
 // Save Ingredient
-function saveIngredient() {
+async function saveIngredient() {
 
     // save data variables
     const name = document.getElementById('ingredientName-p').value.trim();
@@ -700,8 +701,9 @@ function saveIngredient() {
     // Add ingredient to DB
     Storage.addNewIngredientToDB(ingredientData);
 
-    let lastIngredientId = ingredientsArray[ingredientsArray.length - 1].ingredient_id;
-    let ingredientId = lastIngredientId + 1;
+    ingredientsArray = await Storage.getIngredients();
+    let lastIngredient = ingredientsArray[ingredientsArray.length - 1];
+    let ingredientId = lastIngredient.ingredient_id;
 
     // Add ingredient to UI
     addIngredientCard(ingredientData.name, ingredientId, ingredientData.category);
