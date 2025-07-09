@@ -1,68 +1,132 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>No Access</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Denied</title>
   <style>
+
     body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      font-family: Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #f8f9fa;
-      color: #333;
-      font-size: 18px;
+      padding: 20px;
     }
 
     .container {
+      border-radius: 16px;
+      padding: 60px 40px;
+      max-width: 480px;
+      width: 100%;
       text-align: center;
-      border: 1px solid #ccc;
-      padding: 200px 80px;
-      border-radius: 12px;
-      background: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      margin: 60px;
-      max-width: 600px;
-      max-height: 800px;
     }
 
-    h2 {
-      font-size: 30px;
-      color: #d9534f;
-      margin-bottom: 0.5em;
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 16px;
+      line-height: 1.2;
     }
 
     p {
-      margin-bottom: 1.5em;
-      font-size: 24px;
+      font-size: 16px;
+      color: #999;
+      line-height: 1.5;
+      margin-bottom: 40px;
     }
 
-    a {
-      display: inline-block;
-      padding: 10px 20px;
-      text-decoration: none;
-      background-color: #0275d8;
+    .login-button {
+      background: #1F2937;
       color: white;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-      font-size: 20px;
+      border: none;
+      border-radius: 24px;
+      width: 210px;
+      height: 50px;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 40px;
     }
 
-    a:hover {
-      background-color: #025aa5;
+    .login-button:hover {
+      background: #2c3e50;
+      transform: translateY(-1px);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+    }
+
+    .help-text {
+      font-size: 14px;
+      color: #6c757d;
+      margin-top: 16px;
+    }
+
+    .help-link {
+      color: #20c997;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .help-link:hover {
+      text-decoration: underline;
+    }
+
+    #back-to-login{
+      font-weight: 600;
+    }
+
+    #forbidden-log{
+      height: 50px;
+      width: 50px;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 40px 24px;
+        margin: 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .icon-container {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+      }
     }
   </style>
+  <link rel="stylesheet" href="/frontend/set-up/style-sheets/general.css">
 </head>
 
 <body>
   <div class="container">
-    <h2>Access Denied</h2>
+    <img id="forbidden-log" src="/frontend/set-up/pictures/forbidden.svg" alt="DENIED">
+
+    <h1>Access Denied</h1>
+
     <p>You don't have permission to access this page or you are not logged in.</p>
-    <a href="/frontend/set-up/pages/log-in.html">Back to Login</a>
+
+    <a href="/frontend/set-up/pages/log-in.html" class="login-button">
+      <span id="back-to-login">Back to Login</span>
+    </a>
+
+    <div class="footer-div">
+      <span class="footer-text">Need help? <a href="#" class="help-link">Contact Support</a></span>
+      <img src="/frontend/set-up/pictures/VM logo.svg" alt="App Logo" class="logo" />
+    </div>
   </div>
 </body>
 
