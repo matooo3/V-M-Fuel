@@ -175,11 +175,11 @@ function filterPreferenceContent(button) {
 
     ingredients.style.display = filter === 'Meals' ? 'none' : '';
     meals.style.display = filter === 'Ingredients' ? 'none' : '';
-    
+
     // Hide ingredient counters when showing meals
     prefIngt.style.display = filter === 'Meals' ? 'none' : '';
     blockedIng.style.display = filter === 'Meals' ? 'none' : '';
-    
+
     // Hide meal counters when showing ingredients
     prefMeal.style.display = filter === 'Ingredients' ? 'none' : '';
     blockedMeal.style.display = filter === 'Ingredients' ? 'none' : '';
@@ -190,8 +190,6 @@ function filterPreferenceContent(button) {
 // Like/Dislike functionality
 // -----------------------------------------------------------
 
-
-// Initialize counters from localStorage on page load
 function toggleFavorite(event) {
     const button = event.currentTarget;
     const mealId = button.dataset.meal;
@@ -255,14 +253,72 @@ function updateCounter(id, type, isAdding) {
     }
 }
 
+export function deleteDishCounter(id) {
+
+    let dishes = document.querySelectorAll('.dish-card-p');
+
+    dishes.forEach(dish => {
+
+        let currentId = dish.querySelector('.item-id').textContent.trim();
+        currentId = parseInt(currentId, 10);
+
+        if (currentId == id) {
+            const dislikeButton = dish.querySelector('.dislike')
+            const likeButton = dish.querySelector('.like')
+            const prefElement = document.getElementById('mealsPreferred');
+            const blockedElement = document.getElementById('mealsBlocked');
+
+            if (dislikeButton.classList.contains('rejected')) {
+
+                updateElementCounter(blockedElement, false, 'mealsPreferred');
+            }
+
+            if (likeButton.classList.contains('favorited')) {
+                updateElementCounter(prefElement, false, 'mealsBlocked');
+            }
+        }
+
+    });
+}
+
+export function deleteIngredientCounter(id) {
+
+    let ingredients = document.querySelectorAll('.ingredient-card-p');
+
+    ingredients.forEach(ing => {
+
+        let currentId = ing.querySelector('.item-id').textContent.trim();
+        currentId = parseInt(currentId, 10);
+
+
+        if (currentId === id) {
+            const dislikeButton = ing.querySelector('.dislike')
+            const likeButton = ing.querySelector('.like')
+            const prefElement = document.getElementById('ingredientsPreferred');
+            const blockedElement = document.getElementById('ingredientsBlocked');
+
+            if (dislikeButton.classList.contains('rejected')) {
+                updateElementCounter(blockedElement, false, 'ingredientsPreferred');
+            }
+
+            if (likeButton.classList.contains('favorited')) {
+                console.log("hello")
+                updateElementCounter(prefElement, false, 'ingredientsBlocked');
+            }
+        }
+
+    });
+
+}
+
 function updateElementCounter(element, isAdding, storageKey) {
     if (element) {
         const currentValue = Number(element.textContent) || 0;
         const newValue = isAdding ? currentValue + 1 : currentValue - 1;
-        element.textContent = Math.max(0, newValue); 
+        element.textContent = Math.max(0, newValue);
 
         // element.textContent = finalValue;
-        
+
         // Save to localStorage
         // localStorage.setItem(storageKey, finalValue.toString());
 
@@ -567,7 +623,7 @@ async function saveMeal() {
 
     // Add dish to DB
     Storage.addNewDishToDB(mealData);
-    
+
     dishesArray = await Storage.getDishes();
     let lastDish = dishesArray[dishesArray.length - 1];
     let dishID = lastDish.dish_id
