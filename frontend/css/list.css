@@ -365,7 +365,7 @@
     font-size: 1.6rem;
     z-index: 1;
     cursor: pointer;
-    background-color: var(--accent-color);
+    background-color: #E35252;
     border-radius: 0; /* No border radius to prevent bleeding */
     opacity: 0; /* Start invisible */
     transition: width 0.3s ease-out, opacity 0.3s ease-out;
@@ -380,7 +380,7 @@
     right: 0;
     bottom: 0;
     left: 15px; /* Start the red background 15px from the left */
-    background-color: var(--accent-color);
+    background-color: #E35252;
     border-radius: 0 15px 15px 0;
     z-index: -1;
 }

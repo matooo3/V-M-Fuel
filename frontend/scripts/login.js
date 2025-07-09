@@ -25,13 +25,15 @@ document.getElementById('login-form').addEventListener('submit', async function 
 
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        if (userData.role === 'admin') {
-            window.location.href = "/frontend/index.html#home";
-        } else if (userData.role === 'cook') {
-            window.location.href = "/frontend/auth/cook.html";
-        } else {
-            window.location.href = "/frontend/auth/user.html";
-        }
+        // if (userData.role === 'admin') {
+        //     window.location.href = "/frontend/index.html#home";
+        // } else if (userData.role === 'cook') {
+        //     window.location.href = "/frontend/auth/cook.html";
+        // } else {
+        //     window.location.href = "/frontend/auth/user.html";
+        // }
+
+        window.location.href = "../index.html";
 
         // window.location.href = "../../index.html#home";
         
