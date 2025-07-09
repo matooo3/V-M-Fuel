@@ -112,7 +112,7 @@ export async function postData(endpoint, data, token) {
       await new Promise(resolve => setTimeout(resolve, 1000));
       console.log("❌❌❌❌ Retrying fetch for " + endpoint + " due to 503... ❌❌❌❌");
       console.log(data);
-      postData(endpoint, data, token);
+      return await postData(endpoint, data, token);
     }
 
     return null;
