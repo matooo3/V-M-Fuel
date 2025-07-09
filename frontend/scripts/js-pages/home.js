@@ -150,6 +150,7 @@ async function renderUserList() {
         userItem.innerHTML = `
         <div class="swipe-delete">Delete</div>
         <div class="swipe-content">
+            <span class="item-id">${user.user_id}</span>
             <div class="profile-picture">
                 <span>${initials}</span>
             </div>
@@ -174,8 +175,7 @@ async function renderUserList() {
     renderTotalUsers();
 
     if (userListContainer) {
-        Swipe.initializeSwipeToDelete(userListContainer, '.card.user', nothing);
-
+        Swipe.initializeSwipeToDelete(userListContainer, '.card.user', deleteUser);
     }
 
     // add eventlistener for change role button
@@ -190,9 +190,11 @@ async function renderUserList() {
     Search.searchULs(searchInputUser, userList);
 }
 
-function nothing() {
-
+function deleteUser(user_id) {
+    Storage.deleteUserFromDB(user_id);
+    renderTotalUsers();
 }
+
 // -----------------------END-----------------------------
 //
 
