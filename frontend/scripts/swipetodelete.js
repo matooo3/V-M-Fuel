@@ -19,8 +19,10 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
 
         itemToDelete.addEventListener('transitionend', () => {
             itemToDelete.remove();
-            let id = parseInt(itemToDelete.querySelector('.item-id').textContent, 10);
+            let itemId = itemToDelete.querySelector('.item-id')
+            let id = parseInt(itemId.textContent, 10);
             removeFromDB(id);
+
         }, { once: true });
     };
 

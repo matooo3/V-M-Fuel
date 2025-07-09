@@ -175,11 +175,11 @@ function filterPreferenceContent(button) {
 
     ingredients.style.display = filter === 'Meals' ? 'none' : '';
     meals.style.display = filter === 'Ingredients' ? 'none' : '';
-    
+
     // Hide ingredient counters when showing meals
     prefIngt.style.display = filter === 'Meals' ? 'none' : '';
     blockedIng.style.display = filter === 'Meals' ? 'none' : '';
-    
+
     // Hide meal counters when showing ingredients
     prefMeal.style.display = filter === 'Ingredients' ? 'none' : '';
     blockedMeal.style.display = filter === 'Ingredients' ? 'none' : '';
@@ -190,8 +190,6 @@ function filterPreferenceContent(button) {
 // Like/Dislike functionality
 // -----------------------------------------------------------
 
-
-// Initialize counters from localStorage on page load
 function toggleFavorite(event) {
     const button = event.currentTarget;
     const mealId = button.dataset.meal;
@@ -255,14 +253,82 @@ function updateCounter(id, type, isAdding) {
     }
 }
 
-function updateElementCounter(element, isAdding, storageKey) {
+function updateCounters(itemType) {
+    const config = {
+        dish: {
+            selector: '.dish-card-p',
+            counters: {
+                preferred: 'mealsPreferred',
+                blocked: 'mealsBlocked'
+            }
+        },
+        ingredient: {
+            selector: '.ingredient-card-p',
+            counters: {
+                preferred: 'ingredientsPreferred',
+                blocked: 'ingredientsBlocked'
+            }
+        }
+    };
+
+    const typeConfig = config[itemType];
+    if (!typeConfig) {
+        console.error(`Invalid item type: ${itemType}`);
+        return;
+    }
+
+    // Count all currently favorited and rejected items
+    const items = document.querySelectorAll(typeConfig.selector);
+    let preferredCount = 0;
+    let blockedCount = 0;
+
+    items.forEach(item => {
+        const likeButton = item.querySelector('.like');
+        const dislikeButton = item.querySelector('.dislike');
+
+        if (likeButton?.classList.contains('favorited')) {
+            preferredCount++;
+        }
+        if (dislikeButton?.classList.contains('rejected')) {
+            blockedCount++;
+        }
+    });
+
+    // Update counter displays
+    const preferredElement = document.getElementById(typeConfig.counters.preferred);
+    const blockedElement = document.getElementById(typeConfig.counters.blocked);
+
+    if (preferredElement) {
+        preferredElement.textContent = preferredCount;
+    }
+    if (blockedElement) {
+        blockedElement.textContent = blockedCount;
+    }
+}
+
+// Exported functions that simply recount everything
+export function deleteDishCounter() {
+    updateCounters('dish');
+}
+
+export function deleteIngredientCounter() {
+    updateCounters('ingredient');
+}
+
+function updateAllCounters() {
+    updateCounters('dish');
+    updateCounters('ingredient');
+}
+
+function updateElementCounter(element, isAdding) {
     if (element) {
         const currentValue = Number(element.textContent) || 0;
         const newValue = isAdding ? currentValue + 1 : currentValue - 1;
-        element.textContent = Math.max(0, newValue); 
+        element.textContent = Math.max(0, newValue);
 
         // element.textContent = finalValue;
-        
+
+        // local storage key must be defined and given to the function!!!
         // Save to localStorage
         // localStorage.setItem(storageKey, finalValue.toString());
 
@@ -566,11 +632,11 @@ async function saveMeal() {
     };
 
     // Add dish to DB
-    Storage.addNewDishToDB(mealData);
-    
+    await Storage.addNewDishToDB(mealData);
+
     dishesArray = await Storage.getDishes();
-    let lastDish = dishesArray[dishesArray.length - 1];
-    let dishID = lastDish.dish_id
+    let lastDish = dishesArray[dishesArray.length-1];
+    let dishID = lastDish.dish_id;
 
     // Add dish to UI
     addMealCard(name, dishID, calories, time, tagsArray);
@@ -699,7 +765,7 @@ async function saveIngredient() {
     validateIngredientData(ingredientData);
 
     // Add ingredient to DB
-    Storage.addNewIngredientToDB(ingredientData);
+    await Storage.addNewIngredientToDB(ingredientData);
 
     ingredientsArray = await Storage.getIngredients();
     let lastIngredient = ingredientsArray[ingredientsArray.length - 1];

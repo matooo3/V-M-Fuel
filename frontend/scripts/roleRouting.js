@@ -1,6 +1,7 @@
 import * as Auth from './auth.js';
 import * as Storage from './storage.js';
 import * as Swipe from './swipetodelete.js';
+import * as Meals from './js-pages/meals.js';
 
 export function renderUserRoleColors() {
     const user = Auth.getUserFromToken();
@@ -65,7 +66,7 @@ export function allowSwipeForCook() {
         const ingredientslist = document.getElementById('ingredients-list-p');
         let ingredientCard = '.ingredient-card-p'
         if (ingredientslist) {
-            Swipe.initializeSwipeToDelete(ingredientslist, ingredientCard, Storage.deleteIngredientFromDB);
+            Swipe.initializeSwipeToDelete(ingredientslist, ingredientCard, deleteIngredient);
         }
     }
 
@@ -73,7 +74,18 @@ export function allowSwipeForCook() {
         const dishlist = document.querySelector('#dishes-list-p');
         let dishCard = '.dish-card-p'
         if (dishlist) {
-            Swipe.initializeSwipeToDelete(dishlist, dishCard, Storage.deleteDishFromDB);
+            Swipe.initializeSwipeToDelete(dishlist, dishCard, deleteIDish);
         }
     }
+}
+
+function deleteIngredient(id){
+    Meals.deleteIngredientCounter();
+    Storage.deleteIngredientFromDB(id);
+}
+
+
+function deleteIDish(id){
+    Meals.deleteDishCounter();
+    Storage.deleteDishFromDB(id);
 }
