@@ -744,7 +744,7 @@ function validateIngredientData(data) {
     }
 
     // Fat 
-    if (isNaN(data.fat) || data.fat < 0) {
+    if (isNaN(data.fats) || data.fats < 0) {
         alert('Please enter a valid number for fat (0 or more).');
         document.getElementById('ingredientFat-p').focus();
         return false;
@@ -758,7 +758,7 @@ function validateIngredientData(data) {
     }
 
     // Unit
-    if (!data.unit || data.unit.trim() === '' || data.unit === 'Select Unit') {
+    if (!data.uom || data.uom.trim() === '' || data.uom === 'Select Unit') {
         alert('Please select a unit.');
         document.getElementById('ingredientUnit-p').focus();
         return false;
@@ -791,7 +791,6 @@ async function saveIngredient() {
 
     }
 
-
     const ingredientData = {
         name,
         uom,
@@ -806,22 +805,27 @@ async function saveIngredient() {
     if (validateIngredientData(ingredientData)) {
 
         hideAddIngredient();
-
+        console.log("1")
         // Add ingredient to DB
-        await Storage.addNewIngredientToDB(ingredientData);
-
+        Storage.addNewIngredientToDB(ingredientData);
+        console.log("2")
         ingredientsArray = await Storage.getIngredients();
+        console.log("3")
+        ingredientsArray = await Storage.getDishes();
+        console.log("4")
+        loadDishesAndIngredients();
+        console.log("5")
         let lastIngredient = ingredientsArray[ingredientsArray.length - 1];
         let ingredientId = lastIngredient.ingredient_id;
 
         // Add ingredient to UI
-        addIngredientCard(ingredientData.name, ingredientId, ingredientData.category);
+        addIngredientCard(name, ingredientId, category);
+        console.log("6")
 
         // hide UI and clear form
         clearIngredientForm();
     };
 
-    submitButton.disabled = false;
 }
 
 function clearIngredientForm() {
