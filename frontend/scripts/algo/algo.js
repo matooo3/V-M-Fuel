@@ -21,6 +21,10 @@ export function createDay(scaledBDkcal, scaledLUkcal, scaledDIkcal, scaledPUkcal
     searchMealForPuffer(scaledPUkcal);
 }
 
+export function test() {
+
+}
+
 export function scale(kcal) {
     // ........
     // 24% / 38% / 38%
