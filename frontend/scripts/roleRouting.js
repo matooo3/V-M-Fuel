@@ -61,7 +61,7 @@ export function renderCookButtons() {
     // }
 }
 
-export function allowSwipeForCook() {
+export async function allowSwipeForCook() {
     if (Auth.requiredUserRole('cook') || Auth.requiredUserRole('admin')) {
         const ingredientslist = document.getElementById('ingredients-list-p');
         let ingredientCard = '.ingredient-card-p'
@@ -79,13 +79,13 @@ export function allowSwipeForCook() {
     }
 }
 
-function deleteIngredient(id){
+async function deleteIngredient(id){
     Meals.deleteIngredientCounter();
-    Storage.deleteIngredientFromDB(id);
+    await Storage.deleteIngredientFromDB(id);
 }
 
 
-function deleteIDish(id){
+async function deleteIDish(id){
     Meals.deleteDishCounter();
-    Storage.deleteDishFromDB(id);
+    await Storage.deleteDishFromDB(id);
 }
