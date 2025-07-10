@@ -49,15 +49,3 @@ export function searchMealForPuffer(kcal) {
     // ...
     calcPuffer();
 }
-
-function test(){
-
-}
-
-function deinemom() {
-
-}
-
-function zuzu() {
-
-}
