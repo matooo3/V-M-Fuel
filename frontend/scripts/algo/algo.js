@@ -30,10 +30,6 @@ export function scale(kcal) {
     return array;
 }
 
-export function wojn9iebueb(){
-    
-}
-
 export function searchMealForBreakfast(kcal) {
     // ...
     calcPuffer();
@@ -52,8 +48,4 @@ export function searchMealForDinner(kcal) {
 export function searchMealForPuffer(kcal) {
     // ...
     calcPuffer();
-}
-
-export function ieieieieieieiieieiei() {
-    
 }
