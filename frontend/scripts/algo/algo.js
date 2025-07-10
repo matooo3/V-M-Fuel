@@ -53,3 +53,7 @@ export function searchMealForPuffer(kcal) {
     // ...
     calcPuffer();
 }
+
+export function ieieieieieieiieieiei() {
+    
+}
