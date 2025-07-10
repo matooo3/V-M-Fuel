@@ -53,3 +53,7 @@ export function searchMealForPuffer(kcal) {
 function test(){
 
 }
+
+function deinemom() {
+
+}
