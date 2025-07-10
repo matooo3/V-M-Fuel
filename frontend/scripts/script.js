@@ -57,18 +57,19 @@ function initialLoad() {
 
 initialLoad();
 
-let previousHash = window.location.hash || "#home";
+let previousHash = localStorage.getItem("lastValidHash") || "#home";
 
 export function updateLastHash() {
     const currentHash = window.location.hash;
 
     if (currentHash !== "#settings") {
         previousHash = currentHash;
+        localStorage.setItem("lastValidHash", currentHash);
     }
 }
 
 export function getLastHash() {    
-    return previousHash;
+    return localStorage.getItem("lastValidHash") || previousHash || "#home";
 }
 
 function setActiveTab() {
