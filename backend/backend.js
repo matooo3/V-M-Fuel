@@ -243,7 +243,12 @@ app.post("/api/set-role", authMiddleware, checkRole("admin"), (req, res) => {
     db.query(query, [role, userId], (err) => {
         if (err)
             return res.status(500).json({ message: "Error updating role" });
-        res.json({ message: "Role updated" });
+
+        // ✅ SUCCESSFUL
+        return res.status(201).json({
+            message: "Role updated successfully",
+            userId: userId
+        });
     });
 });
 
@@ -323,6 +328,7 @@ function setDishesTable(dishesData, callback) {
         if (err) return callback(err);
         callback(null, result.insertId);
     });
+
 }
 
 function setDishIngredientTable(dishId, ingredients, callback) {
@@ -342,6 +348,7 @@ function setDishIngredientTable(dishId, ingredients, callback) {
         if (err) return callback(err);
         callback(null);
     });
+
 }
 
 app.post("/api/add-ingredient", authMiddleware, checkRole("cook"), (req, res) => {
@@ -361,10 +368,15 @@ app.post("/api/add-ingredient", authMiddleware, checkRole("cook"), (req, res) =>
                 .status(510)
                 .json({ message: "Fehler bei add ingredients" });
         }
+
+        // ✅ SUCCESSFUL
+        return res.status(201).json({
+            message: "Ingredient successfully added",
+            ingredientId: result.insertId
+        });
+
     });
     
-    // ✅ SUCCESSFUL
-    res.status(200).json({ message: "Ingredient seccessfully added" });
 
 });
 

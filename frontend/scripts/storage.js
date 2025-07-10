@@ -128,6 +128,7 @@ export async function changeUserRoleInDB(role, email) {
         const result = await Api.postData("/set-role", userData, token);
 
         alert("Rolle erfolgreich geändert!");
+        return result;
     } catch (error) {
         alert("Fehler beim Rollenwechsel: " + error.message);
     }
@@ -156,6 +157,7 @@ export async function addNewDishToDB(data) {
         // 2. Anfrage an Backend
         const result = await Api.postData("/add-dish", data, token);
         
+        return result;
     } catch (error) {
       alert("Failed to add new dish: " + error.message);
     }
@@ -170,6 +172,7 @@ export async function addNewIngredientToDB(data) {
         // 2. Anfrage an Backend
         const result = await Api.postData("/add-ingredient", data, token);
         
+        return result;
     } catch (error) {
       alert("Failed to add new ingredient: " + error.message);
     }
@@ -184,6 +187,7 @@ export async function deleteDishFromDB(dishID) {
         // 2. Anfrage an Backend
         const result = await Api.postData("/delete-dish", { dishID }, token);
         
+        return result;
     } catch (error) {
       alert("Failed to delete dish: " + error.message);
     }
@@ -197,6 +201,7 @@ export async function deleteIngredientFromDB(ingredientID) {
         // 2. Anfrage an Backend
         const result = await Api.postData("/delete-ingredient", { ingredientID }, token);
         
+        return result;
     } catch (error) {
       alert("Failed to delete ingredient: " + error.message);
     }
