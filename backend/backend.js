@@ -317,7 +317,7 @@ function setDishesTable(dishesData, callback) {
     (name, preparation, vm_score, meal_category, preparation_time_in_min, total_calories, total_protein, total_fat, total_carbs, tags) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    const values = [ name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags ];
+    const values = [name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags];
 
     db.query(query, values, (err, result) => {
         if (err) return callback(err);
@@ -352,20 +352,20 @@ app.post("/api/add-ingredient", authMiddleware, checkRole("cook"), (req, res) =>
     (name, Unit_of_Measurement, calories_per_UoM, carbs_per_UoM, fats_per_UoM, protein_per_UoM, category) 
     VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-    const values = [ name, uom, calories, carbs, fats, protein, category ];
+    const values = [name, uom, calories, carbs, fats, protein, category];
 
     db.query(query, values, (err, result) => {
         if (err) {
-                console.error(err);
-                return res
-                    .status(510)
-                    .json({ message: "Fehler bei add ingredients" });
-            }
+            console.error(err);
+            return res
+                .status(510)
+                .json({ message: "Fehler bei add ingredients" });
+        }
+        // ✅ SUCCESSFUL
+        res.status(200).json({ message: "Ingredient seccessfully added" });
     });
 
-    // ✅ SUCCESSFUL
-    res.status(200);
-    
+
 });
 
 app.post("/api/delete-dish", authMiddleware, checkRole("cook"), (req, res) => {
