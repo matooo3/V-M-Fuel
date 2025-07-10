@@ -827,7 +827,7 @@
     position: relative;
     z-index: 0;
     cursor: pointer;
-    border-radius: 15px;
+    border-radius: 0px;
     transition: transform 0.3s ease-out, border-radius 0.3s ease-out;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Re-applies the drop-shadow look */
 }
@@ -843,7 +843,7 @@
     position: relative;
     z-index: 0;
     cursor: pointer;
-    border-radius: 15px;
+    border-radius: 0px;
     transition: transform 0.3s ease-out, border-radius 0.3s ease-out;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
@@ -870,6 +870,10 @@
     overflow: hidden; /* Hide text when width is 0 */
 }
 
+.ingredient-card-p .swipe-delete{
+    font-size: 1.2rem;
+}
+
 /* Pseudo-element for the red background with correct border-radius */
 .dish-card-p .swipe-delete::before, .ingredient-card-p .swipe-delete::before {
     content: '';
@@ -879,7 +883,7 @@
     bottom: 0;
     left: 15px;
     background-color: #E35252;
-    border-radius: 0 15px 15px 0;
+    border-radius: 0px;
     z-index: -1;
 }
 
@@ -891,6 +895,7 @@
     padding-top: 0;
     padding-bottom: 0;
     margin-bottom: 0;
+    border-radius: 0px;
     border: none;
 }
 
