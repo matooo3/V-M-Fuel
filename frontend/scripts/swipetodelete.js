@@ -8,7 +8,7 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
 
     // Cooldown state and duration (handled purely in JS)
     let isDeletionCooldownActive = false;
-    const cooldownDuration = 500; // 1.5 seconds
+    const cooldownDuration = 500; // 0.5 seconds
 
     const deleteButtonWidth = 90;
     const fullSwipeThreshold = 150;
