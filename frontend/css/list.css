@@ -43,6 +43,10 @@
     outline: none;
 }
 
+#search-bar-gl input::placeholder {
+    color: #D1D1D1;
+}
+
 #filter-bar {
     display: flex;
     justify-content: start;

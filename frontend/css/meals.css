@@ -61,6 +61,7 @@
 
 #search-bar-p input::placeholder {
     font-size: 1.6rem;
+    color: #D1D1D1;
 }
 
 #filter-bar-p {
@@ -686,6 +687,10 @@
     outline: none;
     background: transparent;
     font-size: 1.6rem;
+}
+
+#search-bar-ingr input::placeholder {
+    color: #D1D1D1;
 }
 
 #ingredientsContainer {
