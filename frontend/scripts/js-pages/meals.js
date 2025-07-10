@@ -817,7 +817,7 @@ async function saveIngredient() {
 
         // hide UI and clear form
         clearIngredientForm();
-    };
+    }
 
     submitButton.disabled = false;
 
