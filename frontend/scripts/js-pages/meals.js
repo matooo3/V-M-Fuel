@@ -656,7 +656,7 @@ function clearMealForm() {
     document.getElementById('tagsContainer').innerHTML = '';
 
     // Clear ingredients
-    document.getElementById('ingredientsContainer').innerHTML = ''
+    document.getElementById('ingredientsContainer').innerHTML = '';
 
     const overlay = document.getElementById('editMealOverlay');
     overlay.scrollTop = 0;
