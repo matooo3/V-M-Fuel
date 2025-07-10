@@ -62,7 +62,7 @@ export default async function loadMeals() {
     // Add Meal Overlay
     // -----------------------------------------------------------
     document.getElementById('add-meal-p').addEventListener('click', showEditMeal);
-    document.getElementById('closeMealBtn').addEventListener('click', hideEditMeal);
+    document.getElementById('closeMealBtn').addEventListener('click', hideAddMeal);
     document.getElementById('addBtn-p').addEventListener('click', saveMeal);
 
     // Tag functionality
@@ -77,12 +77,12 @@ export default async function loadMeals() {
     // Close overlay when clicking outside
     document.getElementById('editMealOverlay').addEventListener('click', function (e) {
         if (e.target === this) {
-            hideEditMeal();
+            hideAddMeal();
         }
     });
 
     document.getElementById('navOverlay').addEventListener('click', function (e) {
-        hideEditMeal();
+        hideAddMeal();
     });
 
     // Allow Enter key to add tags
@@ -96,7 +96,7 @@ export default async function loadMeals() {
     // Close overlay when clicking outside
     document.getElementById('editMealOverlay').addEventListener('click', function (e) {
         if (e.target === this) {
-            hideEditMeal();
+            hideAddMeal();
         }
     });
 
@@ -113,18 +113,18 @@ export default async function loadMeals() {
     // Ingredients Overlay
     // -----------------------------------------------------------
     document.getElementById('add-ingredient-p').addEventListener('click', showEditIngredient);
-    document.getElementById('closeIngredientBtn').addEventListener('click', hideEditIngredient);
+    document.getElementById('closeIngredientBtn').addEventListener('click', hideAddIngredient);
     document.getElementById('addIngredientSubmitBtn').addEventListener('click', saveIngredient);
 
     // Close overlay when clicking outside
     document.getElementById('editIngredientOverlay').addEventListener('click', function (e) {
         if (e.target === this) {
-            hideEditIngredient();
+            hideAddIngredient();
         }
     });
 
     document.getElementById('navOverlay').addEventListener('click', function (e) {
-        hideEditIngredient();
+        hideAddIngredient();
     });
 
 }
@@ -413,12 +413,13 @@ function calculateIngredientsData() {
     });
 
     return {
-        calories: totalCalories,
-        protein: totalProtein,
-        carbs: totalCarbs,
-        fat: totalFat,
+        calories: Math.round(totalCalories),
+        protein: Math.round(totalProtein),
+        carbs: Math.round(totalCarbs),
+        fat: Math.round(totalFat),
         ingredients: ingredients,
     };
+
 }
 
 
@@ -426,14 +427,20 @@ function calculateIngredientsData() {
 
 function showEditMeal() {
     document.getElementById('navOverlay').classList.remove('hidden');
-    document.getElementById('editMealOverlay').classList.remove('hidden');
+    const overlay = document.getElementById('editMealOverlay');
+    const formSection = overlay.querySelector('.form-section');
     document.body.style.overflow = 'hidden';
+    overlay.classList.remove('hidden');
+
+    if (formSection) {
+        formSection.scrollTop = 0;
+    }
 
     loadIngredients();
 
 }
 
-function hideEditMeal() {
+function hideAddMeal() {
     document.getElementById('navOverlay').classList.add('hidden');
     document.getElementById('editMealOverlay').classList.add('hidden');
     document.body.style.overflow = 'auto';
@@ -441,11 +448,18 @@ function hideEditMeal() {
 
 function showEditIngredient() {
     document.getElementById('navOverlay').classList.remove('hidden');
-    document.getElementById('editIngredientOverlay').classList.remove('hidden');
+    const overlay = document.getElementById('editIngredientOverlay');
+    const formSectionIng = overlay.querySelector('.form-section-ingredient');
     document.body.style.overflow = 'hidden';
+    overlay.classList.remove('hidden');
+
+    if (formSectionIng) {
+        formSectionIng.scrollTop = 0;
+    }
+
 }
 
-function hideEditIngredient() {
+function hideAddIngredient() {
     document.getElementById('navOverlay').classList.add('hidden');
     document.getElementById('editIngredientOverlay').classList.add('hidden');
     document.body.style.overflow = 'auto';
@@ -477,61 +491,53 @@ function addTag() {
     }
 }
 
-function validateMealForm() {
-    const errors = [];
+function validateMealForm(mealData) {
 
-    // 1. Meal Name validation
-    const mealName = document.getElementById('mealName-p').value.trim();
-    if (!mealName) {
-        errors.push({ field: 'mealName-p', message: 'Please enter a meal name' });
+    // 1. Meal Name
+    if (!mealData.name || mealData.name.trim() === '') {
+        alert('Please enter a meal name.');
+        return false;
     }
 
-    // 2. Time validation
-    const time = document.getElementById('time-p').value.trim();
-    if (!time || isNaN(time) || parseInt(time) <= 0) {
-        errors.push({ field: 'time-p', message: 'Please enter a valid cooking time' });
+    // 2. Time
+    if (!mealData.time || isNaN(mealData.time) || parseInt(mealData.time) <= 0) {
+        alert('Please enter a valid cooking time (greater than 0).');
+        return false;
     }
 
-    // 3. VM Score validation
-    const vmScore = document.getElementById('vmScore-p').value.trim();
-    if (!vmScore || isNaN(vmScore)) {
-        errors.push({ field: 'vmScore-p', message: 'Please enter a valid VM score' });
+    // 3. VM Score
+    if (!mealData.vmScore || isNaN(mealData.vmScore)) {
+        alert('Please enter a valid VM score.');
+        return false;
     }
 
-    // 4. Category validation
-    const category = document.getElementById('category-p').textContent.trim();
-    if (!category || category === 'Select Category' || category === 'Protein') {
-        errors.push({ field: 'category-p', message: 'Please select a category' });
+    // 4. Category
+    if (!mealData.category || mealData.category === 'Select Category' || mealData.category === 'Protein') {
+        alert('Please select a valid category.');
+        return false;
     }
 
-    // 5. Cooking Instructions validation
-    const instructions = document.getElementById('instructions-p').value.trim();
-    if (!instructions) {
-        errors.push({ field: 'instructions-p', message: 'Please enter cooking instructions' });
+    // 5. Cooking Instructions
+    if (!mealData.preparation || mealData.preparation.trim() === '') {
+        alert('Please enter cooking instructions.');
+        return false;
     }
 
-    // 6. Ingredients validation - at least one checked
-    const checkedCheckboxes = document.querySelectorAll('#ingredientsContainer .checkbox:checked');
-    if (checkedCheckboxes.length === 0) {
-        errors.push({ field: 'ingredientsContainer', message: 'Please select at least one ingredient' });
+    // 6. Ingredients - at least one
+    if (!mealData.ingredients || mealData.ingredients.length === 0) {
+        alert('Please select at least one ingredient.');
+        return false;
     }
 
-    // 7. Validate checked ingredients have amounts
-    checkedCheckboxes.forEach((checkbox, index) => {
-        const ingredientItem = checkbox.closest('.card.ingredient');
-        const amountInput = ingredientItem.querySelector('.form-input.ingredient');
-        const amount = amountInput.value.trim();
-        const ingredientName = ingredientItem.querySelector('.ingredient-text-p').textContent;
-
-        if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
-            errors.push({
-                field: amountInput,
-                message: `Please enter a valid amount for ${ingredientName}`
-            });
+    // 7. Each ingredient must have a valid amount
+    for (let ing of mealData.ingredients) {
+        if (!ing.amount || isNaN(ing.amount) || parseFloat(ing.amount) <= 0) {
+            alert(`Please enter a valid amount for ingredient ID: ${ing.ingredient_id}.`);
+            return false;
         }
-    });
+    }
 
-    return errors;
+    return true;
 }
 
 
@@ -591,24 +597,8 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '#di
 // Save Meal
 async function saveMeal() {
 
-    // Validate form
-    const validationErrors = validateMealForm();
-
-    if (validationErrors.length > 0) {
-        // Show first error and focus field
-        const firstError = validationErrors[0];
-        alert(firstError.message);
-
-        // Focus the problematic field
-        if (typeof firstError.field === 'string') {
-            const field = document.getElementById(firstError.field);
-            if (field) field.focus();
-        } else if (firstError.field.focus) {
-            firstError.field.focus(); // For input elements
-        }
-
-        return; // Stop execution
-    }
+    const submitButton = document.getElementById('addBtn-p');
+    submitButton.disabled = true;
 
     // save data variables
     const ingredientData = calculateIngredientsData();
@@ -631,23 +621,32 @@ async function saveMeal() {
         name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags, ingredients
     };
 
-    // Add dish to DB
-    await Storage.addNewDishToDB(mealData);
+    // Validate form
+    if (validateMealForm(mealData)) {
 
-    dishesArray = await Storage.getDishes();
-    let lastDish = dishesArray[dishesArray.length-1];
-    let dishID = lastDish.dish_id;
+        hideAddMeal();
 
-    // Add dish to UI
-    addMealCard(name, dishID, calories, time, tagsArray);
+        // Add dish to DB
+        const response = await Storage.addNewDishToDB(mealData);
+        const dishId = response.dishId;
 
-    // hide UI and clear form
-    hideEditMeal();
-    clearForm();
+        // dishesArray = await Storage.getDishes();
+        // let lastDish = dishesArray[dishesArray.length - 1];
+        // let dishID = lastDish.dish_id;
+
+        // Add dish to UI
+        addMealCard(name, dishId, calories, time, tagsArray);
+
+        // hide UI and clear form
+        clearMealForm();
+
+    };
+
+    submitButton.disabled = false;
 }
 
 
-function clearForm() {
+function clearMealForm() {
     document.getElementById('mealName-p').value = '';
     document.getElementById('time-p').value = '';
     document.getElementById('vmScore-p').value = '';
@@ -659,10 +658,13 @@ function clearForm() {
     // Clear ingredients
     document.getElementById('ingredientsContainer').innerHTML = '';
 
-    // Reset category to default
-    const categoryElement = document.getElementById('category-p');
-    if (categoryElement) {
-        categoryElement.textContent = 'Select Category';
+    const overlay = document.getElementById('editMealOverlay');
+    overlay.scrollTop = 0;
+
+    // Also reset scroll position of the meal card content if it exists
+    const mealCard = overlay.querySelector('.edit-meal-card');
+    if (mealCard) {
+        mealCard.scrollTop = 0;
     }
 }
 
@@ -713,17 +715,53 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
     dislikeBtn.addEventListener('click', toggleRejected);
 }
 
-// validate ingredient data
 function validateIngredientData(data) {
+    // Name
     if (!data.name || data.name.trim() === '') {
         alert('Please enter an ingredient name.');
         document.getElementById('ingredientName-p').focus();
         return false;
     }
 
+    // Category 
     if (!data.category || data.category.trim() === '' || data.category === 'Select Category') {
         alert('Please select a category.');
         document.getElementById('ingredientCategory-p').focus();
+        return false;
+    }
+
+    // Calories
+    if (isNaN(data.calories) || data.calories <= 0) {
+        alert('Please enter a valid number for calories (must be greater than 0).');
+        document.getElementById('ingredientCalories-p').focus();
+        return false;
+    }
+
+    // Protein
+    if (isNaN(data.protein) || data.protein < 0) {
+        alert('Please enter a valid number for protein (0 or more).');
+        document.getElementById('ingredientProtein-p').focus();
+        return false;
+    }
+
+    // Fat 
+    if (isNaN(data.fats) || data.fats < 0) {
+        alert('Please enter a valid number for fat (0 or more).');
+        document.getElementById('ingredientFat-p').focus();
+        return false;
+    }
+
+    // Carbs 
+    if (isNaN(data.carbs) || data.carbs < 0) {
+        alert('Please enter a valid number for carbs (0 or more).');
+        document.getElementById('ingredientCarbs-p').focus();
+        return false;
+    }
+
+    // Unit
+    if (!data.uom || data.uom.trim() === '' || data.uom === 'Select Unit') {
+        alert('Please select a unit.');
+        document.getElementById('ingredientUnit-p').focus();
         return false;
     }
 
@@ -731,8 +769,12 @@ function validateIngredientData(data) {
 }
 
 
+
 // Save Ingredient
 async function saveIngredient() {
+
+    const submitButton = document.getElementById('addIngredientSubmitBtn');
+    submitButton.disabled = true;
 
     // save data variables
     const name = document.getElementById('ingredientName-p').value.trim();
@@ -750,7 +792,6 @@ async function saveIngredient() {
 
     }
 
-
     const ingredientData = {
         name,
         uom,
@@ -762,21 +803,24 @@ async function saveIngredient() {
     };
 
     // Validate data
-    validateIngredientData(ingredientData);
+    if (validateIngredientData(ingredientData)) {
 
-    // Add ingredient to DB
-    await Storage.addNewIngredientToDB(ingredientData);
+        hideAddIngredient();
+        
+        await Storage.addNewIngredientToDB(ingredientData);
 
-    ingredientsArray = await Storage.getIngredients();
-    let lastIngredient = ingredientsArray[ingredientsArray.length - 1];
-    let ingredientId = lastIngredient.ingredient_id;
+        const response = await Storage.addNewIngredientToDB(ingredientData);
+        const ingredientId = response.ingredientId;
 
-    // Add ingredient to UI
-    addIngredientCard(ingredientData.name, ingredientId, ingredientData.category);
+        // Add ingredient to UI
+        addIngredientCard(name, ingredientId, category);
 
-    // hide UI and clear form
-    hideEditIngredient();
-    clearIngredientForm();
+        // hide UI and clear form
+        clearIngredientForm();
+    }
+
+    submitButton.disabled = false;
+
 }
 
 function clearIngredientForm() {
@@ -785,5 +829,4 @@ function clearIngredientForm() {
     document.getElementById('ingredientFat-p').value = '';
     document.getElementById('ingredientCarbs-p').value = '';
     document.getElementById('ingredientCalories-p').value = '';
-    document.getElementById('ingredientCategory-p').textContent = 'Select Category';
 }

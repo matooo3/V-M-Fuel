@@ -420,13 +420,12 @@
     top: 5vh;
     left: 50%;
     transform: translateX(-50%);
-    right: 2vh;
     background: white;
     border-radius: 20px;
     width: 450px;
     max-width: 90vw;
     height: calc(90vh - var(--nav-height));
-    overflow: auto;
+    overflow: hidden;
     color: var(--main-text-color);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     font-family: inherit;
@@ -444,7 +443,7 @@
     width: 400px;
     max-width: 90vw;
     height: calc(80vh - var(--nav-height));
-    overflow: auto;
+    overflow: hidden;
     color: var(--main-text-color);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     font-family: inherit;
@@ -497,6 +496,8 @@
     padding: 20px 30px;
     overflow-y: auto;
     scrollbar-width: none;
+    flex: 1;
+    min-height: 0;
 }
 
 .form-group {
@@ -766,7 +767,7 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    height: 10vh;
+    height: 76px;
 }
 
 .form-actions-ingredients {
@@ -777,12 +778,12 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    height: 7vh;
+    height: 76px;
 }
 
 
 .add-button-p {
-    min-height: 35px;
+    height: 35px;
     width: fit-content;
     min-width: 100px;
     padding: 0px 10px;
@@ -891,4 +892,8 @@
     padding-bottom: 0;
     margin-bottom: 0;
     border: none;
+}
+
+.swipe-disabled {
+    pointer-events: none; 
 }
