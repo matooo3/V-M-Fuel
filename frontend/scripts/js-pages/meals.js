@@ -627,14 +627,15 @@ async function saveMeal() {
         hideAddMeal();
 
         // Add dish to DB
-        await Storage.addNewDishToDB(mealData);
+        const response = await Storage.addNewDishToDB(mealData);
+        const dishId = response.dishId;
 
-        dishesArray = await Storage.getDishes();
-        let lastDish = dishesArray[dishesArray.length - 1];
-        let dishID = lastDish.dish_id;
+        // dishesArray = await Storage.getDishes();
+        // let lastDish = dishesArray[dishesArray.length - 1];
+        // let dishID = lastDish.dish_id;
 
         // Add dish to UI
-        addMealCard(name, dishID, calories, time, tagsArray);
+        addMealCard(name, dishId, calories, time, tagsArray);
 
         // hide UI and clear form
         clearMealForm();
@@ -808,10 +809,8 @@ async function saveIngredient() {
         
         await Storage.addNewIngredientToDB(ingredientData);
 
-        ingredientsArray = await Storage.getIngredients();
-
-        let lastIngredient = ingredientsArray[ingredientsArray.length - 1];
-        let ingredientId = lastIngredient.ingredient_id;
+        const response = await Storage.addNewIngredientToDB(ingredientData);
+        const ingredientId = response.ingredientId;
 
         // Add ingredient to UI
         addIngredientCard(name, ingredientId, category);
