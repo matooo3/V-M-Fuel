@@ -57,3 +57,7 @@ function test(){
 function deinemom() {
 
 }
+
+function zuzu() {
+
+}
