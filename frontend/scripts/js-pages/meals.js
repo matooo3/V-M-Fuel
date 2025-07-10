@@ -805,22 +805,19 @@ async function saveIngredient() {
     if (validateIngredientData(ingredientData)) {
 
         hideAddIngredient();
-        console.log("1")
+
         // Add ingredient to DB
-        Storage.addNewIngredientToDB(ingredientData);
-        console.log("2")
+        console.log(ingredientData);
+        
+        await Storage.addNewIngredientToDB(ingredientData);
+
         ingredientsArray = await Storage.getIngredients();
-        console.log("3")
-        ingredientsArray = await Storage.getDishes();
-        console.log("4")
-        loadDishesAndIngredients();
-        console.log("5")
+
         let lastIngredient = ingredientsArray[ingredientsArray.length - 1];
         let ingredientId = lastIngredient.ingredient_id;
 
         // Add ingredient to UI
         addIngredientCard(name, ingredientId, category);
-        console.log("6")
 
         // hide UI and clear form
         clearIngredientForm();
