@@ -364,7 +364,7 @@ app.post("/api/add-ingredient", authMiddleware, checkRole("cook"), (req, res) =>
     });
 
     // ✅ SUCCESSFUL
-    res.status(200).json({ message: "Ingredient seccessfully added", id: result.insertId });
+    res.status(200);
     
 });
 
