@@ -361,10 +361,10 @@ app.post("/api/add-ingredient", authMiddleware, checkRole("cook"), (req, res) =>
                 .status(510)
                 .json({ message: "Fehler bei add ingredients" });
         }
-        // ✅ SUCCESSFUL
-        res.status(200).json({ message: "Ingredient seccessfully added" });
     });
-
+    
+    // ✅ SUCCESSFUL
+    res.status(200).json({ message: "Ingredient seccessfully added" });
 
 });
 
