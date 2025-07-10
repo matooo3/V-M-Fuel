@@ -805,9 +805,6 @@ async function saveIngredient() {
     if (validateIngredientData(ingredientData)) {
 
         hideAddIngredient();
-
-        // Add ingredient to DB
-        console.log(ingredientData);
         
         await Storage.addNewIngredientToDB(ingredientData);
 
