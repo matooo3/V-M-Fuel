@@ -826,6 +826,8 @@ async function saveIngredient() {
         clearIngredientForm();
     };
 
+    submitButton.disabled = false;
+
 }
 
 function clearIngredientForm() {
