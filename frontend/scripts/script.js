@@ -6,6 +6,7 @@ import loadSettings from "./js-pages/settings.js";
 import * as Storage from "./storage.js";
 import * as Auth from "./auth.js";
 import * as Role from "./roleRouting.js";
+import * as Algo from "./algo/algo.js";
 
 const valid = await Auth.checkSessionTokenValid();
 if (!valid) {
@@ -176,3 +177,6 @@ export function showNavbar() {
         navbar.style.display = 'flex';
     }
 }
+
+const weekPlan = await Algo.algo(3000, 0, 0, 0);
+console.log("WEEK PLAN:", weekPlan);
