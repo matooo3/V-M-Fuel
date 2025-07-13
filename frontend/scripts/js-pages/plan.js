@@ -112,20 +112,20 @@ async function generateDayContent(currentWeek) {
 function renderDay(day) {
     let dayHtmlString = "";
 
-    dayHtmlString += renderDish(day.breakfast);
-    dayHtmlString += renderDish(day.lunch);
-    dayHtmlString += renderDish(day.dinner);
+    dayHtmlString += renderDish(day.breakfast, "Breakfast");
+    dayHtmlString += renderDish(day.lunch, "Lunch");
+    dayHtmlString += renderDish(day.dinner, "Dinner");
 
     return dayHtmlString;
 }
 
-function renderDish(dish) {
+function renderDish(dish, meal) {
     return `
     <div class="card drop-shadow plan-meal-card">
             <div class="meal-header-mp">
                 <div>
-                    <h3 class="meal-title-mp">${dish.name}</h3>
-                    <p class="subtext">${dish.preparation}</p>
+                    <h3 class="meal-title-mp">${meal}</h3>
+                    <p class="subtext">${dish.name}</p>
                 </div>
                 <div class="meal-calories-mp">${dish.total_calories} ckal</div>
             </div>
