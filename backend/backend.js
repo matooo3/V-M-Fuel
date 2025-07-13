@@ -57,7 +57,7 @@ app.get("/api/dishes", (req, res) => {
 });
 
 app.get("/api/dishes-breakfast", (req, res) => {
-    const query = "SELECT * FROM dishes WHERE meal_category ='main";
+    const query = "SELECT * FROM dishes WHERE meal_category ='breakfast'";
     db.query(query, (err, results) => {
         if (err) {
             console.error("Fehler beim Abrufen der Gerichte:", err);
@@ -69,7 +69,7 @@ app.get("/api/dishes-breakfast", (req, res) => {
 });
 
 app.get("/api/dishes-main", (req, res) => {
-    const query = "SELECT * FROM dishes WHERE meal_category ='breakfast'";
+    const query = "SELECT * FROM dishes WHERE meal_category ='main'";
     db.query(query, (err, results) => {
         if (err) {
             console.error("Fehler beim Abrufen der Gerichte:", err);
