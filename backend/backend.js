@@ -56,6 +56,30 @@ app.get("/api/dishes", (req, res) => {
     });
 });
 
+app.get("/api/dishes-breakfast", (req, res) => {
+    const query = "SELECT * FROM dishes WHERE meal_category ='main";
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Fehler beim Abrufen der Gerichte:", err);
+            res.status(500).send("Fehler beim Abrufen der Gerichte");
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+app.get("/api/dishes-main", (req, res) => {
+    const query = "SELECT * FROM dishes WHERE meal_category ='breakfast'";
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Fehler beim Abrufen der Gerichte:", err);
+            res.status(500).send("Fehler beim Abrufen der Gerichte");
+        } else {
+            res.json(results);
+        }
+    });
+});
+
 // API-Endpunkt: Alle ingredients abrufen
 app.get("/api/ingredients", (req, res) => {
     const query = "SELECT * FROM ingredients";
