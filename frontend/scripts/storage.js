@@ -16,6 +16,18 @@ export async function getDishes() {
     return dishes;
 }
 
+export async function getDishesBreakfast() {
+    const dishesBreakfast = await Api.fetchData("/dishes-breakfast");
+    // saveToLS('dishes', dishes);
+    return dishesBreakfast;
+}
+
+export async function getDishesMain() {
+    const dishesMain = await Api.fetchData("/dishes-main");
+    // saveToLS('dishes', dishes);
+    return dishesMain;
+}
+
 // get DISH INGREDIENTS
 export async function getDishIngredients() {
     const dishIngredients = await Api.fetchData("/dish_ingredients");
