@@ -1,7 +1,6 @@
 import * as Storage from "../storage.js";
 
 export async function algo(kcal, puffer, like, dislike) {
-
     // get dishes form db
     const dishesBreakfast = await Storage.getDishesBreakfast();
     const dishesMain = await Storage.getDishesMain();
@@ -16,7 +15,7 @@ export async function algo(kcal, puffer, like, dislike) {
         weekPlan.push(day);
     }
 
-    optimize(); 
+    optimize();
 
     return weekPlan;
 }
@@ -65,14 +64,20 @@ export function split(kcal, puffer) {
 export function pickDish(kcalOptimal, dishes) {
     const DISH_SCALING = 0.2; // ±20 %
 
-    for (let MEAL_PUFFER = 0; MEAL_PUFFER <= 0.2 ; MEAL_PUFFER = MEAL_PUFFER + 0.05) {
-
+    for (
+        let MEAL_PUFFER = 0;
+        MEAL_PUFFER <= 0.2;
+        MEAL_PUFFER = MEAL_PUFFER + 0.05
+    ) {
         // PUFFER
         const mealPZ = calculateMealPufferZone(kcalOptimal, MEAL_PUFFER); // ±0% // ±5% // ±10% // ±15%
 
         // GET CANDIDATES
         const candidates = dishes.filter((dish) => {
-            const dishScalingZone = calcDishScalingZone(dish.total_calories, DISH_SCALING);
+            const dishScalingZone = calcDishScalingZone(
+                dish.total_calories,
+                DISH_SCALING
+            );
             return isInPuffer(dishScalingZone, mealPZ);
         });
 
@@ -82,6 +87,21 @@ export function pickDish(kcalOptimal, dishes) {
             return chooseBestCandidate(candidates);
         }
     }
+    return noCandidateFound();
+}
+
+function noCandidateFound() {
+    console.warn(`⚠️ Kein Gericht gefunden für kcal-Ziel ${kcalOptimal}`);
+    return {
+        name: "Kein Gericht gefunden",
+        preparation: "-",
+        total_calories: 0,
+        total_protein: 0,
+        total_fat: 0,
+        total_carbs: 0,
+        vm_score: 0,
+        preparation_time_in_min: 0,
+    };
 }
 
 function chooseBestCandidate(candidates) {
