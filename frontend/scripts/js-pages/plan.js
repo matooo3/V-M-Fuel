@@ -158,7 +158,7 @@ function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, 
             // Cut (Harris):
             bmr = calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm);
             break;
-            
+
         case GOAL_ADJUSTMENT_MAINTAIN:
             // Maintain (Miffilin):
             bmr = (calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm) + calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm)) / 2;
@@ -179,16 +179,26 @@ function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, 
 };
 
 function getRequiredCalories() {
-    let userData = Storage.getUserData();
-    const gender = userData.gender.toLowerCase().trim();
-    const age = userData.age;
-    const weightKg = userData.weight.value;
-    const heightCm = userData.height.cm;
-    const activityMultiplier = getActivityMultiplier(userData.activityLevel);
-    const goalAdjustment = getGoalAdjustment(userData.goal);
 
-    let requiredCalories = calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, goalAdjustment);
-    return requiredCalories
+    let requiredCalories = 3000; // default value;
+
+    const userData = Storage.getUserData();
+
+    if (userData) {
+
+        const gender = userData.gender.toLowerCase().trim();
+        const age = userData.age;
+        const weightKg = userData.weight.value;
+        const heightCm = userData.height.cm;
+        const activityMultiplier = getActivityMultiplier(userData.activityLevel);
+        const goalAdjustment = getGoalAdjustment(userData.goal);
+
+        requiredCalories = calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, goalAdjustment);
+    
+    }
+
+    return requiredCalories;
+
 }
 
 // ===== CONTENT GENERATION =====
@@ -196,8 +206,9 @@ function getRequiredCalories() {
 async function generateDayContent(currentWeek) {
 
     let dailyCalories = getRequiredCalories();
+
     console.log("Daily Calories: " + dailyCalories);
-    console.log("Starting Algorithm...")
+    
     const weekPlan = await Algo.algo(dailyCalories, 0, 0, 0);
     const dayContent = {};
 
