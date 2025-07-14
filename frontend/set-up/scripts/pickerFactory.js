@@ -36,8 +36,8 @@ function saveAgeData(ageData) {
 function saveWeightData(weightData) {
     const userData = getUserData();
     userData.weight = {
-        value: weightData.value,
-        unit: weightData.unit,
+        kg: weightData.kg,
+        pounds: weightData.pounds,
     };
     saveUserData(userData);
     return userData;
@@ -52,7 +52,7 @@ function saveHeightData(heightData) {
     const userData = getUserData();
     userData.height = {
         cm: heightData.cm,
-        unit: heightData.unit,
+        feetAndInches: heightData.feet_and_inches_string,
     };
     saveUserData(userData);
     return userData;

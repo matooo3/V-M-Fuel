@@ -118,7 +118,7 @@ function calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm) {
 }
 
 function getActivityMultiplier(activityLevel) {
-    const normalized = activityLevel.toLowerCase().trim().split('\n')[0];
+    const normalized = activityLevel.toLowerCase();
 
     const activityMap = {
         'very low': 1.2,
@@ -188,7 +188,7 @@ function getRequiredCalories() {
 
         const gender = userData.gender.toLowerCase().trim();
         const age = userData.age;
-        const weightKg = userData.weight.value;
+        const weightKg = userData.weight.kg;
         const heightCm = userData.height.cm;
         const activityMultiplier = getActivityMultiplier(userData.activityLevel);
         const goalAdjustment = getGoalAdjustment(userData.goal);

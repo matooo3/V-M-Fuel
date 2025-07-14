@@ -47,7 +47,15 @@ function saveCardData(currentFile) {
     const key = PAGE_KEY_MAP[currentFile];
     if (!key) return null;
 
-    const value = selectedCard.textContent.trim();
+    // Spezielle Behandlung für activity-level.html
+    let value;
+    if (currentFile === 'activity-level.html') {
+        const alTextElement = selectedCard.querySelector('.al-text');
+        value = alTextElement ? alTextElement.textContent.trim() : selectedCard.textContent.trim();
+    } else {
+        value = selectedCard.textContent.trim();
+    }
+
     const userData = getUserData();
     userData[key] = value;
     saveUserData(userData);
