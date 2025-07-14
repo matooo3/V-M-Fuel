@@ -13,16 +13,24 @@ CREATE TABLE `dishes` (
   `name` varchar(100) NOT NULL,
   `preparation` varchar(1000) NOT NULL,
   `vm_score` int(11) NOT NULL,
-  `meal_category` varchar(100) NOT NULL,
+  `meal_category` enum('breakfast','main','snack') NOT NULL,
   `preparation_time_in_min` int(3) NOT NULL,
   `total_calories` int(11) NOT NULL,
   `total_protein` float NOT NULL,
   `total_fat` float NOT NULL,
   `total_carbs` float NOT NULL,
-  `tags` varchar(100) NOT NULL,
+  `tags` text NOT NULL,
   PRIMARY KEY (`dish_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
+TRUNCATE `dishes`;
+INSERT INTO `dishes` (`dish_id`, `name`, `preparation`, `vm_score`, `meal_category`, `preparation_time_in_min`, `total_calories`, `total_protein`, `total_fat`, `total_carbs`, `tags`) VALUES
+(1,	'chili con carne',	'#Fry minced meatin a pan #Add tomato sauce, kidney beans, beef broth and corn #Season with paprika powder and chili #Simmer for  5-10 minutes',	1,	'main',	20,	820,	1,	1,	1,	'[\"cut\", \"bulk\"]'),
+(186,	'CHENNG',	'Ebenfnfk',	2,	'breakfast',	2,	700,	45,	33,	89,	'[]'),
+(187,	'Lasagne',	'test',	2,	'breakfast',	2,	735,	147,	14,	4,	'[\"2\"]'),
+(197,	'777777',	'7',	7,	'main',	7,	864,	9,	84,	12,	'[\"7\"]'),
+(198,	'99999',	'3',	3,	'main',	3,	864,	9,	84,	12,	'[\"3\"]'),
+(199,	'nochmal eins',	'3',	3,	'main',	3,	864,	9,	84,	12,	'[\"3\"]');
 
 DROP TABLE IF EXISTS `dish_ingredients`;
 CREATE TABLE `dish_ingredients` (
@@ -36,6 +44,13 @@ CREATE TABLE `dish_ingredients` (
   CONSTRAINT `dish_ingredients_ibfk_2` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`ingredient_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
+TRUNCATE `dish_ingredients`;
+INSERT INTO `dish_ingredients` (`dish_id`, `ingredient_id`, `unit_of_measurement`, `amount`) VALUES
+(186,	2,	'ml',	1),
+(187,	4,	'g',	700),
+(197,	2,	'ml',	400),
+(198,	2,	'ml',	400),
+(199,	2,	'ml',	400);
 
 DROP TABLE IF EXISTS `ingredients`;
 CREATE TABLE `ingredients` (
@@ -46,10 +61,27 @@ CREATE TABLE `ingredients` (
   `carbs_per_UoM` float NOT NULL,
   `fats_per_UoM` float NOT NULL,
   `protein_per_UoM` float NOT NULL,
-  PRIMARY KEY (`ingredient_id`),
-  UNIQUE KEY `name` (`name`)
+  `category` varchar(100) NOT NULL,
+  PRIMARY KEY (`ingredient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
+TRUNCATE `ingredients`;
+INSERT INTO `ingredients` (`ingredient_id`, `name`, `Unit_of_Measurement`, `calories_per_UoM`, `carbs_per_UoM`, `fats_per_UoM`, `protein_per_UoM`, `category`) VALUES
+(2,	'coconut milk',	'100ml',	216,	3,	21,	2.2,	''),
+(3,	'curry powder',	'100g',	319,	49.1,	8.9,	9.9,	''),
+(4,	'chicken breast filet',	'100g',	105,	0.6,	2,	21,	''),
+(5,	'salt',	'100g',	0,	0,	0,	0,	''),
+(6,	'pepper',	'100g',	251,	64,	3.3,	10.4,	''),
+(7,	'champignons (brown)',	'100g',	20,	0.6,	0.3,	2.7,	''),
+(8,	'onion (white)',	'piece',	19,	3.4,	0.2,	0.8,	''),
+(9,	'spätzle',	'100g',	380,	68,	4.7,	15,	''),
+(10,	'cream for cooking',	'100g',	163,	4,	15,	2.9,	''),
+(11,	'beef broth (maggi)',	'100ml',	19,	0.3,	0.3,	0.1,	''),
+(12,	'minced beef',	'100g',	238,	0,	15,	21,	''),
+(13,	'corn',	'100g',	85,	15.4,	1.1,	2.5,	''),
+(14,	'kidney beans',	'100g',	98,	12,	0.5,	5.6,	''),
+(15,	'paprika powder',	'100g',	282,	54,	13,	14,	''),
+(16,	'tomato puree',	'100ml',	37,	5.6,	0.5,	1.6,	'');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -65,24 +97,14 @@ CREATE TABLE `users` (
 
 TRUNCATE `users`;
 INSERT INTO `users` (`user_id`, `username`, `email`, `password_hash`, `role`) VALUES
-(1,	'testUser1',	'testUser1@mail.mail',	'uuwhhdbb77228828dJDDBobos##++2883838',	'admin'),
-(2,	'testuser',	'testuser@example.com',	'$2b$10$6s4kBW0sSVpRm0t53ykGN.v.FLR4zq3MI1t5kjYwj8AkkaiJ3Uhqq',	'admin'),
-(4,	'rerere',	'lalal@lala.lala',	'$2b$10$q2iZCX76ywWpiYt3Z538vunN4SOY.rvfnprlbT97sb6GQGzSmMPFi',	'cook'),
-(6,	'test',	'test@test.test',	'$2b$10$Sc.aOi606Xl9yg1posaJjeRsPGldZfrPwNDQbtNKhlwrxGbSLV7Lm',	'user'),
-(8,	'tgewfgw',	'efwe@feni.com',	'$2b$10$QXeVhKwkVbafxBgZ.wWwBeS1RwxL.TFzlNIXORm3lphrLaAtFVSKy',	'user'),
-(9,	'terstete',	't4ete@pppp.com',	'$2b$10$SfFDLRJ5jNXqa5SCzQHp/OhsWGMGvsP8lW2GSPsRiXBy9tRX0CMIK',	'user'),
-(10,	'dwwdd',	'wdw@dwe.com',	'$2b$10$OhbBsemQgtM1mCFwyYDkLOmSh0nXZwUzpLpottPPt6MiVZA3s.zQW',	'user'),
-(16,	'reredw',	'bradto@gmail.com',	'$2b$10$GenPQ1ll..zWhIX.RW9Ueeh7Md8bt0O3xHJUWxFv5pZQL4mZnCWnS',	'cook'),
-(17,	'new',	'new@gmail.com',	'$2b$10$81iBuK2gNxH.WFjm9bHTR.lzbT8UcNksxWGz.b9if2PHVG7RJ/1GG',	'user'),
-(20,	'Marcel1',	'marcel@davis.com',	'$2b$10$pH/0rFgMiOBGhrkXZC20T.GiUoauE4zRE0MEKGQR5v64L/n.jP7K.',	'user'),
 (21,	'unituebingen',	'uni@tuebingen.de',	'$2b$10$hUOtqLheeHUsTu2OJ5BJC.CSfjZ12Cgmo.YTTXFUGkJk20aIt5fWC',	'user'),
 (22,	'user',	'user@user.com',	'$2b$10$QeoePGtXhQNBc8xS9EMiAus5YE5y.VQn5JXA1znPQL12SU9JQpVb6',	'user'),
 (23,	'cook',	'cook@cook.com',	'$2b$10$G.LzZlviA5xBMGybxIR4buZmeCCKJKcXGuMWvdMa5NJN8.0bQ.a.6',	'cook'),
 (24,	'admin',	'admin@admin.com',	'$2b$10$5oAL3bh6A0W6jGA5GZTji.p8y.rINmMbd1nBexdBwPgK3Sf8KelBq',	'admin'),
-(25,	'test123123',	'test123123@gmail.com',	'$2b$10$s3fvm//JpVdAOV.c18j7t.LJxvePGl/lw/CWesy6vVZeq1TjyWyw2',	'user'),
-(26,	'teette',	'tte@tete.domdd',	'$2b$10$qcaEOeGzkLQn82l4iK5m6uLTr9aLN/8nQu0pub4cUtJRS9gUNoyqK',	'user'),
 (27,	'Matthias Vetter',	'matze2948@gmail.com',	'$2b$10$2cpJSvXoEuZ/9FIJqgLxJ.M6mqQJNPFAaZHd4Ux6jjV3vFUY4a0oC',	'admin'),
-(28,	'Dani Mani',	'danimani@mehl.com',	'$2b$10$l7aGJTk64LSbBFVW58DWEuvSjUm122fH8wG.7isJ4DZ5pIxXRyREO',	'user');
+(45,	'Daniel Mehler',	'daniel.sebastian.mehler@gmail.com',	'$2b$10$2TKNHwZutU0nlVacU.YVqu4a1aMG9/kI5sQVXQeMKWdHohYQNRrnO',	'admin'),
+(46,	'jojo',	'jojo@jojo.com',	'$2b$10$BA./T9ZNJrHQPYBUItZZmuL5H6LEozjIUnwSL16hBilocCwB47bQ6',	'user'),
+(47,	'Robert',	'robert@gmail.com',	'$2b$10$WKMAwaGAdhNUkRP23a5XleQXzEF/XpQLDJL5FphqixdWJ4UaBt08i',	'user');
 
 DROP TABLE IF EXISTS `user_dishes`;
 CREATE TABLE `user_dishes` (
@@ -94,5 +116,6 @@ CREATE TABLE `user_dishes` (
   CONSTRAINT `user_dishes_ibfk_2` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`dish_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
+TRUNCATE `user_dishes`;
 
--- 2025-07-06 10:55:49
+-- 2025-07-14 11:04:51
