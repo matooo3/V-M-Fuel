@@ -106,9 +106,9 @@ function populateDaysGrid(today, currentWeek) {
 
 function calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm) {
     if (gender === 'male') {
-        return 88.362 + (13.397 * weightKg) + (4.799 * heightCm) - (5.677 * age);
+        return 66.47 + (13.75 * weightKg) + (5 * heightCm) - (6.755 * age);
     } else {
-        return 447.593 + (9.247 * weightKg) + (3.098 * heightCm) - (4.330 * age);
+        return 655.1 + (9.563 * weightKg) + (1.85 * heightCm) - (4.676 * age);
     }
 }
 
@@ -147,7 +147,7 @@ function getGoalAdjustment(goal) {
 function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, goalAdjustment) {
 
     let bmr = 0;
-
+    
     switch (goalAdjustment) {
         case 200:
             // Bulk (Miffilin):
