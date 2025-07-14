@@ -610,12 +610,16 @@ async function saveMeal() {
     const carbs = ingredientData.carbs;
     const time = document.getElementById('time-p').value;
     const vmScore = document.getElementById('vmScore-p').value;
-    const category = document.getElementById('category-p').textContent.trim();
+    let category = document.getElementById('category-p').textContent.trim();
     const tagsArray = Array.from(document.querySelectorAll('.tag-o-p span')).map(tag => tag.textContent);
     const ingredients = ingredientData.ingredients;
     const preparation = document.getElementById('instructions-p').value;
 
     const tags = JSON.stringify(tagsArray);
+
+    if(category === "Lunch/Dinner") {
+        category = "Main";
+    }
 
     const mealData = {
         name, preparation, vmScore, category, time, calories, protein, fat, carbs, tags, ingredients
@@ -807,8 +811,6 @@ async function saveIngredient() {
 
         hideAddIngredient();
         
-        await Storage.addNewIngredientToDB(ingredientData);
-
         const response = await Storage.addNewIngredientToDB(ingredientData);
         const ingredientId = response.ingredientId;
 
