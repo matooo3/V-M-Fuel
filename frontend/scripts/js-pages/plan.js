@@ -1,6 +1,7 @@
 import { loadHTMLTemplate } from "../templateLoader.js";
 import * as Settings from "./settings.js";
 import * as Algo from "../algo/algo.js";
+import * as Storage from "../storage.js";
 
 // ===== MAIN EXPORT =====
 export default async function loadPlan() {
@@ -100,11 +101,97 @@ function populateDaysGrid(today, currentWeek) {
     });
 }
 
+
+// ===== CALORIE CALCULATION =====
+
+function calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm) {
+    if (gender === 'male') {
+        return 88.362 + (13.397 * weightKg) + (4.799 * heightCm) - (5.677 * age);
+    } else {
+        return 447.593 + (9.247 * weightKg) + (3.098 * heightCm) - (4.330 * age);
+    }
+}
+
+function calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm) {
+    const baseBMR = 10 * weightKg + 6.25 * heightCm - 5 * age;
+    return gender === 'male' ? baseBMR + 5 : baseBMR - 161;
+}
+
+function getActivityMultiplier(activityLevel) {
+    const normalized = activityLevel.toLowerCase().trim().split('\n')[0];
+
+    const activityMap = {
+        'very low': 1.2,
+        'low': 1.375,
+        'moderate': 1.55,
+        'active': 1.725,
+        'very active': 1.9
+    };
+
+    return activityMap[normalized] || 1.55; // Default: moderate
+};
+
+function getGoalAdjustment(goal) {
+    const normalized = goal.toLowerCase().trim();
+
+    const goalMap = {
+        'maintaining weight': 0,
+        'gaining weight': 200,
+        'losing weight': -200
+    };
+
+    return goalMap[normalized] || 0; // Default: maintaining
+
+};
+
+function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, goalAdjustment) {
+
+    let bmr = 0;
+
+    switch (goalAdjustment) {
+        case 200:
+            // Bulk (Miffilin):
+            bmr = calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm);
+            break;
+        case 0:
+            // Maintain (Miffilin):
+            bmr = (calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm) + calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm)) / 2;
+            break;
+        case -200:
+            // Cut (Harris):
+            bmr = calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm);
+            break;
+    }
+
+    // TDEE = BMR × Activity Level
+    const tdee = bmr * activityMultiplier;
+
+    // Finaler Kalorienbedarf = TDEE + Ziel-Adjustment
+    return Math.round(tdee + goalAdjustment);
+
+};
+
+function getRequiredCalories() {
+    let userData = Storage.getUserData();
+    const gender = userData.gender.toLowerCase().trim();
+    const age = userData.age;
+    const weightKg = userData.weight.value;
+    const heightCm = userData.height.cm;
+    const activityMultiplier = getActivityMultiplier(userData.activityLevel);
+    const goalAdjustment = getGoalAdjustment(userData.goal);
+
+    let requiredCalories = calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, goalAdjustment);
+    return requiredCalories
+}
+
 // ===== CONTENT GENERATION =====
 
 async function generateDayContent(currentWeek) {
 
-    const weekPlan = await Algo.algo(3000, 0, 0, 0);
+    let dailyCalories = getRequiredCalories();
+    console.log("Daily Calories: " + dailyCalories);
+    console.log("Starting Algorithm...")
+    const weekPlan = await Algo.algo(dailyCalories, 0, 0, 0);
     const dayContent = {};
 
     currentWeek.forEach((date, index) => {

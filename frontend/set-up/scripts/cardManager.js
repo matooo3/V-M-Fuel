@@ -7,7 +7,7 @@ import { getUserData, saveUserData } from '../../scripts/storage.js';
 
 const PAGE_KEY_MAP = {
     'goal.html': 'goal',
-    'activity-level.html': 'activity-level',
+    'activity-level.html': 'activityLevel',
     'gender.html': 'gender'
 };
 
