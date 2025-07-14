@@ -236,7 +236,7 @@ function renderMeal(dish, mealType) {
                 <h3 class="meal-title-mp">${dish.name}</h3>
                 <p class="subtext">${mealType}</p>
             </div>
-            <div class="meal-calories-mp">${dish.total_calories} ckal</div>
+            <div class="meal-calories-mp">${dish.total_calories} kcal</div>
         </div>
         <div class="nutrition-values-mp">
             <div class="nutrition-item-mp">

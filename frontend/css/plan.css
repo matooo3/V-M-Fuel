@@ -104,7 +104,7 @@
     background: #f0f0f0;
 }
 
-.other-month{
+.other-month {
     color: #ccc;
 }
 
@@ -140,6 +140,7 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 8px;
+    gap: 20px;
 }
 
 .meal-title-mp {
@@ -152,6 +153,7 @@
     font-size: 1.6rem;
     font-weight: 500;
     color: var(--main-text-color);
+    white-space: nowrap;
 }
 
 .nutrition-label-mp {
@@ -228,22 +230,15 @@
         padding: 5px 20px 10px 20px;
     }
 
-    .meal-calories-mp {
-    font-size: 1.4rem;
-}
-.generate-btn{
-    font-size: 1.2rem;
-}
+
+    .generate-btn {
+        font-size: 1.2rem;
+    }
 }
 
 @media (max-width: 340px) {
 
-.meal-calories-mp {
-    font-size: 1.2rem;
+    .generate-btn {
+        font-size: 1.1rem;
+    }
 }
-
-.generate-btn{
-    font-size: 1.1rem;
-}
-}
-
