@@ -166,7 +166,7 @@ function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, 
     // TDEE = BMR × Activity Level
     const tdee = bmr * activityMultiplier;
 
-    // Finaler Kalorienbedarf = TDEE + Ziel-Adjustment
+    // Final calorie requirement = TDEE + Goal adjustment
     return Math.round(tdee + goalAdjustment);
 
 };
