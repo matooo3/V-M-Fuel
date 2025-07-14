@@ -11,9 +11,9 @@ export async function algo(kcal, puffer, like, dislike) {
     const weekPlan = [];
 
     for (let i = 0; i < 7; i++) {
-        const [day, PZ] = await createDay(kcalArray, dishesBreakfast, dishesMain);
+        const day = await createDay(kcalArray, dishesBreakfast, dishesMain);
 
-        const scaledDay = scalePlan(day, PZ, kcalArray);
+        const scaledDay = scalePlan(day, kcalArray);
 
         weekPlan.push(scaledDay);
     }
@@ -23,21 +23,21 @@ export async function algo(kcal, puffer, like, dislike) {
     return weekPlan;
 }
 
-export function scalePlan(day, PZ, kcalArray) {
+export function scalePlan(day, kcalArray) {
     // scale plan to kcalArray
     const scaledDay = {
-        breakfast: scaleDish(day.breakfast, PZ[0], kcalArray[0]),
-        lunch: scaleDish(day.lunch, PZ[1], kcalArray[1]),
-        dinner: scaleDish(day.dinner, PZ[2], kcalArray[2]),
+        breakfast: scaleDish(day.breakfast, kcalArray[0]),
+        lunch: scaleDish(day.lunch, kcalArray[1]),
+        dinner: scaleDish(day.dinner, kcalArray[2]),
         puffer: null,
     };
  
     return scaledDay;
 }
 
-export function scaleDish(dish, mealPZ, kcalOptimal) {
+export function scaleDish(dish, kcalOptimal) {
     // scale dish to kcalOptimal
-    const [minPZ, maxPZ] = mealPZ;
+    
     const DISH_SCALING = 0.2; // ±20%
 
     // erst testen ob man skalieren muss (wenn exakt passt mit optimal kcal)
@@ -106,16 +106,12 @@ export async function createDay(kcalArray, dishesBreakfast, dishesMain) {
         puffer: null,
     };
 
-    const [dish1, mealPZ1] = pickDish(kcalB, dishesBreakfast);
-    const [dish2, mealPZ2] = pickDish(kcalL, dishesMain);
-    const [dish3, mealPZ3] = pickDish(kcalD, dishesMain);
-
-    day.breakfast = dish1;
-    day.lunch = dish2;
-    day.dinner = dish3;
+    day.breakfast = pickDish(kcalB, dishesBreakfast);
+    day.lunch = pickDish(kcalL, dishesMain);
+    day.dinner = pickDish(kcalD, dishesMain);
     // day.puffer = pickDish(kcalP, dishesMain);
 
-    return [day, [mealPZ1, mealPZ2, mealPZ3]];
+    return day;
 }
 
 export function split(kcal, puffer) {
@@ -161,10 +157,10 @@ export function pickDish(kcalOptimal, dishes) {
         // CANDIDATES FOUND!
         if (candidates.length > 0) {
             // CHOOSE FROM CANDIDATES
-            return [chooseBestCandidate(candidates), mealPZ];
+            return chooseBestCandidate(candidates);
         }
     }
-    return [noCandidateFound(), null];
+    return noCandidateFound();
 }
 
 function noCandidateFound() {
