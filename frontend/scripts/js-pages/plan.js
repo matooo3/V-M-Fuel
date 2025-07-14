@@ -131,13 +131,17 @@ function getActivityMultiplier(activityLevel) {
     return activityMap[normalized] || 1.55; // Default: moderate
 };
 
+const GOAL_ADJUSTMENT_LOSE = -200;
+const GOAL_ADJUSTMENT_MAINTAIN = 0;
+const GOAL_ADJUSTMENT_GAIN = 200;
+
 function getGoalAdjustment(goal) {
     const normalized = goal.toLowerCase().trim();
 
     const goalMap = {
-        'maintaining weight': 0,
-        'gaining weight': 200,
-        'losing weight': -200
+        'losing weight': GOAL_ADJUSTMENT_LOSE,
+        'maintaining weight': GOAL_ADJUSTMENT_MAINTAIN,
+        'gaining weight': GOAL_ADJUSTMENT_GAIN
     };
 
     return goalMap[normalized] || 0; // Default: maintaining
@@ -147,19 +151,22 @@ function getGoalAdjustment(goal) {
 function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, goalAdjustment) {
 
     let bmr = 0;
-    
+
     switch (goalAdjustment) {
-        case 200:
-            // Bulk (Miffilin):
-            bmr = calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm);
+
+        case GOAL_ADJUSTMENT_LOSE:
+            // Cut (Harris):
+            bmr = calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm);
             break;
-        case 0:
+            
+        case GOAL_ADJUSTMENT_MAINTAIN:
             // Maintain (Miffilin):
             bmr = (calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm) + calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm)) / 2;
             break;
-        case -200:
-            // Cut (Harris):
-            bmr = calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm);
+
+        case GOAL_ADJUSTMENT_GAIN:
+            // Bulk (Miffilin):
+            bmr = calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm);
             break;
     }
 
