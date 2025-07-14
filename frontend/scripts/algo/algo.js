@@ -36,39 +36,38 @@ export function scalePlan(day, kcalArray) {
 }
 
 export function scaleDish(dish, kcalOptimal) {
-    // scale dish to kcalOptimal
     
     const DISH_SCALING = 0.2; // ±20%
 
-    // erst testen ob man skalieren muss (wenn exakt passt mit optimal kcal)
+    // if dis is already optimal RETURN
     if(dish.total_calories === kcalOptimal) {
         return dish;
     }
     
-    // Scale DISH
+    // Scale-Zone of dish
     const [minDish, maxDish] = calcDishScalingZone(dish.total_calories, DISH_SCALING);
 
-    // PERFEKT MÖGLICH
+    // PERFECT MATCH
     if (minDish <= kcalOptimal && kcalOptimal <= maxDish) {
         const factor = kcalOptimal / dish.total_calories;
         return scaleDishByFactor(dish, factor);
     }
 
-    // Optimale ist zu hoch
+    // Optimal is too high
     if (kcalOptimal > maxDish) {
         // mache max
         const factor = maxDish / dish.total_calories;
         return scaleDishByFactor(dish, factor);
     }
 
-    // Optimale ist zu niedrig
+    // Optimal is too low
     if (kcalOptimal < minDish) {
         // mache max
         const factor = minDish / dish.total_calories;
         return scaleDishByFactor(dish, factor);
     }
 
-    // falls nix geht
+    // fallback (don't scale)
     return dish;
 
 }
