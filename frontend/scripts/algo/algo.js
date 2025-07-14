@@ -11,13 +11,86 @@ export async function algo(kcal, puffer, like, dislike) {
     const weekPlan = [];
 
     for (let i = 0; i < 7; i++) {
-        const day = await createDay(kcalArray, dishesBreakfast, dishesMain);
-        weekPlan.push(day);
+        const [day, PZ] = await createDay(kcalArray, dishesBreakfast, dishesMain);
+
+        const scaledDay = scalePlan(day, PZ, kcalArray);
+
+        weekPlan.push(scaledDay);
     }
 
     optimize();
 
     return weekPlan;
+}
+
+export function scalePlan(day, PZ, kcalArray) {
+    // scale plan to kcalArray
+    const scaledDay = {
+        breakfast: scaleDish(day.breakfast, PZ[0], kcalArray[0]),
+        lunch: scaleDish(day.lunch, PZ[1], kcalArray[1]),
+        dinner: scaleDish(day.dinner, PZ[2], kcalArray[2]),
+        puffer: null,
+    };
+ 
+    return scaledDay;
+}
+
+export function scaleDish(dish, mealPZ, kcalOptimal) {
+    // scale dish to kcalOptimal
+    const [minPZ, maxPZ] = mealPZ;
+    const DISH_SCALING = 0.2; // ±20%
+
+    // erst testen ob man skalieren muss (wenn exakt passt mit optimal kcal)
+    if(dish.total_calories === kcalOptimal) {
+        return dish;
+    }
+    
+    // Scale DISH
+    const [minDish, maxDish] = calcDishScalingZone(dish.total_calories, DISH_SCALING);
+
+    // PERFEKT MÖGLICH
+    if (minDish <= kcalOptimal && kcalOptimal <= maxDish) {
+        const factor = kcalOptimal / dish.total_calories;
+        return scaleDishByFactor(dish, factor);
+    }
+
+    // Optimale ist zu hoch
+    if (kcalOptimal > maxDish) {
+        // mache max
+        const factor = maxDish / dish.total_calories;
+        return scaleDishByFactor(dish, factor);
+    }
+
+    // Optimale ist zu niedrig
+    if (kcalOptimal < minDish) {
+        // mache max
+        const factor = minDish / dish.total_calories;
+        return scaleDishByFactor(dish, factor);
+    }
+
+    // falls nix geht
+    return dish;
+
+}
+
+export function scaleDishByFactor(dish, factor) {
+    
+    const scaledDish = {
+        dish_id: dish.dish_id,
+        name: dish.name,
+        preparation: dish.preparation,
+        vm_score: dish.vm_score,
+        meal_category: dish.meal_category,
+        preparation_time_in_min: dish.preparation_time_in_min,
+        total_calories: Math.round(dish.total_calories * factor),
+        total_protein: Math.round(dish.total_protein * factor),
+        total_fat: Math.round(dish.total_fat * factor),
+        total_carbs: Math.round(dish.total_carbs * factor),
+        tags: dish.tags
+    };
+
+    return scaledDish;
+
 }
 
 export async function createDay(kcalArray, dishesBreakfast, dishesMain) {
@@ -33,12 +106,16 @@ export async function createDay(kcalArray, dishesBreakfast, dishesMain) {
         puffer: null,
     };
 
-    day.breakfast = pickDish(kcalB, dishesBreakfast);
-    day.lunch = pickDish(kcalL, dishesMain);
-    day.dinner = pickDish(kcalD, dishesMain);
+    const [dish1, mealPZ1] = pickDish(kcalB, dishesBreakfast);
+    const [dish2, mealPZ2] = pickDish(kcalL, dishesMain);
+    const [dish3, mealPZ3] = pickDish(kcalD, dishesMain);
+
+    day.breakfast = dish1;
+    day.lunch = dish2;
+    day.dinner = dish3;
     // day.puffer = pickDish(kcalP, dishesMain);
 
-    return day;
+    return [day, [mealPZ1, mealPZ2, mealPZ3]];
 }
 
 export function split(kcal, puffer) {
@@ -84,10 +161,10 @@ export function pickDish(kcalOptimal, dishes) {
         // CANDIDATES FOUND!
         if (candidates.length > 0) {
             // CHOOSE FROM CANDIDATES
-            return chooseBestCandidate(candidates);
+            return [chooseBestCandidate(candidates), mealPZ];
         }
     }
-    return noCandidateFound();
+    return [noCandidateFound(), null];
 }
 
 function noCandidateFound() {
