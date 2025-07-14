@@ -8,7 +8,9 @@ export function saveToLS(key, data) {
     }
 }
 
+
 // ---------------------- get() ----------------------------------
+
 // get DISHES
 export async function getDishes() {
     const dishes = await Api.fetchData("/dishes");
@@ -218,3 +220,20 @@ export async function deleteIngredientFromDB(ingredientID) {
       alert("Failed to delete ingredient: " + error.message);
     }
 }
+
+
+// get user data
+export function getUserData() {
+    try {
+        const data = localStorage.getItem('userData');
+        return data ? JSON.parse(data) : {};
+    } catch (error) {
+        console.error('Error reading user data:', error);
+        return {};
+    }
+}
+
+export function saveUserData(userData) {
+    saveToLS('userData', userData);
+}
+
