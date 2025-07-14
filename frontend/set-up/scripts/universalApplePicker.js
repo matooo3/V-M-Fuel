@@ -444,8 +444,8 @@ export class UniversalApplePicker {
             unit: this.currentUnit,
             value: weight,
             formatted: this.displayEl.textContent,
-            kg: this.currentUnit === 'kg' ? weight : weight / this.config.conversion,
-            pounds: this.currentUnit === 'pounds' ? weight : weight * this.config.conversion,
+            kg: this.currentUnit === 'kg' ? weight : parseFloat((weight / this.config.conversion).toFixed(1)),
+            pounds: this.currentUnit === 'pounds' ? weight : parseFloat((weight * this.config.conversion).toFixed(1)),
             displayString: `${weight.toFixed(1)} ${this.currentUnit}`,
             stones: this.currentUnit === 'pounds' ?
                 `${Math.floor(weight / 14)} st ${Math.round(weight % 14)} lbs` :

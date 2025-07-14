@@ -38,6 +38,7 @@ function saveWeightData(weightData) {
     userData.weight = {
         kg: weightData.kg,
         pounds: weightData.pounds,
+        unit: weightData.unit
     };
     saveUserData(userData);
     return userData;
@@ -53,6 +54,7 @@ function saveHeightData(heightData) {
     userData.height = {
         cm: heightData.cm,
         feetAndInches: heightData.feet_and_inches_string,
+        unit: heightData.unit
     };
     saveUserData(userData);
     return userData;
