@@ -617,7 +617,7 @@ async function saveMeal() {
 
     const tags = JSON.stringify(tagsArray);
 
-    if(category === "Lunch/Dinner") {
+    if(category === "lunch/dinner") {
         category = "Main";
     }
 
@@ -661,6 +661,8 @@ function clearMealForm() {
 
     // Clear ingredients
     document.getElementById('ingredientsContainer').innerHTML = '';
+
+    document.getElementById('category-p').textContent = 'breakfast';
 
     const overlay = document.getElementById('editMealOverlay');
     overlay.scrollTop = 0;
@@ -772,8 +774,6 @@ function validateIngredientData(data) {
     return true;
 }
 
-
-
 // Save Ingredient
 async function saveIngredient() {
 
@@ -831,4 +831,6 @@ function clearIngredientForm() {
     document.getElementById('ingredientFat-p').value = '';
     document.getElementById('ingredientCarbs-p').value = '';
     document.getElementById('ingredientCalories-p').value = '';
+    document.getElementById('ingredientCategory-p').textContent = 'fruits';
+    document.getElementById('ingredientUnit-p').textContent = 'piece';
 }
