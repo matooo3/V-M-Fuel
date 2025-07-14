@@ -26,7 +26,7 @@
     align-items: center;
     justify-content: center;
     width: 250px;
-    height: 60px;
+    min-height: 60px;
     border-radius: 50px;
     gap: 10px;
     background-color: #1F2937;
@@ -104,10 +104,10 @@
     gap: 5px;
 }
 
-@media (max-height: 700px) {
+@media (max-height: 800px) {
 
     #acc-div {
-        gap: 30px;
+        gap: 20px;
     }
     #google-logo {
         width: 25px;
@@ -119,14 +119,12 @@
     }
 
     .sign-up{
-        height: 50px;
+        margin-top: -10px;
+        min-height: 55px;
         width: 210px;
     }
 
-    .landing-container {
-        display: grid;
-        justify-items: center;
-        grid-template-columns: 1fr;
-        grid-template-rows: 10vh 10vh 55vh 3vh 20vh;
-        }
+    #email-text{
+        font-size: 12px;
+    }
 }
