@@ -102,16 +102,8 @@ function populateDaysGrid(today, currentWeek) {
 
 // ===== CONTENT GENERATION =====
 
-function getUserData() {
-    if (localStorage.getItem('userData')) {
-        return JSON.parse(localStorage.getItem('userData'));
-    }
-    return {};
-}
-
 async function generateDayContent(currentWeek) {
 
-    UserData = getUserData();
     const weekPlan = await Algo.algo(3000, 0, 0, 0);
     const dayContent = {};
 

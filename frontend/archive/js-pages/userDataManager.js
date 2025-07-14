@@ -3,7 +3,7 @@
 // ===== USER DATA MANAGEMENT ===
 // ==============================
 
-import { getUserData, saveUserData } from './storage.js';
+import { getUserData, saveUserData } from '../../scripts/storage';
 
 /**
  * Update specific field in user data
