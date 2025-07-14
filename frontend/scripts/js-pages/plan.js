@@ -127,8 +127,8 @@ function renderMeal(dish, mealType) {
     <div class="card drop-shadow plan-meal-card">
         <div class="meal-header-mp">
             <div>
-                <h3 class="meal-title-mp">${mealType}</h3>
-                <p class="subtext">${dish.name}</p>
+                <h3 class="meal-title-mp">${dish.name}</h3>
+                <p class="subtext">${mealType}</p>
             </div>
             <div class="meal-calories-mp">${dish.total_calories} ckal</div>
         </div>
