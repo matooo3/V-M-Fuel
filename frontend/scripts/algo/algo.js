@@ -12,12 +12,84 @@ export async function algo(kcal, puffer, like, dislike) {
 
     for (let i = 0; i < 7; i++) {
         const day = await createDay(kcalArray, dishesBreakfast, dishesMain);
-        weekPlan.push(day);
+
+        const scaledDay = scalePlan(day, kcalArray);
+
+        weekPlan.push(scaledDay);
     }
 
     optimize();
 
     return weekPlan;
+}
+
+export function scalePlan(day, kcalArray) {
+    // scale plan to kcalArray
+    const scaledDay = {
+        breakfast: scaleDish(day.breakfast, kcalArray[0]),
+        lunch: scaleDish(day.lunch, kcalArray[1]),
+        dinner: scaleDish(day.dinner, kcalArray[2]),
+        puffer: null,
+    };
+ 
+    return scaledDay;
+}
+
+export function scaleDish(dish, kcalOptimal) {
+    
+    const DISH_SCALING = 0.2; // ±20%
+
+    // if dis is already optimal RETURN
+    if(dish.total_calories === kcalOptimal) {
+        return dish;
+    }
+    
+    // Scale-Zone of dish
+    const [minDish, maxDish] = calcDishScalingZone(dish.total_calories, DISH_SCALING);
+
+    // PERFECT MATCH
+    if (minDish <= kcalOptimal && kcalOptimal <= maxDish) {
+        const factor = kcalOptimal / dish.total_calories;
+        return scaleDishByFactor(dish, factor);
+    }
+
+    // Optimal is too high
+    if (kcalOptimal > maxDish) {
+        // mache max
+        const factor = maxDish / dish.total_calories;
+        return scaleDishByFactor(dish, factor);
+    }
+
+    // Optimal is too low
+    if (kcalOptimal < minDish) {
+        // mache max
+        const factor = minDish / dish.total_calories;
+        return scaleDishByFactor(dish, factor);
+    }
+
+    // fallback (don't scale)
+    return dish;
+
+}
+
+export function scaleDishByFactor(dish, factor) {
+    
+    const scaledDish = {
+        dish_id: dish.dish_id,
+        name: dish.name,
+        preparation: dish.preparation,
+        vm_score: dish.vm_score,
+        meal_category: dish.meal_category,
+        preparation_time_in_min: dish.preparation_time_in_min,
+        total_calories: Math.round(dish.total_calories * factor),
+        total_protein: Math.round(dish.total_protein * factor),
+        total_fat: Math.round(dish.total_fat * factor),
+        total_carbs: Math.round(dish.total_carbs * factor),
+        tags: dish.tags
+    };
+
+    return scaledDish;
+
 }
 
 export async function createDay(kcalArray, dishesBreakfast, dishesMain) {
