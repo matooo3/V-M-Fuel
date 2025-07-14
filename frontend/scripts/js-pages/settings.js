@@ -2,6 +2,7 @@ import * as Auth from "../auth.js";
 import * as Role from "../roleRouting.js";
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { getLastHash } from "../script.js";
+import * as Storage from "../storage.js";
 
 // ==============================
 // ======= CARD ELEMENTS ========
@@ -21,7 +22,97 @@ export default async function loadSettings() {
 
     addEventListeners();
 
+    loadUserData();
+
 }
+
+function loadUserData() {
+    const userData = Storage.getUserData();
+
+    const heightInput = document.getElementById('height-st');
+    const weightInput = document.getElementById('weight-st');
+    const ageInput = document.getElementById('age-st');
+    const sexSelect = document.getElementById('sex-st');
+
+   heightInput.value = userData.height.cm;
+   weightInput.value = userData.weight.kg;
+   ageInput.value = userData.age;
+
+   if (userData.gender) {
+        sexSelect.value = userData.gender.toLowerCase();
+    } else {
+        sexSelect.value = "";
+    }
+
+    // === ACTIVITY LEVEL ===
+    const activityCards = document.querySelectorAll('#activity-container .card-st-activity');
+    activityCards.forEach(card => {
+        const level = card.querySelector('.al-text-st').textContent;
+        if (level === userData.activityLevel) {
+            card.classList.add('clicked-st-activity');
+        } else {
+            card.classList.remove('clicked-st-activity');
+        }
+    });
+
+    // === GOAL LEVEL ===
+    const goalCards = document.querySelectorAll('#goal-container .card-st-goal');
+    goalCards.forEach(card => {
+        const level = card.querySelector('.al-text-st').textContent;
+        if (level === userData.goal) {
+            card.classList.add('clicked-st-goal');
+        } else {
+            card.classList.remove('clicked-st-goal');
+        }
+    });
+}
+
+function updateUserData() {
+    const heightInput = document.getElementById('height-st');
+    const weightInput = document.getElementById('weight-st');
+    const ageInput = document.getElementById('age-st');
+    const sexSelect = document.getElementById('sex-st');
+
+    // Get values from inputs
+    const heightCm = parseFloat(heightInput.value);
+    const weightKg = parseFloat(weightInput.value);
+    const age = parseInt(ageInput.value, 10);
+    const gender = sexSelect.value;
+
+    // Calculate weight -> pounds
+    const weightPounds = weightKg * 2.20462;
+
+    // Calculate feet and inches from cm (rough)
+    const totalInches = heightCm / 2.54;
+    const feet = Math.floor(totalInches / 12);
+    const inches = Math.round(totalInches % 12);
+    const feetAndInches = `${feet}' ${inches}"`;
+
+    const activityCard = document.querySelector('#activity-container .clicked-st-activity .al-text-st');
+    const activityLevel = activityCard ? activityCard.textContent : null;
+
+    const goalCard = document.querySelector('#goal-container .clicked-st-goal .al-text-st');
+    const goal = goalCard ? goalCard.textContent : null;
+
+    const userData = {
+        gender: gender,
+        age: age,
+        weight: {
+            kg: weightKg,
+            pounds: weightPounds
+        },
+        height: {
+            cm: heightCm,
+            feetAndInches: feetAndInches
+        },
+        activityLevel: activityLevel,
+        goal: goal
+    };
+
+    Storage.saveUserData(userData);
+}
+
+
 
 function addEventListeners() {
     // close buttons
@@ -92,15 +183,8 @@ export function referenceToLastHash() {
 
 export function saveSettings() {
 
-    // Implement save settings logic here
-    // ....
-    // ....
-    // ....
     console.log('Settings saved!');
-    // ....
-    // ....
-    // ....
-
+    updateUserData();
     referenceToLastHash();
 
 }
