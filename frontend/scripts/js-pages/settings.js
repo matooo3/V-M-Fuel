@@ -37,7 +37,6 @@ function loadUserData() {
    heightInput.value = userData.height.cm;
    weightInput.value = userData.weight.kg;
    ageInput.value = userData.age;
-   sexSelect.value = userData.gender;
 
    if (userData.gender) {
         sexSelect.value = userData.gender.toLowerCase();
