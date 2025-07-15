@@ -22,15 +22,39 @@ export default async function loadPlan() {
 async function initializeCalendar(today, currentWeek) {
 
     setupWeekDisplay(today, currentWeek);
-    await setupWeekContent(today, currentWeek);
+
+    const weekPlan = await getWeekPlan();
+    await setupWeekContent(today, currentWeek, weekPlan);
 
 }
 
-async function setupWeekContent(today, currentWeek) {
+async function setupWeekContent(today, currentWeek, weekPlan) {
 
-    const dayContent = await generateDayContent(currentWeek);
+    const dayContent = await generateDayContent(currentWeek, weekPlan);
     showDay(today.getDate(), dayContent);
     addDayEventListeners(dayContent);
+
+}
+
+// LOAD WEEK PLAN DB // CALCULATE NEW ONE IF NO ONE EXISTS
+async function getWeekPlan() {
+    // check if user already has a week plan
+    let weekPlan = await Storage.getWeekPlanFromDB();
+
+    if (!weekPlan) {
+        weekPlan = await generateNewWeekPlan();
+    }
+
+    return weekPlan;
+}
+
+async function generateNewWeekPlan() {
+
+    let optimalCalories = getRequiredCalories();
+
+    console.log("Optimal daily Calories: " + optimalCalories);
+
+    return await Algo.algo(optimalCalories, 0, 0, 0);
 
 }
 
@@ -194,7 +218,7 @@ function getRequiredCalories() {
         const goalAdjustment = getGoalAdjustment(userData.goal);
 
         requiredCalories = calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, goalAdjustment);
-    
+
     }
 
     return requiredCalories;
@@ -203,19 +227,16 @@ function getRequiredCalories() {
 
 // ===== CONTENT GENERATION =====
 
-async function generateDayContent(currentWeek) {
+async function generateDayContent(currentWeek, weekPlan) {
 
-    let dailyCalories = getRequiredCalories();
-
-    console.log("Daily Calories: " + dailyCalories);
-    
-    const weekPlan = await Algo.algo(dailyCalories, 0, 0, 0);
     const dayContent = {};
 
     currentWeek.forEach((date, index) => {
         const dayNumber = date.getDate();
         dayContent[dayNumber] = renderDay(weekPlan[index]);
     });
+
+    Storage.saveWeekPlanToDB(weekPlan);
 
     return dayContent;
 }
@@ -304,8 +325,10 @@ function addGenerateEventListener(today, currentWeek) {
     if (generateBtn) {
         generateBtn.addEventListener("click", async () => {
 
-            await setupWeekContent(today, currentWeek);
+            const weekPlan = await generateNewWeekPlan();
+            await setupWeekContent(today, currentWeek, weekPlan);
 
         });
     }
+
 }

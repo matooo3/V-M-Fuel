@@ -237,3 +237,14 @@ export function saveUserData(userData) {
     saveToLS('userData', userData);
 }
 
+// MEAL PLAN DB
+export function saveWeekPlanToDB(weekPlan) {
+    const user = Auth.getUserFromToken();
+    Api.postData("/add-week-plan", { weekPlan, userId: user.id }, Auth.getUserToken());
+}
+
+export function getWeekPlanFromDB() {
+  const token = Auth.getUserToken();
+  return Api.fetchDataWithToken("/get-week-plan", token);
+}
+

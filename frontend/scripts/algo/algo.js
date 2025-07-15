@@ -20,6 +20,8 @@ export async function algo(kcal, puffer, like, dislike) {
 
     optimize();
 
+    console.log("Generated week plan:", weekPlan);
+
     return weekPlan;
 }
 
