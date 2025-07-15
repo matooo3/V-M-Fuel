@@ -477,8 +477,8 @@ app.post("/api/add-week-plan", authMiddleware, checkRole("user"), (req, res) => 
 });
 
 // get Week Plan
-app.post("/api/get-week-plan", authMiddleware, checkRole("user"), (req, res) => {
-    const { userId } = req.body;
+app.get("/api/get-week-plan", authMiddleware, checkRole("user"), (req, res) => {
+    const userId = req.user.id;
 
     const query = "SELECT week_plan FROM users WHERE user_id = ?";
     db.query(query, [userId], (err, results) => {
