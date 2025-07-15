@@ -41,7 +41,8 @@ async function getWeekPlan() {
     // check if user already has a week plan
     let weekPlan = await Storage.getWeekPlanFromDB();
 
-    if (!weekPlan) {
+    if (weekPlan === null || weekPlan === undefined) {
+        console.warn("Week plan not found in database. Generating a new one...");
         weekPlan = await generateNewWeekPlan();
     }
 
