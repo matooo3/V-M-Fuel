@@ -34,11 +34,11 @@ function loadUserData() {
     const ageInput = document.getElementById('age-st');
     const sexSelect = document.getElementById('sex-st');
 
-   heightInput.value = userData.height.cm;
-   weightInput.value = userData.weight.kg;
-   ageInput.value = userData.age;
+    heightInput.value = userData.height.cm;
+    weightInput.value = userData.weight.kg;
+    ageInput.value = userData.age;
 
-   if (userData.gender) {
+    if (userData.gender) {
         sexSelect.value = userData.gender.toLowerCase();
     } else {
         sexSelect.value = "";
@@ -116,15 +116,12 @@ function updateUserData() {
 
 function addEventListeners() {
     // close buttons
-    const closeButtons = document.querySelectorAll('.close-button-refer');
-    closeButtons.forEach(button => {
-        button.addEventListener('click', referenceToLastHash);
-    });
+    const backArrow = document.querySelector('#arrow-back-st');
+    if (backArrow) {
 
-    // save button
-    const saveSettingsButton = document.getElementById('save-settings-btn');
-    if (saveSettingsButton) {
-        saveSettingsButton.addEventListener('click', saveSettings);
+        backArrow.addEventListener('click', referenceToLastHash);
+        backArrow.addEventListener('click', saveSettings);
+
     }
 
     // card selection (activity)
