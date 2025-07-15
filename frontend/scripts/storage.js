@@ -234,8 +234,12 @@ export function getWeekPlanFromDB() {
 }
 
 
-// get user data
-export function getUserData() {
+// Local storage (for login / initial data)
+export function saveUserDataToLS(userData) {
+    saveToLS('userData', userData);
+}
+
+export function getUserDataFromLS() {
     try {
         const data = localStorage.getItem('userData');
         return data ? JSON.parse(data) : {};
@@ -245,9 +249,6 @@ export function getUserData() {
     }
 }
 
-export function saveUserData(userData) {
-    saveToLS('userData', userData);
-}
 
 // SAVE USER DATA
 export async function saveUserDataToDB(userInfo) {
@@ -266,8 +267,35 @@ export async function getUserDataFromDB() {
     const token = Auth.getUserToken();
     const data = await Api.fetchDataWithToken("/get-user-data", token);
   
-    return data; // { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal, userId }
+    return data; // { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal }
 
+}
+
+export function saveInitialUserDataToDB() {
+    const userData = getUserDataFromLS();
+
+    if (!userData.gender || !userData.age || !userData.weight || !userData.height || !userData.activityLevel || !userData.goal) {
+        console.warn("No user data found in local storage. Skipping initial save.");
+        return;
+    }
+
+    console.warn("Saving initial user data to DB...");
+
+    const initialData = {
+        gender: userData.gender,
+        age: userData.age,
+        weight_kg: userData.weight?.kg,
+        weight_pounds: userData.weight?.pounds,
+        height_cm: userData.height?.cm,
+        height_feet_and_inches: userData.height?.feetAndInches,
+        activityLevel: userData.activityLevel,
+        goal: userData.goal
+    };
+
+    // Send initial data to the database
+    saveUserDataToDB(initialData);
+
+    localStorage.removeItem("userData"); // delete initial user data (only keep until in DB)
 }
 // ------------------------------------------------------------------
 

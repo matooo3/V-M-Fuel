@@ -4,7 +4,7 @@
 // ==============================
 
 import { Utils } from './utils.js';
-import { getUserData } from '../../scripts/storage.js';
+import { getUserDataFromLS } from '../../scripts/storage.js';
 
 const PAGES = [
     'getstarted.html',
@@ -118,7 +118,7 @@ function navigateToNext(currentIndex, currentFile) {
     if (currentIndex === PAGES.length - 1) {
         // Last page - go to main index
         clearPreviousPage();
-        console.log('Complete user data:', getUserData());
+        console.log('Complete user data:', getUserDataFromLS());
         window.location.href = '../../index.html';
     } else {
         // Special handling for getstarted.html - default to gender.html
