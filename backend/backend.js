@@ -478,18 +478,30 @@ app.post("/api/add-week-plan", authMiddleware, checkRole("user"), (req, res) => 
 
 // get Week Plan
 app.get("/api/get-week-plan", authMiddleware, checkRole("user"), (req, res) => {
-    const userId = req.user.id;
+    const userId = req.user.id; // from token
 
     const query = "SELECT week_plan FROM users WHERE user_id = ?";
     db.query(query, [userId], (err, results) => {
         if (err) {
             console.error(err);
-            res.status(500).send("Error fetching week plan");
-        } else {
-            res.json(results);
+            return res.status(500).send("Error fetching week plan");
+        }
+
+        if (results.length === 0 || !results[0].week_plan) {
+            // No plan found for the user
+            return res.json([]);
+        }
+
+        try {
+            const weekPlan = JSON.parse(results[0].week_plan);
+            return res.json(weekPlan);
+        } catch (parseError) {
+            console.error("JSON parse error:", parseError);
+            return res.status(500).send("Fehler beim Verarbeiten des Wochenplans");
         }
     });
 });
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////
