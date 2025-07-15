@@ -46,7 +46,7 @@ export async function getIngredients() {
 
 // get USERS
 export async function getUsers() {
-    const users = await Api.fetchData("/users");
+    const users = await Api.fetchDataWithToken("/users", Auth.getUserToken());
     //     saveToLS('users', users);
     return users;
 }
@@ -73,10 +73,10 @@ export async function getDataDB() {
     const dishes = await getDishes();
     const ingredients = await getIngredients();
     const users = await getUsers();
-    const userDishes = await getUserDishes();
+    // const userDishes = await getUserDishes();
     const dishIngredients = await getDishIngredients();
 
-    const data = { dishes, ingredients, users, userDishes, dishIngredients };
+    const data = { dishes, ingredients, users, dishIngredients };
 
     // data --> json-Format
     // save to LocalStorage

@@ -120,7 +120,7 @@ app.get("/api/users", authMiddleware, checkRole("admin"), (req, res) => {
 });
 
 // API-Endpunkt: Alle Zuordnungen zwischen Nutzern und Gerichten abrufen
-app.get("/api/user_dishes", (req, res) => {
+app.get("/api/user_dishes", authMiddleware, checkRole("user"),(req, res) => {
     const query = "SELECT * FROM user_dishes";
     db.query(query, (err, results) => {
         if (err) {
