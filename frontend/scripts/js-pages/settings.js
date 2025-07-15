@@ -27,19 +27,19 @@ export default async function loadSettings() {
 }
 
 function loadUserData() {
-    const userData = Storage.getUserData();
+    const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal, userId } = Storage.getUserDataFromDB();
 
     const heightInput = document.getElementById('height-st');
     const weightInput = document.getElementById('weight-st');
     const ageInput = document.getElementById('age-st');
     const sexSelect = document.getElementById('sex-st');
 
-    heightInput.value = userData.height.cm;
-    weightInput.value = userData.weight.kg;
-    ageInput.value = userData.age;
+    heightInput.value = height_cm;
+    weightInput.value = weight_kg;
+    ageInput.value = age;
 
-    if (userData.gender) {
-        sexSelect.value = userData.gender.toLowerCase();
+    if (gender) {
+        sexSelect.value = gender.toLowerCase();
     } else {
         sexSelect.value = "";
     }
@@ -48,7 +48,7 @@ function loadUserData() {
     const activityCards = document.querySelectorAll('#activity-container .card-st-activity');
     activityCards.forEach(card => {
         const level = card.querySelector('.al-text-st').textContent;
-        if (level === userData.activityLevel) {
+        if (level === activityLevel) {
             card.classList.add('clicked-st-activity');
         } else {
             card.classList.remove('clicked-st-activity');
@@ -59,7 +59,7 @@ function loadUserData() {
     const goalCards = document.querySelectorAll('#goal-container .card-st-goal');
     goalCards.forEach(card => {
         const level = card.querySelector('.al-text-st').textContent;
-        if (level === userData.goal) {
+        if (level === goal) {
             card.classList.add('clicked-st-goal');
         } else {
             card.classList.remove('clicked-st-goal');
@@ -94,22 +94,37 @@ function updateUserData() {
     const goalCard = document.querySelector('#goal-container .clicked-st-goal .al-text-st');
     const goal = goalCard ? goalCard.textContent : null;
 
+    // const userData = {
+    //     gender: gender,
+    //     age: age,
+    //     weight: {
+    //         kg: weightKg,
+    //         pounds: weightPounds
+    //     },
+    //     height: {
+    //         cm: heightCm,
+    //         feetAndInches: feetAndInches
+    //     },
+    //     activityLevel: activityLevel,
+    //     goal: goal
+    // };
+
+    // Storage.saveUserData(userData);
+
     const userData = {
         gender: gender,
         age: age,
-        weight: {
-            kg: weightKg,
-            pounds: weightPounds
-        },
-        height: {
-            cm: heightCm,
-            feetAndInches: feetAndInches
-        },
+        weight_kg: weightKg,
+        weight_pounds: weightPounds,
+        height_cm: heightCm,
+        height_feet_and_inches: feetAndInches,
         activityLevel: activityLevel,
-        goal: goal
-    };
+        goal: goal,
+        userId: userId
+    }
 
-    Storage.saveUserData(userData);
+    Storage.saveUserDataToDB(userData);
+
 }
 
 
