@@ -124,6 +124,13 @@ function addEventListeners() {
 
     }
 
+    // const closeButton = document.querySelector('#close-settings-btn');
+    // if (closeButton) {
+
+    //     closeButton.addEventListener('click', referenceToLastHash);
+
+    // }
+
     // card selection (activity)
     const cards = document.querySelectorAll('.card-st-activity');
     cards.forEach(card => {
