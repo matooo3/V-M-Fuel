@@ -218,7 +218,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 
 /* ------------- CARD SELECT GREEN (START) ------------------ */
 .card-st-activity {
-    border: transparent solid 2px;
+    border: transparent solid 1px;
     border-radius: 10px;
     outline: #D9D9D9 solid 1px;
     outline-offset: -1px;
@@ -226,14 +226,14 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 }
 
 .card-st-activity.clicked-st-activity {
-    border: #1BCE86 solid 2px;
+    border: #1BCE86 solid 1px;
     outline: none;
     background-color: #EEFFF6;
 }
 
 
 .card-st-goal {
-    border: transparent solid 2px;
+    border: transparent solid 1px;
     border-radius: 10px;
     outline: #D9D9D9 solid 1px;
     outline-offset: -1px;
@@ -241,7 +241,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 }
 
 .card-st-goal.clicked-st-goal {
-    border: #1BCE86 solid 2px;
+    border: #1BCE86 solid 1px;
     outline: none;
     background-color: #EEFFF6;
 }
