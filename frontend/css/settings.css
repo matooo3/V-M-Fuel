@@ -14,6 +14,7 @@
     width: 100%;
     overflow-y: auto;
     padding: 22px;
+    padding-bottom: 0px;
     gap: 16px;
     font-family: inherit;
 }
@@ -30,24 +31,34 @@
 
 .settings-header {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     max-height: 200px;
     width: 100%;
 }
+
 .settings-header h1 {
     font-size: 2rem;
 }
 
+#arrow-back-st {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 10px;
+    height: 10px;
+    border-left: 3px solid #1F2937;
+    border-bottom: 3px solid #1F2937;
+    border-radius: 0 0 0 3px;
+    transform: rotate(45deg);
+    z-index: 100;
+}
+
 #close-settings-btn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
+    position: absolute;
+    top: 11px;
+    right: 20px;
+    z-index: 100;
 }
 
 #close-settings-btn img {
@@ -94,6 +105,7 @@
     color: var(--main-text-color);
     padding: 7px;
 }
+
 .user-details-settings input:focus {
     outline: none;
     border-color: var(--border-color);
@@ -129,6 +141,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     border-radius: 30px;
     width: 50%;
 }
+
 .user-details-settings select option:focus {
     outline: none;
     border-color: var(--border-color);
@@ -183,8 +196,9 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     margin-top: 4px;
     margin-left: 7px;
     font-size: 1rem;
-    font-weight: 500;
-    font-size: 1.4rem; /* same size as .subtext */
+    font-weight: 400;
+    font-size: 1.4rem;
+    /* same size as .subtext */
 }
 
 .al-desc-st {
@@ -192,7 +206,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     top: 0;
     left: 0;
     margin-top: 2px;
-    margin-left: 10px;
+    margin-left: 7px;
     font-size: 1rem;
     color: #868686;
     font-weight: 500;
@@ -204,7 +218,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 
 /* ------------- CARD SELECT GREEN (START) ------------------ */
 .card-st-activity {
-    border: transparent solid 2px;
+    border: transparent solid 1px;
     border-radius: 10px;
     outline: #D9D9D9 solid 1px;
     outline-offset: -1px;
@@ -212,14 +226,14 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 }
 
 .card-st-activity.clicked-st-activity {
-    border: #1BCE86 solid 2px;
+    border: #1BCE86 solid 1px;
     outline: none;
     background-color: #EEFFF6;
 }
 
 
 .card-st-goal {
-    border: transparent solid 2px;
+    border: transparent solid 1px;
     border-radius: 10px;
     outline: #D9D9D9 solid 1px;
     outline-offset: -1px;
@@ -227,7 +241,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 }
 
 .card-st-goal.clicked-st-goal {
-    border: #1BCE86 solid 2px;
+    border: #1BCE86 solid 1px;
     outline: none;
     background-color: #EEFFF6;
 }
@@ -263,12 +277,12 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 }
 
 .goal-card-st {
-    height: 3.8rem;
+    height: 50px;
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: center;
-    padding-left: 7px;
+    padding-left: 10px;
     padding-bottom: 0px;
 }
 
@@ -286,6 +300,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     justify-content: start;
     width: 100%;
     gap: 16px;
+    margin-bottom: 30px;
 }
 
 .app-settings-container select {
@@ -324,31 +339,12 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     margin-top: -8px;
 }
 
-.app-settings-buttons button {
-    width: 100%;
-    height: 3rem;
-    border-radius: 14px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.app-settings-buttons #cancel-settings-btn {
-    background-color: var(--background-color);
-    color: var(--main-text-color);
-    border: 1px solid var(--border-color);
-    font-weight: 500;
-    font-family: inherit;
-}
-
-.app-settings-buttons #save-settings-btn, #logout-btn {
+#logout-btn {
     background-color: var(--accent-color);
     color: var(--background-color);
     border: none;
     font-weight: 500;
     font-family: inherit;
-}
-#logout-btn {
     height: 2.7rem;
     border-radius: 7px;
     font-size: 1.2rem;
@@ -376,60 +372,25 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     box-shadow: 0 2px 5px rgba(48, 48, 48, 0.1);
 }
 
-.fixed-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background-color: var(--background-color);
-    padding: 16px;
-    padding-top: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 28px;
-    /* GRÖßE VON FOOTER*/
-    justify-content: center;
-
-    border-top: 1px solid var(--border-color);
-    box-shadow: 0 -2px 5px rgba(48, 48, 48, 0.1);
-
-}
-
 .scrollable-content-st {
     width: 100%;
     margin-top: 50px;
     /* Adjust based on header height */
-    margin-bottom: 45px;
-    /* Adjust based on footer height */
-    /* HIER WICHTIG FÜR WEIß OBERHALB VON BUTTONS!!*/
+    padding-left: 5px;
+    padding-right: 5px;
     overflow-y: auto;
-    height: 100vh;
-    /* Full height minus header and footer */
+    height: calc(100vh - 40px);
+    /* Full height minus header */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    width: 100%;
-    overflow-y: auto;
     gap: 20px;
-
-    /* Inhalt von Ecken weg */
-    padding-top: 8px;
-    padding-bottom: 8px;
-
-    /* Scrollbar funktioniert aber wird nicht angezeigt */
-    overflow: auto;
     scrollbar-width: none;
-    /* Firefox */
     -ms-overflow-style: none;
-    /* IE & Edge */
-    /* End of scrollbar */
-
 }
+
 .scrollable-content-st::-webkit-scrollbar {
     display: none;
     /* Chrome, Safari and Opera */
 }
-

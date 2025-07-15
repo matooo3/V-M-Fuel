@@ -21,6 +21,7 @@ export default async function loadMeals() {
     Role.renderCookButtons();
     Role.renderUserRoleColors();
 
+    // Update ingredients and meals
     ingredientsArray = await Storage.getIngredients();
     dishesArray = await Storage.getDishes();
 
@@ -32,13 +33,40 @@ export default async function loadMeals() {
     // Settings Event Listener
     Settings.loadSettingsEventListener();
 
-    // filter bar (Meals, Ingredients)
+    addFilterbarEventlistener();
+
+    addDropdownEventlisteners();
+
+    addPreferenceEventlisteners();
+
+    addSearchbarEventlisteners();
+
+    addMealOverlayEventListeners();
+
+    addIngredientOverlayEventListeners();
+
+}
+
+function addFilterbarEventlistener() {
+
     const filterButtons = document.querySelectorAll('#filter-bar-p button');
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             setActiveFilterButton(button);
         });
     });
+
+}
+
+function addDropdownEventlisteners() {
+    //dropdown menu
+    const customSelects = document.querySelectorAll('.custom-select');
+    customSelects.forEach(select => {
+        new CustomSelect(select);
+    });
+}
+
+function addPreferenceEventlisteners() {
 
     // Like-Buttons
     const likeButtons = document.querySelectorAll('.like');
@@ -51,16 +79,21 @@ export default async function loadMeals() {
     dislikeButtons.forEach(button => {
         button.addEventListener('click', toggleRejected);
     });
+}
 
-    //dropdown menu
-    const customSelects = document.querySelectorAll('.custom-select');
-    customSelects.forEach(select => {
-        new CustomSelect(select);
-    });
+function addSearchbarEventlisteners() {
+    // search bars
+    const searchInput = 'search-preferences';
+    const searchableLists = ['#dishes-list-p', '#ingredients-list-p'];
+    searchULs(searchInput, searchableLists);
 
-    // -----------------------------------------------------------
-    // Add Meal Overlay
-    // -----------------------------------------------------------
+    const searchInputIng = 'search-ingredients';
+    const ingredientsList = ['#ingredientsContainer'];
+    searchULs(searchInputIng, ingredientsList);
+}
+
+function addMealOverlayEventListeners() {
+
     document.getElementById('add-meal-p').addEventListener('click', showEditMeal);
     document.getElementById('closeMealBtn').addEventListener('click', hideAddMeal);
     document.getElementById('addBtn-p').addEventListener('click', saveMeal);
@@ -99,19 +132,11 @@ export default async function loadMeals() {
             hideAddMeal();
         }
     });
+}
 
-    // search bars
-    const searchInput = 'search-preferences';
-    const searchableLists = ['#dishes-list-p', '#ingredients-list-p'];
-    searchULs(searchInput, searchableLists);
 
-    const searchInputIng = 'search-ingredients';
-    const ingredientsList = ['#ingredientsContainer'];
-    searchULs(searchInputIng, ingredientsList);
+function addIngredientOverlayEventListeners() {
 
-    // -----------------------------------------------------------
-    // Ingredients Overlay
-    // -----------------------------------------------------------
     document.getElementById('add-ingredient-p').addEventListener('click', showEditIngredient);
     document.getElementById('closeIngredientBtn').addEventListener('click', hideAddIngredient);
     document.getElementById('addIngredientSubmitBtn').addEventListener('click', saveIngredient);
@@ -617,7 +642,7 @@ async function saveMeal() {
 
     const tags = JSON.stringify(tagsArray);
 
-    if(category === "lunch/dinner") {
+    if (category === "lunch/dinner") {
         category = "Main";
     }
 
@@ -810,7 +835,7 @@ async function saveIngredient() {
     if (validateIngredientData(ingredientData)) {
 
         hideAddIngredient();
-        
+
         const response = await Storage.addNewIngredientToDB(ingredientData);
         const ingredientId = response.ingredientId;
 

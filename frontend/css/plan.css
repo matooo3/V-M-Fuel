@@ -118,6 +118,7 @@
     flex-direction: column;
     margin-top: 10px;
     padding-top: 15px;
+    padding-bottom: 15px;
     overflow-y: auto;
     gap: 15px;
     scrollbar-width: none;
