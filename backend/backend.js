@@ -476,6 +476,21 @@ app.post("/api/add-week-plan", authMiddleware, checkRole("user"), (req, res) => 
     });
 });
 
+// get Week Plan
+app.post("/api/get-week-plan", authMiddleware, checkRole("user"), (req, res) => {
+    const { userId } = req.body;
+
+    const query = "SELECT week_plan FROM users WHERE user_id = ?";
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send("Error fetching week plan");
+        } else {
+            res.json(results);
+        }
+    });
+});
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Starte den Server
