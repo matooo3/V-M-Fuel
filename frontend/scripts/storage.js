@@ -292,10 +292,13 @@ export function saveInitialUserDataToDB() {
         goal: userData.goal
     };
 
-    // Send initial data to the database
-    saveUserDataToDB(initialData);
-
-    localStorage.removeItem("userData"); // delete initial user data (only keep until in DB)
+    try {
+        // Send initial data to the database
+        await saveUserDataToDB(initialData);
+        localStorage.removeItem("userData"); // delete initial user data (only keep until in DB)
+    } catch (error) {
+        console.error("Failed to save initial user data to DB:", error);
+    }
 }
 // ------------------------------------------------------------------
 
