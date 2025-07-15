@@ -4,7 +4,7 @@
 // ==============================
 
 import { UniversalApplePicker } from './universalApplePicker.js';
-import { getUserData, saveUserData } from '../../scripts/storage.js';
+import { getUserDataFromLS, saveUserDataToLS } from '../../scripts/storage.js';
 
 /**
  * Create a picker instance
@@ -22,9 +22,9 @@ function createPicker(type, options = {}) {
  * @returns {Object} Updated user data
  */
 function saveAgeData(ageData) {
-    const userData = getUserData();
+    const userData = getUserDataFromLS();
     userData.age = ageData.age;
-    saveUserData(userData);
+    saveUserDataToLS(userData);
     return userData;
 }
 
@@ -34,13 +34,13 @@ function saveAgeData(ageData) {
  * @returns {Object} Updated user data
  */
 function saveWeightData(weightData) {
-    const userData = getUserData();
+    const userData = getUserDataFromLS();
     userData.weight = {
         kg: weightData.kg,
         pounds: weightData.pounds,
         unit: weightData.unit
     };
-    saveUserData(userData);
+    saveUserDataToLS(userData);
     return userData;
 }
 
@@ -50,13 +50,13 @@ function saveWeightData(weightData) {
  * @returns {Object} Updated user data
  */
 function saveHeightData(heightData) {
-    const userData = getUserData();
+    const userData = getUserDataFromLS();
     userData.height = {
         cm: heightData.cm,
         feetAndInches: heightData.feet_and_inches_string,
         unit: heightData.unit
     };
-    saveUserData(userData);
+    saveUserDataToLS(userData);
     return userData;
 }
 

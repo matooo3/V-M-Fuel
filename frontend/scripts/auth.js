@@ -27,6 +27,7 @@ export function getUserFromToken() {
 // Logout
 export function logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("userData"); // delete initial user data
 
     // reload site 
     // location.reload();

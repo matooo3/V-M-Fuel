@@ -3,7 +3,7 @@
 // ===== CARD FUNCTIONS =====
 // ==============================
 
-import { getUserData, saveUserData } from '../../scripts/storage.js';
+import { getUserDataFromLS, saveUserDataToLS } from '../../scripts/storage.js';
 
 const PAGE_KEY_MAP = {
     'goal.html': 'goal',
@@ -56,9 +56,9 @@ function saveCardData(currentFile) {
         value = selectedCard.textContent.trim();
     }
 
-    const userData = getUserData();
+    const userData = getUserDataFromLS();
     userData[key] = value;
-    saveUserData(userData);
+    saveUserDataToLS(userData);
     return userData;
 }
 

@@ -41,21 +41,23 @@ async function getWeekPlan() {
     // check if user already has a week plan
     let weekPlan = await Storage.getWeekPlanFromDB();
 
-    if (weekPlan === null || weekPlan === undefined) {
+    if (!weekPlan || weekPlan.length === 0) {// wenn noch keiner existiert
         console.warn("Week plan not found in database. Generating a new one...");
         weekPlan = await generateNewWeekPlan();
     }
+    
+    console.warn("Week plan loaded from DB:", weekPlan);
 
     return weekPlan;
 }
 
 async function generateNewWeekPlan() {
 
-    let optimalCalories = getRequiredCalories();
+    let kcalOptimal = await getRequiredCalories();
 
-    console.log("Optimal daily Calories: " + optimalCalories);
+    console.log("Optimal daily Calories!: " + kcalOptimal);
 
-    return await Algo.algo(optimalCalories, 0, 0, 0);
+    return await Algo.algo(kcalOptimal, 0, 0, 0);
 
 }
 
@@ -203,22 +205,24 @@ function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, 
 
 };
 
-function getRequiredCalories() {
+async function getRequiredCalories() {
 
     let requiredCalories = 3000; // default value;
 
-    const userData = Storage.getUserData();
+    const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal } = await Storage.getUserDataFromDB();
 
-    if (userData) {
+    if (gender && age && weight_kg && height_cm && activityLevel && goal) {
 
-        const gender = userData.gender.toLowerCase().trim();
-        const age = userData.age;
-        const weightKg = userData.weight.kg;
-        const heightCm = userData.height.cm;
-        const activityMultiplier = getActivityMultiplier(userData.activityLevel);
-        const goalAdjustment = getGoalAdjustment(userData.goal);
+        const gender1 = gender.toLowerCase().trim();
+        const age1 = age;
+        const weightKg1 = weight_kg;
+        const heightCm1 = height_cm;
+        const activityMultiplier1 = getActivityMultiplier(activityLevel);
+        const goalAdjustment1 = getGoalAdjustment(goal);
 
-        requiredCalories = calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, goalAdjustment);
+        requiredCalories = calculateCalories(gender1, age1, weightKg1, heightCm1, activityMultiplier1, goalAdjustment1);
+
+        console.log("Calculated requ5656565656ired calories: " + requiredCalories);
 
     }
 

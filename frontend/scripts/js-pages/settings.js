@@ -22,12 +22,12 @@ export default async function loadSettings() {
 
     addEventListeners();
 
-    loadUserData();
+    await loadUserData();
 
 }
 
-function loadUserData() {
-    const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal, userId } = Storage.getUserDataFromDB();
+async function loadUserData() {
+    const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal } = await Storage.getUserDataFromDB();
 
     const heightInput = document.getElementById('height-st');
     const weightInput = document.getElementById('weight-st');
@@ -80,7 +80,7 @@ function updateUserData() {
     const gender = sexSelect.value;
 
     // Calculate weight -> pounds
-    const weightPounds = weightKg * 2.20462;
+    const weightPounds = (weightKg * 2.20462).toFixed(1);
 
     // Calculate feet and inches from cm (rough)
     const totalInches = heightCm / 2.54;
@@ -119,8 +119,7 @@ function updateUserData() {
         height_cm: heightCm,
         height_feet_and_inches: feetAndInches,
         activityLevel: activityLevel,
-        goal: goal,
-        userId: userId
+        goal: goal
     }
 
     Storage.saveUserDataToDB(userData);
@@ -134,7 +133,6 @@ function addEventListeners() {
     const backArrow = document.querySelector('#arrow-back-st');
     if (backArrow) {
 
-        backArrow.addEventListener('click', referenceToLastHash);
         backArrow.addEventListener('click', saveSettings);
 
     }
@@ -202,8 +200,26 @@ export function referenceToLastHash() {
 
 export function saveSettings() {
 
+    if (!isSettingsValid()) {
+        alert("Please fill out all required fields.");
+        // referenceToLastHash(); // alternativ => closeButton
+        return;
+    }
+
     console.log('Settings saved!');
     updateUserData();
     referenceToLastHash();
 
+}
+
+function isSettingsValid() {
+    const height = document.getElementById("height-st").value.trim();
+    const weight = document.getElementById("weight-st").value.trim();
+    const age = document.getElementById("age-st").value.trim();
+    const sex = document.getElementById("sex-st").value.trim();
+
+    // const activitySelected = document.querySelector("#activity-container .al-card-st.selected");
+    // const goalSelected = document.querySelector("#goal-container .goal-card-st.selected");
+
+    return height && weight && age && sex;
 }

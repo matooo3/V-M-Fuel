@@ -161,10 +161,10 @@ export function pickDish(kcalOptimal, dishes) {
             return chooseBestCandidate(candidates);
         }
     }
-    return noCandidateFound();
+    return noCandidateFound(kcalOptimal);
 }
 
-function noCandidateFound() {
+function noCandidateFound(kcalOptimal) {
     console.warn(`⚠️ Kein Gericht gefunden für kcal-Ziel ${kcalOptimal}`);
     return {
         name: "Kein Gericht gefunden",

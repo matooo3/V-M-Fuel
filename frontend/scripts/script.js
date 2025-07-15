@@ -30,6 +30,9 @@ setInterval(async () => {
     }
 }, 5 * 60 * 1000); // alle 5 Minuten
 
+// SAVE INITIAL USER DATA TO DB
+Storage.saveInitialUserDataToDB();
+
 // SERVICE-WORKER REGISTRATION
 // The service worker registration code is currently disabled for debugging purposes.
 // Uncomment the following block to enable service worker functionality.
@@ -122,23 +125,6 @@ window.addEventListener("hashchange", router);
 // Lädt die Standardseite beim Start:
 window.addEventListener("load", router);
 
-// BACKEND-http-Request:
-//
-// export async function getDataDB() {
-//     try {
-//         console.log("trying to get API-data.....");
-//         const response = await fetch('http://172.18.45.1:3000/dishes'); // API-Endpoint of Backend
-//         console.log("API-data arrived...");
-//         if (!response.ok) {
-//             throw new Error(`HTTP-Error! Status: ${response.status}`);
-//         }
-//         const data = await response.json(); // get data of API
-//         console.log('Daten abgerufen:', data); // Debugging
-//         return data;
-//     } catch (error) {
-//         console.error('Fehler beim Abrufen der Daten:', error);
-//     }
-// }
 
 // --------------- LOAD ALL DATA --------------------
 async function loadData() {
@@ -177,6 +163,3 @@ export function showNavbar() {
         navbar.style.display = 'flex';
     }
 }
-
-const weekPlan = await Algo.algo(3000, 0, 0, 0);
-console.log("WEEK PLAN:", weekPlan);
