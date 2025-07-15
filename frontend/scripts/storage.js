@@ -221,6 +221,18 @@ export async function deleteIngredientFromDB(ingredientID) {
     }
 }
 
+// -------------------------- USER DATA ----------------------------
+// MEAL PLAN DB
+export function saveWeekPlanToDB(weekPlan) {
+    const user = Auth.getUserFromToken();
+    Api.postData("/add-week-plan", { weekPlan, userId: user.id }, Auth.getUserToken());
+}
+
+export function getWeekPlanFromDB() {
+  const token = Auth.getUserToken();
+  return Api.fetchDataWithToken("/get-week-plan", token);
+}
+
 
 // get user data
 export function getUserData() {
@@ -237,14 +249,25 @@ export function saveUserData(userData) {
     saveToLS('userData', userData);
 }
 
-// MEAL PLAN DB
-export function saveWeekPlanToDB(weekPlan) {
-    const user = Auth.getUserFromToken();
-    Api.postData("/add-week-plan", { weekPlan, userId: user.id }, Auth.getUserToken());
+// SAVE USER DATA
+export async function saveUserDataToDB(userInfo) {
+  const token = Auth.getUserToken();
+
+  if (!token || !userInfo) {
+    throw new Error("Token oder UserInfo fehlt");
+  }
+
+  await Api.postData("/save-user-data", userInfo, token);
 }
 
-export function getWeekPlanFromDB() {
-  const token = Auth.getUserToken();
-  return Api.fetchDataWithToken("/get-week-plan", token);
+// GET USER DATA
+export async function getUserDataFromDB() {
+
+    const token = Auth.getUserToken();
+    const data = await Api.fetchDataWithToken("/get-user-data", token);
+  
+    return data; // { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal, userId }
+
 }
+// ------------------------------------------------------------------
 
