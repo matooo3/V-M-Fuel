@@ -264,11 +264,15 @@
 #planned {
     padding: 15px;
     width: 100%;
-    height: fit-content;
+    height: 80px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 
+}
+
+.nowrap-text{
+    white-space: nowrap;
 }
 
 .meals-amount-db {
@@ -279,7 +283,7 @@
 #eaten {
     padding: 15px;
     width: 100%;
-    height: fit-content;
+    height: 80px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
