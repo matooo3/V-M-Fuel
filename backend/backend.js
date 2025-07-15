@@ -449,7 +449,7 @@ app.post("/api/delete-ingredient", authMiddleware, checkRole("cook"), (req, res)
 
 
 // ADD Week Plan
-app.post("/api/add-meal-plan", authMiddleware, checkRole("user"), (req, res) => {
+app.post("/api/add-week-plan", authMiddleware, checkRole("user"), (req, res) => {
 
     const { userId, weekPlan } = req.body;
 
