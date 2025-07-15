@@ -502,6 +502,42 @@ app.get("/api/get-week-plan", authMiddleware, checkRole("user"), (req, res) => {
     });
 });
 
+// SAVE USER DATA (gender - goal)
+app.post("/api/save-user-data", authMiddleware, checkRole("user"), (req, res) => {
+  const userId = req.user.id;
+  const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal } = req.body;
+
+  const query = `
+    UPDATE users SET
+      gender = ?, age = ?, weight_kg = ?, weight_pounds = ?,
+      height_cm = ?, height_feet_and_inches = ?, activityLevel = ?, goal = ?
+    WHERE user_id = ?`;
+
+  db.query(query, [gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal, userId], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Failed to update user info" });
+    }
+    res.status(200).json({ message: "User info successfully updated" });
+  });
+});
+
+// GET USER DATA (gender - goal)
+app.get("/api/get-user-data", authMiddleware, checkRole("user"), (req, res) => {
+  const userId = req.user.id;
+
+  const query = `
+    SELECT gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal
+    FROM users WHERE user_id = ?`;
+
+  db.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Error fetching user data" });
+    }
+    res.json(results[0] || {});
+  });
+});
 
 
 /////////////////////////////////////////////////////////////////////////////////////
