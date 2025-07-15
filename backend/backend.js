@@ -107,7 +107,7 @@ app.get("/api/dish_ingredients", (req, res) => {
 });
 
 // API-Endpunkt: Alle Nutzer abrufen
-app.get("/api/users", (req, res) => {
+app.get("/api/users", authMiddleware, checkRole("admin"), (req, res) => {
     const query = "SELECT * FROM users";
     db.query(query, (err, results) => {
         if (err) {
@@ -447,6 +447,34 @@ app.post("/api/delete-ingredient", authMiddleware, checkRole("cook"), (req, res)
     });
 });
 
+
+// ADD MEAL PLAN TO DB
+app.post("/api/add-meal-plan", authMiddleware, checkRole("user"), (req, res) => {
+
+    const { userId, weekPlan } = req.body;
+
+    if (!userId || !weekPlan) {
+        return res.status(400).json({ message: "User ID and week plan are required" });
+    }
+
+    const query = `UPDATE users SET week_plan = ? WHERE user_id = ?`;
+
+    db.query(query, [JSON.stringify(weekPlan), userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res
+                .status(510)
+                .json({ message: "Fehler bei add meal plan" });
+        }
+
+        // ✅ SUCCESSFUL
+        return res.status(201).json({
+            message: "Meal plan successfully added",
+            mealPlanId: result.insertId
+        });
+
+    });
+});
 
 
 /////////////////////////////////////////////////////////////////////////////////////
