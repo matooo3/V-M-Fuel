@@ -254,7 +254,7 @@ export async function saveUserDataToDB(userInfo) {
   const token = Auth.getUserToken();
 
   if (!token || !userInfo) {
-    throw new Error("Token oder UserInfo fehlt");
+    throw new Error("Token or UserInfo is missing");
   }
 
   await Api.postData("/save-user-data", userInfo, token);
