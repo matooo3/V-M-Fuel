@@ -271,7 +271,7 @@ export async function getUserDataFromDB() {
 
 }
 
-export function saveInitialUserDataToDB() {
+export async function saveInitialUserDataToDB() {
     const userData = getUserDataFromLS();
 
     if (!userData.gender || !userData.age || !userData.weight || !userData.height || !userData.activityLevel || !userData.goal) {
