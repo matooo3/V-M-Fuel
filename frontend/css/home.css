@@ -107,12 +107,13 @@
 }
 
 .progress-bar {
+    --progress-in-percent: 0;
     fill: none;
     stroke: var(--accent-color);
     stroke-width: var(--circle-stroke);
     stroke-linecap: round;
     stroke-dasharray: 565.48;
-    stroke-dashoffset: calc(565.48 - (565.48 * 36.1) / 100);
+    stroke-dashoffset: calc(565.48 - (565.48 * var(--progress-in-percent)) / 100);
     transition: stroke-dashoffset 0.5s ease-out;
 }
 

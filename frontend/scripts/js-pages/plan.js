@@ -63,7 +63,7 @@ async function generateNewWeekPlan() {
 
 // ===== WEEK SETUP =====
 
-function getCurrentData() {
+export function getCurrentData() {
 
     const today = new Date();
     const currentWeek = calculateCurrentWeek(today);

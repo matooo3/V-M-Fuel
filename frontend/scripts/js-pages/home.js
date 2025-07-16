@@ -7,6 +7,7 @@ import * as Swipe from '../swipetodelete.js';
 import * as Role from '../roleRouting.js';
 import * as Settings from './settings.js';
 import * as Search from '../searchBar.js';
+import * as Plan from './plan.js'
 
 
 export default async function loadHome() {
@@ -17,11 +18,28 @@ export default async function loadHome() {
 
     //load user greeting! (eventlistener DOM loaded)
     // document.addEventListener('DOMContentLoaded', renderUserGreeting);
+    getTodaysMeals();
 
     Role.renderAdminPanel();
     Role.renderUserRoleColors();
 
-    updateAdminContainer();
+    setTimeout(() => {
+        renderUserGreeting();
+    }, 1);
+
+    await updateAdminContainer();
+
+    let optimalKcal = await Plan.getOptimalKcal();
+    let eatenKcal = getEatenKcal();
+    const todaysMeals = await getTodaysMeals();
+    const nextMeal = getNextMeal();
+
+    await updateProgressCircle(eatenKcal, optimalKcal);
+    updateProgressCircleText(eatenKcal);
+    await updateMealsPlanned(todaysMeals);
+    await updateGoalPercentage(eatenKcal, optimalKcal);
+    updateNextMeal(nextMeal);
+
 
     // Eventlistener: -------------------------------------------
     // DOM-Manipulation:
@@ -44,10 +62,6 @@ export default async function loadHome() {
 
     // Settings Event Listener
     Settings.loadSettingsEventListener();
-
-    setTimeout(() => {
-        renderUserGreeting();
-    }, 1);
 
 }
 
@@ -86,6 +100,154 @@ function renderUserGreeting() {
 }
 // ------------------------------------------------------------
 //
+
+// --------------------- LOAD MEALS DATA ----------------------
+
+// --------------------- Get Data ----------------------
+
+function getTodaysIndexInWeek(today, currentWeek) {
+
+    for (let i = 0; i < currentWeek.length; i++) {
+
+        const day = currentWeek[i];
+        if (day.getTime() === today.getTime()) {
+            return i;
+        }
+    }
+}
+
+async function getTodaysMeals() {
+
+    const { today, currentWeek } = Plan.getCurrentData();
+    const index = getTodaysIndexInWeek(today, currentWeek);
+
+    const weekPlan = await Storage.getWeekPlanFromDB();
+    const todaysMeals = weekPlan[index]
+    return todaysMeals;
+}
+
+function getEatenKcal() {
+
+    return 1000;
+}
+
+async function getMealsAmount(todaysMeals) {
+
+    const planLength = countDefinedMeals(todaysMeals);
+    return planLength;
+}
+
+function countDefinedMeals(todaysMeals) {
+    const definedCount = Object.values(todaysMeals).filter(v => v != null).length;
+    return definedCount
+}
+
+function getNextMeal() {
+
+    const dish = {
+        dish_id: 1,
+        meal_category: "main",
+        name: "chili con carne",
+        preparation: "#Fry minced meatin a pan #Add tomato sauce, kidney beans, beef broth and corn #Season with paprika powder and chili #Simmer for  5-10 minutes",
+        preparation_time_in_min: 20,
+        tags: ["cut", "bulk"],
+        total_calories: 820,
+        total_carbs: 1,
+        total_fat: 1,
+        total_protein: 1,
+        vm_score: 1
+    };
+
+    return dish;
+
+}
+
+async function calculatePercentage(eatenKcal, optimalKcal) {
+
+    let percentage = (eatenKcal / optimalKcal) * 100;
+
+    if (percentage > 100) {
+
+        return 0;
+
+    }
+
+    return percentage;
+}
+
+// --------------------- Update Data ----------------------
+
+async function updateProgressCircle(eatenKcal, optimalKcal) {
+
+    const percentage = await calculatePercentage(eatenKcal, optimalKcal);
+    const progressBar = document.querySelector('.progress-bar');
+    progressBar.style.setProperty('--progress-in-percent', percentage);
+
+}
+
+function updateProgressCircleText(eatenKcal) {
+
+    const progressTextElement = document.querySelector('.progress-text');
+    progressTextElement.textContent = `${eatenKcal} kcal`;
+
+}
+
+async function updateMealsPlanned(todaysMeals) {
+
+    const mealsAmount = await getMealsAmount(todaysMeals);
+    const mealsPlanned = document.getElementById('planned-meals-h');
+    mealsPlanned.textContent = mealsAmount;
+}
+
+async function updateGoalPercentage(eatenKcal, optimalKcal) {
+
+    const percentage = await calculatePercentage(eatenKcal, optimalKcal);
+    const goalPercentage = document.getElementById('goal-percentage-h');
+    goalPercentage.textContent = `${Math.round(percentage)}%`;
+}
+
+async function getNextMeals() {
+
+    let nextMeals = await getNextMealsFromDB();
+
+    if (!nextMeals) {
+
+        const nextMeals = await getTodaysMeals();
+        await saveNextMealsToDB(nextMeals);
+
+        return nextMeals[0];
+
+    }
+
+    return nextMeals;
+
+}
+
+async function removeEatenMeal(nextMeals) {
+
+    const keys = Object.keys(nextMeals);
+
+    if (keys.length > 0) {
+        delete nextMeals[keys[0]];
+    }
+}
+
+// loading: getNextMeals, renderNextMeal
+
+
+function renderNextMeal(nextMeal) {
+    const mealName = document.querySelector('.meal-name');
+    const meal_category = document.querySelector('.meal-category-h"');
+    const calories = document.querySelector('.calories-db');
+    const nutritionValues = document.querySelectorAll('.nutrition-value-mp');
+
+    mealName.textContent = nextMeal.name;
+    meal_category.textContent = nextMeal.meal_category;
+    calories.textContent = nextMeal.total_calories;
+    nutritionValues[0].textContent = nextMeal.total_protein; // Protein
+    nutritionValues[1].textContent = nextMeal.total_carbs; // Carbs
+    nutritionValues[2].textContent = nextMeal.total_fat; // Fat 
+}
 
 //
 // --------------------------------------------------------------------------------------------
@@ -184,7 +346,7 @@ async function renderUserList() {
         button.addEventListener("click", changeUserRole);
     });
 
-    
+
     const searchInputUser = "user-search-bar";
     const userList = ['#user-list'];
     Search.searchULs(searchInputUser, userList);
