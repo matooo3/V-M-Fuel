@@ -540,57 +540,98 @@ app.get("/api/get-user-data", authMiddleware, checkRole("user"), (req, res) => {
 });
 
 // GET INGREDIENTS FROM WEEK PLAN
-// backend/routes/ingredients.js
-// app.get('/get-ingredients-from-week-plan', authenticateToken, async (req, res) => {
-//   const userId = req.user.id;
-//   const [rows] = await db.query('SELECT week_plan FROM users WHERE user_id = ?', [userId]);
+app.get("/api/get-ingredients-from-week-plan", authMiddleware, checkRole("user"), (req, res) => {
+    const userId = req.user.id;
 
-//   if (!rows.length || !rows[0].week_plan) {
-//     return res.status(400).json({ error: 'No week plan found for user' });
-//   }
+    // 1. Hole den gespeicherten Wochenplan
+    const getWeekPlanQuery = "SELECT week_plan FROM users WHERE user_id = ?";
+    db.query(getWeekPlanQuery, [userId], (err, results) => {
+        if (err) {
+            console.error("Fehler beim Abrufen des Wochenplans:", err);
+            return res.status(500).json({ message: "Fehler beim Abrufen des Wochenplans" });
+        }
 
-//   const plan = JSON.parse(rows[0].week_plan);
-//   const dishMap = new Map();
+        if (!results.length || !results[0].week_plan) {
+            return res.status(400).json({ error: "Kein Wochenplan für den Benutzer gefunden" });
+        }
 
-//   for (const day of plan) {
-//     for (const mealType of ['breakfast', 'lunch', 'dinner']) {
-//       const meal = day[mealType];
-//       if (meal && meal.dish_id) {
-//         const dishId = meal.dish_id;
-//         const factor = meal.factor ?? 1; // fallback falls kein Faktor gespeichert
+        let weekPlan;
+        try {
+            weekPlan = JSON.parse(results[0].week_plan);
+        } catch (parseError) {
+            console.error("Fehler beim Parsen des Wochenplans:", parseError);
+            return res.status(500).json({ error: "Fehler beim Verarbeiten des Wochenplans" });
+        }
 
-//         if (!dishMap.has(dishId)) {
-//           dishMap.set(dishId, factor);
-//         } else {
-//           dishMap.set(dishId, dishMap.get(dishId) + factor); // Faktor kumulieren
-//         }
-//       }
-//     }
-//   }
+        // 2. Extrahiere alle dish_ids + Faktor (falls vorhanden)
+        const dishMap = new Map();
+        for (const day of weekPlan) {
+            for (const mealType of ["breakfast", "lunch", "dinner"]) {
+                const meal = day[mealType];
+                if (meal && meal.dish_id) {
+                    const dishId = meal.dish_id;
+                    const factor = meal.factor ?? 1;
 
-//   // Erzeuge dynamische VALUES-Konstruktion für SQL
-//   const dishFactorsSQL = [...dishMap.entries()]
-//     .map(([dishId, factor]) => `SELECT ${dishId} AS dish_id, ${factor} AS factor`)
-//     .join(' UNION ALL ');
+                    if (!dishMap.has(dishId)) {
+                        dishMap.set(dishId, factor);
+                    } else {
+                        dishMap.set(dishId, dishMap.get(dishId) + factor);
+                    }
+                }
+            }
+        }
 
-//   const query = `
-//     SELECT 
-//       di.ingredient_id,
-//       i.name,
-//       di.unit_of_measurement,
-//       ROUND(SUM(di.amount * df.factor), 2) AS total_amount
-//     FROM dish_ingredients di
-//     JOIN ingredients i ON i.ingredient_id = di.ingredient_id
-//     JOIN (
-//       ${dishFactorsSQL}
-//     ) AS df ON df.dish_id = di.dish_id
-//     GROUP BY di.ingredient_id, di.unit_of_measurement
-//     ORDER BY i.name;
-//   `;
+        if (dishMap.size === 0) {
+            return res.json([]);
+        }
 
-//   const [ingredients] = await db.query(query);
-//   res.json(ingredients);
-// });
+        const dishIds = Array.from(dishMap.keys());
+
+        // 3. Hole Zutateninformationen für alle Dish IDs
+        const placeholders = dishIds.map(() => "?").join(",");
+        const getIngredientsQuery = `
+            SELECT 
+                di.dish_id,
+                i.ingredient_id,
+                i.name AS ingredient_name,
+                di.amount,
+                di.unit_of_measurement
+            FROM dish_ingredients di
+            JOIN ingredients i ON di.ingredient_id = i.ingredient_id
+            WHERE di.dish_id IN (${placeholders})
+        `;
+
+        db.query(getIngredientsQuery, dishIds, (err2, ingredientRows) => {
+            if (err2) {
+                console.error("Fehler beim Abrufen der Zutaten:", err2);
+                return res.status(500).json({ error: "Fehler beim Abrufen der Zutaten" });
+            }
+
+            const aggregatedIngredients = {};
+
+            ingredientRows.forEach(row => {
+                const key = `${row.ingredient_id}-${row.unit_of_measurement}`;
+                const factor = dishMap.get(row.dish_id);
+
+                if (!aggregatedIngredients[key]) {
+                    aggregatedIngredients[key] = {
+                        ingredient_id: row.ingredient_id,
+                        name: row.ingredient_name,
+                        unit_of_measurement: row.unit_of_measurement,
+                        total_amount: 0
+                    };
+                }
+
+                aggregatedIngredients[key].total_amount += row.amount * factor;
+            });
+
+            // 4. Rückgabe als Array
+            const result = Object.values(aggregatedIngredients);
+            res.json(result);
+        });
+    });
+});
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////
