@@ -289,7 +289,7 @@ function renderMeal(dish, mealType) {
             </div>
             <div class="footer-mp">
                 <img class="users-logo-mp" src="/frontend/assets/icons/users.svg" alt="users">
-                <p class="footer-text-mp">1 serving</p>
+                <p class="footer-text-mp">${dish.factor.toFixed(1)} serving</p>
             </div>
         </div>
     </div>

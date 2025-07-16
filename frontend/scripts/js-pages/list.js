@@ -12,7 +12,6 @@ export default async function loadList() {
     const html = await loadHTMLTemplate('/frontend/html-pages/list.html');
     app.innerHTML = html;
 
-
     // ingredients = await getAllDishIngredients()
     // updateList(ingredients); 
 
@@ -38,9 +37,12 @@ export default async function loadList() {
 
     });
 
+    const ingredients = await Storage.getIngredientsFromWeekPlan();
+    console.warn("Ingredients from week plan:", ingredients);
+
     // Load existing items from storage
-    // const items = Storage.getGroceryListItems();
-    // items.forEach(item => addItem(item));
+    ingredients.forEach(item => addItem(item));
+
     // Add event listeners for quantity control buttons
     const list = document.querySelector('.grocery-list');
 
@@ -71,7 +73,7 @@ function addItem(item) {
             </div>
             <div class="quantity-control">
                 <button class="minus-btn"><img src="/frontend/assets/icons/minus.svg" alt="-"></button>
-                <span class="amount">${item.amount}</span><span class="unit">${item.unit}</span>
+                <span class="amount">${item.amount.toFixed(0)}</span><span class="unit">${pieceToPcs(item.unit_of_measurement)}</span>
                 <button class="plus-btn"><img src="/frontend/assets/icons/plus.svg" alt="+"></button>
             </div>
         </div>
@@ -79,6 +81,12 @@ function addItem(item) {
     list.insertBefore(li, list.firstChild)
 }
 
+function pieceToPcs(unit) {
+    if(unit === "piece") {
+        return "pcs";
+    }
+    return unit;
+}
 
 function addItemToList() {
     // Save item to storage
