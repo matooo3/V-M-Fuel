@@ -622,7 +622,7 @@ app.get("/api/get-ingredients-from-week-plan", authMiddleware, checkRole("user")
                         name: row.name,
                         unit_of_measurement: row.unit_of_measurement,
                         amount: 0,
-                        ingredient_unit: row.ingredient_unit,
+                        unit: row.ingredient_unit,
                         calories_per_UoM: row.calories_per_UoM,
                         carbs_per_UoM: row.carbs_per_UoM,
                         fats_per_UoM: row.fats_per_UoM,
