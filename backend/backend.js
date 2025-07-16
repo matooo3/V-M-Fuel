@@ -541,7 +541,7 @@ app.get("/api/get-user-data", authMiddleware, checkRole("user"), (req, res) => {
 
 // GET INGREDIENTS FROM WEEK PLAN
 // backend/routes/ingredients.js
-router.get('/get-ingredients-from-week-plan', authenticateToken, async (req, res) => {
+app.get('/get-ingredients-from-week-plan', authenticateToken, async (req, res) => {
   const userId = req.user.id;
   const [rows] = await db.query('SELECT week_plan FROM users WHERE user_id = ?', [userId]);
 
