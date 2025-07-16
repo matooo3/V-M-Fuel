@@ -32,13 +32,18 @@ export default async function loadHome() {
     let optimalKcal = await Plan.getOptimalKcal();
     let eatenKcal = getEatenKcal();
     const todaysMeals = await getTodaysMeals();
-    const nextMeal = getNextMeal();
 
     await updateProgressCircle(eatenKcal, optimalKcal);
     updateProgressCircleText(eatenKcal);
     await updateMealsPlanned(todaysMeals);
     await updateGoalPercentage(eatenKcal, optimalKcal);
-    updateNextMeal(nextMeal);
+
+
+    // next meal structure
+
+    let nextMeals = await getNextMeals();
+    console.log(nextMeals)
+    saveNextMealsToDB(nextMeals);
 
 
     // Eventlistener: -------------------------------------------
@@ -57,6 +62,18 @@ export default async function loadHome() {
             updateAdminContainer();
 
         });
+    });
+
+    const checkbox = document.getElementById('checked-circle');
+
+    checkbox.addEventListener('change', (event) => {
+        console.log('Checkbox status:', event.target.checked);
+
+        setTimeout(() => {
+            updateNextMeal(nextMeals);
+            checkbox.checked = false;
+        }, 300);
+
     });
 
 
@@ -142,26 +159,6 @@ function countDefinedMeals(todaysMeals) {
     return definedCount
 }
 
-function getNextMeal() {
-
-    const dish = {
-        dish_id: 1,
-        meal_category: "main",
-        name: "chili con carne",
-        preparation: "#Fry minced meatin a pan #Add tomato sauce, kidney beans, beef broth and corn #Season with paprika powder and chili #Simmer for  5-10 minutes",
-        preparation_time_in_min: 20,
-        tags: ["cut", "bulk"],
-        total_calories: 820,
-        total_carbs: 1,
-        total_fat: 1,
-        total_protein: 1,
-        vm_score: 1
-    };
-
-    return dish;
-
-}
-
 async function calculatePercentage(eatenKcal, optimalKcal) {
 
     let percentage = (eatenKcal / optimalKcal) * 100;
@@ -206,16 +203,98 @@ async function updateGoalPercentage(eatenKcal, optimalKcal) {
     goalPercentage.textContent = `${Math.round(percentage)}%`;
 }
 
+
+// --------------------- Next Meals ----------------------
+
+let Meals = {
+        breakfast: {
+            dish_id: 204,
+            factor: 1.07904,
+            meal_category: "breakfast",
+            name: "Spinach Omelette",
+            preparation: "#Whisk eggs #Sauté spinach briefly #Pour eggs into pan and cook until set",
+            preparation_time_in_min: 7,
+            tags: "[\"keto\", \"bulk\"]",
+            total_calories: 270,
+            total_carbs: 2,
+            total_fat: 19,
+            total_protein: 15,
+            vm_score: 4,
+            eaten: false
+        },
+        dinner: {
+            dish_id: 205,
+            name: 'Tofu Stir Fry',
+            preparation: '#Sauté tofu #Add zucchini and spinach #Season with soy sauce and chili',
+            vm_score: 5,
+            meal_category: 'main',
+            factor: 1.2,
+            preparation_time_in_min: 15,
+            tags: "[\"vegetarian\", \"asian\"]",
+            total_calories: 320,
+            total_carbs: 12,
+            total_fat: 22,
+            total_protein: 18,
+            eaten: false
+        },
+        lunch: {
+            dish_id: 205,
+            name: 'Tofu Stir Fry',
+            preparation: '#Sauté tofu #Add zucchini and spinach #Season with soy sauce and chili',
+            vm_score: 5,
+            meal_category: 'main',
+            factor: 0.95,
+            preparation_time_in_min: 15,
+            tags: "[\"vegetarian\", \"asian\"]",
+            total_calories: 305,
+            total_carbs: 11,
+            total_fat: 21,
+            total_protein: 17,
+            eaten: false
+        },
+        puffer: null
+    };
+
+async function getNextMealsFromDB() {
+
+    return Meals;
+}
+
+function saveNextMealsToDB(nextMeals) {
+
+    Meals = nextMeals
+}
+
+// loading: 
+// getNextMeals
+// saveNextMealsToDB
+
+// clicked eventlistener
+
+// updateNextMeals
+// ----- getNextMeal
+// ----- renderNextMeal
+// ----- setEatenState
+// ----- saveNextMealstoDB
+
+function updateNextMeal(nextMeals) {
+
+    const nextMeal = getNextMeal(nextMeals);
+    console.log(nextMeal)
+    renderNextMeal(nextMeal);
+
+    nextMeals = setEatenState(nextMeals);
+    saveNextMealsToDB(nextMeals);
+}
+
 async function getNextMeals() {
 
-    let nextMeals = await getNextMealsFromDB();
+    let nextMeals = getNextMealsFromDB();
 
     if (!nextMeals) {
 
-        const nextMeals = await getTodaysMeals();
-        await saveNextMealsToDB(nextMeals);
-
-        return nextMeals[0];
+        nextMeals = await getTodaysMeals();
+        nextMeals = initializeEatenState(nextMeals);
 
     }
 
@@ -223,27 +302,49 @@ async function getNextMeals() {
 
 }
 
-async function removeEatenMeal(nextMeals) {
+function initializeEatenState(nextMeals) {
 
-    const keys = Object.keys(nextMeals);
+    Object.keys(nextMeals).forEach(key => {
 
-    if (keys.length > 0) {
-        delete nextMeals[keys[0]];
-    }
+        if (nextMeals[key]) {
+
+            nextMeals[key].eaten = false;
+        }
+    });
+
+    return nextMeals
 }
 
-// loading: getNextMeals, renderNextMeal
+function setEatenState(nextMeals) {
+
+    Object.keys(nextMeals).forEach(key => {
+
+        if (nextMeals[key] && !nextMeals[key].eaten) {
+
+            nextMeals[key].eaten = true;
+            return nextMeals;
+
+        }
+    });
+}
+
+function getNextMeal(nextMeals) {
+    console.log('WEWE', nextMeals)
+    return Object.values(nextMeals).find(meal =>
+        meal && meal.eaten === false
+    );
+}
 
 
 function renderNextMeal(nextMeal) {
     const mealName = document.querySelector('.meal-name');
-    const meal_category = document.querySelector('.meal-category-h"');
+    const meal_category = document.querySelector('.meal-category-h');
     const calories = document.querySelector('.calories-db');
     const nutritionValues = document.querySelectorAll('.nutrition-value-mp');
 
     mealName.textContent = nextMeal.name;
     meal_category.textContent = nextMeal.meal_category;
-    calories.textContent = nextMeal.total_calories;
+    calories.textContent = `${nextMeal.total_calories} kcal`;
     nutritionValues[0].textContent = nextMeal.total_protein; // Protein
     nutritionValues[1].textContent = nextMeal.total_carbs; // Carbs
     nutritionValues[2].textContent = nextMeal.total_fat; // Fat 
