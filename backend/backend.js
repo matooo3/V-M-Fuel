@@ -621,7 +621,7 @@ app.get("/api/get-ingredients-from-week-plan", authMiddleware, checkRole("user")
                         ingredient_id: row.ingredient_id,
                         name: row.name,
                         unit_of_measurement: row.unit_of_measurement,
-                        total_amount: 0,
+                        amount: 0,
                         ingredient_unit: row.ingredient_unit,
                         calories_per_UoM: row.calories_per_UoM,
                         carbs_per_UoM: row.carbs_per_UoM,
@@ -631,7 +631,7 @@ app.get("/api/get-ingredients-from-week-plan", authMiddleware, checkRole("user")
                     };
                 }
 
-                aggregatedIngredients[key].total_amount += row.amount * scaleFactor;
+                aggregatedIngredients[key].amount += row.amount * scaleFactor;
             });
 
             const result = Object.values(aggregatedIngredients);
