@@ -539,6 +539,59 @@ app.get("/api/get-user-data", authMiddleware, checkRole("user"), (req, res) => {
   });
 });
 
+// GET INGREDIENTS FROM WEEK PLAN
+// backend/routes/ingredients.js
+router.get('/get-ingredients-from-week-plan', authenticateToken, async (req, res) => {
+  const userId = req.user.id;
+  const [rows] = await db.query('SELECT week_plan FROM users WHERE user_id = ?', [userId]);
+
+  if (!rows.length || !rows[0].week_plan) {
+    return res.status(400).json({ error: 'No week plan found for user' });
+  }
+
+  const plan = JSON.parse(rows[0].week_plan);
+  const dishMap = new Map();
+
+  for (const day of plan) {
+    for (const mealType of ['breakfast', 'lunch', 'dinner']) {
+      const meal = day[mealType];
+      if (meal && meal.dish_id) {
+        const dishId = meal.dish_id;
+        const factor = meal.factor ?? 1; // fallback falls kein Faktor gespeichert
+
+        if (!dishMap.has(dishId)) {
+          dishMap.set(dishId, factor);
+        } else {
+          dishMap.set(dishId, dishMap.get(dishId) + factor); // Faktor kumulieren
+        }
+      }
+    }
+  }
+
+  // Erzeuge dynamische VALUES-Konstruktion für SQL
+  const dishFactorsSQL = [...dishMap.entries()]
+    .map(([dishId, factor]) => `SELECT ${dishId} AS dish_id, ${factor} AS factor`)
+    .join(' UNION ALL ');
+
+  const query = `
+    SELECT 
+      di.ingredient_id,
+      i.name,
+      di.unit_of_measurement,
+      ROUND(SUM(di.amount * df.factor), 2) AS total_amount
+    FROM dish_ingredients di
+    JOIN ingredients i ON i.ingredient_id = di.ingredient_id
+    JOIN (
+      ${dishFactorsSQL}
+    ) AS df ON df.dish_id = di.dish_id
+    GROUP BY di.ingredient_id, di.unit_of_measurement
+    ORDER BY i.name;
+  `;
+
+  const [ingredients] = await db.query(query);
+  res.json(ingredients);
+});
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Starte den Server
