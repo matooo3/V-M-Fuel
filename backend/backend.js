@@ -540,13 +540,6 @@ app.get("/api/get-user-data", authMiddleware, checkRole("user"), (req, res) => {
 });
 
 
-const {
-    getUserWeekPlan,
-    extractDishMapFromWeekPlan,
-    getIngredientsFromDishMap,
-    aggregateIngredients
-} = require("./weekPlan");
-
 // GET INGREDIENTS FROM WEEK PLAN
 app.get("/api/get-ingredients-from-week-plan", authMiddleware, checkRole("user"), async (req, res) => {
     const userId = req.user.id;
