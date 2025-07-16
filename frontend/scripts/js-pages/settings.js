@@ -201,8 +201,8 @@ export function referenceToLastHash() {
 export function saveSettings() {
 
     if (!isSettingsValid()) {
-        alert("Please fill out all required fields.");
-        // referenceToLastHash(); // alternativ => closeButton
+        // alert("Please fill out all required fields.");
+        referenceToLastHash(); // alternativ => closeButton
         return;
     }
 

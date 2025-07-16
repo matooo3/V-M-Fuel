@@ -53,7 +53,7 @@ async function getWeekPlan() {
 
 async function generateNewWeekPlan() {
 
-    let kcalOptimal = await getRequiredCalories();
+    let kcalOptimal = await getOptimalKcal();
 
     console.log("Optimal daily Calories!: " + kcalOptimal);
 
@@ -205,9 +205,9 @@ function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, 
 
 };
 
-async function getRequiredCalories() {
+export async function getOptimalKcal() {
 
-    let requiredCalories = 3000; // default value;
+    let optimalKcal = 3000; // default value;
 
     const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal } = await Storage.getUserDataFromDB();
 
@@ -220,13 +220,13 @@ async function getRequiredCalories() {
         const activityMultiplier1 = getActivityMultiplier(activityLevel);
         const goalAdjustment1 = getGoalAdjustment(goal);
 
-        requiredCalories = calculateCalories(gender1, age1, weightKg1, heightCm1, activityMultiplier1, goalAdjustment1);
+        optimalKcal = calculateCalories(gender1, age1, weightKg1, heightCm1, activityMultiplier1, goalAdjustment1);
 
-        console.log("Calculated requ5656565656ired calories: " + requiredCalories);
+        console.log("Calculated optimal calories: " + optimalKcal);
 
     }
 
-    return requiredCalories;
+    return optimalKcal;
 
 }
 
