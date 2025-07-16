@@ -233,6 +233,11 @@ export function getWeekPlanFromDB() {
   return Api.fetchDataWithToken("/get-week-plan", token);
 }
 
+export function getIngredientsFromWeekPlan() {
+    const token = Auth.getUserToken();
+    return Api.fetchDataWithToken("/get-ingredients-from-week-plan", token);
+}
+
 
 // Local storage (for login / initial data)
 export function saveUserDataToLS(userData) {
