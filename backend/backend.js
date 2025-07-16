@@ -539,106 +539,37 @@ app.get("/api/get-user-data", authMiddleware, checkRole("user"), (req, res) => {
   });
 });
 
+
+const {
+    getUserWeekPlan,
+    extractDishMapFromWeekPlan,
+    getIngredientsFromDishMap,
+    aggregateIngredients
+} = require("./weekPlan");
+
 // GET INGREDIENTS FROM WEEK PLAN
-app.get("/api/get-ingredients-from-week-plan", authMiddleware, checkRole("user"), (req, res) => {
+app.get("/api/get-ingredients-from-week-plan", authMiddleware, checkRole("user"), async (req, res) => {
     const userId = req.user.id;
 
-    const getWeekPlanQuery = "SELECT week_plan FROM users WHERE user_id = ?";
-    db.query(getWeekPlanQuery, [userId], (err, results) => {
-        if (err) {
-            console.error("Error retrieving week plan:", err);
-            return res.status(500).json({ message: "Error retrieving week plan" });
-        }
-
-        if (!results.length || !results[0].week_plan) {
-            return res.status(400).json({ error: "No week plan found for the user" });
-        }
-
-        let weekPlan;
-        try {
-            weekPlan = JSON.parse(results[0].week_plan);
-        } catch (parseError) {
-            console.error("Error parsing week plan:", parseError);
-            return res.status(500).json({ error: "Error processing week plan" });
-        }
-
-        const dishMap = new Map();
-        for (const day of weekPlan) {
-            for (const mealType of ["breakfast", "lunch", "dinner"]) {
-                const meal = day[mealType];
-                if (meal && meal.dish_id) {
-                    const dishId = meal.dish_id;
-                    const factor = meal.factor ?? 1;
-
-                    if (!dishMap.has(dishId)) {
-                        dishMap.set(dishId, factor);
-                    } else {
-                        dishMap.set(dishId, dishMap.get(dishId) + factor);
-                    }
-                }
-            }
-        }
+    try {
+        const weekPlan = await getUserWeekPlan(userId);
+        const dishMap = extractDishMapFromWeekPlan(weekPlan);
 
         if (dishMap.size === 0) {
             return res.json([]);
         }
 
-        const dishIds = Array.from(dishMap.keys());
-        const placeholders = dishIds.map(() => "?").join(",");
+        const ingredients = await getIngredientsFromDishMap(dishMap);
+        const aggregated = aggregateIngredients(ingredients, dishMap);
 
-        const getIngredientsQuery = `
-            SELECT 
-                di.dish_id,
-                di.amount,
-                di.unit_of_measurement,
-                i.ingredient_id,
-                i.name,
-                i.Unit_of_Measurement AS ingredient_unit,
-                i.calories_per_UoM,
-                i.carbs_per_UoM,
-                i.fats_per_UoM,
-                i.protein_per_UoM,
-                i.category
-            FROM dish_ingredients di
-            JOIN ingredients i ON di.ingredient_id = i.ingredient_id
-            WHERE di.dish_id IN (${placeholders})
-        `;
-
-        db.query(getIngredientsQuery, dishIds, (err2, rows) => {
-            if (err2) {
-                console.error("Error retrieving ingredients:", err2);
-                return res.status(500).json({ error: "Error retrieving ingredients" });
-            }
-
-            const aggregatedIngredients = {};
-
-            rows.forEach(row => {
-                const key = `${row.ingredient_id}-${row.unit_of_measurement}`;
-                const scaleFactor = dishMap.get(row.dish_id);
-
-                if (!aggregatedIngredients[key]) {
-                    aggregatedIngredients[key] = {
-                        ingredient_id: row.ingredient_id,
-                        name: row.name,
-                        unit_of_measurement: row.unit_of_measurement,
-                        amount: 0,
-                        ingredient_unit: row.ingredient_unit,
-                        calories_per_UoM: row.calories_per_UoM,
-                        carbs_per_UoM: row.carbs_per_UoM,
-                        fats_per_UoM: row.fats_per_UoM,
-                        protein_per_UoM: row.protein_per_UoM,
-                        category: row.category
-                    };
-                }
-
-                aggregatedIngredients[key].amount += row.amount * scaleFactor;
-            });
-
-            const result = Object.values(aggregatedIngredients);
-            res.json(result);
-        });
-    });
+        res.json(aggregated);
+    } catch (err) {
+        console.error(err.message, err);
+        res.status(err.status || 500).json({ error: err.message || "Internal server error" });
+    }
 });
+
+
 
 
 
