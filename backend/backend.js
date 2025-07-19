@@ -706,7 +706,7 @@ app.get("/api/get-next-meals", authMiddleware, checkRole("user"), (req, res) => 
       }
     }
     
-    res.json({ next_meals: nextMeals });
+    res.json(nextMeals);
   });
 });
 
