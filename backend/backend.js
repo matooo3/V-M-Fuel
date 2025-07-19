@@ -120,7 +120,7 @@ app.get("/api/users", authMiddleware, checkRole("admin"), (req, res) => {
 });
 
 // API-Endpunkt: Alle Zuordnungen zwischen Nutzern und Gerichten abrufen
-app.get("/api/user_dishes", authMiddleware, checkRole("user"),(req, res) => {
+app.get("/api/user_dishes", authMiddleware, checkRole("user"), (req, res) => {
     const query = "SELECT * FROM user_dishes";
     db.query(query, (err, results) => {
         if (err) {
@@ -400,7 +400,7 @@ app.post("/api/add-ingredient", authMiddleware, checkRole("cook"), (req, res) =>
         });
 
     });
-    
+
 
 });
 
@@ -504,39 +504,39 @@ app.get("/api/get-week-plan", authMiddleware, checkRole("user"), (req, res) => {
 
 // SAVE USER DATA (gender - goal)
 app.post("/api/save-user-data", authMiddleware, checkRole("user"), (req, res) => {
-  const userId = req.user.id;
-  const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal } = req.body;
+    const userId = req.user.id;
+    const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal } = req.body;
 
-  const query = `
+    const query = `
     UPDATE users SET
       gender = ?, age = ?, weight_kg = ?, weight_pounds = ?,
       height_cm = ?, height_feet_and_inches = ?, activityLevel = ?, goal = ?
     WHERE user_id = ?`;
 
-  db.query(query, [gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal, userId], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Failed to update user info" });
-    }
-    res.status(200).json({ message: "User info successfully updated" });
-  });
+    db.query(query, [gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal, userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Failed to update user info" });
+        }
+        res.status(200).json({ message: "User info successfully updated" });
+    });
 });
 
 // GET USER DATA (gender - goal)
 app.get("/api/get-user-data", authMiddleware, checkRole("user"), (req, res) => {
-  const userId = req.user.id;
+    const userId = req.user.id;
 
-  const query = `
+    const query = `
     SELECT gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal
     FROM users WHERE user_id = ?`;
 
-  db.query(query, [userId], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Error fetching user data" });
-    }
-    res.json(results[0] || {});
-  });
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Error fetching user data" });
+        }
+        res.json(results[0] || {});
+    });
 });
 
 
@@ -663,51 +663,49 @@ function aggregateIngredients(rows, dishMap) {
 
 // SAVE NEXT MEALS
 app.post("/api/save-next-meals", authMiddleware, checkRole("user"), (req, res) => {
-  const userId = req.user.id;
-  const { next_meals } = req.body;
+    const userId = req.user.id;
+    const { next_meals } = req.body;
 
-  const nextMealsJson = JSON.stringify(next_meals);
+    const nextMealsJson = JSON.stringify(next_meals);
 
-  const query = `
+    const query = `
     UPDATE users SET next_meals = ? WHERE user_id = ?`;
 
-  db.query(query, [nextMealsJson, userId], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Failed to update next meals" });
-    }
-    res.status(200).json({ message: "Next meals successfully updated" });
-  });
+    db.query(query, [nextMealsJson, userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Failed to update next meals" });
+        }
+        res.status(200).json({ message: "Next meals successfully updated" });
+    });
 });
 
 // GET NEXT MEALS
 app.get("/api/get-next-meals", authMiddleware, checkRole("user"), (req, res) => {
-  const userId = req.user.id;
+    const userId = req.user.id;
 
-  const query = `
+    const query = `
     SELECT next_meals FROM users WHERE user_id = ?`;
 
-  db.query(query, [userId], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Error fetching next meals" });
-    }
-    
-    const result = results[0];
-    let nextMeals = {};
-    
-    // Parse den JSON String zurück zu einem Object
-    if (result && result.next_meals) {
-      try {
-        nextMeals = JSON.parse(result.next_meals);
-      } catch (parseErr) {
-        console.error("Error parsing next_meals JSON:", parseErr);
-        nextMeals = {};
-      }
-    }
-    
-    res.json(nextMeals);
-  });
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Error fetching next meals" });
+        }
+
+        if (results.length === 0 || !results[0].next_meals) {
+
+            return res.json([]);
+        }
+
+        try {
+            const nextMeals = JSON.parse(results[0].next_meals);
+            return res.json(nextMeals);
+        } catch (parseErr) {
+            console.error("Error parsing next_meals JSON:", parseErr);
+            return res.status(500).send("Error processing next meals");
+        }
+    });
 });
 
 
