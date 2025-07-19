@@ -119,7 +119,9 @@ export async function setData() {
 // CHANGE USER ROLE IN DB
 
 export async function getUserIDFromDB(email) {
-    const users = await Api.fetchData("/users");
+    
+    const users = await Api.fetchDataWithToken("/users", Auth.getUserToken());
+
     const user = users.find((u) => u.email === email);
 
     if (!user) {
