@@ -159,8 +159,28 @@
     padding: 10px 15px 10px 15px;
     display: flex;
     flex-direction: column;
-    min-height: 115px;
+    height: fit-content;
     gap: 8px;
+}
+
+.congratulations-message-db {
+    padding: 10px 15px 10px 15px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #6B7280;
+    gap: 5px;
+}
+
+#congrats-link{
+    display: none;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--accent-color);
 }
 
 .first-row-db {
@@ -321,14 +341,14 @@
     gap: 15px;
 }
 
-.red-point-db {
+.check-point-db {
     min-width: 10px;
     min-height: 10px;
     border-radius: 50%;
     background-color: var(--border-color);
 }
 
-.red-point-db.active {
+.check-point-db.active {
     background-color: var(--accent-color);
 }
 

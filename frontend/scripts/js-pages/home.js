@@ -9,56 +9,7 @@ import * as Settings from './settings.js';
 import * as Search from '../searchBar.js';
 import * as Plan from './plan.js'
 
-
-let Meals = {
-    breakfast: {
-        dish_id: 204,
-        factor: 1.07904,
-        meal_category: "breakfast",
-        name: "1",
-        preparation: "#Whisk eggs #Sauté spinach briefly #Pour eggs into pan and cook until set",
-        preparation_time_in_min: 7,
-        tags: "[\"keto\", \"bulk\"]",
-        total_calories: 270,
-        total_carbs: 2,
-        total_fat: 19,
-        total_protein: 15,
-        vm_score: 4,
-        eaten: false
-    },
-    lunch: {
-        dish_id: 205,
-        name: '2',
-        preparation: '#Sauté tofu #Add zucchini and spinach #Season with soy sauce and chili',
-        vm_score: 5,
-        meal_category: 'main',
-        factor: 0.95,
-        preparation_time_in_min: 15,
-        tags: "[\"vegetarian\", \"asian\"]",
-        total_calories: 10000,
-        total_carbs: 11,
-        total_fat: 21,
-        total_protein: 17,
-        eaten: false
-    },
-    dinner: {
-        dish_id: 206,
-        name: '3',
-        preparation: '#Sauté tofu #Add zucchini and spinach #Season with soy sauce and chili',
-        vm_score: 5,
-        meal_category: 'main',
-        factor: 1.2,
-        preparation_time_in_min: 15,
-        tags: "[\"vegetarian\", \"asian\"]",
-        total_calories: 320,
-        total_carbs: 12,
-        total_fat: 22,
-        total_protein: 18,
-        eaten: false
-    },
-    puffer: null
-};
-
+let Meals = null;
 
 export default async function loadHome() {
     const app = document.getElementById('app');
@@ -68,7 +19,6 @@ export default async function loadHome() {
 
     //load user greeting! (eventlistener DOM loaded)
     // document.addEventListener('DOMContentLoaded', renderUserGreeting);
-    getTodaysMeals();
 
     Role.renderAdminPanel();
     Role.renderUserRoleColors();
@@ -81,6 +31,7 @@ export default async function loadHome() {
 
     // get meals with eaten state
     let initialTodaysMealsWithState = await getTodaysMealsWithState();
+    renderTodaysMeals(initialTodaysMealsWithState);
 
     // render first meal
     const mealValues = Object.values(initialTodaysMealsWithState);
@@ -119,9 +70,8 @@ function setUpInitialEventlisteners() {
     const checkbox = document.getElementById('checked-circle');
 
     checkbox.addEventListener('change', async (event) => {
-        console.log('Checkbox status:', event.target.checked);
-
         let todaysMealsWithState = await getTodaysMealsWithState();
+        let currentKey = 0;
         [todaysMealsWithState, currentKey] = updateAndSaveCurrentMeal(todaysMealsWithState);
         let nextMeal = getNextMeal(todaysMealsWithState, currentKey);
 
@@ -199,15 +149,18 @@ async function getTodaysMeals() {
 function getEatenKcal(todaysMealsWithState) {
 
     let caloriesCount = 0;
+    const keys = Object.keys(todaysMealsWithState);
 
-    for (let i = 0; i < todaysMealsWithState.length; i++) {
-        if (todaysMealsWithState[i].eaten) {
+    for (let i = 0; i < keys.length - 1; i++) {
 
-            caloriesCount += todaysMealsWithState[i].total_calories;
+        const currentKey = keys[i];
 
-        } else {
-            return caloriesCount;
+        if (todaysMealsWithState[currentKey].eaten) {
+
+            caloriesCount += todaysMealsWithState[currentKey].total_calories;
+
         }
+
     }
 
     return caloriesCount;
@@ -238,13 +191,11 @@ async function updateUI(todaysMealsWithState) {
     let optimalKcal = await Plan.getOptimalKcal();
     let eatenKcal = getEatenKcal(todaysMealsWithState);
 
-    console.log("Eaten Kcal:", eatenKcal);
-    console.log("Optimal Kcal:", optimalKcal);
-
     updateProgressCircle(eatenKcal, optimalKcal);
     updateProgressCircleText(eatenKcal);
     updateMealsPlanned(todaysMealsWithState);
     updateGoalPercentage(eatenKcal, optimalKcal);
+    updateTodaysMeals(todaysMealsWithState);
 
 }
 
@@ -288,14 +239,13 @@ async function getNextMealsFromDB() {
 async function saveNextMealsToDB(todaysMealsWithState) {
 
     Meals = todaysMealsWithState;
-    
+
 }
 
 async function getTodaysMealsWithState(reset = false) {
 
     let todaysMealsWithState = await getNextMealsFromDB();
-    console.log("Todays Meals with State:", todaysMealsWithState);
-
+    
     if (!todaysMealsWithState || reset) {
 
         let todaysMeals = await getTodaysMeals();
@@ -321,18 +271,10 @@ function initializeEatenState(todaysMeals, boolean = false) {
     return todaysMeals;
 }
 
-function setEatenState(clickedMeal) {
-
-    clickedMeal.eaten = true;
-
-    return clickedMeal;
-}
-
 function updateAndSaveCurrentMeal(todaysMealsWithState) {
 
     const keys = Object.keys(todaysMealsWithState);
-    console.log("Keys:", keys);
-
+    
     for (let i = 0; i < keys.length - 1; i++) {
         const currentKey = keys[i];
 
@@ -348,10 +290,34 @@ function updateAndSaveCurrentMeal(todaysMealsWithState) {
     return [null, null];
 }
 
-function getNextMeal(todaysMealsWithState, nextKey){
+function getNextMeal(todaysMealsWithState, nextKey) {
     return todaysMealsWithState[nextKey] || null;
 }
 
+function updateTodaysMeals(todaysMealsWithState) {
+
+
+    const list = document.getElementById('todays-meals-container');
+
+    const keys = Object.keys(todaysMealsWithState);
+
+    for (let i = 0; i < keys.length - 1; i++) {
+        const currentKey = keys[i];
+
+        for (const child of list.children) {
+
+            let dish_id = child.querySelector(".item-id").textContent;
+
+            if(todaysMealsWithState[currentKey].dish_id === Number(dish_id)) {
+                if (todaysMealsWithState[currentKey].eaten) {
+                    child.querySelector(".check-point-db").classList.add("active");
+                } 
+            }
+
+        }
+    }
+
+}
 
 function renderNextMeal(nextMeal) {
 
@@ -373,6 +339,35 @@ function renderNextMeal(nextMeal) {
     nutritionValues[2].textContent = nextMeal.total_fat; // Fat 
 }
 
+function renderTodaysMeals(todaysMealsWithState) {
+
+    const list = document.getElementById('todays-meals-container');
+
+    const keys = Object.keys(todaysMealsWithState);
+
+    for (let i = 0; i < keys.length - 1; i++) {
+        const currentKey = keys[i];
+        list.appendChild(createMealCard(todaysMealsWithState[currentKey]));
+
+    }
+
+}
+
+function createMealCard(todaysMeal) {
+
+    const card = document.createElement("li");
+    card.className = "card drop-shadow mealcards-db";
+    card.innerHTML = `<div class="check-point-db"></div>
+                    <div class="todays-meal-info">
+                        <span class="item-id">${todaysMeal.dish_id}</span>
+                        <h3 class="meal-name-db">${todaysMeal.name}</h3>
+                        <span class="subtext">${todaysMeal.meal_category}</span>
+                    </div>
+                    <h3 class="todays-calories">${todaysMeal.total_calories}</h3>`;
+
+    return card;
+}
+
 function renderCongratulations() {
 
     const div = document.querySelector(".next-meal-card-db");
@@ -391,7 +386,7 @@ function renderCongratulations() {
 
 }
 
-function resetEventlistener(){
+function resetEventlistener() {
     document.getElementById("congrats-link").addEventListener("click", async () => {
 
         let initialTodaysMealsWithState = await getTodaysMealsWithState(reset = true);
