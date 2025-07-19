@@ -189,7 +189,9 @@ async function calculatePercentage(eatenKcal, optimalKcal) {
 async function updateUI(todaysMealsWithState) {
 
     let optimalKcal = await Plan.getOptimalKcal();
-    let eatenKcal = getEatenKcal(todaysMealsWithState);
+
+    let eatenKcal = 0;
+    eatenKcal = getEatenKcal(todaysMealsWithState);
 
     updateProgressCircle(eatenKcal, optimalKcal);
     updateProgressCircleText(eatenKcal);
@@ -234,6 +236,8 @@ async function updateGoalPercentage(eatenKcal, optimalKcal) {
 async function getNextMealsFromDB() {
 
     return Meals;
+
+
 }
 
 async function saveNextMealsToDB(todaysMealsWithState) {
@@ -245,12 +249,15 @@ async function saveNextMealsToDB(todaysMealsWithState) {
 async function getTodaysMealsWithState(reset = false) {
 
     let todaysMealsWithState = await getNextMealsFromDB();
-    
-    if (!todaysMealsWithState || reset) {
+
+    console.log("Todays meals with state:", todaysMealsWithState);
+
+    if (!todaysMealsWithState || Object.keys(todaysMealsWithState).length === 0 || reset) {
 
         let todaysMeals = await getTodaysMeals();
         todaysMealsWithState = initializeEatenState(todaysMeals);
-        saveNextMealsToDB(todaysMealsWithState);
+        console.log("First meals save:", todaysMealsWithState);
+        await saveNextMealsToDB(todaysMealsWithState);
 
     }
 
@@ -306,9 +313,9 @@ function updateTodaysMeals(todaysMealsWithState) {
 
         for (const child of list.children) {
 
-            let dish_id = child.querySelector(".item-id").textContent;
+            let iteration = child.querySelector(".item-id").textContent;
 
-            if(todaysMealsWithState[currentKey].dish_id === Number(dish_id)) {
+            if (i === Number(iteration)) {
                 if (todaysMealsWithState[currentKey].eaten) {
                     child.querySelector(".check-point-db").classList.add("active");
                 } else {
@@ -349,19 +356,19 @@ function renderTodaysMeals(todaysMealsWithState) {
 
     for (let i = 0; i < keys.length - 1; i++) {
         const currentKey = keys[i];
-        list.appendChild(createMealCard(todaysMealsWithState[currentKey]));
+        list.appendChild(createMealCard(i, todaysMealsWithState[currentKey]));
 
     }
 
 }
 
-function createMealCard(todaysMeal) {
+function createMealCard(i, todaysMeal) {
 
     const card = document.createElement("li");
     card.className = "card drop-shadow mealcards-db";
     card.innerHTML = `<div class="check-point-db"></div>
                     <div class="todays-meal-info">
-                        <span class="item-id">${todaysMeal.dish_id}</span>
+                        <span class="item-id">${i}</span>
                         <h3 class="meal-name-db">${todaysMeal.name}</h3>
                         <span class="subtext">${todaysMeal.meal_category}</span>
                     </div>
@@ -394,13 +401,13 @@ function resetEventlistener() {
         let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
         await saveNextMealsToDB(initialTodaysMealsWithState);
 
+        // update ui accordingly
+        await updateUI(initialTodaysMealsWithState);
+
         // render first meal
         const mealValues = Object.values(initialTodaysMealsWithState);
         const firstMeal = mealValues[0];
         renderNextMeal(firstMeal);
-
-        // update ui accordingly
-        await updateUI(initialTodaysMealsWithState);
 
     });
 }
