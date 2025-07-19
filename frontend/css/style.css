@@ -52,7 +52,9 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 
-input, textarea, [contenteditable="true"] {
+input,
+textarea,
+[contenteditable="true"] {
     user-select: text;
     -webkit-user-select: text;
 }
@@ -146,6 +148,8 @@ button {
 }
 
 #main-nav a {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
     text-decoration: none;
     position: relative;
     padding: 8px;
@@ -172,7 +176,7 @@ button {
     bottom: 0;
     left: 0;
     right: 0;
-    height: var(--nav-height); 
+    height: var(--nav-height);
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
@@ -190,14 +194,14 @@ button {
     font-variation-settings: "wdth" 100;
 }
 
-.item-id{
+.item-id {
     display: none;
 }
 
 
 @media (max-width: 370px) {
 
-    #main-nav{
+    #main-nav {
         gap: 30px;
     }
 }
