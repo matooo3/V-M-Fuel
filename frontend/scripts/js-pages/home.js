@@ -508,8 +508,10 @@ async function renderUserList() {
     Search.searchULs(searchInputUser, userList);
 }
 
-function deleteUser(user_id) {
+async function deleteUser(user_id) {
     Storage.deleteUserFromDB(user_id);
+    setTimeout(() => {}, 2000); // 750 ms verzögern
+    console.warn("TOTAL USERS ARE BEING RENDERED AGAIN")
     renderTotalUsers();
 }
 
