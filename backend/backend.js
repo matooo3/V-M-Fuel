@@ -174,7 +174,7 @@ app.get("/api/dishes_full", (req, res) => {
 /////////////////////////////////////////////////////////////////////////////////////
 function authMiddleware(req, res, next) {
     const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(409).json({ message: "Token fehlt" });
+    if (!authHeader) return res.status(401).json({ message: "Token fehlt" });
 
     const token = authHeader.split(" ")[1];
     try {
@@ -189,7 +189,7 @@ function authMiddleware(req, res, next) {
 function checkRole(requiredRole) {
     return function (req, res, next) {
         if (!req.user)
-            return res.status(408).json({ message: "Not logged in" });
+            return res.status(401).json({ message: "Not logged in" });
         if (req.user.role !== requiredRole && req.user.role !== "admin") {
             return res.status(403).json({ message: "Not allowed" });
         }
