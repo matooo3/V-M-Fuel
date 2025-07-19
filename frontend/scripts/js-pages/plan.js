@@ -31,7 +31,6 @@ async function initializeCalendar(today, currentWeek) {
 async function setupWeekContent(today, currentWeek, weekPlan) {
 
     const dayContent = await generateDayContent(currentWeek, weekPlan);
-    showDay(today.getDate(), dayContent);
     addDayEventListeners(dayContent);
 
 }
@@ -45,7 +44,7 @@ async function getWeekPlan() {
         console.warn("Week plan not found in database. Generating a new one...");
         weekPlan = await generateNewWeekPlan();
     }
-    
+
     console.warn("Week plan loaded from DB:", weekPlan);
 
     return weekPlan;
@@ -207,7 +206,7 @@ function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, 
 
 export async function getOptimalKcal() {
 
-    let optimalKcal = 3000; // default value;
+    let optimalKcal = 0; // default value;
 
     const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal } = await Storage.getUserDataFromDB();
 
@@ -252,6 +251,14 @@ function renderDay(dayPlan) {
     html += renderMeal(dayPlan.lunch, "Lunch");
     html += renderMeal(dayPlan.dinner, "Dinner");
     return html;
+}
+
+function getCurrentlySelectedDay() {
+    const selectedDayElement = document.querySelector(".day.selected");
+    if (selectedDayElement) {
+        return parseInt(selectedDayElement.getAttribute("data-day"));
+    }
+    return null;
 }
 
 function renderMeal(dish, mealType) {
@@ -322,6 +329,11 @@ function addDayEventListeners(dayContent) {
             showDay(day, dayContent);
         });
     });
+
+    const currentlySelectedDay = getCurrentlySelectedDay();
+    if (currentlySelectedDay) {
+        showDay(currentlySelectedDay, dayContent);
+    }
 }
 
 function addGenerateEventListener(today, currentWeek) {
@@ -330,8 +342,15 @@ function addGenerateEventListener(today, currentWeek) {
     if (generateBtn) {
         generateBtn.addEventListener("click", async () => {
 
+            const currentlySelectedDay = getCurrentlySelectedDay();
+
             const weekPlan = await generateNewWeekPlan();
-            await setupWeekContent(today, currentWeek, weekPlan);
+            const dayContent = await generateDayContent(currentWeek, weekPlan, today);
+            addDayEventListeners(dayContent);
+
+            if (currentlySelectedDay) {
+                showDay(currentlySelectedDay, dayContent);
+            }
 
         });
     }

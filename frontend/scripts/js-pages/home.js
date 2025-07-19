@@ -9,6 +9,7 @@ import * as Settings from './settings.js';
 import * as Search from '../searchBar.js';
 import * as Plan from './plan.js'
 
+let Meals = null;
 
 export default async function loadHome() {
     const app = document.getElementById('app');
@@ -18,7 +19,6 @@ export default async function loadHome() {
 
     //load user greeting! (eventlistener DOM loaded)
     // document.addEventListener('DOMContentLoaded', renderUserGreeting);
-    getTodaysMeals();
 
     Role.renderAdminPanel();
     Role.renderUserRoleColors();
@@ -29,25 +29,28 @@ export default async function loadHome() {
 
     await updateAdminContainer();
 
-    let optimalKcal = await Plan.getOptimalKcal();
-    let eatenKcal = getEatenKcal();
-    const todaysMeals = await getTodaysMeals();
+    // get meals with eaten state
+    let initialTodaysMealsWithState = await getTodaysMealsWithState();
+    renderTodaysMeals(initialTodaysMealsWithState);
 
-    await updateProgressCircle(eatenKcal, optimalKcal);
-    updateProgressCircleText(eatenKcal);
-    await updateMealsPlanned(todaysMeals);
-    await updateGoalPercentage(eatenKcal, optimalKcal);
+    // render first meal
+    const mealValues = Object.values(initialTodaysMealsWithState);
+    const firstMeal = mealValues[0];
+    renderNextMeal(firstMeal);
 
-
-    // next meal structure
-
-    let nextMeals = await getNextMeals();
-    console.log(nextMeals)
-    saveNextMealsToDB(nextMeals);
+    // update ui accordingly
+    await updateUI(initialTodaysMealsWithState);
 
 
     // Eventlistener: -------------------------------------------
-    // DOM-Manipulation:
+    setUpInitialEventlisteners();
+
+    // Settings Event Listener
+    Settings.loadSettingsEventListener();
+
+}
+
+function setUpInitialEventlisteners() {
 
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', function () {
@@ -66,20 +69,20 @@ export default async function loadHome() {
 
     const checkbox = document.getElementById('checked-circle');
 
-    checkbox.addEventListener('change', (event) => {
-        console.log('Checkbox status:', event.target.checked);
+    checkbox.addEventListener('change', async (event) => {
+        let todaysMealsWithState = await getTodaysMealsWithState();
+        let currentKey = 0;
+        [todaysMealsWithState, currentKey] = updateAndSaveCurrentMeal(todaysMealsWithState);
+        let nextMeal = getNextMeal(todaysMealsWithState, currentKey);
+
+        await updateUI(todaysMealsWithState);
 
         setTimeout(() => {
-            updateNextMeal(nextMeals);
+            renderNextMeal(nextMeal);
             checkbox.checked = false;
         }, 300);
 
     });
-
-
-    // Settings Event Listener
-    Settings.loadSettingsEventListener();
-
 }
 
 
@@ -143,19 +146,28 @@ async function getTodaysMeals() {
     return todaysMeals;
 }
 
-function getEatenKcal() {
+function getEatenKcal(todaysMealsWithState) {
 
-    return 1000;
+    let caloriesCount = 0;
+    const keys = Object.keys(todaysMealsWithState);
+
+    for (let i = 0; i < keys.length - 1; i++) {
+
+        const currentKey = keys[i];
+
+        if (todaysMealsWithState[currentKey].eaten) {
+
+            caloriesCount += todaysMealsWithState[currentKey].total_calories;
+
+        }
+
+    }
+
+    return caloriesCount;
 }
 
-async function getMealsAmount(todaysMeals) {
-
-    const planLength = countDefinedMeals(todaysMeals);
-    return planLength;
-}
-
-function countDefinedMeals(todaysMeals) {
-    const definedCount = Object.values(todaysMeals).filter(v => v != null).length;
+function getMealsAmount(todaysMealsWithState) {
+    const definedCount = Object.values(todaysMealsWithState).filter(v => v != null).length;
     return definedCount
 }
 
@@ -174,6 +186,19 @@ async function calculatePercentage(eatenKcal, optimalKcal) {
 
 // --------------------- Update Data ----------------------
 
+async function updateUI(todaysMealsWithState) {
+
+    let optimalKcal = await Plan.getOptimalKcal();
+    let eatenKcal = getEatenKcal(todaysMealsWithState);
+
+    updateProgressCircle(eatenKcal, optimalKcal);
+    updateProgressCircleText(eatenKcal);
+    updateMealsPlanned(todaysMealsWithState);
+    updateGoalPercentage(eatenKcal, optimalKcal);
+    updateTodaysMeals(todaysMealsWithState);
+
+}
+
 async function updateProgressCircle(eatenKcal, optimalKcal) {
 
     const percentage = await calculatePercentage(eatenKcal, optimalKcal);
@@ -191,7 +216,7 @@ function updateProgressCircleText(eatenKcal) {
 
 async function updateMealsPlanned(todaysMeals) {
 
-    const mealsAmount = await getMealsAmount(todaysMeals);
+    const mealsAmount = getMealsAmount(todaysMeals);
     const mealsPlanned = document.getElementById('planned-meals-h');
     mealsPlanned.textContent = mealsAmount;
 }
@@ -206,137 +231,103 @@ async function updateGoalPercentage(eatenKcal, optimalKcal) {
 
 // --------------------- Next Meals ----------------------
 
-let Meals = {
-        breakfast: {
-            dish_id: 204,
-            factor: 1.07904,
-            meal_category: "breakfast",
-            name: "Spinach Omelette",
-            preparation: "#Whisk eggs #Sauté spinach briefly #Pour eggs into pan and cook until set",
-            preparation_time_in_min: 7,
-            tags: "[\"keto\", \"bulk\"]",
-            total_calories: 270,
-            total_carbs: 2,
-            total_fat: 19,
-            total_protein: 15,
-            vm_score: 4,
-            eaten: false
-        },
-        dinner: {
-            dish_id: 205,
-            name: 'Tofu Stir Fry',
-            preparation: '#Sauté tofu #Add zucchini and spinach #Season with soy sauce and chili',
-            vm_score: 5,
-            meal_category: 'main',
-            factor: 1.2,
-            preparation_time_in_min: 15,
-            tags: "[\"vegetarian\", \"asian\"]",
-            total_calories: 320,
-            total_carbs: 12,
-            total_fat: 22,
-            total_protein: 18,
-            eaten: false
-        },
-        lunch: {
-            dish_id: 205,
-            name: 'Tofu Stir Fry',
-            preparation: '#Sauté tofu #Add zucchini and spinach #Season with soy sauce and chili',
-            vm_score: 5,
-            meal_category: 'main',
-            factor: 0.95,
-            preparation_time_in_min: 15,
-            tags: "[\"vegetarian\", \"asian\"]",
-            total_calories: 305,
-            total_carbs: 11,
-            total_fat: 21,
-            total_protein: 17,
-            eaten: false
-        },
-        puffer: null
-    };
-
 async function getNextMealsFromDB() {
 
     return Meals;
 }
 
-function saveNextMealsToDB(nextMeals) {
+async function saveNextMealsToDB(todaysMealsWithState) {
 
-    Meals = nextMeals
+    Meals = todaysMealsWithState;
+
 }
 
-// loading: 
-// getNextMeals
-// saveNextMealsToDB
+async function getTodaysMealsWithState(reset = false) {
 
-// clicked eventlistener
+    let todaysMealsWithState = await getNextMealsFromDB();
+    
+    if (!todaysMealsWithState || reset) {
 
-// updateNextMeals
-// ----- getNextMeal
-// ----- renderNextMeal
-// ----- setEatenState
-// ----- saveNextMealstoDB
-
-function updateNextMeal(nextMeals) {
-
-    const nextMeal = getNextMeal(nextMeals);
-    console.log(nextMeal)
-    renderNextMeal(nextMeal);
-
-    nextMeals = setEatenState(nextMeals);
-    saveNextMealsToDB(nextMeals);
-}
-
-async function getNextMeals() {
-
-    let nextMeals = getNextMealsFromDB();
-
-    if (!nextMeals) {
-
-        nextMeals = await getTodaysMeals();
-        nextMeals = initializeEatenState(nextMeals);
+        let todaysMeals = await getTodaysMeals();
+        todaysMealsWithState = initializeEatenState(todaysMeals);
+        saveNextMealsToDB(todaysMealsWithState);
 
     }
 
-    return nextMeals;
+    return todaysMealsWithState;
 
 }
 
-function initializeEatenState(nextMeals) {
+function initializeEatenState(todaysMeals, boolean = false) {
 
-    Object.keys(nextMeals).forEach(key => {
+    Object.keys(todaysMeals).forEach(key => {
 
-        if (nextMeals[key]) {
+        if (todaysMeals[key]) {
 
-            nextMeals[key].eaten = false;
+            todaysMeals[key].eaten = boolean;
         }
     });
 
-    return nextMeals
+    return todaysMeals;
 }
 
-function setEatenState(nextMeals) {
+function updateAndSaveCurrentMeal(todaysMealsWithState) {
 
-    Object.keys(nextMeals).forEach(key => {
+    const keys = Object.keys(todaysMealsWithState);
 
-        if (nextMeals[key] && !nextMeals[key].eaten) {
+    for (let i = 0; i < keys.length - 1; i++) {
+        const currentKey = keys[i];
 
-            nextMeals[key].eaten = true;
-            return nextMeals;
+        if (!todaysMealsWithState[currentKey].eaten) {
+            const nextKey = keys[i + 1];
+            todaysMealsWithState[currentKey].eaten = true;
+            saveNextMealsToDB(todaysMealsWithState);
+
+            return [todaysMealsWithState, nextKey];
+        }
+
+    }
+    return [null, null];
+}
+
+function getNextMeal(todaysMealsWithState, nextKey) {
+    return todaysMealsWithState[nextKey] || null;
+}
+
+function updateTodaysMeals(todaysMealsWithState) {
+
+
+    const list = document.getElementById('todays-meals-container');
+
+    const keys = Object.keys(todaysMealsWithState);
+
+    for (let i = 0; i < keys.length - 1; i++) {
+        const currentKey = keys[i];
+
+        for (const child of list.children) {
+
+            let dish_id = child.querySelector(".item-id").textContent;
+
+            if(todaysMealsWithState[currentKey].dish_id === Number(dish_id)) {
+                if (todaysMealsWithState[currentKey].eaten) {
+                    child.querySelector(".check-point-db").classList.add("active");
+                } else {
+                    child.querySelector(".check-point-db").classList.remove("active");
+                }
+            }
 
         }
-    });
-}
+    }
 
-function getNextMeal(nextMeals) {
-    console.log('WEWE', nextMeals)
-    return Object.values(nextMeals).find(meal =>
-        meal && meal.eaten === false
-    );
 }
-
 
 function renderNextMeal(nextMeal) {
+
+    if (!nextMeal) {
+        renderCongratulations();
+        return;
+    }
+
     const mealName = document.querySelector('.meal-name');
     const meal_category = document.querySelector('.meal-category-h');
     const calories = document.querySelector('.calories-db');
@@ -348,6 +339,70 @@ function renderNextMeal(nextMeal) {
     nutritionValues[0].textContent = nextMeal.total_protein; // Protein
     nutritionValues[1].textContent = nextMeal.total_carbs; // Carbs
     nutritionValues[2].textContent = nextMeal.total_fat; // Fat 
+}
+
+function renderTodaysMeals(todaysMealsWithState) {
+
+    const list = document.getElementById('todays-meals-container');
+
+    const keys = Object.keys(todaysMealsWithState);
+
+    for (let i = 0; i < keys.length - 1; i++) {
+        const currentKey = keys[i];
+        list.appendChild(createMealCard(todaysMealsWithState[currentKey]));
+
+    }
+
+}
+
+function createMealCard(todaysMeal) {
+
+    const card = document.createElement("li");
+    card.className = "card drop-shadow mealcards-db";
+    card.innerHTML = `<div class="check-point-db"></div>
+                    <div class="todays-meal-info">
+                        <span class="item-id">${todaysMeal.dish_id}</span>
+                        <h3 class="meal-name-db">${todaysMeal.name}</h3>
+                        <span class="subtext">${todaysMeal.meal_category}</span>
+                    </div>
+                    <h3 class="todays-calories">${todaysMeal.total_calories}</h3>`;
+
+    return card;
+}
+
+function renderCongratulations() {
+
+    const div = document.querySelector(".next-meal-card-db");
+
+    const congratsDiv = document.createElement("div");
+    congratsDiv.classList.add("congratulations-message-db");
+    congratsDiv.innerHTML = `
+  <span> Congratulations! 🎉</span>
+  <span>You have achieved your goal!</span> 
+  <a href="#" id="congrats-link">reset</a>
+  `;
+
+    div.replaceWith(congratsDiv);
+
+    resetEventlistener();
+
+}
+
+function resetEventlistener() {
+    document.getElementById("congrats-link").addEventListener("click", async () => {
+
+        let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
+        await saveNextMealsToDB(initialTodaysMealsWithState);
+
+        // render first meal
+        const mealValues = Object.values(initialTodaysMealsWithState);
+        const firstMeal = mealValues[0];
+        renderNextMeal(firstMeal);
+
+        // update ui accordingly
+        await updateUI(initialTodaysMealsWithState);
+
+    });
 }
 
 //
