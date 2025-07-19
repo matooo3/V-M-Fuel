@@ -661,6 +661,55 @@ function aggregateIngredients(rows, dishMap) {
     return Object.values(aggregated);
 }
 
+// SAVE NEXT MEALS
+app.post("/api/save-next-meals", authMiddleware, checkRole("user"), (req, res) => {
+  const userId = req.user.id;
+  const { next_meals } = req.body;
+
+  const nextMealsJson = JSON.stringify(next_meals);
+
+  const query = `
+    UPDATE users SET next_meals = ? WHERE user_id = ?`;
+
+  db.query(query, [nextMealsJson, userId], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Failed to update next meals" });
+    }
+    res.status(200).json({ message: "Next meals successfully updated" });
+  });
+});
+
+// GET NEXT MEALS
+app.get("/api/get-next-meals", authMiddleware, checkRole("user"), (req, res) => {
+  const userId = req.user.id;
+
+  const query = `
+    SELECT next_meals FROM users WHERE user_id = ?`;
+
+  db.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Error fetching next meals" });
+    }
+    
+    const result = results[0];
+    let nextMeals = {};
+    
+    // Parse den JSON String zurück zu einem Object
+    if (result && result.next_meals) {
+      try {
+        nextMeals = JSON.parse(result.next_meals);
+      } catch (parseErr) {
+        console.error("Error parsing next_meals JSON:", parseErr);
+        nextMeals = {};
+      }
+    }
+    
+    res.json({ next_meals: nextMeals });
+  });
+});
+
 
 
 
