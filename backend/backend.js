@@ -666,10 +666,14 @@ app.post("/api/save-next-meals", authMiddleware, checkRole("user"), (req, res) =
     const userId = req.user.id;
     const { next_meals } = req.body;
 
-    const nextMealsJson = JSON.stringify(next_meals);
+    if(!userId || !next_meals){
+        return res.status(400).json({ message: "User ID and next meals are required" });
+    }
 
     const query = `
     UPDATE users SET next_meals = ? WHERE user_id = ?`;
+
+    const nextMealsJson = JSON.stringify(next_meals);
 
     db.query(query, [nextMealsJson, userId], (err, result) => {
         if (err) {
@@ -695,7 +699,7 @@ app.get("/api/get-next-meals", authMiddleware, checkRole("user"), (req, res) => 
 
         if (results.length === 0 || !results[0].next_meals) {
 
-            return res.json([]);
+            return res.json({});
         }
 
         try {
@@ -707,8 +711,6 @@ app.get("/api/get-next-meals", authMiddleware, checkRole("user"), (req, res) => 
         }
     });
 });
-
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////
