@@ -274,7 +274,7 @@ function initializeEatenState(todaysMeals, boolean = false) {
 function updateAndSaveCurrentMeal(todaysMealsWithState) {
 
     const keys = Object.keys(todaysMealsWithState);
-    
+
     for (let i = 0; i < keys.length - 1; i++) {
         const currentKey = keys[i];
 
@@ -389,7 +389,7 @@ function renderCongratulations() {
 function resetEventlistener() {
     document.getElementById("congrats-link").addEventListener("click", async () => {
 
-        let initialTodaysMealsWithState = await getTodaysMealsWithState(reset = true);
+        let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
         await saveNextMealsToDB(initialTodaysMealsWithState);
 
         // render first meal
