@@ -72,6 +72,7 @@
 .tab {
     font-size: 1.5rem;
     font-weight: medium;
+    color: var(--main-text-color);
     border: none;
     background-color: transparent;
     width: 90px;
