@@ -60,6 +60,7 @@ input, textarea, [contenteditable="true"] {
 body {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
+    overscroll-behavior: none;
 }
 
 h1 {
