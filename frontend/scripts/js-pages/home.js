@@ -311,7 +311,9 @@ function updateTodaysMeals(todaysMealsWithState) {
             if(todaysMealsWithState[currentKey].dish_id === Number(dish_id)) {
                 if (todaysMealsWithState[currentKey].eaten) {
                     child.querySelector(".check-point-db").classList.add("active");
-                } 
+                } else {
+                    child.querySelector(".check-point-db").classList.remove("active");
+                }
             }
 
         }
