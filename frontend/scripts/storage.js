@@ -53,7 +53,7 @@ export async function getUsers() {
 
 // get USER-DISHES
 export async function getUserDishes() {
-    const userDishes = await Api.fetchData("/user_dishes");
+    const userDishes = await Api.fetchDataWithToken("/user_dishes", Auth.getUserToken());
     //     saveToLS('userDishes', userDishes);
     return userDishes;
 }
@@ -230,14 +230,16 @@ export function saveWeekPlanToDB(weekPlan) {
     Api.postData("/add-week-plan", { weekPlan, userId: user.id }, Auth.getUserToken());
 }
 
-export function getWeekPlanFromDB() {
+export async function getWeekPlanFromDB() {
   const token = Auth.getUserToken();
-  return Api.fetchDataWithToken("/get-week-plan", token);
+  const weekPlan = await Api.fetchDataWithToken("/get-week-plan", token);
+  return weekPlan;
 }
 
-export function getIngredientsFromWeekPlan() {
+export async function getIngredientsFromWeekPlan() {
     const token = Auth.getUserToken();
-    return Api.fetchDataWithToken("/get-ingredients-from-week-plan", token);
+    const result = await Api.fetchDataWithToken("/get-ingredients-from-week-plan", token);
+    return result;
 }
 
 

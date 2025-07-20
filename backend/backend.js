@@ -186,7 +186,7 @@ function authMiddleware(req, res, next) {
     }
 }
 
-function checkRole(requiredRole) {
+function checkRoleExact(requiredRole) {
     return function (req, res, next) {
         if (!req.user)
             return res.status(401).json({ message: "Not logged in" });
@@ -196,6 +196,30 @@ function checkRole(requiredRole) {
         next();
     };
 }
+
+function checkRole(requiredRole) {
+    return function (req, res, next) {
+        if (!req.user)
+            return res.status(401).json({ message: "Not logged in" });
+
+        const role = req.user.role;
+
+        const roleHierarchy = {
+            user: ["user", "cook", "admin"],
+            cook: ["cook", "admin"],
+            admin: ["admin"]
+        };
+
+        const allowedRoles = roleHierarchy[requiredRole] || [];
+
+        if (!allowedRoles.includes(role)) {
+            return res.status(403).json({ message: "Not allowed" });
+        }
+
+        next();
+    };
+}
+
 
 // Auth-API
 app.post("/api/login", (req, res) => {
