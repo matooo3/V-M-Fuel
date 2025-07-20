@@ -176,7 +176,7 @@ function saveNewItem() {
         name: itemName,
         category: category,
         amount: parseInt(amount, 10),
-        unit: unit
+        unit_of_measurement: unit
     };
 
     // Save the new item to storage (uncomment when ready)
