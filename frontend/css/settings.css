@@ -32,7 +32,7 @@
 .settings-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     max-height: 200px;
     width: 100%;
 }
@@ -42,9 +42,6 @@
 }
 
 #arrow-back-st {
-    position: absolute;
-    top: 20px;
-    left: 20px;
     width: 10px;
     height: 10px;
     border-left: 3px solid #1F2937;
