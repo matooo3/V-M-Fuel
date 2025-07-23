@@ -75,6 +75,11 @@ function addCheckboxEventListener() {
     const checkbox = document.getElementById('checked-circle');
 
     checkbox.addEventListener('change', async (event) => {
+
+        const checkboxSound = 'checkbox.mp3';
+        let volCheck = 0.2;
+        createSound(volCheck, checkboxSound);
+
         let todaysMealsWithState = await getTodaysMealsWithState();
         let currentKey = 0;
         [todaysMealsWithState, currentKey] = updateAndSaveCurrentMeal(todaysMealsWithState);
@@ -88,6 +93,12 @@ function addCheckboxEventListener() {
         }, 300);
 
     });
+}
+
+function createSound(volume = 0.2, file) {
+    const sound = new Audio(`/frontend/assets/sounds/${file}`);
+    sound.volume = volume;
+    sound.play();
 }
 
 
@@ -452,6 +463,11 @@ function resetEventlistener() {
 
 
         let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
+
+        const pageSound = 'page.mp3';
+        let volPage = 0.2;
+        createSound(volPage, pageSound);
+        
         await saveNextMealsToDB(initialTodaysMealsWithState);
 
         // update ui accordingly
