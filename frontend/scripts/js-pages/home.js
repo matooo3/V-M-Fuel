@@ -76,14 +76,16 @@ function addCheckboxEventListener() {
 
     checkbox.addEventListener('change', async () => {
 
+        const checkboxSound = 'checkbox.mp3';
+        let volCheck = 0.2;
+        createSound(volCheck, checkboxSound);
+
+        await sleep(100);
+
         let todaysMealsWithState = await getTodaysMealsWithState();
         let currentKey = 0;
         [todaysMealsWithState, currentKey] = updateAndSaveCurrentMeal(todaysMealsWithState);
         let nextMeal = getNextMeal(todaysMealsWithState, currentKey);
-
-        const checkboxSound = 'checkbox.mp3';
-        let volCheck = 0.2;
-        createSound(volCheck, checkboxSound);
 
         await updateUI(todaysMealsWithState);
 
@@ -93,6 +95,10 @@ function addCheckboxEventListener() {
         }, 300);
 
     });
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function createSound(volume, file) {
@@ -457,6 +463,8 @@ function resetEventlistener() {
         const pageSound = 'page.mp3';
         let volPage = 0.1;
         createSound(volPage, pageSound);
+
+        await sleep(280);
 
         await saveNextMealsToDB(initialTodaysMealsWithState);
 
