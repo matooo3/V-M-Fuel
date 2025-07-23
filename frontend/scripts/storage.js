@@ -226,6 +226,7 @@ export async function deleteIngredientFromDB(ingredientID) {
 // -------------------------- USER DATA ----------------------------
 // MEAL PLAN DB
 export function saveWeekPlanToDB(weekPlan) {
+
     const user = Auth.getUserFromToken();
     Api.postData("/add-week-plan", { weekPlan, userId: user.id }, Auth.getUserToken());
 }
@@ -308,6 +309,30 @@ export async function saveInitialUserDataToDB() {
     } catch (error) {
         console.error("Failed to save initial user data to DB:", error);
     }
+}
+
+// SAVE NEXT MEALS
+export async function saveNextMealsToDB(todaysMealsWithState) {
+    
+  const token = Auth.getUserToken();
+
+  console.log("Data being sent to save-next-meals:", todaysMealsWithState);
+
+  if (!token || !todaysMealsWithState) {
+    throw new Error("Token or UserInfo is missing");
+  }
+
+  await Api.postData("/save-next-meals", todaysMealsWithState, token);
+}
+
+// GET NEXT MEALS
+export async function getNextMealsFromDB() {
+
+    const token = Auth.getUserToken();
+    const data = await Api.fetchDataWithToken("/get-next-meals", token);
+  
+    return data; 
+
 }
 // ------------------------------------------------------------------
 
