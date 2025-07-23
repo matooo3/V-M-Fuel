@@ -194,8 +194,8 @@ async function updateUI(todaysMealsWithState) {
     console.log("Eaten Kcal:", eatenKcal);
     console.log("Optimal Kcal:", optimalKcal);
 
-    updateProgressCircle(eatenKcal, optimalKcal);
     updateProgressCircleText(eatenKcal);
+    await updateProgressCircle(eatenKcal, optimalKcal);
     updateMealsPlanned(todaysMealsWithState);
     updateGoalPercentage(eatenKcal, optimalKcal);
     updateTodaysMeals(todaysMealsWithState);
@@ -204,8 +204,9 @@ async function updateUI(todaysMealsWithState) {
 
 async function updateProgressCircle(eatenKcal, optimalKcal) {
 
-    const percentage = await calculatePercentage(eatenKcal, optimalKcal);
     const progressBar = document.querySelector('.progress-bar');
+    let percentage = 0;
+    percentage = await calculatePercentage(eatenKcal, optimalKcal);
     progressBar.style.setProperty('--progress-in-percent', percentage);
 
 }
@@ -389,25 +390,29 @@ function renderCongratulations() {
   `;
 
     div.replaceWith(congratsDiv);
-
     resetEventlistener();
 
 }
 
 function resetEventlistener() {
     document.getElementById("congrats-link").addEventListener("click", async () => {
-
+        
         let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
         await saveNextMealsToDB(initialTodaysMealsWithState);
 
+        const progressBar = document.querySelector('.progress-bar');
+        progressBar.style.transition = 'none'; // Disable transition for immediate update
         // update ui accordingly
-        await updateUI(initialTodaysMealsWithState);
+        await updateUI(initialTodaysMealsWithState)
+
+
 
         // render first meal
         const mealValues = Object.values(initialTodaysMealsWithState);
         const firstMeal = mealValues[0];
         renderNextMeal(firstMeal);
 
+        progressBar.style.transition = 'stroke-dashoffset 0.5s ease-out'; 
     });
 }
 
@@ -516,7 +521,7 @@ async function renderUserList() {
 
 async function deleteUser(user_id) {
     Storage.deleteUserFromDB(user_id);
-    setTimeout(() => {}, 2000); // 750 ms verzögern
+    setTimeout(() => { }, 2000); // 750 ms verzögern
     console.warn("TOTAL USERS ARE BEING RENDERED AGAIN")
     renderTotalUsers();
 }
