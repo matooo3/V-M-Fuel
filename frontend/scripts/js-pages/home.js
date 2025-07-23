@@ -29,21 +29,7 @@ export default async function loadHome() {
 
     await updateAdminContainer();
 
-    // get meals with eaten state
-    let initialTodaysMealsWithState = await getTodaysMealsWithState();
-    renderTodaysMeals(initialTodaysMealsWithState);
-
-    // render first meal
-    const mealValues = Object.values(initialTodaysMealsWithState);
-    const firstMeal = mealValues[0];
-    renderNextMeal(firstMeal);
-
-    // update ui accordingly
-    await updateUI(initialTodaysMealsWithState);
-
-
     // Eventlistener: -------------------------------------------
-    setUpInitialEventlisteners();
 
     // Settings Event Listener
     Settings.loadSettingsEventListener();
@@ -53,7 +39,7 @@ export default async function loadHome() {
 function setUpInitialEventlisteners() {
 
     document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', function () {
+        tab.addEventListener('click', async function () {
             // Remove 'active' class from all tabs
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
@@ -63,7 +49,6 @@ function setUpInitialEventlisteners() {
             this.classList.add('active');
             // Update the admin-container content
             updateAdminContainer();
-
         });
     });
 
@@ -98,7 +83,7 @@ function addCheckboxEventListener() {
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function createSound(volume, file) {
@@ -115,6 +100,21 @@ async function updateAdminContainer() {
     if (activeTab && activeTab.textContent.trim() === 'Standard') {
         const html = await loadHTMLTemplate('/frontend/html-pages/homeStandard.html');
         adminContainer.innerHTML = html;
+
+        // get meals with eaten state
+        let initialTodaysMealsWithState = await getTodaysMealsWithState();
+        renderTodaysMeals(initialTodaysMealsWithState);
+
+        // render first meal
+        const mealValues = Object.values(initialTodaysMealsWithState);
+        const firstMeal = mealValues[0];
+        renderNextMeal(firstMeal);
+
+        // update ui accordingly
+        await updateUI(initialTodaysMealsWithState);
+        
+        setUpInitialEventlisteners();
+
     } else {
         const html = await loadHTMLTemplate('/frontend/html-pages/homeRoles.html');
         adminContainer.innerHTML = html;
