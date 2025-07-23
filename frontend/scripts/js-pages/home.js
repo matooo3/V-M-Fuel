@@ -74,7 +74,7 @@ function addCheckboxEventListener() {
 
     const checkbox = document.getElementById('checked-circle');
 
-    checkbox.addEventListener('change', async (event) => {
+    checkbox.addEventListener('change', async () => {
 
         let todaysMealsWithState = await getTodaysMealsWithState();
         let currentKey = 0;
