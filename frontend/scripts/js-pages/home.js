@@ -76,14 +76,14 @@ function addCheckboxEventListener() {
 
     checkbox.addEventListener('change', async (event) => {
 
-        const checkboxSound = 'checkbox.mp3';
-        let volCheck = 0.2;
-        createSound(volCheck, checkboxSound);
-
         let todaysMealsWithState = await getTodaysMealsWithState();
         let currentKey = 0;
         [todaysMealsWithState, currentKey] = updateAndSaveCurrentMeal(todaysMealsWithState);
         let nextMeal = getNextMeal(todaysMealsWithState, currentKey);
+
+        const checkboxSound = 'checkbox.mp3';
+        let volCheck = 0.2;
+        createSound(volCheck, checkboxSound);
 
         await updateUI(todaysMealsWithState);
 
@@ -95,7 +95,7 @@ function addCheckboxEventListener() {
     });
 }
 
-function createSound(volume = 0.2, file) {
+function createSound(volume, file) {
     const sound = new Audio(`/frontend/assets/sounds/${file}`);
     sound.volume = volume;
     sound.play();
@@ -343,16 +343,6 @@ function updateTodaysMeals(todaysMealsWithState) {
 
 }
 
-function ensureElement(selector, tagName, parent) {
-    let el = document.querySelector(selector);
-    if (!el) {
-        el = document.createElement(tagName);
-        el.className = selector.replace('.', '');
-        parent.appendChild(el);
-    }
-    return el;
-}
-
 function renderNextMeal(nextMeal) {
 
     if (!nextMeal) {
@@ -465,9 +455,9 @@ function resetEventlistener() {
         let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
 
         const pageSound = 'page.mp3';
-        let volPage = 0.2;
+        let volPage = 0.1;
         createSound(volPage, pageSound);
-        
+
         await saveNextMealsToDB(initialTodaysMealsWithState);
 
         // update ui accordingly
