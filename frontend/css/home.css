@@ -177,11 +177,14 @@
     gap: 5px;
 }
 
-#congrats-link{
-    
+#congrats-link {
+    border: none;
+    background-color: transparent;
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--accent-color);
+    border-bottom: 1px solid var(--accent-color);;
+    border-radius: 0px;
 }
 
 .first-row-db {
@@ -293,7 +296,7 @@
 
 }
 
-.nowrap-text{
+.nowrap-text {
     white-space: nowrap;
 }
 

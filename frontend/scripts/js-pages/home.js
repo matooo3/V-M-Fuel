@@ -67,6 +67,11 @@ function setUpInitialEventlisteners() {
         });
     });
 
+    addCheckboxEventListener();
+}
+
+function addCheckboxEventListener() {
+
     const checkbox = document.getElementById('checked-circle');
 
     checkbox.addEventListener('change', async (event) => {
@@ -205,8 +210,7 @@ async function updateUI(todaysMealsWithState) {
 async function updateProgressCircle(eatenKcal, optimalKcal) {
 
     const progressBar = document.querySelector('.progress-bar');
-    let percentage = 0;
-    percentage = await calculatePercentage(eatenKcal, optimalKcal);
+    let percentage = await calculatePercentage(eatenKcal, optimalKcal);
     progressBar.style.setProperty('--progress-in-percent', percentage);
 
 }
@@ -328,11 +332,60 @@ function updateTodaysMeals(todaysMealsWithState) {
 
 }
 
+function ensureElement(selector, tagName, parent) {
+    let el = document.querySelector(selector);
+    if (!el) {
+        el = document.createElement(tagName);
+        el.className = selector.replace('.', '');
+        parent.appendChild(el);
+    }
+    return el;
+}
+
 function renderNextMeal(nextMeal) {
 
     if (!nextMeal) {
         renderCongratulations();
         return;
+    }
+
+    const congratsDiv = document.querySelector(".congratulations-message-db");
+
+    if (congratsDiv) {
+        const nextMealCard = document.createElement("div");
+        nextMealCard.classList.add("card", "drop-shadow", "next-meal-card-db");
+        nextMealCard.innerHTML = `
+                <div class="first-row-db">
+                    <input id="checked-circle" class="checkbox" type="checkbox">
+
+                    <div class="next-meal-info">
+                        <div class="next-meal-info-texts">
+                            <h3 class="meal-name"></h3>
+                            <span class="subtext meal-category-h"></span>
+                        </div>
+
+                        <span class="calories-db">
+                            830kcal
+                        </span>
+                    </div>
+                </div>
+
+                <div class="nutrition-values-db">
+                    <div class="nutrition-item-mp">
+                        <p class="nutrition-value-mp"></p>
+                        <p class="nutrition-label-mp subtext">Protein</p>
+                    </div>
+                    <div class="nutrition-item-mp">
+                        <p class="nutrition-value-mp"></p>
+                        <p class="nutrition-label-mp subtext">Carbs</p>
+                    </div>
+                    <div class="nutrition-item-mp">
+                        <p class="nutrition-value-mp"></p>
+                        <p class="nutrition-label-mp subtext">Fat</p>
+                    </div>
+                </div>
+        `;
+        congratsDiv.replaceWith(nextMealCard);
     }
 
     const mealName = document.querySelector('.meal-name');
@@ -386,7 +439,7 @@ function renderCongratulations() {
     congratsDiv.innerHTML = `
   <span> Congratulations! 🎉</span>
   <span>You have achieved your goal!</span> 
-  <a href="#" id="congrats-link">reset</a>
+  <button id="congrats-link">reset</button>
   `;
 
     div.replaceWith(congratsDiv);
@@ -396,23 +449,19 @@ function renderCongratulations() {
 
 function resetEventlistener() {
     document.getElementById("congrats-link").addEventListener("click", async () => {
-        
+
+
         let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
         await saveNextMealsToDB(initialTodaysMealsWithState);
 
-        const progressBar = document.querySelector('.progress-bar');
-        progressBar.style.transition = 'none'; // Disable transition for immediate update
         // update ui accordingly
-        await updateUI(initialTodaysMealsWithState)
-
-
+        await updateUI(initialTodaysMealsWithState);
 
         // render first meal
         const mealValues = Object.values(initialTodaysMealsWithState);
         const firstMeal = mealValues[0];
         renderNextMeal(firstMeal);
-
-        progressBar.style.transition = 'stroke-dashoffset 0.5s ease-out'; 
+        addCheckboxEventListener();
     });
 }
 
