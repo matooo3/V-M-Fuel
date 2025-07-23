@@ -177,7 +177,7 @@ async function calculatePercentage(eatenKcal, optimalKcal) {
 
     if (percentage > 100) {
 
-        return 0;
+        return 100;
 
     }
 
@@ -189,9 +189,10 @@ async function calculatePercentage(eatenKcal, optimalKcal) {
 async function updateUI(todaysMealsWithState) {
 
     let optimalKcal = await Plan.getOptimalKcal();
+    let eatenKcal = getEatenKcal(todaysMealsWithState);
 
-    let eatenKcal = 0;
-    eatenKcal = getEatenKcal(todaysMealsWithState);
+    console.log("Eaten Kcal:", eatenKcal);
+    console.log("Optimal Kcal:", optimalKcal);
 
     updateProgressCircle(eatenKcal, optimalKcal);
     updateProgressCircleText(eatenKcal);
@@ -249,8 +250,6 @@ async function saveNextMealsToDB(todaysMealsWithState) {
 async function getTodaysMealsWithState(reset = false) {
 
     let todaysMealsWithState = await getNextMealsFromDB();
-
-    console.log("Todays meals with state:", todaysMealsWithState);
 
     if (!todaysMealsWithState || Object.keys(todaysMealsWithState).length === 0 || reset) {
 
