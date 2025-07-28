@@ -78,7 +78,13 @@ function addItem(item) {
             </div>
         </div>
     `;
-    list.insertBefore(li, list.firstChild)
+
+    if (list.firstChild) {
+        list.insertBefore(li, list.firstChild);
+    } else {
+        list.appendChild(li);
+    }
+
 }
 
 function pieceToPcs(unit) {
