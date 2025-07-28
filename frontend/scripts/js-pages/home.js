@@ -69,7 +69,7 @@ function addCheckboxEventListener() {
 
         let todaysMealsWithState = await getTodaysMealsWithState();
         let currentKey = 0;
-        [todaysMealsWithState, currentKey] = updateAndSaveCurrentMeal(todaysMealsWithState);
+        [todaysMealsWithState, currentKey] = await updateAndSaveCurrentMeal(todaysMealsWithState);
         let nextMeal = getNextMeal(todaysMealsWithState, currentKey);
 
         await updateUI(todaysMealsWithState);
@@ -271,14 +271,14 @@ async function saveNextMealsToDB(todaysMealsWithState) {
 
 async function getTodaysMealsWithState(reset = false) {
 
-    let todaysMealsWithState = await getNextMealsFromDB();
+    let todaysMealsWithState = await Storage.getNextMealsFromDB();
 
     if (!todaysMealsWithState || Object.keys(todaysMealsWithState).length === 0 || reset) {
 
         let todaysMeals = await getTodaysMeals();
         todaysMealsWithState = initializeEatenState(todaysMeals);
         console.log("First meals save:", todaysMealsWithState);
-        await saveNextMealsToDB(todaysMealsWithState);
+        await Storage.saveNextMealsToDB({todaysMealsWithState});
 
     }
 
@@ -299,7 +299,7 @@ function initializeEatenState(todaysMeals, boolean = false) {
     return todaysMeals;
 }
 
-function updateAndSaveCurrentMeal(todaysMealsWithState) {
+async function updateAndSaveCurrentMeal(todaysMealsWithState) {
 
     const keys = Object.keys(todaysMealsWithState);
 
@@ -309,7 +309,7 @@ function updateAndSaveCurrentMeal(todaysMealsWithState) {
         if (!todaysMealsWithState[currentKey].eaten) {
             const nextKey = keys[i + 1];
             todaysMealsWithState[currentKey].eaten = true;
-            saveNextMealsToDB(todaysMealsWithState);
+            await Storage.saveNextMealsToDB(todaysMealsWithState);
 
             return [todaysMealsWithState, nextKey];
         }
@@ -466,7 +466,7 @@ function resetEventlistener() {
 
         await sleep(280);
 
-        await saveNextMealsToDB(initialTodaysMealsWithState);
+        await Storage.saveNextMealsToDB(initialTodaysMealsWithState);
 
         // update ui accordingly
         await updateUI(initialTodaysMealsWithState);
