@@ -790,7 +790,7 @@ app.get("/api/get-user-list-items", authMiddleware, checkRole("user"), (req, res
       uli.amount,
       uli.unit_of_measurement,
       i.category,
-      i.ingredient_unit,
+      i.Unit_of_Measurement AS ingredient_unit,
       i.calories_per_UoM,
       i.carbs_per_UoM,
       i.fats_per_UoM,
