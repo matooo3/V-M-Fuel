@@ -737,6 +737,123 @@ app.get("/api/get-next-meals", authMiddleware, checkRole("user"), (req, res) => 
 });
 
 
+//////////////////// USER LIST ITEMS ///////////////////
+
+// SET WHOLE LIST
+app.post("/api/set-user-list-items", authMiddleware, checkRole("user"), (req, res) => {
+    const userId = req.user.id;
+    const items = req.body.items;
+
+    if (!Array.isArray(items) || items.length === 0) {
+        return res.status(400).json({ message: "No items provided" });
+    }
+
+    // Optional: vorher alte Liste löschen
+    const deleteQuery = "DELETE FROM user_list_items WHERE user_id = ?";
+
+    db.query(deleteQuery, [userId], (deleteErr) => {
+        if (deleteErr) {
+            console.error("Error clearing existing list:", deleteErr);
+            return res.status(500).json({ message: "Failed to clear old list" });
+        }
+
+        const insertQuery = `
+        INSERT INTO user_list_items (user_id, ingredient_id, amount, unit_of_measurement)
+        VALUES ?`;
+
+        const values = items.map(item => [
+            userId,
+            item.ingredient_id,
+            item.amount,
+            item.unit_of_measurement
+        ]);
+
+        db.query(insertQuery, [values], (insertErr, result) => {
+            if (insertErr) {
+                console.error("Error inserting list items:", insertErr);
+                return res.status(500).json({ message: "Failed to insert list items" });
+            }
+
+            res.status(200).json({ message: "List successfully saved", inserted: result.affectedRows });
+        });
+    });
+});
+
+// GET USER LIST ITEMS
+app.get("/api/get-user-list-items", authMiddleware, checkRole("user"), (req, res) => {
+  const userId = req.user.id;
+
+  const query = `
+    SELECT 
+      i.ingredient_id,
+      i.name,
+      uli.amount,
+      uli.unit_of_measurement,
+      i.category,
+      i.ingredient_unit,
+      i.calories_per_UoM,
+      i.carbs_per_UoM,
+      i.fats_per_UoM,
+      i.protein_per_UoM
+    FROM user_list_items uli
+    JOIN ingredients i ON uli.ingredient_id = i.ingredient_id
+    WHERE uli.user_id = ?
+  `;
+
+  db.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error("Error fetching user list items:", err);
+      return res.status(500).json({ message: "Failed to fetch user list items" });
+    }
+
+    res.status(200).json(results); // direkt so nutzbar wie erwartet
+  });
+});
+
+
+
+// ADD USER LIST ITEM
+app.post("/api/add-user-list-item", authMiddleware, checkRole("user"), (req, res) => {
+    const userId = req.user.id;
+    const { ingredient_id, amount, unit_of_measurement } = req.body;
+
+    const query = `
+    INSERT INTO user_list_items (user_id, ingredient_id, amount, unit_of_measurement)
+    VALUES (?, ?, ?, ?)`;
+
+    db.query(query, [userId, ingredient_id, amount, unit_of_measurement], (err, result) => {
+        if (err) {
+            console.error("Error inserting list item:", err);
+            return res.status(500).json({ message: "Failed to add list item" });
+        }
+        res.status(200).json({ message: "Item successfully added to list", item_id: result.insertId });
+    });
+});
+
+// DELETE USER LIST ITEM
+app.post("/api/delete-user-list-item", authMiddleware, checkRole("user"), (req, res) => {
+  const userId = req.user.id;
+  const { item_id } = req.body;
+
+  if (!item_id) {
+    return res.status(400).json({ message: "Missing item_id" });
+  }
+
+  const query = "DELETE FROM user_list_items WHERE item_id = ? AND user_id = ?";
+  db.query(query, [item_id, userId], (err, result) => {
+    if (err) {
+      console.error("Error deleting item:", err);
+      return res.status(500).json({ message: "Failed to delete item" });
+    }
+
+    res.status(200).json({ message: "Item deleted successfully" });
+  });
+});
+
+
+
+////////////////// END USER LIST ITEMS /////////////////
+
 /////////////////////////////////////////////////////////////////////////////////////
 // Starte den Server
 app.listen(PORT, () => {
