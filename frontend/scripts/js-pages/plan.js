@@ -2,6 +2,7 @@ import { loadHTMLTemplate } from "../templateLoader.js";
 import * as Settings from "./settings.js";
 import * as Algo from "../algo/algo.js";
 import * as Storage from "../storage.js";
+import * as Home from "../js-pages/home.js";
 
 // ===== MAIN EXPORT =====
 export default async function loadPlan() {
@@ -24,6 +25,11 @@ async function initializeCalendar(today, currentWeek) {
     setupWeekDisplay(today, currentWeek);
 
     const weekPlan = await getWeekPlan();
+    
+    let todaysMeals = await Home.getTodaysMeals(weekPlan);
+    todaysMeals = await Home.initializeEatenState(todaysMeals);
+    await Storage.saveNextMealsToDB(todaysMeals);
+
     await setupWeekContent(today, currentWeek, weekPlan);
 
 }
@@ -346,7 +352,13 @@ function addGenerateEventListener(today, currentWeek) {
 
             const weekPlan = await generateNewWeekPlan();
             const dayContent = await generateDayContent(currentWeek, weekPlan, today);
+
+            let todaysMeals = await Home.getTodaysMeals(weekPlan);
+            todaysMeals = await Home.initializeEatenState(todaysMeals);
+            await Storage.saveNextMealsToDB(todaysMeals);
+
             addDayEventListeners(dayContent);
+
 
             if (currentlySelectedDay) {
                 showDay(currentlySelectedDay, dayContent);

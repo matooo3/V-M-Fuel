@@ -9,8 +9,6 @@ import * as Settings from './settings.js';
 import * as Search from '../searchBar.js';
 import * as Plan from './plan.js'
 
-let Meals = null;
-
 export default async function loadHome() {
     const app = document.getElementById('app');
     // LOAD app html-code
@@ -103,6 +101,7 @@ async function updateAdminContainer() {
 
         // get meals with eaten state
         let initialTodaysMealsWithState = await getTodaysMealsWithState();
+        await Storage.saveNextMealsToDB(initialTodaysMealsWithState);
         renderTodaysMeals(initialTodaysMealsWithState);
 
         // render first meal
@@ -158,13 +157,16 @@ function getTodaysIndexInWeek(today, currentWeek) {
     }
 }
 
-async function getTodaysMeals() {
+export async function getTodaysMeals(weekPlan = null) {
 
     const { today, currentWeek } = Plan.getCurrentData();
     const index = getTodaysIndexInWeek(today, currentWeek);
 
-    const weekPlan = await Storage.getWeekPlanFromDB();
-    const todaysMeals = weekPlan[index]
+    if(!weekPlan){
+        weekPlan = await Storage.getWeekPlanFromDB();
+    }
+
+    const todaysMeals = weekPlan[index];
     return todaysMeals;
 }
 
@@ -256,20 +258,7 @@ async function updateGoalPercentage(eatenKcal, optimalKcal) {
 
 // --------------------- Next Meals ----------------------
 
-async function getNextMealsFromDB() {
-
-    return Meals;
-
-
-}
-
-async function saveNextMealsToDB(todaysMealsWithState) {
-
-    Meals = todaysMealsWithState;
-
-}
-
-async function getTodaysMealsWithState(reset = false) {
+export async function getTodaysMealsWithState(reset = false) {
 
     let todaysMealsWithState = await Storage.getNextMealsFromDB();
 
@@ -278,7 +267,6 @@ async function getTodaysMealsWithState(reset = false) {
         let todaysMeals = await getTodaysMeals();
         todaysMealsWithState = initializeEatenState(todaysMeals);
         console.log("First meals save:", todaysMealsWithState);
-        await Storage.saveNextMealsToDB({todaysMealsWithState});
 
     }
 
@@ -286,7 +274,7 @@ async function getTodaysMealsWithState(reset = false) {
 
 }
 
-function initializeEatenState(todaysMeals, boolean = false) {
+export function initializeEatenState(todaysMeals, boolean = false) {
 
     Object.keys(todaysMeals).forEach(key => {
 
@@ -459,6 +447,7 @@ function resetEventlistener() {
 
 
         let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
+        await Storage.saveNextMealsToDB(initialTodaysMealsWithState);
 
         const pageSound = 'page.mp3';
         let volPage = 0.1;
