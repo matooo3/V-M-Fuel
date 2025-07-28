@@ -785,18 +785,18 @@ app.get("/api/get-user-list-items", authMiddleware, checkRole("user"), (req, res
 
   const query = `
     SELECT 
-      i.ingredient_id,
-      i.name,
+      uli.ingredient_id,
+      COALESCE(i.name, uli.custom_name) AS name,
       uli.amount,
       uli.unit_of_measurement,
-      i.category,
+      COALESCE(i.category, uli.category) AS category,
       i.Unit_of_Measurement AS ingredient_unit,
       i.calories_per_UoM,
       i.carbs_per_UoM,
       i.fats_per_UoM,
       i.protein_per_UoM
     FROM user_list_items uli
-    JOIN ingredients i ON uli.ingredient_id = i.ingredient_id
+    LEFT JOIN ingredients i ON uli.ingredient_id = i.ingredient_id
     WHERE uli.user_id = ?
   `;
 
@@ -830,8 +830,9 @@ app.post("/api/add-user-list-item", authMiddleware, checkRole("user"), (req, res
   // ingredient_id oder NULL, custom_name oder NULL setzen
   const ingredientIdValue = ingredient_id || null;
   const customNameValue = custom_name || null;
+  const categoryValue = category || null;
 
-  db.query(query, [userId, ingredientIdValue, customNameValue, amount, unit_of_measurement], (err, result) => {
+  db.query(query, [userId, ingredientIdValue, customNameValue, amount, unit_of_measurement, categoryValue], (err, result) => {
     if (err) {
       console.error("Error inserting list item:", err);
       return res.status(500).json({ message: "Failed to add list item" });
