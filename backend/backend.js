@@ -812,23 +812,34 @@ app.get("/api/get-user-list-items", authMiddleware, checkRole("user"), (req, res
 
 
 
-// ADD USER LIST ITEM
+// ADD USER LIST ITEM (inkl. custom_name)
 app.post("/api/add-user-list-item", authMiddleware, checkRole("user"), (req, res) => {
-    const userId = req.user.id;
-    const { ingredient_id, amount, unit_of_measurement } = req.body;
+  const userId = req.user.id;
+  const { ingredient_id, custom_name, amount, unit_of_measurement } = req.body;
 
-    const query = `
-    INSERT INTO user_list_items (user_id, ingredient_id, amount, unit_of_measurement)
-    VALUES (?, ?, ?, ?)`;
+  // Validation: entweder ingredient_id ODER custom_name muss vorhanden sein
+  if ((!ingredient_id && !custom_name) || (ingredient_id && custom_name)) {
+    return res.status(400).json({ message: "Bitte entweder ingredient_id ODER custom_name angeben" });
+  }
 
-    db.query(query, [userId, ingredient_id, amount, unit_of_measurement], (err, result) => {
-        if (err) {
-            console.error("Error inserting list item:", err);
-            return res.status(500).json({ message: "Failed to add list item" });
-        }
-        res.status(200).json({ message: "Item successfully added to list", item_id: result.insertId });
-    });
+  const query = `
+    INSERT INTO user_list_items (user_id, ingredient_id, custom_name, amount, unit_of_measurement)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+
+  // ingredient_id oder NULL, custom_name oder NULL setzen
+  const ingredientIdValue = ingredient_id || null;
+  const customNameValue = custom_name || null;
+
+  db.query(query, [userId, ingredientIdValue, customNameValue, amount, unit_of_measurement], (err, result) => {
+    if (err) {
+      console.error("Error inserting list item:", err);
+      return res.status(500).json({ message: "Failed to add list item" });
+    }
+    res.status(200).json({ message: "Item successfully added to list", item_id: result.insertId });
+  });
 });
+
 
 // DELETE USER LIST ITEM
 app.post("/api/delete-user-list-item", authMiddleware, checkRole("user"), (req, res) => {
