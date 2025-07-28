@@ -839,7 +839,7 @@ app.post("/api/delete-user-list-item", authMiddleware, checkRole("user"), (req, 
     return res.status(400).json({ message: "Missing item_id" });
   }
 
-  const query = "DELETE FROM user_list_items WHERE item_id = ? AND user_id = ?";
+  const query = "DELETE FROM user_list_items WHERE ingredient_id = ? AND user_id = ?";
   db.query(query, [item_id, userId], (err, result) => {
     if (err) {
       console.error("Error deleting item:", err);
