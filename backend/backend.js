@@ -790,11 +790,11 @@ app.get("/api/get-user-list-items", authMiddleware, checkRole("user"), (req, res
       uli.amount,
       uli.unit_of_measurement,
       COALESCE(i.category, uli.category) AS category,
-      i.Unit_of_Measurement AS ingredient_unit,
-      i.calories_per_UoM,
-      i.carbs_per_UoM,
-      i.fats_per_UoM,
-      i.protein_per_UoM
+      COALESCE(i.unit_of_measurement, uli.unit_of_measurement) AS ingredient_unit,
+      COALESCE(i.calories_per_UoM, 0) AS calories_per_UoM,
+      COALESCE(i.carbs_per_UoM, 0) AS carbs_per_UoM,
+      COALESCE(i.fats_per_UoM, 0) AS fats_per_UoM,
+      COALESCE(i.protein_per_UoM, 0) AS protein_per_UoM
     FROM user_list_items uli
     LEFT JOIN ingredients i ON uli.ingredient_id = i.ingredient_id
     WHERE uli.user_id = ?
