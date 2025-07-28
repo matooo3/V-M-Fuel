@@ -690,12 +690,8 @@ app.post("/api/save-next-meals", authMiddleware, checkRole("user"), (req, res) =
     const userId = req.user.id;
     const { next_meals } = req.body;
 
-    if(!next_meals){
-        return res.status(606).json({ message: "Next meals are required" });
-    }
-
-    if(!userId){
-        return res.status(607).json({ message: "User ID is required" });
+    if(!userId || !next_meals){
+        return res.status(400).json({ message: "User ID and next meals are required" });
     }
 
     const query = `
