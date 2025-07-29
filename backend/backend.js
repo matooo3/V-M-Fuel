@@ -870,6 +870,48 @@ app.post("/api/delete-user-list-item", authMiddleware, checkRole("user"), (req, 
   });
 });
 
+// UPDATE USER LIST ITEM
+app.post("/api/update-user-list-item", authMiddleware, checkRose("user"), (req, res) => {
+    const userId = req.user.id;
+    const { identifier, updatedItem } = req.body;
+    if (!identifier || !updatedItem) {
+        return res.status(400).json({ message: "Identifier or updatedItem is missing" });
+    }
+
+    const isNumeric = !isNaN(identifier);
+
+    const query = `
+        UPDATE user_list_items
+        SET 
+            ingredient_id = ?, 
+            custom_name = ?, 
+            category = ?, 
+            amount = ?, 
+            unit_of_measurement = ?, 
+            is_checked = ?
+        WHERE user_id = ? AND ${isNumeric ? "ingredient_id" : "custom_name"} = ?
+    `;
+
+    const values = [
+        updatedItem.ingredient_id || null,
+        updatedItem.custom_name || null,
+        updatedItem.category || null,
+        updatedItem.amount || 0,
+        updatedItem.unit_of_measurement || null,
+        updatedItem.is_checked ? 1 : 0,
+        userId,
+        identifier
+    ];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            console.error("Error updating item:", err);
+            return res.status(500).json({ message: "Failed to update item" });
+        }
+
+        res.status(200).json({ message: "Item updated successfully" });
+    });
+});
 
 
 ////////////////// END USER LIST ITEMS /////////////////
