@@ -455,8 +455,6 @@ function resetEventlistener() {
 
         await sleep(280);
 
-        await Storage.saveNextMealsToDB(initialTodaysMealsWithState);
-
         // update ui accordingly
         await updateUI(initialTodaysMealsWithState);
 
