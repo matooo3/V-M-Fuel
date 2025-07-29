@@ -116,7 +116,6 @@
 #content-section {
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
     padding-top: 15px;
     padding-bottom: 15px;
     overflow-y: auto;
@@ -242,4 +241,285 @@
     .generate-btn {
         font-size: 1.1rem;
     }
+}
+
+/* OVERLAY CSS */
+
+#view-dish-card {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 10px;
+    width: 450px;
+    max-width: 90vw;
+    height: calc(90vh - var(--nav-height));
+    overflow: auto;
+    color: var(--main-text-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    font-family: inherit;
+    padding: 20px;
+}
+
+.view-dish-numbers{
+    color: var(--main-text-color);
+    font-weight: 500;
+}
+
+.view-macro-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#view-clock{
+    position: relative;
+    top: 10%;
+    width: 15px;
+    height: 15px;
+    background-color: var(--main-text-color);
+    mask: url('/frontend/assets/icons/clock.svg') no-repeat center;
+    mask-size: contain;
+    margin-right: 5px;
+}
+
+
+#view-dish-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#view-dish-name {
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: black;
+    margin-right: 40px;
+    margin-bottom: 10px;
+}
+
+#close-view-dish {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    border: none;
+    background: transparent;
+}
+
+#view-dish-info {
+    padding: 10px 10px 20px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#view-kcal-time {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#view-dish-macros {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#cooking-process {
+    padding: 20px 0px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#cooking-process-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cooking-process-name {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--main-text-color);
+}
+
+#reset-cooking-process {
+    padding: 5px 15px;
+    background: var(--accent-color);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#cooking-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+#cooking-progress-fill {
+    width: 0%;
+    height: 8px;
+    background: var(--accent-color);
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+#view-completed-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+#view-dish-ingredients{
+    padding: 20px 0px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#view-dish-ingredients-text{
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--main-text-color);
+}
+
+#view-dish-ingredients-list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.view-dish-ingredient-el{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    background-color: var(--fill-color);
+    width: 100%;
+    height: 28px;
+    border-radius: 6px;
+}
+
+.view-dish-ingredient-name{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--main-text-color);
+}
+
+.view-dish-ingredient-amount{
+    font-size: 1.1rem;
+}
+
+#view-dish-instructions{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px 0px;
+    height: fit-content;
+}
+
+#view-dish-instructions-text{
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--main-text-color);
+}
+
+#view-dish-instructions-list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+    padding: 0px 10px;
+    margin: 0px;
+}
+
+.view-instruction-step-el{
+    padding: 10px;
+    height: fit-content;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    border: var(--border-color) 1px solid;  
+    transition: border 0.3s ease;
+}
+
+.view-instruction-checkbox{
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.view-instruction-checkbox:checked{
+    background: var(--positive-color);
+    border: 1px solid var(--positive-color);
+}
+
+.view-instruction-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.view-instruction-step-el:has(input[type="checkbox"]:checked) {
+    background-color: var(--positive-fill-color);
+    border: 1px solid var(--positive-color);
+}
+
+.view-instruction-step-el:has(input[type="checkbox"]:checked) 
+.view-instruction-header,
+.view-instruction-step-el:has(input[type="checkbox"]:checked) 
+.view-instruction-text {
+  text-decoration: line-through;
+  color: #6B7280;
+  text-decoration-color: black;
+}
+
+.view-instruction-text-container{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+.view-instruction-header{
+    color: var(--main-text-color);
+}
+
+.view-instruction-text{
+    color: #6B7280;
 }

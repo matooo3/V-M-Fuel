@@ -25,19 +25,19 @@ async function initializeCalendar(today, currentWeek) {
     setupWeekDisplay(today, currentWeek);
 
     const weekPlan = await getWeekPlan();
-    
     let todaysMeals = await Home.getTodaysMeals(weekPlan);
     todaysMeals = await Home.initializeEatenState(todaysMeals);
     await Storage.saveNextMealsToDB(todaysMeals);
 
     await setupWeekContent(today, currentWeek, weekPlan);
+    addOverlayEventlisteners(weekPlan);
 
 }
 
 async function setupWeekContent(today, currentWeek, weekPlan) {
 
     const dayContent = await generateDayContent(currentWeek, weekPlan);
-    addDayEventListeners(dayContent);
+    addDayEventListeners(dayContent, weekPlan);
 
 }
 
@@ -269,7 +269,7 @@ function getCurrentlySelectedDay() {
 
 function renderMeal(dish, mealType) {
     return `
-    <div class="card drop-shadow plan-meal-card">
+    <div class="card drop-shadow plan-meal-card" data-id="${dish.dish_id}">
         <div class="meal-header-mp">
             <div>
                 <h3 class="meal-title-mp">${dish.name}</h3>
@@ -319,7 +319,7 @@ function showDay(day, dayContent) {
 }
 
 // ===== EVENT LISTENERS =====
-function addDayEventListeners(dayContent) {
+function addDayEventListeners(dayContent, weekPlan) {
     // Remove existing listeners
     document.querySelectorAll(".day").forEach((dayElement) => {
         dayElement.replaceWith(dayElement.cloneNode(true));
@@ -333,6 +333,7 @@ function addDayEventListeners(dayContent) {
 
             const day = parseInt(dayElement.getAttribute("data-day"));
             showDay(day, dayContent);
+            addOverlayEventlisteners(weekPlan);
         });
     });
 
@@ -341,6 +342,227 @@ function addDayEventListeners(dayContent) {
         showDay(currentlySelectedDay, dayContent);
     }
 }
+
+// OVERLAY
+
+function addOverlayEventlisteners(weekPlan) {
+
+    document.getElementById('viewDishOverlay').addEventListener('click', function (e) {
+        if (e.target === this) {
+            hideOverlay();
+            resetLists()
+            updateCompletedSteps(0);
+            updateCookingProgressBarAndPercentageText(0);
+        }
+    });
+
+    document.getElementById('navOverlay').addEventListener('click', function (e) {
+        hideOverlay();
+        resetLists();
+        updateCompletedSteps(0);
+        updateCookingProgressBarAndPercentageText(0);
+    });
+
+    document.querySelector('#close-view-dish').addEventListener('click', function (e) {
+        hideOverlay();
+        resetLists();
+        updateCompletedSteps(0);
+        updateCookingProgressBarAndPercentageText(0);
+    });
+
+    document.getElementById('reset-cooking-process').addEventListener('click', function (e) {
+
+        const checkedCheckboxes = document.querySelectorAll('#view-dish-instructions-list .view-instruction-checkbox:checked');
+        checkedCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+
+        updateCompletedSteps(0);
+        updateCookingProgressBarAndPercentageText(0);
+    });
+
+    const dishes = document.querySelectorAll('.plan-meal-card');
+    dishes.forEach((dish) => {
+        const id = dish.dataset.id
+        dish.addEventListener("click", () => {
+            showOverlay();
+            renderDishInfo(id, weekPlan);
+            addCheckboxInstrEventlistener();
+        });
+    })
+}
+
+function addCheckboxInstrEventlistener() {
+    const checkboxes = document.querySelectorAll('.view-instruction-checkbox');
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', event => {
+            const checkedCheckboxes = document.querySelectorAll('#view-dish-instructions-list .view-instruction-checkbox:checked');
+            updateCompletedSteps(checkedCheckboxes.length);
+            updateCookingProgressBarAndPercentageText(checkedCheckboxes.length);
+        });
+    });
+}
+
+function updateCookingProgressBarAndPercentageText(completedSteps) {
+
+    let width = 0 + "%";
+
+    if (completedSteps !== 0) {
+
+        const totalSteps = getTotalCookingSteps();
+        let percentage = (completedSteps / totalSteps) * 100
+        width = percentage.toFixed(1) + "%";
+
+    }
+
+    const progressBar = document.getElementById('cooking-progress-fill');
+    const percText = document.getElementById('view-%-steps');
+    progressBar.style.width = width;
+    percText.textContent = width;
+
+}
+
+function showOverlay() {
+    document.getElementById('navOverlay').classList.remove('hidden');
+    document.getElementById('viewDishOverlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function hideOverlay() {
+    document.getElementById('navOverlay').classList.add('hidden');
+    document.getElementById('viewDishOverlay').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// UTILITY FUNCTIONS
+
+function getMealbyIdInWeekplan(id, weekPlan) {
+    for (const day of weekPlan) {
+        for (const meal of Object.values(day)) {
+            if (meal && meal.dish_id === Number(id)) {
+                return meal;
+            }
+        }
+    }
+    return null;
+}
+
+function splitInSteps(preparation) {
+    const matches = preparation.match(/(\d)([^0-9]+)/g);
+
+    const preparationSteps = {};
+
+    if (matches) {
+        matches.forEach(step => {
+            const key = step.match(/^\d/)[0];
+            const value = step.slice(2).trim();
+            preparationSteps[key] = value;
+        });
+    }
+    return preparationSteps;
+}
+
+function getTotalCookingSteps() {
+    const list = document.getElementById('view-dish-instructions-list');
+    const listItems = list.querySelectorAll('li');
+    const totalSteps = listItems.length;
+    return totalSteps
+}
+
+function updateCompletedSteps(steps) {
+    document.getElementById('view-completed-number').textContent = steps;
+}
+
+function resetLists() {
+    const instructionsList = document.getElementById('view-dish-instructions-list');
+    const ingredientsList = document.getElementById('view-dish-instructions-list');
+    instructionsList.innerHTML = '';
+    ingredientsList.innerHTML = '';
+
+}
+
+// RENDER FUNCTIONS
+async function renderDishInfo(id, weekPlan) {
+
+    // get cklicked meal
+    const meal = getMealbyIdInWeekplan(id, weekPlan);
+
+    //load macros
+    renderDishMacrosAndName(meal);
+
+    //load ingredients
+    // renderDishIngredients(meal.ingredients);
+
+    // load prep steps
+    let preparationSteps = splitInSteps(meal.preparation);
+    renderDishPreparationSteps(preparationSteps);
+
+    //load cooking process
+    renderTotalCookingStepsText();
+
+}
+
+function renderTotalCookingStepsText() {
+
+    const totalSteps = getTotalCookingSteps();
+    document.getElementById('view-total-number').textContent = totalSteps;
+
+}
+
+// function renderDishIngredients(ingredients) {
+//     const list = document.getElementById('view-dish-ingredients-list');
+//     ingredients.forEach(ingredient => {
+//         let ingredientHTML = getIngredientHTML(ingredient);
+//         list.appendChild(ingredientHTML);
+//     });
+// }
+
+function renderDishPreparationSteps(preparationSteps) {
+
+    const list = document.getElementById('view-dish-instructions-list');
+
+    Object.entries(preparationSteps).forEach(([stepNumber, text]) => {
+        const preparationHTML = getPreparationHTML(stepNumber, text);
+        list.insertAdjacentHTML('beforeend', preparationHTML);
+    });
+}
+
+function renderDishMacrosAndName(meal) {
+
+    document.getElementById('view-dish-name').textContent = meal.name;
+    document.getElementById('view-kcal').textContent = meal.total_calories;
+    document.getElementById('view-prep-time').textContent = meal.preparation_time_in_min;
+    document.getElementById('view-protein-amount').textContent = meal.total_protein + "g";
+    document.getElementById('view-carbs-amount').textContent = meal.total_carbs + "g";
+    document.getElementById('view-fat-amount').textContent = meal.total_fat + "g";
+    document.getElementById('view-vm-score').textContent = meal.vm_score;
+}
+
+
+// GET HTML CODE FUNCTIONS
+function getIngredientHTML(ingredient) {
+    return `
+    <li class="view-dish-ingredient-el">
+        <p class="view-dish-ingredient-name">${ingredient.name}</p>
+        <p class="subtext view-dish-ingredient-amount">${ingredient.amount}</p>
+    </li>
+    `
+}
+
+function getPreparationHTML(stepNumber, text) {
+    return `
+    <li class="view-instruction-step-el">
+        <input type="checkbox" class="view-instruction-checkbox">
+        <div class="view-instruction-text-container">
+            <p class="view-instruction-header">Step ${stepNumber}</p>
+            <p class="view-instruction-text">${text}</p>
+        </div>
+    </li>
+    `
+}
+
+// END OVERLAY
 
 function addGenerateEventListener(today, currentWeek) {
     const generateBtn = document.querySelector('#regenerate-plan');
@@ -357,7 +579,7 @@ function addGenerateEventListener(today, currentWeek) {
             todaysMeals = await Home.initializeEatenState(todaysMeals);
             await Storage.saveNextMealsToDB(todaysMeals);
 
-            addDayEventListeners(dayContent);
+            addDayEventListeners(dayContent, weekPlan);
 
 
             if (currentlySelectedDay) {

@@ -94,7 +94,7 @@ function addSearchbarEventlisteners() {
 
 function addMealOverlayEventListeners() {
 
-    document.getElementById('add-meal-p').addEventListener('click', showEditMeal);
+    document.getElementById('add-meal-p').addEventListener('click', showAddMeal);
     document.getElementById('closeMealBtn').addEventListener('click', hideAddMeal);
     document.getElementById('addBtn-p').addEventListener('click', saveMeal);
 
@@ -137,7 +137,7 @@ function addMealOverlayEventListeners() {
 
 function addIngredientOverlayEventListeners() {
 
-    document.getElementById('add-ingredient-p').addEventListener('click', showEditIngredient);
+    document.getElementById('add-ingredient-p').addEventListener('click', showAddIngredient);
     document.getElementById('closeIngredientBtn').addEventListener('click', hideAddIngredient);
     document.getElementById('addIngredientSubmitBtn').addEventListener('click', saveIngredient);
 
@@ -450,7 +450,7 @@ function calculateIngredientsData() {
 
 // Show and hide Overlays
 
-function showEditMeal() {
+function showAddMeal() {
     document.getElementById('navOverlay').classList.remove('hidden');
     const overlay = document.getElementById('editMealOverlay');
     const formSection = overlay.querySelector('.form-section');
@@ -471,7 +471,7 @@ function hideAddMeal() {
     document.body.style.overflow = 'auto';
 }
 
-function showEditIngredient() {
+function showAddIngredient() {
     document.getElementById('navOverlay').classList.remove('hidden');
     const overlay = document.getElementById('editIngredientOverlay');
     const formSectionIng = overlay.querySelector('.form-section-ingredient');
@@ -693,7 +693,7 @@ function clearMealForm() {
     overlay.scrollTop = 0;
 
     // Also reset scroll position of the meal card content if it exists
-    const mealCard = overlay.querySelector('.edit-meal-card');
+    const mealCard = overlay.querySelector('.add-meal-card');
     if (mealCard) {
         mealCard.scrollTop = 0;
     }
