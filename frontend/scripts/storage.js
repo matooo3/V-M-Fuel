@@ -231,12 +231,6 @@ export function saveWeekPlanToDB(weekPlan) {
     Api.postData("/add-week-plan", { weekPlan, userId: user.id }, Auth.getUserToken());
 }
 
-export async function saveWeekPlanToDBAsync(weekPlan) {
-
-    const user = Auth.getUserFromToken();
-    await Api.postData("/add-week-plan", { weekPlan, userId: user.id }, Auth.getUserToken());
-}
-
 export async function getWeekPlanFromDB() {
   const token = Auth.getUserToken();
   const weekPlan = await Api.fetchDataWithToken("/get-week-plan", token);
