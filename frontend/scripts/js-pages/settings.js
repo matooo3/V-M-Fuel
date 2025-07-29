@@ -137,9 +137,7 @@ function addEventListeners() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.classList.toggle('dark-mode', savedTheme === 'dark');
     themeSelect.value = savedTheme;
-
-    loadSavedTheme();
-    // Event listener for changes
+    
     themeSelect.addEventListener('change', function () {
         const selectedTheme = this.value;
         document.body.classList.toggle('dark-mode', selectedTheme === 'dark');
