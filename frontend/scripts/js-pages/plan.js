@@ -41,7 +41,7 @@ async function setupWeekContent(today, currentWeek, weekPlan) {
 }
 
 // LOAD WEEK PLAN DB // CALCULATE NEW ONE IF NO ONE EXISTS
-async function getWeekPlan() {
+export async function getWeekPlan() {
     // check if user already has a week plan
     let weekPlan = await Storage.getWeekPlanFromDB();
 
@@ -574,6 +574,8 @@ function addGenerateEventListener(today, currentWeek) {
             const weekPlan = await generateNewWeekPlan();
 
             const dayContent = await generateDayContent(currentWeek, weekPlan, today);
+
+            await Storage.deleteOldAndCreateNewList();
 
             let todaysMeals = await Home.getTodaysMeals(weekPlan);
             todaysMeals = await Home.initializeEatenState(todaysMeals);
