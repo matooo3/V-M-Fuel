@@ -15,11 +15,26 @@ export default async function loadList() {
     const html = await loadHTMLTemplate("/frontend/html-pages/list.html");
     app.innerHTML = html;
 
-    // ingredients = await getAllDishIngredients()
-    // updateList(ingredients);
-
     // Add event listener
+    addEventListeners();
 
+    // Load existing items from DB
+    const items = await loadItemsFromDBOrWeekPlan();
+    renderItems(items);
+
+    // Add event listeners for quantity control buttons
+    addQuantityControlEventListeners();
+
+    updateCheckedItemsCount();
+
+    activateSearchBar();
+
+    // Initialize swipe to delete
+    const list = document.querySelector(".grocery-list");
+    SwipeToDelete.initializeSwipeToDelete(list, ".grocery-item", deleteItemFromUserList);
+}
+
+function addEventListeners() {
     // Settings Event Listener
     Settings.loadSettingsEventListener();
 
@@ -37,42 +52,36 @@ export default async function loadList() {
             addItemToList();
         }
     });
+}
 
+function addQuantityControlEventListeners() {
+    const list = document.querySelector(".grocery-list");
+    list.addEventListener("click", changeAmount);
+}
+
+async function loadItemsFromDBOrWeekPlan() {
+    // Load existing items from DB
+    let items = await Storage.getUserListItemsFromDB();
 
     // IF NO LIST ITEMS IN DB (USER LIST ITEMS) => LOAD FROM WEEK PLAN
-
-    // Load existing items from DB
-    const userListItems = await Storage.getUserListItemsFromDB();
-
-    if (userListItems && userListItems.length > 0) {
-        console.log("Lade User List Items aus DB:", userListItems);
-        userListItems.forEach((item) => addItem(item));
+    if (items && items.length > 0) {
+        console.warn("Lade User List Items aus DB:", items);
     } else {
         // Wenn keine Items in der DB sind, WeekPlan verwenden
-        console.log("Keine User List Items gefunden – lade aus WeekPlan ...");
+        console.warn("Keine User List Items gefunden – lade aus WeekPlan ...");
 
-        const ingredients = await Storage.getIngredientsFromWeekPlan();
-        console.log("Ingredients from week plan:", ingredients);
-
-        ingredients.forEach((item) => addItem(item));
+        items = await Storage.getIngredientsFromWeekPlan();
+        console.log("Ingredients from week plan:", items);
 
         // Optional: gleich in DB speichern für zukünftige Zugriffe
-        await Storage.setUserListItemsInDB(ingredients);
+        await Storage.setUserListItemsInDB(items);
     }
 
-    // Add event listeners for quantity control buttons
-    const list = document.querySelector(".grocery-list");
+    return items;
+}
 
-    list.addEventListener("click", changeAmount);
-
-    updateCheckedItemsCount();
-
-    const searchInputGro = "search-groceries";
-    const groceryList = [".grocery-list"];
-    searchULs(searchInputGro, groceryList);
-
-    // Initialize swipe to delete
-    SwipeToDelete.initializeSwipeToDelete(list, ".grocery-item", deleteItemFromUserList);
+function renderItems(items) {
+    items.forEach((item) => addItem(item));
 }
 
 function updateCheckedItemsCount() {
@@ -90,6 +99,12 @@ function updateCheckedItemsCount() {
 
 function getCheckedItems(items) {
     return Array.from(items).filter(item => item.querySelector('.checkbox-gl').checked);
+}
+
+function activateSearchBar() {
+    const searchInputGro = "search-groceries";
+    const groceryList = [".grocery-list"];
+    searchULs(searchInputGro, groceryList);
 }
 
 function deleteItemFromUserList(ingredient_id) {
@@ -273,8 +288,19 @@ function saveNewItem() {
         unit_of_measurement: pcsToPiece(unit),
     };
 
+    // Validierung Name
+    const trimmedName = itemName.trim();
+    const isValidName =
+        trimmedName.length > 0 &&            // Nicht nur Leerzeichen
+        !/^\d+$/.test(trimmedName) &&        // Nicht nur Zahlen
+        !/^\d/.test(trimmedName);            // Beginnt nicht mit einer Zahl
+
     // Add the new item to the list + DB, but only if all fields are filled
     if (itemName && amount && category && unit && uniqueItemName(itemName)) {
+        if (!isValidName) {
+            alert("Please enter a valid name!\n (Name must not be empty, only numbers, or start with a number)");
+            return;
+        }
         addItem(newItem);
         const newItemDB = getNewItemDBFormat(newItem);
         Storage.addUserListItemToDB(newItemDB);
@@ -298,7 +324,7 @@ function uniqueItemName() {
     // #TODO => check if already exists!!
     // ..... 
     //
-        
+
 }
 
 function getNewItemDBFormat(item) {
@@ -408,7 +434,7 @@ function filterListContent(button) {
     const isAdding = isAddingNewItemm();
 
     document.querySelectorAll('.grocery-list li').forEach((item, index) => {
-        if (index === 0 && isAdding ) {
+        if (index === 0 && isAdding) {
             item.style.display = ''; // always show add-item
             return;
         }
