@@ -815,7 +815,7 @@ app.get("/api/get-user-list-items", authMiddleware, checkRole("user"), (req, res
 // ADD USER LIST ITEM (inkl. custom_name)
 app.post("/api/add-user-list-item", authMiddleware, checkRole("user"), (req, res) => {
   const userId = req.user.id;
-  const { ingredient_id, custom_name, amount, unit_of_measurement } = req.body;
+  const { ingredient_id, custom_name, category, amount, unit_of_measurement } = req.body;
 
   // Validation: entweder ingredient_id ODER custom_name muss vorhanden sein
   if ((!ingredient_id && !custom_name) || (ingredient_id && custom_name)) {
