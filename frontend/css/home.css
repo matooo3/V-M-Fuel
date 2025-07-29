@@ -28,7 +28,6 @@
 .tag {
     border: solid 1px var(--accent-color);
     background-color: var(--accent-background) !important;
-    ;
     width: 15%;
     min-width: 60px;
     max-width: 60px;
