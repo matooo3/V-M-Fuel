@@ -409,6 +409,11 @@ export async function updateUserListItemInDB(identifier, updatedItem) {
   await Api.postData("/update-user-list-item", { identifier, updatedItem }, token);
 }
 
+export async function deleteOldAndCreateNewList() {
+    const token = Auth.getUserToken();
+    return await Api.postData("/delete-old-and-create-new-list", {}, token);
+}
+
 ////////////////// END USER LIST ITEMS /////////////////
 
 // ------------------------------------------------------------------
