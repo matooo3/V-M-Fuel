@@ -823,8 +823,8 @@ app.post("/api/add-user-list-item", authMiddleware, checkRole("user"), (req, res
   }
 
   const query = `
-    INSERT INTO user_list_items (user_id, ingredient_id, custom_name, amount, unit_of_measurement)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO user_list_items (user_id, ingredient_id, custom_name, category, amount, unit_of_measurement)
+    VALUES (?, ?, ?, ?, ?, ?)
   `;
 
   // ingredient_id oder NULL, custom_name oder NULL setzen
@@ -832,7 +832,7 @@ app.post("/api/add-user-list-item", authMiddleware, checkRole("user"), (req, res
   const customNameValue = custom_name || null;
   const categoryValue = category || null;
 
-  db.query(query, [userId, ingredientIdValue, customNameValue, amount, unit_of_measurement, categoryValue], (err, result) => {
+  db.query(query, [userId, ingredientIdValue, customNameValue, categoryValue, amount, unit_of_measurement], (err, result) => {
     if (err) {
       console.error("Error inserting list item:", err);
       return res.status(500).json({ message: "Failed to add list item" });
