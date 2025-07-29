@@ -107,9 +107,9 @@ function activateSearchBar() {
     searchULs(searchInputGro, groceryList);
 }
 
-function deleteItemFromUserList(ingredient_id) {
-    console.log("Deleting item with ingredient_id:", ingredient_id);
-    Storage.deleteUserListItemFromDB(ingredient_id);
+function deleteItemFromUserList(identifier) {
+    console.log("Deleting item with identifier:", identifier);
+    Storage.deleteUserListItemFromDB(identifier);
     updateCheckedItemsCount();
 }
 
@@ -425,13 +425,13 @@ function setActiveFilterButton(button) {
 }
 
 
-function isAddingNewItemm() {
+function isAddingNewItem() {
     return document.getElementById("newItem") !== null;
 }
 
 function filterListContent(button) {
     const filterText = button.textContent.trim();
-    const isAdding = isAddingNewItemm();
+    const isAdding = isAddingNewItem();
 
     document.querySelectorAll('.grocery-list li').forEach((item, index) => {
         if (index === 0 && isAdding) {
