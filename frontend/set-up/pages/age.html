@@ -1,62 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style-sheets/general.css"/>
-    <link rel="stylesheet" href="../style-sheets/age.css"/>
+    <link rel="stylesheet" href="../style-sheets/general.css" />
+    <link rel="stylesheet" href="../style-sheets/age.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <title>Old?</title>
 </head>
+
 <body>
-    <div class = landing-container>
+    <div class=landing-container>
         <div class="arrow-back"> </div>
 
-        <div class = "header-div">
+        <div class="header-div">
 
-            <h1 class = "text set-up">Set up</h1>
+            <h1 class="text set-up">Set up</h1>
 
-            <div class ="progress-bar">
+            <div class="progress-bar">
                 <div id="progress-bar-fill-age"></div>
             </div>
 
-        </div> 
-
-        <div class="question-div">
-        <h1 class = "text"> When were you born?</h1>
         </div>
 
-        <div id = selection-div>
-        <div class="date-picker-container">
-            
-            <div class="date-picker">
+        <div class="question-div">
+            <h1 class="text"> When were you born?</h1>
+        </div>
 
-                <div class="picker-column day">
-                    <div class="picker-highlight"></div>
-                    <div class="picker-scroll" id="dayPicker">
-                        <!-- Day items will be populated by JavaScript -->
-                    </div>
-                    <div class="picker-overlay"></div>
-                </div>
+        <div id=selection-div>
+            <div class="date-picker-container">
 
-                <div class="picker-column month">
-                    <div class="picker-highlight"></div>
-                    <div class="picker-scroll" id="monthPicker">
-                        <!-- Month items will be populated by JavaScript -->
+                <div class="date-picker">
+
+                    <div class="picker-column day">
+                        <div class="picker-highlight"></div>
+                        <div class="picker-scroll" id="dayPicker">
+                            <!-- Day items will be populated by JavaScript -->
+                        </div>
+                        <div class="picker-overlay"></div>
                     </div>
-                    <div class="picker-overlay"></div>
-                </div>
-                
-                
-                <div class="picker-column year">
-                    <div class="picker-highlight"></div>
-                    <div class="picker-scroll" id="yearPicker">
-                        <!-- Year items will be populated by JavaScript -->
+
+                    <div class="picker-column month">
+                        <div class="picker-highlight"></div>
+                        <div class="picker-scroll" id="monthPicker">
+                            <!-- Month items will be populated by JavaScript -->
+                        </div>
+                        <div class="picker-overlay"></div>
                     </div>
-                    <div class="picker-overlay"></div>
+
+
+                    <div class="picker-column year">
+                        <div class="picker-highlight"></div>
+                        <div class="picker-scroll" id="yearPicker">
+                            <!-- Year items will be populated by JavaScript -->
+                        </div>
+                        <div class="picker-overlay"></div>
+                    </div>
                 </div>
             </div>
-            </div>        
-                    <div class="selected-date" id="selectedDate">
+            <div class="selected-date" id="selectedDate">
                 April 15, 2024
             </div>
 
@@ -67,16 +74,17 @@
 
         </div>
 
-        <div class ="page-end-div">
-        <button class="next-btn" >Next</button>
-        
-        <div class = "footer-div">
-            <h1 id="footer-text">Already have an account? <span class = "accent-col log-in">Log in</span></h1>
-            <img src="../pictures/VM logo.svg" alt="App Logo" class="logo"/>
-        </div>
+        <div class="page-end-div">
+            <button class="next-btn">Next</button>
+
+            <div class="footer-div">
+                <h1 id="footer-text">Already have an account? <span class="accent-col log-in">Log in</span></h1>
+                <img src="../pictures/VM logo.svg" alt="App Logo" class="logo" />
+            </div>
         </div>
 
-    </div>   
-     <script type="module" src="../scripts/script-set-up.js"></script>
+    </div>
+    <script type="module" src="../scripts/script-set-up.js"></script>
 </body>
-</html>  
+
+</html>

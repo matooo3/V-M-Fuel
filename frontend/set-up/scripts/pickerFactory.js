@@ -24,6 +24,11 @@ function createPicker(type, options = {}) {
 function saveAgeData(ageData) {
     const userData = getUserDataFromLS();
     userData.age = ageData.age;
+    userData.dateObject = {
+            day: ageData.day,
+            month: ageData.month,
+            year: ageData.year
+    };
     saveUserDataToLS(userData);
     return userData;
 }

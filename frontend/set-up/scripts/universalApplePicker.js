@@ -3,6 +3,8 @@
 // ===== UNIVERSAL APPLE PICKER CLASS =====
 // ==============================
 
+import { getUserDataFromLS } from '../../scripts/storage.js';
+
 export class UniversalApplePicker {
     constructor(type, options = {}) {
         this.type = type;
@@ -23,6 +25,8 @@ export class UniversalApplePicker {
     }
 
     initializeByType() {
+        const userData = getUserDataFromLS();
+
         switch (this.type) {
             case 'age':
                 this.config = {
@@ -30,14 +34,22 @@ export class UniversalApplePicker {
                     displayId: 'selectedDate',
                     hasUnit: false,
                     months: [
-                        'January', 'February', 'March', 'April', 'May', 'June',
+                        'placeholder', 'January', 'February', 'March', 'April', 'May', 'June',
                         'July', 'August', 'September', 'October', 'November', 'December'
                     ]
                 };
-                this.selectedDay = 15;
-                this.selectedMonth = 5;
-                this.selectedYear = 2010;
+                const storedAge = userData.dateObject;
+                if (storedAge) {
+                    this.selectedDay = storedAge.day;
+                    this.selectedMonth = storedAge.month;
+                    this.selectedYear = storedAge.year;
+                } else {
+                    this.selectedDay = 15;
+                    this.selectedMonth = 5;
+                    this.selectedYear = 2010;
+                }
                 break;
+                
 
             case 'height':
                 this.config = {
@@ -54,9 +66,23 @@ export class UniversalApplePicker {
                     },
                     conversion: 2.54
                 };
-                this.currentUnit = 'cm';
-                this.selectedWhole = 175;
-                this.selectedDecimal = 0;
+                const storedHeight = userData.height;
+                if (storedHeight && storedHeight.unit && storedHeight.cm) {
+                    this.currentUnit = storedHeight.unit;
+                    if (this.currentUnit === 'cm') {
+                        const cm = storedHeight.cm;
+                        this.selectedWhole = Math.floor(cm);
+                        this.selectedDecimal = Math.round((cm % 1) * 10);
+                    } else { // 'ft'
+                        const totalInches = storedHeight.cm / this.config.conversion;
+                        this.selectedWhole = Math.floor(totalInches / 12);
+                        this.selectedDecimal = Math.round(totalInches % 12);
+                    }
+                } else {
+                    this.currentUnit = 'cm';
+                    this.selectedWhole = 175;
+                    this.selectedDecimal = 0;
+                }
                 break;
 
             case 'weight':
@@ -71,9 +97,17 @@ export class UniversalApplePicker {
                     },
                     conversion: 2.20462
                 };
-                this.currentUnit = 'kg';
-                this.selectedWhole = 75;
-                this.selectedDecimal = 5;
+                const storedWeight = userData.weight;
+                if (storedWeight && storedWeight.unit && storedWeight[storedWeight.unit]) {
+                    this.currentUnit = storedWeight.unit;
+                    const value = storedWeight[this.currentUnit];
+                    this.selectedWhole = Math.floor(value);
+                    this.selectedDecimal = Math.round((value % 1) * 10);
+                } else {
+                    this.currentUnit = 'kg';
+                    this.selectedWhole = 75;
+                    this.selectedDecimal = 5;
+                }
                 break;
         }
     }
