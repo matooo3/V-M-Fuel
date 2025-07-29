@@ -845,14 +845,21 @@ app.post("/api/add-user-list-item", authMiddleware, checkRole("user"), (req, res
 // DELETE USER LIST ITEM
 app.post("/api/delete-user-list-item", authMiddleware, checkRole("user"), (req, res) => {
   const userId = req.user.id;
-  const { item_id } = req.body;
+  // identifier is either item_id or custom_name
+  const { identifier } = req.body;
 
-  if (!item_id) {
-    return res.status(400).json({ message: "Missing item_id" });
+  if (!identifier) {
+    return res.status(400).json({ message: "Missing identifier" });
   }
 
-  const query = "DELETE FROM user_list_items WHERE ingredient_id = ? AND user_id = ?";
-  db.query(query, [item_id, userId], (err, result) => {
+  // Check if identifier is ingredient_id or custom_name:
+  const isNumeric = !isNaN(identifier);
+
+  const query = isNumeric
+    ? "DELETE FROM user_list_items WHERE ingredient_id = ? AND user_id = ?"
+    : "DELETE FROM user_list_items WHERE custom_name = ? AND user_id = ?";
+    
+  db.query(query, [identifier, userId], (err, result) => {
     if (err) {
       console.error("Error deleting item:", err);
       return res.status(500).json({ message: "Failed to delete item" });
