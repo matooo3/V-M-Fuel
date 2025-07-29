@@ -139,7 +139,7 @@ function addEventListeners() {
     themeSelect.value = savedTheme;
 
     loadSavedTheme();
-    // Listener für Änderungen
+    // Event listener for changes
     themeSelect.addEventListener('change', function () {
         const selectedTheme = this.value;
         document.body.classList.toggle('dark-mode', selectedTheme === 'dark');
