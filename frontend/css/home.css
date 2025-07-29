@@ -16,7 +16,7 @@
     flex-shrink: 0;
     gap: 5px;
     padding: 20px 27px 0px 27px;
-    color: var(--h1-color)
+    color: var(--h1-color);
 }
 
 #greeting-text {
