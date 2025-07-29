@@ -32,8 +32,6 @@
     --positive-fill-color: #EEFFF6;
     --positive-border-color: #BBF7D0;
 
-
-
     /* red */
     --negative-text-header: #AC1A1A;
     --blocking-color: #FF7C7C;
@@ -61,7 +59,6 @@
     --card-color: #232323;
 
     /* Color for navigation bar items (not selected), star and clos icon */
-    --accent-color: #E66868;
     --accent-background: #1A1A1A;
     --circle-stroke: 12px;
     --nav-height: max(10vh, 80px);
@@ -221,6 +218,16 @@ button {
     transition: all 0.3s ease;
     cursor: pointer;
 }
+
+#main-nav.hiddenNav {
+    display: none;
+}
+
+#main-nav.showNav {
+    display: flex;
+    background-color: var(--background-color);
+}
+
 
 /* Subline */
 #main-nav a.active::after {

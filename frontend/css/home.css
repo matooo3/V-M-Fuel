@@ -26,8 +26,6 @@
 }
 
 .tag {
-    border: solid 1px var(--accent-color);
-    background-color: var(--accent-background) !important;
     width: 15%;
     min-width: 60px;
     max-width: 60px;
@@ -53,7 +51,8 @@
 }
 
 #admin-panel {
-    border: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     padding: 0px 27px 0px 27px;
     grid-row: 2;
     width: 100%;
@@ -590,10 +589,6 @@
 }
 
 .user-tag {
-    border: solid 1px var(--border-color-admin);
-    /**/
-    background-color: var(--background-color-admin);
-    /**/
     width: 6rem;
     height: 2rem;
     min-width: 5rem;

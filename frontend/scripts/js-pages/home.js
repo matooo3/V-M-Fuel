@@ -7,33 +7,32 @@ import * as Swipe from '../swipetodelete.js';
 import * as Role from '../roleRouting.js';
 import * as Settings from './settings.js';
 import * as Search from '../searchBar.js';
-import * as Plan from './plan.js'
+import * as Plan from './plan.js';
 
 export default async function loadHome() {
+    
     const app = document.getElementById('app');
     // LOAD app html-code
     const html = await loadHTMLTemplate('/frontend/html-pages/home.html');
     app.innerHTML = html;
-
+    
     //load user greeting! (eventlistener DOM loaded)
     // document.addEventListener('DOMContentLoaded', renderUserGreeting);
-
-    Settings.loadSavedTheme();
-
+    
     Role.renderAdminPanel();
     Role.renderUserRoleColors();
-
+    
     setTimeout(() => {
         renderUserGreeting();
     }, 1);
-
+    
     await updateAdminContainer();
-
+    
     // Eventlistener: -------------------------------------------
-
+    
     // Settings Event Listener
     Settings.loadSettingsEventListener();
-
+    
 }
 
 function setUpInitialEventlisteners() {
@@ -82,7 +81,7 @@ function addCheckboxEventListener() {
     });
 }
 
-function sleep(ms) {
+export async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -107,9 +106,7 @@ async function updateAdminContainer() {
         renderTodaysMeals(initialTodaysMealsWithState);
 
         // render first meal
-        const mealValues = Object.values(initialTodaysMealsWithState);
-        const firstMeal = mealValues[0];
-        renderNextMeal(firstMeal);
+        renderFirstUneatenMeal(initialTodaysMealsWithState);
 
         // update ui accordingly
         await updateUI(initialTodaysMealsWithState);
@@ -120,6 +117,20 @@ async function updateAdminContainer() {
         const html = await loadHTMLTemplate('/frontend/html-pages/homeRoles.html');
         adminContainer.innerHTML = html;
         renderUserList();
+    }
+}
+
+function renderFirstUneatenMeal(initialTodaysMealsWithState) {
+
+    const keys = Object.keys(initialTodaysMealsWithState);
+
+    for (let i = 0; i < keys.length - 1; i++) {
+        const currentKey = keys[i];
+        const meal = initialTodaysMealsWithState[currentKey];
+        if(!meal.eaten){
+            renderNextMeal(meal);
+            break;
+        }
     }
 }
 
@@ -165,7 +176,8 @@ export async function getTodaysMeals(weekPlan = null) {
     const index = getTodaysIndexInWeek(today, currentWeek);
 
     if(!weekPlan){
-        weekPlan = await Storage.getWeekPlanFromDB();
+        weekPlan = await Plan.getWeekPlan();
+        Storage.saveWeekPlanToDB();
     }
 
     const todaysMeals = weekPlan[index];
@@ -263,6 +275,7 @@ async function updateGoalPercentage(eatenKcal, optimalKcal) {
 export async function getTodaysMealsWithState(reset = false) {
 
     let todaysMealsWithState = await Storage.getNextMealsFromDB();
+    console.log("GETTETTETRTR", todaysMealsWithState);
 
     if (!todaysMealsWithState || Object.keys(todaysMealsWithState).length === 0 || reset) {
 
@@ -362,7 +375,6 @@ function renderNextMeal(nextMeal) {
                         </div>
 
                         <span class="calories-db">
-                            830kcal
                         </span>
                     </div>
                 </div>
@@ -407,7 +419,6 @@ function renderTodaysMeals(todaysMealsWithState) {
     for (let i = 0; i < keys.length - 1; i++) {
         const currentKey = keys[i];
         list.appendChild(createMealCard(i, todaysMealsWithState[currentKey]));
-
     }
 
 }
@@ -422,7 +433,7 @@ function createMealCard(i, todaysMeal) {
                         <h3 class="meal-name-db">${todaysMeal.name}</h3>
                         <span class="subtext">${todaysMeal.meal_category}</span>
                     </div>
-                    <h3 class="todays-calories">${todaysMeal.total_calories}</h3>`;
+                    <h3 class="todays-calories">${todaysMeal.total_calories} kcal</h3>`;
 
     return card;
 }

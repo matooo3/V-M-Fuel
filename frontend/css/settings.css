@@ -224,7 +224,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 }
 
 .card-st-activity.clicked-st-activity {
-    border: var(--positive-border-color) solid 1px;
+    border: var(--positive-color) solid 1px;
     outline: none;
     background-color: var(--positive-fill-color);
 }
@@ -239,7 +239,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 }
 
 .card-st-goal.clicked-st-goal {
-    border: var(--positive-border-color) solid 1px;
+    border: var(--positive-color) solid 1px;
     outline: none;
     background-color: var(--positive-fill-color);
 }

@@ -137,7 +137,7 @@ function addEventListeners() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.classList.toggle('dark-mode', savedTheme === 'dark');
     themeSelect.value = savedTheme;
-    
+
     themeSelect.addEventListener('change', function () {
         const selectedTheme = this.value;
         document.body.classList.toggle('dark-mode', selectedTheme === 'dark');
@@ -201,7 +201,8 @@ export function loadSettingsEventListener() {
 export function hideNavbar() {
     const navbar = document.getElementById('main-nav');
     if (navbar) {
-        navbar.style.display = 'none';
+        navbar.classList.add('hiddenNav');
+        navbar.classList.remove('showNav');
     }
 }
 
