@@ -312,17 +312,17 @@ export async function saveInitialUserDataToDB() {
 }
 
 // SAVE NEXT MEALS
-export async function saveNextMealsToDB(todaysMealsWithState) {
+export async function saveNextMealsToDB(next_meals) {
     
   const token = Auth.getUserToken();
 
-  console.log("Data being sent to save-next-meals:", todaysMealsWithState);
+  console.log("Data being sent to save-next-meals:", next_meals);
 
-  if (!token || !todaysMealsWithState) {
+  if (!token || !next_meals) {
     throw new Error("Token or UserInfo is missing");
   }
 
-  await Api.postData("/save-next-meals", todaysMealsWithState, token);
+  await Api.postData("/save-next-meals", { next_meals }, token);
 }
 
 // GET NEXT MEALS
@@ -334,5 +334,82 @@ export async function getNextMealsFromDB() {
     return data; 
 
 }
+
+//////////////////// USER LIST ITEMS ///////////////////
+
+// SET WHOLE LIST
+export async function setUserListItemsInDB(items) {
+    // items is:
+    //           [ { id, name, amount, unit }, 
+    //             { id, name, amount, unit }, ... ]
+  const token = Auth.getUserToken();
+
+  if (!token || !Array.isArray(items) || items.length === 0) {
+    throw new Error("Token or items list is missing or empty");
+  }
+
+  await Api.postData("/set-user-list-items", { items }, token);
+}
+
+export async function getUserListItemsFromDB() {
+  const token = Auth.getUserToken();
+  const data = await Api.fetchDataWithToken("/get-user-list-items", token);
+  return data;
+  // format:
+  /**
+   * {
+   *   ingredient_id: 4,
+   *   name: "chicken breast filet",
+   *   amount: 556.09,
+   *   unit_of_measurement: "g",
+   *   category: "Protein",
+   *   ingredient_unit: "100g",
+   *   calories_per_UoM: 105,
+   *   carbs_per_UoM: 0.6,
+   *   fats_per_UoM: 2,
+   *   protein_per_UoM: 21
+   * }
+   */
+
+}
+
+
+
+// ADD USER LIST ITEM
+export async function addUserListItemToDB(item) {
+    //   {ingredient_id: 12, amount: 100, unit_of_measurement: "g"}
+  const token = Auth.getUserToken();
+
+  if (!token || !item) {
+    throw new Error("Token or item is missing");
+  }
+
+  await Api.postData("/add-user-list-item", item, token);
+}
+
+
+// DELETE USER LIST ITEM (via POST)
+export async function deleteUserListItemFromDB(identifier) {
+  const token = Auth.getUserToken();
+
+  if (!token || !identifier) {
+    throw new Error("Token or identifier is missing");
+  }
+
+  await Api.postData("/delete-user-list-item", { identifier }, token);
+}
+
+export async function updateUserListItemInDB(identifier, updatedItem) {
+  const token = Auth.getUserToken();
+
+  if (!token || !identifier || !updatedItem) {
+    throw new Error("Token, identifier or updatedItem is missing");
+  }
+
+  await Api.postData("/update-user-list-item", { identifier, updatedItem }, token);
+}
+
+////////////////// END USER LIST ITEMS /////////////////
+
 // ------------------------------------------------------------------
 

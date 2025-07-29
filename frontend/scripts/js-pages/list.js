@@ -1,95 +1,196 @@
 // ./pages/list.js
-import * as Storage from '../storage.js';
-import { loadHTMLTemplate } from '../templateLoader.js';
-import { CustomSelect } from '/frontend/scripts/drop-down.js';
-import { searchULs } from '../searchBar.js';
-import * as Settings from './settings.js';
+import * as Storage from "../storage.js";
+import { loadHTMLTemplate } from "../templateLoader.js";
+import { CustomSelect } from "/frontend/scripts/drop-down.js";
+import { searchULs } from "../searchBar.js";
+import * as Settings from "./settings.js";
+import * as SwipeToDelete from "../swipetodelete.js";
+
+const debounceTimers = new Map();
 
 // Main function
 export default async function loadList() {
-    const app = document.getElementById('app');
+    const app = document.getElementById("app");
     // LOAD app html-code
-    const html = await loadHTMLTemplate('/frontend/html-pages/list.html');
+    const html = await loadHTMLTemplate("/frontend/html-pages/list.html");
     app.innerHTML = html;
 
-    // ingredients = await getAllDishIngredients()
-    // updateList(ingredients); 
+    // Add event listener
+    addEventListeners();
 
-    // Add event listener 
+    // Load existing items from DB
+    const items = await loadItemsFromDBOrWeekPlan();
+    renderItems(items);
 
+    // Add event listeners for quantity control buttons
+    addQuantityControlEventListeners();
+
+    updateCheckedItemsCount();
+
+    activateSearchBar();
+
+    // Initialize swipe to delete
+    const list = document.querySelector(".grocery-list");
+    SwipeToDelete.initializeSwipeToDelete(list, ".grocery-item", deleteItemFromUserList);
+}
+
+function addEventListeners() {
     // Settings Event Listener
     Settings.loadSettingsEventListener();
 
-    const filterButtons = document.querySelectorAll('#filter-bar button');
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
+    const filterButtons = document.querySelectorAll("#filter-bar button");
+    filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
             setActiveFilterButton(button);
         });
     });
 
     document.getElementById("add-item-btn").addEventListener("click", () => {
-
         // only allow to open it once:
-        const existingItem = document.getElementById('newItem');
+        const existingItem = document.getElementById("newItem");
         if (!existingItem) {
             addItemToList();
         }
-
     });
+}
 
-    const ingredients = await Storage.getIngredientsFromWeekPlan();
-    console.warn("Ingredients from week plan:", ingredients);
+function addQuantityControlEventListeners() {
+    const list = document.querySelector(".grocery-list");
+    list.addEventListener("click", changeAmount);
+}
 
-    // Load existing items from storage
-    ingredients.forEach(item => addItem(item));
+async function loadItemsFromDBOrWeekPlan() {
+    // Load existing items from DB
+    let items = await Storage.getUserListItemsFromDB();
 
-    // Add event listeners for quantity control buttons
-    const list = document.querySelector('.grocery-list');
+    // IF NO LIST ITEMS IN DB (USER LIST ITEMS) => LOAD FROM WEEK PLAN
+    if (items && items.length > 0) {
+        console.warn("Lade User List Items aus DB:", items);
+    } else {
+        // Wenn keine Items in der DB sind, WeekPlan verwenden
+        console.warn("Keine User List Items gefunden – lade aus WeekPlan ...");
 
-    list.addEventListener('click', changeAmount);
+        items = await Storage.getIngredientsFromWeekPlan();
+        console.log("Ingredients from week plan:", items);
 
-    const searchInputGro = 'search-groceries';
-    const groceryList = ['.grocery-list'];
+        // Optional: gleich in DB speichern für zukünftige Zugriffe
+        await Storage.setUserListItemsInDB(items);
+    }
+
+    return items;
+}
+
+function renderItems(items) {
+    items.forEach((item) => addItem(item));
+}
+
+function updateCheckedItemsCount() {
+    const items = document.querySelectorAll(".grocery-list li");
+    const checked = getCheckedItems(items);
+    const total = items.length;
+
+    const subtextElement = document.getElementById("subtext-gl");
+    if (subtextElement) {
+        subtextElement.textContent = `${checked.length} out of ${total} checked`;
+    } else {
+        console.warn("Subtext element not found!");
+    }
+}
+
+function getCheckedItems(items) {
+    return Array.from(items).filter(item => item.querySelector('.checkbox-gl').checked);
+}
+
+function activateSearchBar() {
+    const searchInputGro = "search-groceries";
+    const groceryList = [".grocery-list"];
     searchULs(searchInputGro, groceryList);
+}
 
-    // Initialize swipe to delete
-    initializeSwipeToDelete(list);
+function deleteItemFromUserList(identifier) {
+    console.log("Deleting item with identifier:", identifier);
+    Storage.deleteUserListItemFromDB(identifier);
+    updateCheckedItemsCount();
 }
 
 function addItem(item) {
-    const list = document.querySelector('.grocery-list');
-    const li = document.createElement('li');
-    li.className = 'grocery-item drop-shadow';
+    const list = document.querySelector(".grocery-list");
+    const li = document.createElement("li");
+    li.className = "grocery-item drop-shadow";
+    // li.dataset.id = item.id; // ID als data-Attribut speichern
+
+    const identifier = returnIdentifier(item);
+
+    const checked = item.is_checked ? "checked" : "";
 
     // NEUE HTML-STRUKTUR: Notwendig für die Swipe-Animation.
     // Der Inhalt wird in '.swipe-content' gepackt und ein '.swipe-delete' Button hinzugefügt.
     li.innerHTML = `
         <div class="swipe-delete">Delete</div>
         <div class="swipe-content">
-            <input class="checkbox checkbox-gl" type="checkbox" />
+            <span class="item-id">${identifier}</span>
+            <input class="checkbox checkbox-gl" type="checkbox" ${checked} />
             <div class="item-details">
                 <h3>${item.name}</h3>
                 <span class="category subtext">${item.category}</span>
             </div>
             <div class="quantity-control">
                 <button class="minus-btn"><img src="/frontend/assets/icons/minus.svg" alt="-"></button>
-                <span class="amount">${item.amount.toFixed(0)}</span><span class="unit">${pieceToPcs(item.unit_of_measurement)}</span>
+                <span class="amount">${item.amount.toFixed(0)}</span>
+                <span class="unit">${pieceToPcs(item.unit_of_measurement)}</span>
                 <button class="plus-btn"><img src="/frontend/assets/icons/plus.svg" alt="+"></button>
             </div>
         </div>
     `;
+
+    addCheckBoxEventListener(li, identifier, item);
 
     if (list.firstChild) {
         list.insertBefore(li, list.firstChild);
     } else {
         list.appendChild(li);
     }
+}
 
+async function addCheckBoxEventListener(li, identifier, item) {
+    // Checkbox Event Listener
+    const checkbox = li.querySelector('.checkbox-gl');
+    checkbox.addEventListener('change', async () => {
+        const updatedItem = {
+            ingredient_id: item.ingredient_id || null,
+            custom_name: item.name || null,
+            category: item.category || null,
+            amount: item.amount,
+            unit_of_measurement: item.unit_of_measurement,
+            is_checked: checkbox.checked ? 1 : 0
+        };
+
+        updateCheckedItemsCount();
+
+        await Storage.updateUserListItemInDB(identifier, updatedItem);
+    });
+}
+
+function returnIdentifier(item) {
+    if (item.ingredient_id !== null && item.ingredient_id !== undefined) {
+        return item.ingredient_id;
+    } else if (item.name) {
+        return item.name;
+    } else {
+        console.error("Item has no valid identifier"); // Fallback
+    }
 }
 
 function pieceToPcs(unit) {
-    if(unit === "piece") {
+    if (unit === "piece") {
         return "pcs";
+    }
+    return unit;
+}
+
+function pcsToPiece(unit) {
+    if (unit === "pcs") {
+        return "piece";
     }
     return unit;
 }
@@ -99,12 +200,12 @@ function addItemToList() {
     // Storage.addGroceryListItem(item);
     // // Add item to the list in the UI
 
-    const list = document.querySelector('.grocery-list');
+    const list = document.querySelector(".grocery-list");
 
-    const newItem = document.createElement('li');
+    const newItem = document.createElement("li");
 
-    newItem.id = 'newItem';
-    newItem.className = 'grocery-item drop-shadow';
+    newItem.id = "newItem";
+    newItem.className = "grocery-item drop-shadow";
     // Hier soll input felder kommen wo user das item eingeben kann
     newItem.innerHTML = `
     <div id="new-item-container">
@@ -147,57 +248,69 @@ function addItemToList() {
     list.insertBefore(newItem, list.firstChild);
 
     // Initialize custom select
-    const customSelects = newItem.querySelectorAll('.custom-select');
-    customSelects.forEach(selectElement => {
+    const customSelects = newItem.querySelectorAll(".custom-select");
+    customSelects.forEach((selectElement) => {
         new CustomSelect(selectElement);
     });
 
     // Füge Event Listener für die Buttons hinzu
-    const saveBtn = newItem.querySelector('.save-btn');
-    const cancelBtn = newItem.querySelector('.cancel-btn');
-    saveBtn.addEventListener('click', saveNewItem);
-    cancelBtn.addEventListener('click', deleteNewItemForm);
-
-
-
+    const saveBtn = newItem.querySelector(".save-btn");
+    const cancelBtn = newItem.querySelector(".cancel-btn");
+    saveBtn.addEventListener("click", saveNewItem);
+    cancelBtn.addEventListener("click", deleteNewItemForm);
 }
 
 function saveNewItem() {
-    const newItemContainer = document.getElementById('new-item-container');
+    const newItemContainer = document.getElementById("new-item-container");
     const itemName = newItemContainer.querySelector('input[type="text"]').value;
     const amount = newItemContainer.querySelector('input[type="number"]').value;
 
     // Get values from the custom selects by reading the displayed text
-    const customSelects = newItemContainer.querySelectorAll('.custom-select');
-    const categoryText = customSelects[0].querySelector('.select-text').textContent;
-    const unitText = customSelects[1].querySelector('.select-text').textContent;
+    const customSelects = newItemContainer.querySelectorAll(".custom-select");
+    const categoryText = customSelects[0].querySelector(".select-text").textContent;
+    const unitText = customSelects[1].querySelector(".select-text").textContent;
 
     // Check if actual values were selected (not the default placeholder text)
-    const category = (categoryText !== 'Select Category' && categoryText !== 'Protein') ? categoryText : categoryText;
-    const unit = (unitText !== 'Select Unit' && unitText !== 'g') ? unitText : unitText;
+    const category =
+        categoryText !== "Select Category" && categoryText !== "Protein"
+            ? categoryText
+            : categoryText;
+    const unit =
+        unitText !== "Select Unit" && unitText !== "g" ? unitText : unitText;
 
     // Create new item object
     const newItem = {
-        id: Date.now(),
+        // ingredient_id: Date.now(),
+        ingredient_id: null, // No ID for new items
         name: itemName,
         category: category,
         amount: parseInt(amount, 10),
-        unit_of_measurement: unit
+        unit_of_measurement: pcsToPiece(unit),
     };
 
-    // Save the new item to storage (uncomment when ready)
-    // Storage.addGroceryListItem(newItem);
+    // Validierung Name
+    const trimmedName = itemName.trim();
+    const isValidName =
+        trimmedName.length > 0 &&            // Nicht nur Leerzeichen
+        !/^\d+$/.test(trimmedName) &&        // Nicht nur Zahlen
+        !/^\d/.test(trimmedName);            // Beginnt nicht mit einer Zahl
 
-    // Add the new item to the list, but only if all fields are filled
-    if (itemName && amount && category && unit) {
+    // Add the new item to the list + DB, but only if all fields are filled
+    if (itemName && amount && category && unit && uniqueItemName(itemName)) {
+        if (!isValidName) {
+            alert("Please enter a valid name!\n (Name must not be empty, only numbers, or start with a number)");
+            return;
+        }
         addItem(newItem);
+        const newItemDB = getNewItemDBFormat(newItem);
+        Storage.addUserListItemToDB(newItemDB);
         // Remove the input form
         deleteNewItemForm();
     } else {
-        alert('Please fill out all fields!'); // Optional: Error message
+        alert("Please fill out all fields!"); // Optional: Error message
         return;
     }
-
+    updateCheckedItemsCount();
     // // Aktualisiere die Liste
     // updateGroceryList();
     // // Zeige eine Erfolgsmeldung an
@@ -205,253 +318,128 @@ function saveNewItem() {
     // successMessage.className = 'success-message';
     // successMessage.textContent = 'Item successfully added!';
     // document.body.appendChild(successMessage);
+}
+function uniqueItemName() {
+    return true;
+    // #TODO => check if already exists!!
+    // ..... 
+    //
 
 }
 
+function getNewItemDBFormat(item) {
+    return {
+        // ingredient_id: item.ingredient_id,
+        custom_name: item.name,
+        category: item.category,
+        amount: item.amount,
+        unit_of_measurement: item.unit_of_measurement,
+    };
+}
+
 function deleteNewItemForm() {
-    const newItem = document.getElementById('newItem');
+    const newItem = document.getElementById("newItem");
     if (newItem) {
         newItem.remove();
     }
 }
 
-
 function changeAmount(event) {
     // NEU: Verhindert, dass beim Klick auf "Delete" die Menge geändert wird.
-    if (event.target.closest('.swipe-delete')) return;
+    if (event.target.closest(".swipe-delete")) return;
 
-    const btn = event.target.closest('button');
+    const btn = event.target.closest("button");
     // NEU: Genauerer Check, ob der Button wirklich im quantity-control ist.
-    if (!btn || !btn.closest('.quantity-control')) return;
+    if (!btn || !btn.closest(".quantity-control")) return;
     event.preventDefault();
 
     // NEU: Selektor auf '.swipe-content' geändert, da dies der neue Container ist.
-    const itemEl = btn.closest('.swipe-content');
-    const amountSpan = itemEl.querySelector('.amount');
+    const itemEl = btn.closest(".swipe-content");
+    const amountSpan = itemEl.querySelector(".amount");
     if (!amountSpan) return;
     let amount = parseInt(amountSpan.textContent, 10);
 
-    if (btn.classList.contains('plus-btn')) {
+    if (btn.classList.contains("plus-btn")) {
         amountSpan.textContent = amount + 1;
-    } else if (btn.classList.contains('minus-btn') && amount > 1) {
+    } else if (btn.classList.contains("minus-btn") && amount > 1) {
         amountSpan.textContent = amount - 1;
     }
+
+    const identifier = itemEl.querySelector(".item-id").textContent;
+    console.warn("IDENTIFIER: " + identifier);
+    const updatedItem = getNewElementAfterAmountChange(itemEl, identifier);
+    const debounceKey = createDebounceKey(identifier);
+
+    debounceUpdate(debounceKey, identifier, updatedItem);
 }
 
+function getNewElementAfterAmountChange(itemEl, identifier) {
+    const updatedItem = {
+        ingredient_id: isNaN(identifier) ? null : identifier,
+        custom_name: isNaN(identifier) ? identifier : null,
+        category: itemEl.querySelector(".category").textContent,
+        amount: parseInt(itemEl.querySelector(".amount").textContent, 10),
+        unit_of_measurement: pcsToPiece(itemEl.querySelector(".unit").textContent),
+        is_checked: itemEl.querySelector(".checkbox-gl").checked ? 1 : 0,
+    };
 
+    return updatedItem;
+}
+
+function createDebounceKey(identifier) {
+    return typeof identifier === "number" ? `id_${identifier}` : `name_${identifier}`;
+}
+
+// Debounce-Logik mit 1 Sekunde Verzögerung
+function debounceUpdate(debounceKey, identifier, updatedItem) {
+    // Falls noch ein Timer läuft, löschen
+    if (debounceTimers.has(debounceKey)) {
+        clearTimeout(debounceTimers.get(debounceKey));
+    }
+
+    // Neuer Timer
+    const timer = setTimeout(() => {
+        Storage.updateUserListItemInDB(identifier, updatedItem); // deine bestehende Backend-Funktion
+        debounceTimers.delete(debounceKey); // aufräumen
+    }, 1000);
+
+    debounceTimers.set(debounceKey, timer);
+}
 // -----------------------------------------------------------
 // active class for BUTTONS in filter-bar
 // -----------------------------------------------------------
 
 function setActiveFilterButton(button) {
-    const buttons = document.querySelectorAll('#filter-bar button');
-    buttons.forEach(btn => {
+    const buttons = document.querySelectorAll("#filter-bar button");
+    buttons.forEach((btn) => {
         if (btn === button) {
-
             filterListContent(button);
 
-            btn.classList.add('active');
-            btn.classList.remove('notActive');
-
+            btn.classList.add("active");
+            btn.classList.remove("notActive");
         } else {
-
-            btn.classList.remove('active');
-            btn.classList.add('notActive');
-
+            btn.classList.remove("active");
+            btn.classList.add("notActive");
         }
     });
+}
+
+
+function isAddingNewItem() {
+    return document.getElementById("newItem") !== null;
 }
 
 function filterListContent(button) {
     const filterText = button.textContent.trim();
-    
-    document.querySelectorAll('.grocery-list li').forEach(item => {
+    const isAdding = isAddingNewItem();
+
+    document.querySelectorAll('.grocery-list li').forEach((item, index) => {
+        if (index === 0 && isAdding) {
+            item.style.display = ''; // always show add-item
+            return;
+        }
+
         const category = item.querySelector('.category').textContent.trim();
         item.style.display = filterText === 'All' || category.includes(filterText) ? '' : 'none';
     });
 }
-
-
-// -----------------------------------------------------------
-// --------------------- SWIPE TO DELETE ---------------------
-// -----------------------------------------------------------
-
-function initializeSwipeToDelete(container) {
-    let isSwiping = false;
-    let startX = 0;
-    let currentX = 0;
-    let swipedItem = null;
-    let swipedContent = null;
-    let deleteButton = null;
-
-    const deleteButtonWidth = 90;
-    const fullSwipeThreshold = 150;
-
-    const deleteItem = (itemToDelete) => {
-        if (!itemToDelete) return;
-
-        itemToDelete.style.maxHeight = `${itemToDelete.offsetHeight}px`;
-        requestAnimationFrame(() => {
-            itemToDelete.classList.add('deleting');
-        });
-
-        itemToDelete.addEventListener('transitionend', () => {
-            itemToDelete.remove();
-            // Here add logic to remove from storage
-            // e.g. Storage.removeGroceryListItem(itemId);
-        }, { once: true });
-    };
-
-    const closeAllOtherItems = (currentItem) => {
-        container.querySelectorAll('.grocery-item').forEach(item => {
-            if (item !== currentItem) {
-                const content = item.querySelector('.swipe-content');
-                const deleteBtn = item.querySelector('.swipe-delete');
-                if (content) {
-                    content.style.transform = 'translateX(0)';
-                    // Reset border radius when closing
-                    content.style.borderRadius = '15px';
-                }
-                if (deleteBtn) {
-                    // Reset delete button
-                    deleteBtn.style.width = '0px';
-                    deleteBtn.style.opacity = '0';
-                }
-            }
-        });
-    };
-
-    const updateDeleteButton = (diffX) => {
-        if (!deleteButton) return;
-
-        const revealedWidth = Math.abs(diffX);
-
-        if (revealedWidth > 10) { // Start showing after 10px of swipe
-            deleteButton.style.width = `${revealedWidth}px`;
-            deleteButton.style.opacity = '1';
-        } else {
-            deleteButton.style.width = '0px';
-            deleteButton.style.opacity = '0';
-        }
-    };
-
-
-    const updateBorderRadius = (diffX) => {
-        if (!swipedContent) return;
-
-        const revealedWidth = Math.abs(diffX);
-
-        if (revealedWidth > 5) {
-            // When swiping left, only remove the right border radius
-            // Keep the left border radius intact to maintain the visual border
-            swipedContent.style.borderRadius = '15px 0 0 15px';
-            // Also ensure the content doesn't get clipped on the left
-            swipedContent.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
-        } else {
-            // Restore full border radius when not swiping
-            swipedContent.style.borderRadius = '15px';
-            swipedContent.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
-        }
-    };
-
-    const onSwipeStart = (e) => {
-        const item = e.target.closest('.grocery-item');
-        if (!item || item.id === 'newItem' || e.target.classList.contains('swipe-delete')) return;
-
-        closeAllOtherItems(item);
-        isSwiping = true;
-        swipedItem = item;
-        swipedContent = item.querySelector('.swipe-content');
-        deleteButton = item.querySelector('.swipe-delete');
-        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-        currentX = startX;
-
-        // Prepare the delete button
-        if (deleteButton) {
-            deleteButton.style.width = '0px';
-            deleteButton.style.opacity = '0';
-            deleteButton.style.transition = 'none';
-        }
-
-        // Apply transition to the sliding content only
-        swipedContent.style.transition = 'none';
-    };
-
-    const onSwipeMove = (e) => {
-        if (!isSwiping || !swipedContent) return;
-
-        currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-        let diffX = currentX - startX;
-
-        if (diffX > 0) diffX = 0;
-
-        // Transform the content
-        swipedContent.style.transform = `translateX(${diffX}px)`;
-
-        // Update delete button width to match revealed space
-        updateDeleteButton(diffX);
-
-        // Update border radius based on swipe position
-        updateBorderRadius(diffX);
-    };
-
-    const onSwipeEnd = () => {
-        if (!isSwiping || !swipedContent) return;
-
-        isSwiping = false;
-        let diffX = currentX - startX;
-
-        // Apply transition to the sliding content
-        swipedContent.style.transition = 'transform 0.3s ease-out, border-radius 0.3s ease-out';
-
-        // Apply transition to delete button
-        if (deleteButton) {
-            deleteButton.style.transition = 'width 0.3s ease-out, opacity 0.3s ease-out';
-        }
-
-        if (diffX < -fullSwipeThreshold) {
-            // Swipe the content completely off screen
-            swipedContent.style.transform = `translateX(-100%)`;
-            swipedContent.style.borderRadius = '15px 0 0 15px'; // Keep right corners square
-            if (deleteButton) {
-                deleteButton.style.width = '100%';
-                deleteButton.style.opacity = '1';
-            }
-            swipedContent.addEventListener('transitionend', () => deleteItem(swipedItem), { once: true });
-        } else if (diffX < -(deleteButtonWidth / 3)) {
-            // Partially reveal delete button
-            swipedContent.style.transform = `translateX(-${deleteButtonWidth}px)`;
-            swipedContent.style.borderRadius = '15px 0 0 15px'; // Right corners square
-            if (deleteButton) {
-                deleteButton.style.width = `${deleteButtonWidth}px`;
-                deleteButton.style.opacity = '1';
-            }
-        } else {
-            // Snap back to original position
-            swipedContent.style.transform = 'translateX(0)';
-            swipedContent.style.borderRadius = '15px'; // Restore full border radius
-            if (deleteButton) {
-                deleteButton.style.width = '0px';
-                deleteButton.style.opacity = '0';
-            }
-        }
-    };
-
-    const onDeleteClick = (e) => {
-        if (e.target.classList.contains('swipe-delete')) {
-            const itemToDelete = e.target.closest('.grocery-item');
-            deleteItem(itemToDelete);
-        }
-    };
-
-    container.addEventListener('mousedown', onSwipeStart);
-    document.addEventListener('mousemove', onSwipeMove);
-    document.addEventListener('mouseup', onSwipeEnd);
-
-    container.addEventListener('touchstart', onSwipeStart, { passive: true });
-    document.addEventListener('touchmove', onSwipeMove, { passive: true });
-    document.addEventListener('touchend', onSwipeEnd);
-
-    container.addEventListener('click', onDeleteClick);
-}
-// --------------------- END SWIPE TO DELETE ---------------------
