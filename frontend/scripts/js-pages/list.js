@@ -6,6 +6,8 @@ import { searchULs } from "../searchBar.js";
 import * as Settings from "./settings.js";
 import * as SwipeToDelete from "../swipetodelete.js";
 
+const debounceTimers = new Map();
+
 // Main function
 export default async function loadList() {
     const app = document.getElementById("app");
@@ -329,8 +331,47 @@ function changeAmount(event) {
     } else if (btn.classList.contains("minus-btn") && amount > 1) {
         amountSpan.textContent = amount - 1;
     }
+
+    const identifier = itemEl.querySelector(".item-id").textContent;
+    console.warn("IDENTIFIER: " + identifier);
+    const updatedItem = getNewElementAfterAmountChange(itemEl, identifier);
+    const debounceKey = returnMuu(identifier);
+
+    debounceUpdate(debounceKey, identifier, updatedItem);
 }
 
+function getNewElementAfterAmountChange(itemEl, identifier) {
+    const updatedItem = {
+        ingredient_id: isNaN(identifier) ? null : identifier,
+        custom_name: isNaN(identifier) ? identifier : null,
+        category: itemEl.querySelector(".category").textContent,
+        amount: parseInt(itemEl.querySelector(".amount").textContent, 10),
+        unit_of_measurement: pcsToPiece(itemEl.querySelector(".unit").textContent),
+        is_checked: itemEl.querySelector(".checkbox-gl").checked ? 1 : 0,
+    };
+
+    return updatedItem;
+}
+
+function returnMuu(identifier) {
+    return typeof identifier === "number" ? `id_${identifier}` : `name_${identifier}`;
+}
+
+// Debounce-Logik mit 1 Sekunde Verzögerung
+function debounceUpdate(debounceKey, identifier, updatedItem) {
+    // Falls noch ein Timer läuft, löschen
+    if (debounceTimers.has(debounceKey)) {
+        clearTimeout(debounceTimers.get(debounceKey));
+    }
+
+    // Neuer Timer
+    const timer = setTimeout(() => {
+        Storage.updateUserListItemInDB(identifier, updatedItem); // deine bestehende Backend-Funktion
+        debounceTimers.delete(debounceKey); // aufräumen
+    }, 1000);
+
+    debounceTimers.set(debounceKey, timer);
+}
 // -----------------------------------------------------------
 // active class for BUTTONS in filter-bar
 // -----------------------------------------------------------
@@ -350,12 +391,22 @@ function setActiveFilterButton(button) {
     });
 }
 
+
+function isAddingNewItemm() {
+    return document.getElementById("newItem") !== null;
+}
+
 function filterListContent(button) {
     const filterText = button.textContent.trim();
+    const isAdding = isAddingNewItemm();
 
-    document.querySelectorAll(".grocery-list li").forEach((item) => {
-        const category = item.querySelector(".category").textContent.trim();
-        item.style.display =
-            filterText === "All" || category.includes(filterText) ? "" : "none";
+    document.querySelectorAll('.grocery-list li').forEach((item, index) => {
+        if (index === 0 && isAdding ) {
+            item.style.display = ''; // always show add-item
+            return;
+        }
+
+        const category = item.querySelector('.category').textContent.trim();
+        item.style.display = filterText === 'All' || category.includes(filterText) ? '' : 'none';
     });
 }
