@@ -871,7 +871,7 @@ app.post("/api/delete-user-list-item", authMiddleware, checkRole("user"), (req, 
 });
 
 // UPDATE USER LIST ITEM
-app.post("/api/update-user-list-item", authMiddleware, checkRose("user"), (req, res) => {
+app.post("/api/update-user-list-item", authMiddleware, checkRole("user"), (req, res) => {
     const userId = req.user.id;
     const { identifier, updatedItem } = req.body;
     if (!identifier || !updatedItem) {
