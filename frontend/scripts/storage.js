@@ -389,14 +389,14 @@ export async function addUserListItemToDB(item) {
 
 
 // DELETE USER LIST ITEM (via POST)
-export async function deleteUserListItemFromDB(item_id) {
+export async function deleteUserListItemFromDB(identifier) {
   const token = Auth.getUserToken();
 
-  if (!token || !item_id) {
-    throw new Error("Token or item_id is missing");
+  if (!token || !identifier) {
+    throw new Error("Token or identifier is missing");
   }
 
-  await Api.postData("/delete-user-list-item", { item_id }, token);
+  await Api.postData("/delete-user-list-item", { identifier }, token);
 }
 
 

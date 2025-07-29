@@ -222,10 +222,7 @@ function saveNewItem() {
         unit_of_measurement: unit,
     };
 
-    // Save the new item to storage (uncomment when ready)
-    // Storage.addGroceryListItem(newItem);
-
-    // Add the new item to the list, but only if all fields are filled
+    // Add the new item to the list + DB, but only if all fields are filled
     if (itemName && amount && category && unit) {
         addItem(newItem);
         const newItemDB = getNewItemDBFormat(newItem);
