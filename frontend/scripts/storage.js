@@ -231,6 +231,12 @@ export function saveWeekPlanToDB(weekPlan) {
     Api.postData("/add-week-plan", { weekPlan, userId: user.id }, Auth.getUserToken());
 }
 
+export async function saveWeekPlanToDBAsync(weekPlan) {
+
+    const user = Auth.getUserFromToken();
+    await Api.postData("/add-week-plan", { weekPlan, userId: user.id }, Auth.getUserToken());
+}
+
 export async function getWeekPlanFromDB() {
   const token = Auth.getUserToken();
   const weekPlan = await Api.fetchDataWithToken("/get-week-plan", token);
@@ -407,6 +413,11 @@ export async function updateUserListItemInDB(identifier, updatedItem) {
   }
 
   await Api.postData("/update-user-list-item", { identifier, updatedItem }, token);
+}
+
+export async function deleteOldAndCreateNewList() {
+    const token = Auth.getUserToken();
+    return await Api.postData("/delete-old-and-create-new-list", {}, token);
 }
 
 ////////////////// END USER LIST ITEMS /////////////////
