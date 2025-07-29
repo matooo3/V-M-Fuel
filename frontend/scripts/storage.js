@@ -312,17 +312,17 @@ export async function saveInitialUserDataToDB() {
 }
 
 // SAVE NEXT MEALS
-export async function saveNextMealsToDB(next_meals) {
+export async function saveNextMealsToDB(todaysMealsWithState) {
     
   const token = Auth.getUserToken();
 
-  console.log("Data being sent to save-next-meals:", next_meals);
+  console.log("Data being sent to save-next-meals:", todaysMealsWithState);
 
-  if (!token || !next_meals) {
+  if (!token || !todaysMealsWithState) {
     throw new Error("Token or UserInfo is missing");
   }
 
-  await Api.postData("/save-next-meals", { next_meals }, token);
+  await Api.postData("/save-next-meals", todaysMealsWithState, token);
 }
 
 // GET NEXT MEALS
