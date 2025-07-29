@@ -566,25 +566,26 @@ app.get("/api/get-user-data", authMiddleware, checkRole("user"), (req, res) => {
 
 // GET INGREDIENTS FROM WEEK PLAN
 app.get("/api/get-ingredients-from-week-plan", authMiddleware, checkRole("user"), async (req, res) => {
-    const userId = req.user.id;
-
     try {
-        const weekPlan = await getUserWeekPlan(userId);
-        const dishMap = extractDishMapFromWeekPlan(weekPlan);
-
-        if (dishMap.size === 0) {
-            return res.json([]);
-        }
-
-        const ingredients = await getIngredientsFromDishMap(dishMap);
-        const aggregated = aggregateIngredients(ingredients, dishMap);
-
+        const aggregated = await getAggregatedIngredientsForUser(req.user.id);
         res.json(aggregated);
     } catch (err) {
-        console.error(err.message, err);
+        console.error(err);
         res.status(err.status || 500).json({ error: err.message || "Internal server error" });
     }
 });
+
+async function getAggregatedIngredientsForUser(userId) {
+    const weekPlan = await getUserWeekPlan(userId);
+    const dishMap = extractDishMapFromWeekPlan(weekPlan);
+
+    if (dishMap.size === 0) {
+        return [];
+    }
+
+    const ingredients = await getIngredientsFromDishMap(dishMap);
+    return aggregateIngredients(ingredients, dishMap);
+}
 
 function getUserWeekPlan(userId) {
     return new Promise((resolve, reject) => {
@@ -740,44 +741,67 @@ app.get("/api/get-next-meals", authMiddleware, checkRole("user"), (req, res) => 
 //////////////////// USER LIST ITEMS ///////////////////
 
 // SET WHOLE LIST
-app.post("/api/set-user-list-items", authMiddleware, checkRole("user"), (req, res) => {
-    const userId = req.user.id;
+app.post("/api/set-user-list-items", authMiddleware, checkRole("user"), async (req, res) => {
     const items = req.body.items;
 
     if (!Array.isArray(items) || items.length === 0) {
         return res.status(400).json({ message: "No items provided" });
     }
 
-    // Optional: vorher alte Liste löschen
-    const deleteQuery = "DELETE FROM user_list_items WHERE user_id = ? AND ingredient_id IS NOT NULL";
+    try {
+        const inserted = await setUserListItems(req.user.id, items);
+        res.status(200).json({ message: "List successfully saved", inserted });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to update list" });
+    }
+});
 
-    db.query(deleteQuery, [userId], (deleteErr) => {
-        if (deleteErr) {
-            console.error("Error clearing existing list:", deleteErr);
-            return res.status(500).json({ message: "Failed to clear old list" });
-        }
+async function setUserListItems(userId, items) {
+    return new Promise((resolve, reject) => {
+        const deleteQuery = "DELETE FROM user_list_items WHERE user_id = ? AND ingredient_id IS NOT NULL";
 
-        const insertQuery = `
-        INSERT INTO user_list_items (user_id, ingredient_id, amount, unit_of_measurement)
-        VALUES ?`;
+        db.query(deleteQuery, [userId], (deleteErr) => {
+            if (deleteErr) return reject(deleteErr);
 
-        const values = items.map(item => [
-            userId,
-            item.ingredient_id,
-            item.amount,
-            item.unit_of_measurement
-        ]);
+            const insertQuery = `
+                INSERT INTO user_list_items (user_id, ingredient_id, amount, unit_of_measurement)
+                VALUES ?`;
 
-        db.query(insertQuery, [values], (insertErr, result) => {
-            if (insertErr) {
-                console.error("Error inserting list items:", insertErr);
-                return res.status(500).json({ message: "Failed to insert list items" });
-            }
+            const values = items.map(item => [
+                userId,
+                item.ingredient_id,
+                item.amount,
+                item.unit_of_measurement
+            ]);
 
-            res.status(200).json({ message: "List successfully saved", inserted: result.affectedRows });
+            db.query(insertQuery, [values], (insertErr, result) => {
+                if (insertErr) return reject(insertErr);
+                resolve(result.affectedRows);
+            });
         });
     });
+}
+
+// !! COMBINE: get ingredients from week plan and set user list items (DELETE OLD + UPDATE NEW) !!
+app.post("/api/delete-old-and-create-new-list", authMiddleware, checkRole("user"), async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+        const aggregatedIngredients = await getAggregatedIngredientsForUser(userId);
+
+        if (aggregatedIngredients.length === 0) {
+            return res.status(400).json({ message: "No ingredients found for current week plan" });
+        }
+
+        const inserted = await setUserListItems(userId, aggregatedIngredients);
+        res.status(200).json({ message: "List generated and saved", inserted });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to generate and set list" });
+    }
 });
+
 
 // GET USER LIST ITEMS
 app.get("/api/get-user-list-items", authMiddleware, checkRole("user"), (req, res) => {
