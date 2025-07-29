@@ -15,6 +15,7 @@ export default async function loadList() {
     const html = await loadHTMLTemplate("/frontend/html-pages/list.html");
     app.innerHTML = html;
 
+    Settings.loadSavedTheme();
     // Add event listener
     addEventListeners();
 

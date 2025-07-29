@@ -34,7 +34,7 @@ export class UniversalApplePicker {
                     displayId: 'selectedDate',
                     hasUnit: false,
                     months: [
-                        'placeholder', 'January', 'February', 'March', 'April', 'May', 'June',
+                        'January', 'February', 'March', 'April', 'May', 'June',
                         'July', 'August', 'September', 'October', 'November', 'December'
                     ]
                 };
@@ -135,7 +135,7 @@ export class UniversalApplePicker {
                 if (pickerType === 'day') {
                     items = Array.from({ length: 31 }, (_, i) => ({ value: i + 1, text: i + 1 }));
                 } else if (pickerType === 'month') {
-                    items = this.config.months.map((month, index) => ({ value: index, text: month }));
+                    items = this.config.months.map((month, index) => ({ value: index+1, text: month }));
                 } else if (pickerType === 'year') {
                     const currentYear = new Date().getFullYear();
                     items = Array.from({ length: 121 }, (_, i) => {
