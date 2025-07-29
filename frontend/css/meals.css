@@ -350,7 +350,7 @@
 }
 
 .dislike.rejected .cross-icon {
-    stroke: var(--background-color);;
+    stroke: var(--background-color);
 }
 
 .tags-container-p {
