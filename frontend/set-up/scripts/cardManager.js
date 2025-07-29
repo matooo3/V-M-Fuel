@@ -4,6 +4,7 @@
 // ==============================
 
 import { getUserDataFromLS, saveUserDataToLS } from '../../scripts/storage.js';
+import { Utils } from './utils.js';
 
 const PAGE_KEY_MAP = {
     'goal.html': 'goal',
@@ -16,9 +17,45 @@ const PAGE_KEY_MAP = {
  */
 function initializeCards() {
     const cards = document.querySelectorAll('.card');
+    // If there are no cards on the page, exit the function.
+    if (cards.length === 0) return;
+
     cards.forEach(card => {
         card.addEventListener('click', handleCardClick);
     });
+
+    const currentFile = Utils.getCurrentFile();
+    const key = PAGE_KEY_MAP[currentFile];
+    if (!key) return; // Not a page with selectable cards
+
+    const userData = getUserDataFromLS();
+    const storedValue = userData[key];
+    let cardWasSelected = false;
+
+    // Try to select a card based on Local Storage data
+    if (storedValue) {
+        for (const card of cards) {
+            let cardValue;
+            // Handle specific text extraction for activity-level.html
+            if (currentFile === 'activity-level.html') {
+                const alTextElement = card.querySelector('.al-text');
+                cardValue = alTextElement ? alTextElement.textContent.trim() : card.textContent.trim();
+            } else {
+                cardValue = card.textContent.trim();
+            }
+
+            if (cardValue === storedValue) {
+                card.classList.add('clicked');
+                cardWasSelected = true;
+                break; // Exit loop once the selected card is found
+            }
+        }
+    }
+
+    // If no card was selected from storage, select the first one by default
+    if (!cardWasSelected) {
+        cards[0].classList.add('clicked');
+    }
 }
 
 /**
@@ -47,7 +84,6 @@ function saveCardData(currentFile) {
     const key = PAGE_KEY_MAP[currentFile];
     if (!key) return null;
 
-    // Spezielle Behandlung für activity-level.html
     let value;
     if (currentFile === 'activity-level.html') {
         const alTextElement = selectedCard.querySelector('.al-text');
