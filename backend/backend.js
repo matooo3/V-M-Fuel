@@ -789,6 +789,7 @@ app.get("/api/get-user-list-items", authMiddleware, checkRole("user"), (req, res
       COALESCE(i.name, uli.custom_name) AS name,
       uli.amount,
       uli.unit_of_measurement,
+      uli.is_checked,
       COALESCE(i.category, uli.category) AS category,
       COALESCE(i.unit_of_measurement, uli.unit_of_measurement) AS ingredient_unit,
       COALESCE(i.calories_per_UoM, 0) AS calories_per_UoM,
