@@ -89,19 +89,25 @@ function deleteItemFromUserList(ingredient_id) {
     Storage.deleteUserListItemFromDB(ingredient_id);
 }
 
+
+
 function addItem(item) {
     const list = document.querySelector(".grocery-list");
     const li = document.createElement("li");
     li.className = "grocery-item drop-shadow";
-    li.dataset.id = item.id; // ID als data-Attribut speichern
+    // li.dataset.id = item.id; // ID als data-Attribut speichern
+
+    const identifier = returnIdentifier(item);
+
+    const checked = item.is_checked ? "checked" : "";
 
     // NEUE HTML-STRUKTUR: Notwendig für die Swipe-Animation.
     // Der Inhalt wird in '.swipe-content' gepackt und ein '.swipe-delete' Button hinzugefügt.
     li.innerHTML = `
         <div class="swipe-delete">Delete</div>
         <div class="swipe-content">
-            <span class="item-id">${item.ingredient_id}</span>
-            <input class="checkbox checkbox-gl" type="checkbox" />
+            <span class="item-id">${identifier}</span>
+            <input class="checkbox checkbox-gl" type="checkbox" ${checked} />
             <div class="item-details">
                 <h3>${item.name}</h3>
                 <span class="category subtext">${item.category}</span>
@@ -122,9 +128,26 @@ function addItem(item) {
     }
 }
 
+function returnIdentifier(item) {
+    if (item.ingredient_id !== null && item.ingredient_id !== undefined) {
+        return item.ingredient_id;
+    } else if (item.name) {
+        return item.name;
+    } else {
+        console.error("Item has no valid identifier"); // Fallback
+    }
+}
+
 function pieceToPcs(unit) {
     if (unit === "piece") {
         return "pcs";
+    }
+    return unit;
+}
+
+function pcsToPiece(unit) {
+    if (unit === "pcs") {
+        return "piece";
     }
     return unit;
 }
@@ -201,8 +224,7 @@ function saveNewItem() {
 
     // Get values from the custom selects by reading the displayed text
     const customSelects = newItemContainer.querySelectorAll(".custom-select");
-    const categoryText =
-        customSelects[0].querySelector(".select-text").textContent;
+    const categoryText = customSelects[0].querySelector(".select-text").textContent;
     const unitText = customSelects[1].querySelector(".select-text").textContent;
 
     // Check if actual values were selected (not the default placeholder text)
@@ -219,7 +241,7 @@ function saveNewItem() {
         name: itemName,
         category: category,
         amount: parseInt(amount, 10),
-        unit_of_measurement: unit,
+        unit_of_measurement: pcsToPiece(unit),
     };
 
     // Add the new item to the list + DB, but only if all fields are filled
