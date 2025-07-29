@@ -642,7 +642,7 @@
 
 /* admin */
 #card-um3 {
-    border: solid 1px var(--border-color-admin);;
+    border: solid 1px var(--border-color-admin);
     background-color: var(--background-color-admin);
 }
 
