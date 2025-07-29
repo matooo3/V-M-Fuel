@@ -399,7 +399,15 @@ export async function deleteUserListItemFromDB(identifier) {
   await Api.postData("/delete-user-list-item", { identifier }, token);
 }
 
+export async function updateUserListItemInDB(identifier, updatedItem) {
+  const token = Auth.getUserToken();
 
+  if (!token || !identifier || !updatedItem) {
+    throw new Error("Token, identifier or updatedItem is missing");
+  }
+
+  await Api.postData("/update-user-list-item", { identifier, updatedItem }, token);
+}
 
 ////////////////// END USER LIST ITEMS /////////////////
 
