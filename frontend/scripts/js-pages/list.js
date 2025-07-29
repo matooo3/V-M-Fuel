@@ -121,11 +121,30 @@ function addItem(item) {
         </div>
     `;
 
+    addCheckBoxEventListener(li, identifier, item);
+
     if (list.firstChild) {
         list.insertBefore(li, list.firstChild);
     } else {
         list.appendChild(li);
     }
+}
+
+async function addCheckBoxEventListener(li, identifier, item) {
+    // Checkbox Event Listener
+    const checkbox = li.querySelector('.checkbox-gl');
+    checkbox.addEventListener('change', async () => {
+        const updatedItem = {
+            ingredient_id: item.ingredient_id || null,
+            custom_name: item.name || null,
+            category: item.category || null,
+            amount: item.amount,
+            unit_of_measurement: item.unit_of_measurement,
+            is_checked: checkbox.checked ? 1 : 0
+        };
+
+        await Storage.updateUserListItemInDB(identifier, updatedItem);
+    });
 }
 
 function returnIdentifier(item) {
@@ -237,7 +256,8 @@ function saveNewItem() {
 
     // Create new item object
     const newItem = {
-        ingredient_id: Date.now(),
+        // ingredient_id: Date.now(),
+        ingredient_id: null, // No ID for new items
         name: itemName,
         category: category,
         amount: parseInt(amount, 10),
