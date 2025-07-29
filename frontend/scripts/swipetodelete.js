@@ -36,7 +36,11 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
             let itemIdElement = itemToDelete.querySelector('.item-id');
             if (itemIdElement) {
                 let id = parseInt(itemIdElement.textContent, 10);
-                await removeFromDB(id); // Call the async database removal function
+                if(id) {
+                    await removeFromDB(id); // Call the async database removal function
+                } else {
+                    await removeFromDB(itemIdElement.textContent);
+                }
             }
             // Removing the element from the DOM should happen here,
             // after the DB action is complete.

@@ -223,7 +223,7 @@ function saveNewItem() {
     };
 
     // Add the new item to the list + DB, but only if all fields are filled
-    if (itemName && amount && category && unit) {
+    if (itemName && amount && category && unit && uniqueItemName(itemName)) {
         addItem(newItem);
         const newItemDB = getNewItemDBFormat(newItem);
         Storage.addUserListItemToDB(newItemDB);
@@ -241,6 +241,13 @@ function saveNewItem() {
     // successMessage.className = 'success-message';
     // successMessage.textContent = 'Item successfully added!';
     // document.body.appendChild(successMessage);
+}
+function uniqueItemName() {
+    return true;
+    // #TODO => check if already exists!!
+    // ..... 
+    //
+        
 }
 
 function getNewItemDBFormat(item) {
