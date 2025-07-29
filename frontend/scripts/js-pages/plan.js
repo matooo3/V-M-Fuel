@@ -492,7 +492,7 @@ async function renderDishInfo(id, weekPlan) {
     renderDishMacrosAndName(meal);
 
     //load ingredients
-    // renderDishIngredients(meal.ingredients);
+    // renderDishIngredients(ingredients);
 
     // load prep steps
     let preparationSteps = splitInSteps(meal.preparation);
@@ -510,13 +510,13 @@ function renderTotalCookingStepsText() {
 
 }
 
-// function renderDishIngredients(ingredients) {
-//     const list = document.getElementById('view-dish-ingredients-list');
-//     ingredients.forEach(ingredient => {
-//         let ingredientHTML = getIngredientHTML(ingredient);
-//         list.appendChild(ingredientHTML);
-//     });
-// }
+function renderDishIngredients(ingredients) {
+    const list = document.getElementById('view-dish-ingredients-list');
+    ingredients.forEach(ingredient => {
+        let ingredientHTML = getIngredientHTML(ingredient);
+        list.appendChild(ingredientHTML);
+    });
+}
 
 function renderDishPreparationSteps(preparationSteps) {
 

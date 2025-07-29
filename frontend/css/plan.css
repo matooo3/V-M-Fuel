@@ -262,6 +262,7 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     font-family: inherit;
     padding: 20px;
+    scrollbar-width: none;
 }
 
 .view-dish-numbers{
