@@ -44,7 +44,7 @@
 .tag-text {
     font-family: var(--font);
     font-size: 1rem;
-    color: var(--accent-color)
+    color: var(--accent-color);
 }
 
 .tag-logo {
