@@ -414,7 +414,7 @@
     height: calc(100vh - var(--nav-height));
 }
 
-.edit-meal-card {
+.add-meal-card {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -432,7 +432,7 @@
     font-family: inherit;
 }
 
-.edit-ingredient-card {
+.add-ingredient-card {
     display: flex;
     flex-direction: column;
     position: fixed;

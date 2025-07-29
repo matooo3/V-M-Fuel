@@ -9,8 +9,6 @@ import * as Settings from './settings.js';
 import * as Search from '../searchBar.js';
 import * as Plan from './plan.js'
 
-let Meals = null;
-
 export default async function loadHome() {
     const app = document.getElementById('app');
     // LOAD app html-code
@@ -29,21 +27,7 @@ export default async function loadHome() {
 
     await updateAdminContainer();
 
-    // get meals with eaten state
-    let initialTodaysMealsWithState = await getTodaysMealsWithState();
-    renderTodaysMeals(initialTodaysMealsWithState);
-
-    // render first meal
-    const mealValues = Object.values(initialTodaysMealsWithState);
-    const firstMeal = mealValues[0];
-    renderNextMeal(firstMeal);
-
-    // update ui accordingly
-    await updateUI(initialTodaysMealsWithState);
-
-
     // Eventlistener: -------------------------------------------
-    setUpInitialEventlisteners();
 
     // Settings Event Listener
     Settings.loadSettingsEventListener();
@@ -53,7 +37,7 @@ export default async function loadHome() {
 function setUpInitialEventlisteners() {
 
     document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', function () {
+        tab.addEventListener('click', async function () {
             // Remove 'active' class from all tabs
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
@@ -63,7 +47,6 @@ function setUpInitialEventlisteners() {
             this.classList.add('active');
             // Update the admin-container content
             updateAdminContainer();
-
         });
     });
 
@@ -84,7 +67,7 @@ function addCheckboxEventListener() {
 
         let todaysMealsWithState = await getTodaysMealsWithState();
         let currentKey = 0;
-        [todaysMealsWithState, currentKey] = updateAndSaveCurrentMeal(todaysMealsWithState);
+        [todaysMealsWithState, currentKey] = await updateAndSaveCurrentMeal(todaysMealsWithState);
         let nextMeal = getNextMeal(todaysMealsWithState, currentKey);
 
         await updateUI(todaysMealsWithState);
@@ -98,7 +81,7 @@ function addCheckboxEventListener() {
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function createSound(volume, file) {
@@ -115,6 +98,22 @@ async function updateAdminContainer() {
     if (activeTab && activeTab.textContent.trim() === 'Standard') {
         const html = await loadHTMLTemplate('/frontend/html-pages/homeStandard.html');
         adminContainer.innerHTML = html;
+
+        // get meals with eaten state
+        let initialTodaysMealsWithState = await getTodaysMealsWithState();
+        await Storage.saveNextMealsToDB(initialTodaysMealsWithState);
+        renderTodaysMeals(initialTodaysMealsWithState);
+
+        // render first meal
+        const mealValues = Object.values(initialTodaysMealsWithState);
+        const firstMeal = mealValues[0];
+        renderNextMeal(firstMeal);
+
+        // update ui accordingly
+        await updateUI(initialTodaysMealsWithState);
+        
+        setUpInitialEventlisteners();
+
     } else {
         const html = await loadHTMLTemplate('/frontend/html-pages/homeRoles.html');
         adminContainer.innerHTML = html;
@@ -158,13 +157,16 @@ function getTodaysIndexInWeek(today, currentWeek) {
     }
 }
 
-async function getTodaysMeals() {
+export async function getTodaysMeals(weekPlan = null) {
 
     const { today, currentWeek } = Plan.getCurrentData();
     const index = getTodaysIndexInWeek(today, currentWeek);
 
-    const weekPlan = await Storage.getWeekPlanFromDB();
-    const todaysMeals = weekPlan[index]
+    if(!weekPlan){
+        weekPlan = await Storage.getWeekPlanFromDB();
+    }
+
+    const todaysMeals = weekPlan[index];
     return todaysMeals;
 }
 
@@ -256,29 +258,15 @@ async function updateGoalPercentage(eatenKcal, optimalKcal) {
 
 // --------------------- Next Meals ----------------------
 
-async function getNextMealsFromDB() {
+export async function getTodaysMealsWithState(reset = false) {
 
-    return Meals;
-
-
-}
-
-async function saveNextMealsToDB(todaysMealsWithState) {
-
-    Meals = todaysMealsWithState;
-
-}
-
-async function getTodaysMealsWithState(reset = false) {
-
-    let todaysMealsWithState = await getNextMealsFromDB();
+    let todaysMealsWithState = await Storage.getNextMealsFromDB();
 
     if (!todaysMealsWithState || Object.keys(todaysMealsWithState).length === 0 || reset) {
 
         let todaysMeals = await getTodaysMeals();
         todaysMealsWithState = initializeEatenState(todaysMeals);
         console.log("First meals save:", todaysMealsWithState);
-        await saveNextMealsToDB(todaysMealsWithState);
 
     }
 
@@ -286,7 +274,7 @@ async function getTodaysMealsWithState(reset = false) {
 
 }
 
-function initializeEatenState(todaysMeals, boolean = false) {
+export function initializeEatenState(todaysMeals, boolean = false) {
 
     Object.keys(todaysMeals).forEach(key => {
 
@@ -299,7 +287,7 @@ function initializeEatenState(todaysMeals, boolean = false) {
     return todaysMeals;
 }
 
-function updateAndSaveCurrentMeal(todaysMealsWithState) {
+async function updateAndSaveCurrentMeal(todaysMealsWithState) {
 
     const keys = Object.keys(todaysMealsWithState);
 
@@ -309,7 +297,7 @@ function updateAndSaveCurrentMeal(todaysMealsWithState) {
         if (!todaysMealsWithState[currentKey].eaten) {
             const nextKey = keys[i + 1];
             todaysMealsWithState[currentKey].eaten = true;
-            saveNextMealsToDB(todaysMealsWithState);
+            await Storage.saveNextMealsToDB(todaysMealsWithState);
 
             return [todaysMealsWithState, nextKey];
         }
@@ -459,14 +447,13 @@ function resetEventlistener() {
 
 
         let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
+        await Storage.saveNextMealsToDB(initialTodaysMealsWithState);
 
         const pageSound = 'page.mp3';
         let volPage = 0.1;
         createSound(volPage, pageSound);
 
         await sleep(280);
-
-        await saveNextMealsToDB(initialTodaysMealsWithState);
 
         // update ui accordingly
         await updateUI(initialTodaysMealsWithState);
