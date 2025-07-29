@@ -195,7 +195,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     font-size: 1rem;
     font-weight: 400;
     font-size: 1.4rem;
-    color: var(--main-text-color)
+    color: var(--main-text-color);
     /* same size as .subtext */
 }
 
