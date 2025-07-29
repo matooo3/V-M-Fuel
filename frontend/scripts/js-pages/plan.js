@@ -27,9 +27,6 @@ async function initializeCalendar(today, currentWeek) {
     setupWeekDisplay(today, currentWeek);
 
     const weekPlan = await getWeekPlan();
-    let todaysMeals = await Home.getTodaysMeals(weekPlan);
-    todaysMeals = await Home.initializeEatenState(todaysMeals);
-    await Storage.saveNextMealsToDB(todaysMeals);
 
     await setupWeekContent(today, currentWeek, weekPlan);
     addOverlayEventlisteners(weekPlan);
@@ -575,6 +572,7 @@ function addGenerateEventListener(today, currentWeek) {
             const currentlySelectedDay = getCurrentlySelectedDay();
 
             const weekPlan = await generateNewWeekPlan();
+
             const dayContent = await generateDayContent(currentWeek, weekPlan, today);
 
             let todaysMeals = await Home.getTodaysMeals(weekPlan);
