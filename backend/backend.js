@@ -749,7 +749,7 @@ app.post("/api/set-user-list-items", authMiddleware, checkRole("user"), (req, re
     }
 
     // Optional: vorher alte Liste löschen
-    const deleteQuery = "DELETE FROM user_list_items WHERE user_id = ?";
+    const deleteQuery = "DELETE FROM user_list_items WHERE user_id = ? AND ingredient_id IS NOT NULL";
 
     db.query(deleteQuery, [userId], (deleteErr) => {
         if (deleteErr) {
