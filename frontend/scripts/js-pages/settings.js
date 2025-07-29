@@ -126,9 +126,27 @@ function updateUserData() {
 
 }
 
-
+export function loadSavedTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+}
 
 function addEventListeners() {
+
+    const themeSelect = document.getElementById('theme-select')
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+    themeSelect.value = savedTheme;
+
+    loadSavedTheme();
+    // Listener für Änderungen
+    themeSelect.addEventListener('change', function () {
+        const selectedTheme = this.value;
+        document.body.classList.toggle('dark-mode', selectedTheme === 'dark');
+        localStorage.setItem('theme', selectedTheme);
+    });
+
+
     // close buttons
     const backArrow = document.querySelector('#arrow-back-st');
     if (backArrow) {

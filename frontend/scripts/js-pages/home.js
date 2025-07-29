@@ -18,6 +18,8 @@ export default async function loadHome() {
     //load user greeting! (eventlistener DOM loaded)
     // document.addEventListener('DOMContentLoaded', renderUserGreeting);
 
+    Settings.loadSavedTheme();
+
     Role.renderAdminPanel();
     Role.renderUserRoleColors();
 
@@ -355,7 +357,7 @@ function renderNextMeal(nextMeal) {
 
                     <div class="next-meal-info">
                         <div class="next-meal-info-texts">
-                            <h3 class="meal-name"></h3>
+                            <h3 class="meal-name-db"></h3>
                             <span class="subtext meal-category-h"></span>
                         </div>
 
@@ -366,27 +368,27 @@ function renderNextMeal(nextMeal) {
                 </div>
 
                 <div class="nutrition-values-db">
-                    <div class="nutrition-item-mp">
-                        <p class="nutrition-value-mp"></p>
-                        <p class="nutrition-label-mp subtext">Protein</p>
+                    <div class="nutrition-item-db">
+                        <p class="nutrition-value-db"></p>
+                        <p class="nutrition-label-db subtext">Protein</p>
                     </div>
-                    <div class="nutrition-item-mp">
-                        <p class="nutrition-value-mp"></p>
-                        <p class="nutrition-label-mp subtext">Carbs</p>
+                    <div class="nutrition-item-db">
+                        <p class="nutrition-value-db"></p>
+                        <p class="nutrition-label-db subtext">Carbs</p>
                     </div>
-                    <div class="nutrition-item-mp">
-                        <p class="nutrition-value-mp"></p>
-                        <p class="nutrition-label-mp subtext">Fat</p>
+                    <div class="nutrition-item-db">
+                        <p class="nutrition-value-db"></p>
+                        <p class="nutrition-label-db subtext">Fat</p>
                     </div>
                 </div>
         `;
         congratsDiv.replaceWith(nextMealCard);
     }
 
-    const mealName = document.querySelector('.meal-name');
+    const mealName = document.querySelector('.meal-name-db');
     const meal_category = document.querySelector('.meal-category-h');
     const calories = document.querySelector('.calories-db');
-    const nutritionValues = document.querySelectorAll('.nutrition-value-mp');
+    const nutritionValues = document.querySelectorAll('.nutrition-value-db');
 
     mealName.textContent = nextMeal.name;
     meal_category.textContent = nextMeal.meal_category;

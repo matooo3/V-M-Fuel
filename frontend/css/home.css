@@ -6,6 +6,7 @@
     width: 100%;
     overflow-y: auto;
     height: calc(100vh - var(--nav-height));
+    background-color: var(--background-color);
 }
 
 #greeting-container {
@@ -15,6 +16,7 @@
     flex-shrink: 0;
     gap: 5px;
     padding: 20px 27px 0px 27px;
+    color: var(--h1-color)
 }
 
 #greeting-text {
@@ -24,8 +26,9 @@
 }
 
 .tag {
-    border: solid 1px #F9BEBE;
-    background-color: #FEF2F2;
+    border: solid 1px var(--accent-color);
+    background-color: var(--accent-background) !important;
+    ;
     width: 15%;
     min-width: 60px;
     max-width: 60px;
@@ -41,7 +44,7 @@
 .tag-text {
     font-family: var(--font);
     font-size: 1rem;
-    color: #E35252;
+    color: var(--accent-color)
 }
 
 .tag-logo {
@@ -103,7 +106,7 @@
 
 .progress-circle-background {
     fill: none;
-    stroke: var(--fill-color);
+    stroke: var(--progress-circle-color);
     stroke-width: var(--circle-stroke);
 }
 
@@ -142,6 +145,7 @@
     font-family: 'figtree', sans-serif;
     font-weight: 600;
     margin-bottom: 10px;
+    color: var(--h1-color);
 }
 
 .meals-info-db {
@@ -183,7 +187,7 @@
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--accent-color);
-    border-bottom: 1px solid var(--accent-color);;
+    border-bottom: 1px solid var(--accent-color);
     border-radius: 0px;
 }
 
@@ -201,7 +205,7 @@
     appearance: none;
     width: 20px;
     height: 20px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color) !important;
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -220,7 +224,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: var(--background-color);
     font-size: 1.2rem;
     font-weight: bold;
 }
@@ -246,6 +250,34 @@
     color: var(--main-text-color);
 }
 
+.nutrition-item-db{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+}
+
+.nutrition-value-db {
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    color: var(--main-text-color);
+}
+
+.nutrition-values-db {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 5px 40px 10px 40px;
+}
+
+.nutrition-label-db {
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+}
+
 .subtext {
     font-size: 1.4rem;
     margin: 0;
@@ -254,20 +286,6 @@
 .calories-db {
     font-size: 1.6rem;
     color: var(--main-text-color);
-}
-
-.nutrition-item-db {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-}
-
-.nutrition-value-db {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 2px 0;
 }
 
 .nutrition-text-db {
@@ -321,7 +339,8 @@
     position: sticky;
     top: 0px;
     margin-bottom: 5px;
-    background-color: white;
+    background-color: var(--background-color);
+    color: var(--h1-color);
 }
 
 #todays-meals-container {
@@ -440,7 +459,7 @@
 }
 
 #search-bar-db input::placeholder {
-    color: #D1D1D1;
+    color: var(--light-text-color);
     font-size: 1.4rem;
     font-weight: 300;
     font-family: 'poppins', sans-serif;
@@ -474,7 +493,7 @@
 .card.user .swipe-content {
     display: flex;
     align-items: center;
-    background-color: white;
+    background-color: var(--background-color);
     /* Or original card background */
     min-height: 55px;
     gap: 10px;
@@ -533,7 +552,7 @@
     align-items: center;
     margin-left: 1rem;
     border-radius: 60%;
-    background-color: #E5E7EB;
+    background-color: var(--fill-color);
     height: 3.5rem;
     min-width: 3.5rem;
     color: var(--main-text-color)
@@ -572,9 +591,9 @@
 }
 
 .user-tag {
-    border: solid 1px #F9BEBE;
+    border: solid 1px var(--border-color-admin);
     /**/
-    background-color: #FEF2F2;
+    background-color: var(--background-color-admin);
     /**/
     width: 6rem;
     height: 2rem;
@@ -613,8 +632,8 @@
 
 /* cook */
 #card-um2 {
-    border: solid 1px #C7CDFF;
-    background-color: #F2EEFF;
+    border: solid 1px var(--border-color-cook);
+    background-color: var(--background-color-cook);
 }
 
 #text-um2 {
@@ -623,8 +642,8 @@
 
 /* admin */
 #card-um3 {
-    border: solid 1px #F9BEBE;
-    background-color: #FEF2F2;
+    border: solid 1px var(--border-color-admin);;
+    background-color: var(--background-color-admin);
 }
 
 #text-um3 {

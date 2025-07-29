@@ -17,6 +17,8 @@ export default async function loadMeals() {
     // LOAD app html-code
     const html = await loadHTMLTemplate('/frontend/html-pages/meals.html');
     app.innerHTML = html;
+    
+    Settings.loadSavedTheme();
 
     Role.renderCookButtons();
     Role.renderUserRoleColors();

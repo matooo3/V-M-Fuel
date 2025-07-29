@@ -10,6 +10,8 @@ export default async function loadPlan() {
     const html = await loadHTMLTemplate("/frontend/html-pages/plan.html");
     app.innerHTML = html;
 
+    Settings.loadSavedTheme();
+
     const { today, currentWeek } = getCurrentData();
 
     await initializeCalendar(today, currentWeek);
