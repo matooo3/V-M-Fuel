@@ -39,11 +39,6 @@ export default async function loadList() {
     });
 
 
-
-
-
-
-
     // IF NO LIST ITEMS IN DB (USER LIST ITEMS) => LOAD FROM WEEK PLAN
 
     // Load existing items from DB
@@ -54,10 +49,10 @@ export default async function loadList() {
         userListItems.forEach((item) => addItem(item));
     } else {
         // Wenn keine Items in der DB sind, WeekPlan verwenden
-        console.warn("Keine User List Items gefunden – lade aus WeekPlan ...");
+        console.log("Keine User List Items gefunden – lade aus WeekPlan ...");
 
         const ingredients = await Storage.getIngredientsFromWeekPlan();
-        console.warn("Ingredients from week plan:", ingredients);
+        console.log("Ingredients from week plan:", ingredients);
 
         ingredients.forEach((item) => addItem(item));
 
@@ -65,18 +60,12 @@ export default async function loadList() {
         await Storage.setUserListItemsInDB(ingredients);
     }
 
-
-
-
-
-
-
-
-
     // Add event listeners for quantity control buttons
     const list = document.querySelector(".grocery-list");
 
     list.addEventListener("click", changeAmount);
+
+    updateCheckedItemsCount();
 
     const searchInputGro = "search-groceries";
     const groceryList = [".grocery-list"];
@@ -86,12 +75,28 @@ export default async function loadList() {
     SwipeToDelete.initializeSwipeToDelete(list, ".grocery-item", deleteItemFromUserList);
 }
 
-function deleteItemFromUserList(ingredient_id) {
-    console.warn("Deleting item with ingredient_id:", ingredient_id);
-    Storage.deleteUserListItemFromDB(ingredient_id);
+function updateCheckedItemsCount() {
+    const items = document.querySelectorAll(".grocery-list li");
+    const checked = getCheckedItems(items);
+    const total = items.length;
+
+    const subtextElement = document.getElementById("subtext-gl");
+    if (subtextElement) {
+        subtextElement.textContent = `${checked.length} out of ${total} checked`;
+    } else {
+        console.warn("Subtext element not found!");
+    }
 }
 
+function getCheckedItems(items) {
+    return Array.from(items).filter(item => item.querySelector('.checkbox-gl').checked);
+}
 
+function deleteItemFromUserList(ingredient_id) {
+    console.log("Deleting item with ingredient_id:", ingredient_id);
+    Storage.deleteUserListItemFromDB(ingredient_id);
+    updateCheckedItemsCount();
+}
 
 function addItem(item) {
     const list = document.querySelector(".grocery-list");
@@ -144,6 +149,8 @@ async function addCheckBoxEventListener(li, identifier, item) {
             unit_of_measurement: item.unit_of_measurement,
             is_checked: checkbox.checked ? 1 : 0
         };
+
+        updateCheckedItemsCount();
 
         await Storage.updateUserListItemInDB(identifier, updatedItem);
     });
@@ -277,7 +284,7 @@ function saveNewItem() {
         alert("Please fill out all fields!"); // Optional: Error message
         return;
     }
-
+    updateCheckedItemsCount();
     // // Aktualisiere die Liste
     // updateGroceryList();
     // // Zeige eine Erfolgsmeldung an
@@ -335,7 +342,7 @@ function changeAmount(event) {
     const identifier = itemEl.querySelector(".item-id").textContent;
     console.warn("IDENTIFIER: " + identifier);
     const updatedItem = getNewElementAfterAmountChange(itemEl, identifier);
-    const debounceKey = returnMuu(identifier);
+    const debounceKey = createDebounceKey(identifier);
 
     debounceUpdate(debounceKey, identifier, updatedItem);
 }
@@ -353,7 +360,7 @@ function getNewElementAfterAmountChange(itemEl, identifier) {
     return updatedItem;
 }
 
-function returnMuu(identifier) {
+function createDebounceKey(identifier) {
     return typeof identifier === "number" ? `id_${identifier}` : `name_${identifier}`;
 }
 
