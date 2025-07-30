@@ -941,33 +941,40 @@ app.post("/api/update-user-list-item", authMiddleware, checkRole("user"), (req, 
 
 ///////////////// LIKE/DISLIKE DISH/INGREDIENT /////////////////
 // Like/Dislike a dish
-app.post("/api/set-user-dish-preference", authMiddleware, checkRole("user"), (req, res) => {
+app.post("/api/set-user-preference", authMiddleware, checkRole("user"), (req, res) => {
   const userId = req.user.id;
-  const { dish_id, preference } = req.body; // preference: "like", "dislike", or "neutral"
+  const { type, id, preference } = req.body;
 
-  if (!dish_id || !["like", "dislike", "neutral"].includes(preference)) {
+  if (!id || !["like", "dislike", "neutral"].includes(preference) || !["dish", "ingredient"].includes(type)) {
     return res.status(400).json({ message: "Invalid input" });
   }
 
-  const deleteLiked = "DELETE FROM user_preferred_dishes WHERE user_id = ? AND dish_id = ?";
-  const deleteDisliked = "DELETE FROM user_blocked_dishes WHERE user_id = ? AND dish_id = ?";
+  // Tabellen je nach Typ
+  const likedTable = type === "dish" ? "user_preferred_dishes" : "user_preferred_ingredients";
+  const blockedTable = type === "dish" ? "user_blocked_dishes" : "user_blocked_ingredients";
+  const column = type === "dish" ? "dish_id" : "ingredient_id";
 
-  // Erstmal beide entfernen
-  db.query(deleteLiked, [userId, dish_id], (err1) => {
-    if (err1) return res.status(500).json({ message: "Failed to update preference" });
+  const deleteLiked = `DELETE FROM ${likedTable} WHERE user_id = ? AND ${column} = ?`;
+  const deleteBlocked = `DELETE FROM ${blockedTable} WHERE user_id = ? AND ${column} = ?`;
 
-    db.query(deleteDisliked, [userId, dish_id], (err2) => {
-      if (err2) return res.status(500).json({ message: "Failed to update preference" });
+  // Zuerst beides entfernen
+  db.query(deleteLiked, [userId, id], (err1) => {
+    if (err1) return res.status(500).json({ message: "Failed to update preference (liked)" });
+
+    db.query(deleteBlocked, [userId, id], (err2) => {
+      if (err2) return res.status(500).json({ message: "Failed to update preference (blocked)" });
 
       if (preference === "like") {
-        db.query("INSERT INTO user_preferred_dishes (user_id, dish_id) VALUES (?, ?)", [userId, dish_id], (err3) => {
+        const insertLiked = `INSERT INTO ${likedTable} (user_id, ${column}) VALUES (?, ?)`;
+        db.query(insertLiked, [userId, id], (err3) => {
           if (err3) return res.status(500).json({ message: "Failed to save like" });
-          res.status(200).json({ message: "Dish liked" });
+          res.status(200).json({ message: `${type} liked` });
         });
       } else if (preference === "dislike") {
-        db.query("INSERT INTO user_blocked_dishes (user_id, dish_id) VALUES (?, ?)", [userId, dish_id], (err4) => {
+        const insertBlocked = `INSERT INTO ${blockedTable} (user_id, ${column}) VALUES (?, ?)`;
+        db.query(insertBlocked, [userId, id], (err4) => {
           if (err4) return res.status(500).json({ message: "Failed to save dislike" });
-          res.status(200).json({ message: "Dish disliked" });
+          res.status(200).json({ message: `${type} disliked` });
         });
       } else {
         res.status(200).json({ message: "Preference reset to neutral" });
@@ -976,6 +983,44 @@ app.post("/api/set-user-dish-preference", authMiddleware, checkRole("user"), (re
   });
 });
 
+
+app.get("/api/get-user-preferences", authMiddleware, checkRole("user"), async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const [
+      preferredDishes,
+      blockedDishes,
+      preferredIngredients,
+      blockedIngredients
+    ] = await Promise.all([
+      dbQuery("SELECT dish_id FROM user_preferred_dishes WHERE user_id = ?", [userId]),
+      dbQuery("SELECT dish_id FROM user_blocked_dishes WHERE user_id = ?", [userId]),
+      dbQuery("SELECT ingredient_id FROM user_preferred_ingredients WHERE user_id = ?", [userId]),
+      dbQuery("SELECT ingredient_id FROM user_blocked_ingredients WHERE user_id = ?", [userId])
+    ]);
+
+    res.json({
+      preferredDishes: preferredDishes.map(row => row.dish_id),
+      blockedDishes: blockedDishes.map(row => row.dish_id),
+      preferredIngredients: preferredIngredients.map(row => row.ingredient_id),
+      blockedIngredients: blockedIngredients.map(row => row.ingredient_id)
+    });
+  } catch (err) {
+    console.error("Error fetching preferences:", err);
+    res.status(500).json({ message: "Failed to load preferences" });
+  }
+});
+
+// Utility-Funktion (falls du sie noch nicht hast):
+function dbQuery(query, values) {
+  return new Promise((resolve, reject) => {
+    db.query(query, values, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+}
 
 
 
