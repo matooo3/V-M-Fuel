@@ -8,6 +8,7 @@ import { PickerFactory } from './pickerFactory.js';
 import { CardManager } from './cardManager.js';
 import { NavigationManager } from './navigationManager.js';
 import { LoginManager } from './loginManager.js';
+import { AccountFormManager } from './AccountFormManager.js';
 
 let pickerInstance = null;
 
@@ -16,40 +17,21 @@ let pickerInstance = null;
  */
 function init() {
     const currentFile = Utils.getCurrentFile();
-
+    
     initializePicker(currentFile);
     initializeNavigation();
     CardManager.initializeCards();
     LoginManager.initializeLoginEvents();
-
+    
+    // Initialize account form if on account.html
     if (currentFile === 'account.html') {
-        setupCheckboxValidation();
+        AccountFormManager.initializeAccountForm();
     }
-
+    
     // Add auto-save functionality for all navigation actions
     setupAutoSave(currentFile);
 }
 
-/**
- * Setup checkbox validation for account page
- */
-
-function setupCheckboxValidation() {
-    const checkbox = document.getElementById('acceptTerms');
-    const button = document.getElementById('next-btn-register');
-    const form = document.getElementById('register-form');
-
-    form.addEventListener('submit', function (e) {
-        if (!checkbox.checked) {
-            alert('Please accept the Terms of Use and Privacy Policy before proceeding.');
-            e.preventDefault(); // Prevents submission
-        }
-    });
-
-    checkbox.addEventListener('change', () => {
-        button.disabled = !checkbox.checked;
-    });
-}
 /**
  * Initialize picker based on current page
  * @param {string} currentFile - Current filename
@@ -70,7 +52,7 @@ function initializePicker(currentFile) {
 function initializeNavigation() {
     const currentIndex = NavigationManager.getCurrentPageIndex();
     const currentFile = Utils.getCurrentFile();
-
+    
     setupNextButton(currentIndex, currentFile);
     setupBackButton(currentIndex, currentFile);
 }
@@ -84,14 +66,14 @@ function setupAutoSave(currentFile) {
     window.addEventListener('beforeunload', () => {
         saveCurrentPageData(currentFile);
     });
-
+    
     // Auto-save on visibility change (tab switch, minimize)
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
             saveCurrentPageData(currentFile);
         }
     });
-
+    
     // Auto-save when clicking login links
     setupLoginAutoSave(currentFile);
 }
@@ -143,6 +125,14 @@ function saveCurrentPageData(currentFile) {
             const result = CardManager.saveCardData(currentFile);
             if (result) {
                 console.log(`Auto-saved card data for ${currentFile}:`, result);
+            }
+        }
+        
+        // Save account form data if applicable
+        if (currentFile === 'account.html') {
+            const result = AccountFormManager.saveFormDataToStorage();
+            if (result) {
+                console.log(`Auto-saved account form data:`, result);
             }
         }
     } catch (error) {

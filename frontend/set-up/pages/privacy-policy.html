@@ -16,14 +16,14 @@
             line-height: 1.6;
             color: #333;
             background-color: #f8f9fa;
-            padding: 20px;
+            padding: 10px;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
             background: white;
-            padding: 40px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
@@ -31,14 +31,14 @@
         h1 {
             color: #1BCE86;
             margin-bottom: 10px;
-            font-size: 2.5em;
+            font-size: 2em;
         }
         
         h2 {
             color: #1F2937;
             margin-top: 30px;
             margin-bottom: 15px;
-            font-size: 1.4em;
+            font-size: 1.3em;
             border-bottom: 2px solid #1BCE86;
             padding-bottom: 5px;
         }
@@ -47,12 +47,13 @@
             color: #1F2937;
             margin-top: 20px;
             margin-bottom: 10px;
-            font-size: 1.2em;
+            font-size: 1.1em;
         }
         
         p, li {
             margin-bottom: 10px;
             color: #555;
+            font-size: 0.95em;
         }
         
         ul {
@@ -64,6 +65,7 @@
             font-style: italic;
             color: #777;
             margin-bottom: 30px;
+            font-size: 0.9em;
         }
         
         .highlight-box {
@@ -96,26 +98,188 @@
             color: #1F2937;
         }
         
+        /* Responsive Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            -webkit-overflow-scrolling: touch;
+        }
+        
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
+            min-width: 600px;
+            font-size: 1em;
         }
         
         .data-table th,
         .data-table td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 12px 15px;
             text-align: left;
+            vertical-align: top;
         }
         
         .data-table th {
             background-color: #1BCE86;
             color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .data-table tr:nth-child(even) {
             background-color: #f9f9f9;
+        }
+        
+        .data-table td {
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        /* Mobile-first responsive design */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 15px;
+                border-radius: 5px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+                text-align: center;
+            }
+            
+            h2 {
+                font-size: 1.1em;
+                margin-top: 25px;
+            }
+            
+            h3 {
+                font-size: 1em;
+            }
+            
+            p, li {
+                font-size: 0.9em;
+            }
+            
+            .highlight-box {
+                padding: 12px;
+                margin: 15px 0;
+            }
+            
+            .contact-info {
+                padding: 15px;
+            }
+            
+            /* Mobile table styles */
+            .data-table {
+                min-width: 100%;
+                font-size: 0.9em;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 10px 12px;
+            }
+            
+            .data-table th {
+                font-size: 0.85em;
+            }
+            
+            .data-table td {
+                font-size: 0.85em;
+                line-height: 1.4;
+            }
+            
+            .table-container {
+                margin: 10px -15px;
+                border-radius: 0;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 12px;
+            }
+            
+            h1 {
+                font-size: 1.4em;
+            }
+            
+            h2 {
+                font-size: 1em;
+            }
+            
+            p, li {
+                font-size: 0.85em;
+            }
+            
+            /* Extra small screens - readable table text */
+            .data-table {
+                font-size: 0.85em;
+            }
+            
+            .data-table th {
+                font-size: 0.8em;
+                padding: 8px 10px;
+            }
+            
+            .data-table td {
+                font-size: 0.8em;
+                padding: 8px 10px;
+                line-height: 1.3;
+            }
+        }
+        
+        /* Tablet styles */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 30px;
+            }
+            
+            .data-table {
+                font-size: 0.95em;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 12px 15px;
+            }
+        }
+        
+        /* Desktop styles */
+        @media screen and (min-width: 1025px) {
+            body {
+                padding: 20px;
+            }
+            
+            .container {
+                padding: 40px;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            .data-table {
+                font-size: 1em;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -132,42 +296,44 @@
         <h3>1.1 Personal Information</h3>
         <p>When you create an account with APPNAME, we collect:</p>
         
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Data Type</th>
-                    <th>Examples</th>
-                    <th>Purpose</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Account Information</strong></td>
-                    <td>Username, email address, password</td>
-                    <td>Account creation and authentication</td>
-                </tr>
-                <tr>
-                    <td><strong>Personal Details</strong></td>
-                    <td>Age, gender, weight, height</td>
-                    <td>Personalized meal planning and calorie calculations</td>
-                </tr>
-                <tr>
-                    <td><strong>Health & Fitness Data</strong></td>
-                    <td>Activity level, fitness goals, dietary restrictions</td>
-                    <td>Customized nutrition recommendations</td>
-                </tr>
-                <tr>
-                    <td><strong>Meal Preferences</strong></td>
-                    <td>Preferred/blocked ingredients and dishes</td>
-                    <td>Tailored meal plan generation</td>
-                </tr>
-                <tr>
-                    <td><strong>Meal Plans</strong></td>
-                    <td>Weekly meal schedules, recipe selections</td>
-                    <td>Service delivery and meal tracking</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Data Type</th>
+                        <th>Examples</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Account Information</strong></td>
+                        <td>Username, email address, password</td>
+                        <td>Account creation and authentication</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Personal Details</strong></td>
+                        <td>Age, gender, weight, height</td>
+                        <td>Personalized meal planning and calorie calculations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Health & Fitness Data</strong></td>
+                        <td>Activity level, fitness goals, dietary restrictions</td>
+                        <td>Customized nutrition recommendations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meal Preferences</strong></td>
+                        <td>Preferred/blocked ingredients and dishes</td>
+                        <td>Tailored meal plan generation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meal Plans</strong></td>
+                        <td>Weekly meal schedules, recipe selections</td>
+                        <td>Service delivery and meal tracking</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         
         <h3>1.2 Technical Information</h3>
         <p>We automatically collect certain technical information:</p>
