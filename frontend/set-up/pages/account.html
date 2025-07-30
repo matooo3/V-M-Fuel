@@ -12,7 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-        
+
     <title>Almost done!</title>
 </head>
 
@@ -49,15 +49,20 @@
                 <input class="data" type="text" id="username" placeholder="enter username" required><br>
                 <input class="data" type="email" id="email" placeholder="enter email" required><br>
                 <input class="data" type="password" id="password" placeholder="enter password" required><br>
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="acceptTerms" class="checkbox" name="acceptTerms" required>
+                    <label for="acceptTerms" class="terms-text">
+                        I accept the <a href="./terms-of-use.html" class="linked-terms">Terms of Use</a> and acknowledge the <a
+                            href="privacy-policy.html" class="linked-terms">Privacy Policy</a>.
+                    </label>
+                </div>
             </form>
-            <p id="message"></p>
+            <p id="message">
+            </p>
         </div>
 
+        <div></div>
 
-        <!-- space-div -->
-        <div>
-
-        </div>
 
         <div class="page-end-div">
             <button id="next-btn-register" type="submit" form="register-form">Finish Setup</button>

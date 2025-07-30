@@ -209,8 +209,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 12px;
     width: 12px;
+    height: 12px;
+    background-color: var(--background-color);
+    mask: url('/frontend/assets/icons/plus-preferences.svg') no-repeat center;
+    mask-size: contain;
 }
 
 .header-list-p {
@@ -427,7 +430,7 @@
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--background-color);
-    border-radius: 20px;
+    border-radius: 10px;
     width: 450px;
     max-width: 90vw;
     height: calc(90vh - var(--nav-height));
@@ -445,7 +448,7 @@
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--background-color);
-    border-radius: 20px;
+    border-radius: 10px;
     width: 400px;
     max-width: 90vw;
     height: calc(80vh - var(--nav-height));
@@ -458,7 +461,7 @@
 .card-header-p {
     padding: 25px 30px 20px;
     border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 5px rgba(48, 48, 48, 0.1);
+    box-shadow: 0 2px 5px var(--section-shadow);
     position: relative;
 }
 
@@ -488,7 +491,7 @@
 .card-title-o-p {
     font-size: 2rem;
     font-weight: 500;
-    color: black;
+    color: var(--h1-color);
     font-family: inherit;
 }
 
@@ -538,7 +541,7 @@
     display: block;
     font-size: 1.6rem;
     font-weight: 500;
-    color: black;
+    color: var(--main-text-color);
     margin-bottom: 8px;
     font-family: inherit;
 }
@@ -555,13 +558,14 @@
     border-radius: 8px;
     font-size: 1.4rem;
     font-family: inherit;
+    color: var(--main-text-color);
     transition: border-color 0.2s ease;
-    background: white;
+    background: var(--background-color);
 }
 
-.form-input::placeholder {
-    color: #D1D1D1;
-    font-weight: 200;
+.form-input input::placeholder {
+    font-size: 1.6rem;
+    color: var(--light-text-color);
 }
 
 .form-input:focus {
@@ -611,7 +615,7 @@
     border-radius: 8px;
     font-size: 1.4rem;
     transition: border-color 0.2s ease;
-    background: white;
+    background: var(--background-color);
 }
 
 .tags-container {
@@ -682,7 +686,6 @@
     border: 1px solid var(--border-color);
     width: 100%;
     height: 35px;
-    padding: 8px 12px;
 }
 
 #search-bar-ingr input {
@@ -691,11 +694,12 @@
     border: none;
     outline: none;
     background: transparent;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+    color: var(--light-text-color);
 }
 
 #search-bar-ingr input::placeholder {
-    color: #D1D1D1;
+    color: var(--light-text-color);
 }
 
 #ingredientsContainer {
@@ -728,13 +732,15 @@
     margin-left: auto;
     gap: 10px;
 }
-
 .form-input.ingredient {
     height: 30px;
     width: 60px;
     text-align: center;
     padding: 2px;
+    background-color: var(--card-color);
+    color: var(--light-text-color);
 }
+
 
 .amount-text-p {
     font-size: 1.4rem;
@@ -758,6 +764,7 @@
     font-size: 1.4rem;
     resize: vertical;
     font-family: inherit;
+    background-color: var(--background-color);
 }
 
 .instructions-area:focus {
@@ -765,14 +772,14 @@
 }
 
 .instructions-area::placeholder {
-    color: #D1D1D1;
+    color: var(--light-text-color);
     font-weight: 200;
 }
 
 .form-actions-p {
     padding: 20px 0px;
-    border-top: 1px solid #f0f0f0;
-    box-shadow: 0 -2px 5px rgba(48, 48, 48, 0.1);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 5px var(--section-shadow);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -782,8 +789,8 @@
 
 .form-actions-ingredients {
     padding: 20px 0px;
-    border-top: 1px solid #f0f0f0;
-    box-shadow: 0 -2px 5px rgba(48, 48, 48, 0.1);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 5px var(--section-shadow);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -799,11 +806,12 @@
     padding: 0px 10px;
     border-radius: 20px;
     background-color: var(--accent-color);
-    color: white;
+    color: var(--background-color);
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.6rem;
 }
 
 .hidden {
@@ -817,7 +825,7 @@
 .instruction-text {
     font-size: 14px;
     line-height: 1.4;
-    color: #666;
+    color: var(--light-text-color);;
     margin-bottom: 5px;
 }
 
@@ -868,7 +876,7 @@
     width: 0px;
     /* Start with 0 width */
     height: 100%;
-    color: white;
+    color: var(--background-color);
     display: flex;
     justify-content: center;
     align-items: center;

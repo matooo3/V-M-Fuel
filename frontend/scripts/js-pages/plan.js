@@ -3,14 +3,15 @@ import * as Settings from "./settings.js";
 import * as Algo from "../algo/algo.js";
 import * as Storage from "../storage.js";
 import * as Home from "../js-pages/home.js";
+import * as Script from '../script.js';
 
 // ===== MAIN EXPORT =====
 export default async function loadPlan() {
+    Script.showNavbar();
+
     const app = document.getElementById("app");
     const html = await loadHTMLTemplate("/frontend/html-pages/plan.html");
     app.innerHTML = html;
-
-    Settings.loadSavedTheme();
 
     const { today, currentWeek } = getCurrentData();
 
