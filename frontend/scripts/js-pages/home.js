@@ -10,29 +10,29 @@ import * as Search from '../searchBar.js';
 import * as Plan from './plan.js';
 
 export default async function loadHome() {
-    
+
     const app = document.getElementById('app');
     // LOAD app html-code
     const html = await loadHTMLTemplate('/frontend/html-pages/home.html');
     app.innerHTML = html;
-    
+
     //load user greeting! (eventlistener DOM loaded)
     // document.addEventListener('DOMContentLoaded', renderUserGreeting);
-    
+
     Role.renderAdminPanel();
     Role.renderUserRoleColors();
-    
+
     setTimeout(() => {
         renderUserGreeting();
     }, 1);
-    
+
     await updateAdminContainer();
-    
+
     // Eventlistener: -------------------------------------------
-    
+
     // Settings Event Listener
     Settings.loadSettingsEventListener();
-    
+
 }
 
 function setUpInitialEventlisteners() {
@@ -50,35 +50,35 @@ function setUpInitialEventlisteners() {
             updateAdminContainer();
         });
     });
-
-    addCheckboxEventListener();
 }
 
 function addCheckboxEventListener() {
 
     const checkbox = document.getElementById('checked-circle');
 
-    checkbox.addEventListener('change', async () => {
+    if (checkbox) {
+        checkbox.addEventListener('change', async () => {
 
-        const checkboxSound = 'checkbox.mp3';
-        let volCheck = 0.2;
-        createSound(volCheck, checkboxSound);
+            const checkboxSound = 'checkbox.mp3';
+            let volCheck = 0.2;
+            createSound(volCheck, checkboxSound);
 
-        await sleep(100);
+            await sleep(100);
 
-        let todaysMealsWithState = await getTodaysMealsWithState();
-        let currentKey = 0;
-        [todaysMealsWithState, currentKey] = await updateAndSaveCurrentMeal(todaysMealsWithState);
-        let nextMeal = getNextMeal(todaysMealsWithState, currentKey);
+            let todaysMealsWithState = await getTodaysMealsWithState();
+            let currentKey = 0;
+            [todaysMealsWithState, currentKey] = await updateAndSaveCurrentMeal(todaysMealsWithState);
+            let nextMeal = getNextMeal(todaysMealsWithState, currentKey);
 
-        await updateUI(todaysMealsWithState);
+            await updateUI(todaysMealsWithState);
 
-        setTimeout(() => {
-            renderNextMeal(nextMeal);
-            checkbox.checked = false;
-        }, 300);
+            setTimeout(() => {
+                renderNextMeal(nextMeal);
+                checkbox.checked = false;
+            }, 300);
 
-    });
+        });
+    }
 }
 
 export async function sleep(ms) {
@@ -103,14 +103,14 @@ async function updateAdminContainer() {
         // get meals with eaten state
         let initialTodaysMealsWithState = await getTodaysMealsWithState();
         await Storage.saveNextMealsToDB(initialTodaysMealsWithState);
-        renderTodaysMeals(initialTodaysMealsWithState);
-
         // render first meal
         renderFirstUneatenMeal(initialTodaysMealsWithState);
 
+        renderTodaysMeals(initialTodaysMealsWithState);
+
         // update ui accordingly
         await updateUI(initialTodaysMealsWithState);
-        
+
         setUpInitialEventlisteners();
 
     } else {
@@ -123,15 +123,18 @@ async function updateAdminContainer() {
 function renderFirstUneatenMeal(initialTodaysMealsWithState) {
 
     const keys = Object.keys(initialTodaysMealsWithState);
-
     for (let i = 0; i < keys.length - 1; i++) {
         const currentKey = keys[i];
         const meal = initialTodaysMealsWithState[currentKey];
-        if(!meal.eaten){
+
+        if (!meal.eaten) {
             renderNextMeal(meal);
-            break;
+            return;
         }
+
     }
+    // if every meal is eaten
+    renderNextMeal(null);
 }
 
 // -----------------LOAD USER GREETING ---------------------
@@ -175,9 +178,9 @@ export async function getTodaysMeals(weekPlan = null) {
     const { today, currentWeek } = Plan.getCurrentData();
     const index = getTodaysIndexInWeek(today, currentWeek);
 
-    if(!weekPlan){
+    if (!weekPlan) {
         weekPlan = await Plan.getWeekPlan();
-        Storage.saveWeekPlanToDB();
+        Storage.saveWeekPlanToDB(weekPlan);
     }
 
     const todaysMeals = weekPlan[index];
@@ -353,7 +356,6 @@ function updateTodaysMeals(todaysMealsWithState) {
 }
 
 function renderNextMeal(nextMeal) {
-
     if (!nextMeal) {
         renderCongratulations();
         return;
@@ -362,63 +364,59 @@ function renderNextMeal(nextMeal) {
     const congratsDiv = document.querySelector(".congratulations-message-db");
 
     if (congratsDiv) {
-        const nextMealCard = document.createElement("div");
-        nextMealCard.classList.add("card", "drop-shadow", "next-meal-card-db");
-        nextMealCard.innerHTML = `
+
+        congratsDiv.remove();
+
+    }
+    const nextMealContainer = document.querySelector(".next-meal-container");
+
+    nextMealContainer.innerHTML =
+        `   <div class="card drop-shadow next-meal-card-db">
                 <div class="first-row-db">
                     <input id="checked-circle" class="checkbox" type="checkbox">
 
                     <div class="next-meal-info">
                         <div class="next-meal-info-texts">
-                            <h3 class="meal-name-db"></h3>
-                            <span class="subtext meal-category-h"></span>
+                            <h3 class="meal-name-db">${nextMeal.name}</h3>
+                            <span class="subtext meal-category-h">${nextMeal.meal_category}</span>
                         </div>
 
                         <span class="calories-db">
+                        ${nextMeal.total_calories}
                         </span>
                     </div>
                 </div>
 
                 <div class="nutrition-values-db">
                     <div class="nutrition-item-db">
-                        <p class="nutrition-value-db"></p>
+                        <p class="nutrition-value-db">${nextMeal.total_protein}</p>
                         <p class="nutrition-label-db subtext">Protein</p>
                     </div>
                     <div class="nutrition-item-db">
-                        <p class="nutrition-value-db"></p>
+                        <p class="nutrition-value-db">${nextMeal.total_carbs}</p>
                         <p class="nutrition-label-db subtext">Carbs</p>
                     </div>
                     <div class="nutrition-item-db">
-                        <p class="nutrition-value-db"></p>
+                        <p class="nutrition-value-db">${nextMeal.total_fat}</p>
                         <p class="nutrition-label-db subtext">Fat</p>
                     </div>
                 </div>
-        `;
-        congratsDiv.replaceWith(nextMealCard);
-    }
-
-    const mealName = document.querySelector('.meal-name-db');
-    const meal_category = document.querySelector('.meal-category-h');
-    const calories = document.querySelector('.calories-db');
-    const nutritionValues = document.querySelectorAll('.nutrition-value-db');
-
-    mealName.textContent = nextMeal.name;
-    meal_category.textContent = nextMeal.meal_category;
-    calories.textContent = `${nextMeal.total_calories} kcal`;
-    nutritionValues[0].textContent = nextMeal.total_protein; // Protein
-    nutritionValues[1].textContent = nextMeal.total_carbs; // Carbs
-    nutritionValues[2].textContent = nextMeal.total_fat; // Fat 
+            </div>
+        `
+    addCheckboxEventListener();
 }
 
 function renderTodaysMeals(todaysMealsWithState) {
 
     const list = document.getElementById('todays-meals-container');
 
-    const keys = Object.keys(todaysMealsWithState);
+    if (list.children.length === 0) {
+        const keys = Object.keys(todaysMealsWithState);
 
-    for (let i = 0; i < keys.length - 1; i++) {
-        const currentKey = keys[i];
-        list.appendChild(createMealCard(i, todaysMealsWithState[currentKey]));
+        for (let i = 0; i < keys.length - 1; i++) {
+            const currentKey = keys[i];
+            list.appendChild(createMealCard(i, todaysMealsWithState[currentKey]));
+        }
     }
 
 }
@@ -440,19 +438,34 @@ function createMealCard(i, todaysMeal) {
 
 function renderCongratulations() {
 
-    const div = document.querySelector(".next-meal-card-db");
+    const nextMealContainer = document.querySelector(".next-meal-container");
+    const congratsExisting = document.querySelector('.congratulations-message-db');
 
-    const congratsDiv = document.createElement("div");
-    congratsDiv.classList.add("congratulations-message-db");
-    congratsDiv.innerHTML = `
-  <span> Congratulations! 🎉</span>
-  <span>You have achieved your goal!</span> 
-  <button id="congrats-link">reset</button>
-  `;
+    if (!congratsExisting) {
+        nextMealContainer.innerHTML = `
+        <div class="congratulations-message-db">     
+            <span> Congratulations! 🎉</span>
+            <span>You have achieved your goal!</span> 
+            <button id="congrats-link">reset</button>
+        </div>
+        `;
+        resetEventlistener();
+    }
 
-    div.replaceWith(congratsDiv);
-    resetEventlistener();
+}
 
+function syncHeightFromValue(sourceHeight, targetElement) {
+    if (!targetElement) {
+        console.warn('syncHeightFromValue: target element is missing.');
+        return;
+    }
+
+    if (typeof sourceHeight !== 'number') {
+        console.warn('syncHeightFromValue: sourceHeight must be a number.');
+        return;
+    }
+
+    targetElement.style.height = `${sourceHeight}px`;
 }
 
 function resetEventlistener() {
@@ -462,20 +475,14 @@ function resetEventlistener() {
         let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
         await Storage.saveNextMealsToDB(initialTodaysMealsWithState);
 
-        const pageSound = 'page.mp3';
-        let volPage = 0.1;
-        createSound(volPage, pageSound);
-
-        await sleep(280);
-
-        // update ui accordingly
-        await updateUI(initialTodaysMealsWithState);
+        // const pageSound = 'page.mp3';
+        // let volPage = 0.1;
+        // createSound(volPage, pageSound);
 
         // render first meal
-        const mealValues = Object.values(initialTodaysMealsWithState);
-        const firstMeal = mealValues[0];
-        renderNextMeal(firstMeal);
-        addCheckboxEventListener();
+        renderFirstUneatenMeal(initialTodaysMealsWithState);
+        // update ui accordingly
+        await updateUI(initialTodaysMealsWithState);
     });
 }
 
