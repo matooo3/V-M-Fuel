@@ -123,7 +123,7 @@ async function updateAdminContainer() {
 function renderFirstUneatenMeal(initialTodaysMealsWithState) {
 
     const keys = Object.keys(initialTodaysMealsWithState);
-    for (let i = 0; i < keys.length - 1; i++) {
+    for (let i = 0; i < keys.length; i++) {
         const currentKey = keys[i];
         const meal = initialTodaysMealsWithState[currentKey];
 
