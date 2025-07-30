@@ -132,44 +132,95 @@ app.get("/api/user_dishes", authMiddleware, checkRole("user"), (req, res) => {
     });
 });
 
-app.get("/api/dishes_full", (req, res) => {
-    const query = `
-        SELECT 
-            d.dish_id AS dish_id,
-            d.name AS dish_name,
-            i.ingredient_id,
-            i.name AS ingredient_name
-        FROM dishes d
-        JOIN dish_ingredients di ON di.dish_id = d.dish_id
-        JOIN ingredients i ON i.ingredient_id = di.ingredient_id
-        ORDER BY d.dish_id
+// app.get("/api/dishes_full", (req, res) => {
+//     const query = `
+//         SELECT 
+//             d.dish_id AS dish_id,
+//             d.name AS dish_name,
+//             i.ingredient_id,
+//             i.name AS ingredient_name
+//         FROM dishes d
+//         JOIN dish_ingredients di ON di.dish_id = d.dish_id
+//         JOIN ingredients i ON i.ingredient_id = di.ingredient_id
+//         ORDER BY d.dish_id
+//     `;
+
+//     db.query(query, (err, results) => {
+//         if (err) {
+//             console.error("Fehler bei der Abfrage von dishes_full:", err);
+//             res.status(500).send("Serverfehler bei /api/dishes_full");
+//         } else {
+//             const dishMap = {};
+//             results.forEach((row) => {
+//                 const id = row.dish_id;
+//                 if (!dishMap[id]) {
+//                     dishMap[id] = {
+//                         id,
+//                         name: row.dish_name,
+//                         ingredientNames: [],
+//                         ingredientIDs: []
+//                     };
+//                 }
+//                 dishMap[id].ingredientNames.push(row.ingredient_name);
+//                 dishMap[id].ingredientIDs.push(row.ingredient_id);
+//             });
+
+//             const dishesWithIngredients = Object.values(dishMap);
+//             res.json(dishesWithIngredients);
+//         }
+//     });
+// });
+
+app.post("/api/dishes_full_filtered", authMiddleware, checkRole("user"), (req, res) => {
+  const { category } = req.body;
+
+    let query = `
+      SELECT 
+        d.dish_id AS dish_id,
+        d.name AS dish_name,
+        i.ingredient_id AS ingredient_id,
+        i.name AS ingredient_name
+      FROM dishes d
+      JOIN dish_ingredients di ON di.dish_id = d.dish_id
+      JOIN ingredients i ON i.ingredient_id = di.ingredient_id
     `;
 
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error("Fehler bei der Abfrage von dishes_full:", err);
-            res.status(500).send("Serverfehler bei /api/dishes_full");
-        } else {
-            const dishMap = {};
-            results.forEach((row) => {
-                const id = row.dish_id;
-                if (!dishMap[id]) {
-                    dishMap[id] = {
-                        id,
-                        name: row.dish_name,
-                        ingredientNames: [],
-                        ingredientIDs: []
-                    };
-                }
-                dishMap[id].ingredientNames.push(row.ingredient_name);
-                dishMap[id].ingredientIDs.push(row.ingredient_id);
-            });
+    if (category && category !== "all") {
+      query += ` WHERE d.meal_category = ? `;
+    }
 
-            const dishesWithIngredients = Object.values(dishMap);
-            res.json(dishesWithIngredients);
+    query += ` ORDER BY d.dish_id `;
+
+    const params = (category && category !== "all") ? [category] : [];
+
+    db.query(query, params, (err, results) => {
+      if (err) {
+        console.error("Fehler bei der Abfrage von dishes_full_filtered:", err);
+        return res.status(500).send("Serverfehler bei /api/dishes_full_filtered");
+      }
+
+      const dishMap = {};
+      results.forEach(row => {
+        const id = row.dish_id;
+        if (!dishMap[id]) {
+          dishMap[id] = {
+            id,
+            name: row.dish_name,
+            ingredientNames: [],
+            ingredientIDs: []
+          };
         }
+        dishMap[id].ingredientNames.push(row.ingredient_name);
+        dishMap[id].ingredientIDs.push(row.ingredient_id);
+      });
+
+      const dishesWithIngredients = Object.values(dishMap);
+      res.json(dishesWithIngredients);
     });
-});
+  }
+);
+
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////
