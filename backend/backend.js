@@ -936,9 +936,49 @@ app.post("/api/update-user-list-item", authMiddleware, checkRole("user"), (req, 
         res.status(200).json({ message: "Item updated successfully" });
     });
 });
-
-
 ////////////////// END USER LIST ITEMS /////////////////
+
+
+///////////////// LIKE/DISLIKE DISH/INGREDIENT /////////////////
+// Like/Dislike a dish
+app.post("/api/set-user-dish-preference", authMiddleware, checkRole("user"), (req, res) => {
+  const userId = req.user.id;
+  const { dish_id, preference } = req.body; // preference: "like", "dislike", or "neutral"
+
+  if (!dish_id || !["like", "dislike", "neutral"].includes(preference)) {
+    return res.status(400).json({ message: "Invalid input" });
+  }
+
+  const deleteLiked = "DELETE FROM user_preferred_dishes WHERE user_id = ? AND dish_id = ?";
+  const deleteDisliked = "DELETE FROM user_blocked_dishes WHERE user_id = ? AND dish_id = ?";
+
+  // Erstmal beide entfernen
+  db.query(deleteLiked, [userId, dish_id], (err1) => {
+    if (err1) return res.status(500).json({ message: "Failed to update preference" });
+
+    db.query(deleteDisliked, [userId, dish_id], (err2) => {
+      if (err2) return res.status(500).json({ message: "Failed to update preference" });
+
+      if (preference === "like") {
+        db.query("INSERT INTO user_preferred_dishes (user_id, dish_id) VALUES (?, ?)", [userId, dish_id], (err3) => {
+          if (err3) return res.status(500).json({ message: "Failed to save like" });
+          res.status(200).json({ message: "Dish liked" });
+        });
+      } else if (preference === "dislike") {
+        db.query("INSERT INTO user_blocked_dishes (user_id, dish_id) VALUES (?, ?)", [userId, dish_id], (err4) => {
+          if (err4) return res.status(500).json({ message: "Failed to save dislike" });
+          res.status(200).json({ message: "Dish disliked" });
+        });
+      } else {
+        res.status(200).json({ message: "Preference reset to neutral" });
+      }
+    });
+  });
+});
+
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Starte den Server
