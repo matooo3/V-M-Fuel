@@ -66,14 +66,14 @@ function addCheckboxEventListener() {
             await sleep(100);
 
             let todaysMealsWithState = await getTodaysMealsWithState();
-            let currentKey = 0;
+            let currentKey = 'breakfast';
             [todaysMealsWithState, currentKey] = await updateAndSaveCurrentMeal(todaysMealsWithState);
             let nextMeal = getNextMeal(todaysMealsWithState, currentKey);
 
             await updateUI(todaysMealsWithState);
 
             setTimeout(() => {
-                renderNextMeal(nextMeal);
+                renderNextMeal(nextMeal, currentKey);
                 checkbox.checked = false;
             }, 300);
 
@@ -128,7 +128,7 @@ function renderFirstUneatenMeal(initialTodaysMealsWithState) {
         const meal = initialTodaysMealsWithState[currentKey];
 
         if (!meal.eaten) {
-            renderNextMeal(meal);
+            renderNextMeal(meal, currentKey);
             return;
         }
 
@@ -355,7 +355,7 @@ function updateTodaysMeals(todaysMealsWithState) {
 
 }
 
-function renderNextMeal(nextMeal) {
+function renderNextMeal(nextMeal, currentKey) {
     if (!nextMeal) {
         renderCongratulations();
         return;
@@ -378,11 +378,11 @@ function renderNextMeal(nextMeal) {
                     <div class="next-meal-info">
                         <div class="next-meal-info-texts">
                             <h3 class="meal-name-db">${nextMeal.name}</h3>
-                            <span class="subtext meal-category-h">${nextMeal.meal_category}</span>
+                            <span class="subtext meal-category-h">${currentKey}</span>
                         </div>
 
                         <span class="calories-db">
-                        ${nextMeal.total_calories}
+                        ${nextMeal.total_calories} kcal
                         </span>
                     </div>
                 </div>
@@ -415,21 +415,22 @@ function renderTodaysMeals(todaysMealsWithState) {
 
         for (let i = 0; i < keys.length - 1; i++) {
             const currentKey = keys[i];
-            list.appendChild(createMealCard(i, todaysMealsWithState[currentKey]));
+            list.appendChild(createMealCard(i, todaysMealsWithState, currentKey));
         }
     }
 
 }
 
-function createMealCard(i, todaysMeal) {
+function createMealCard(i, todaysMealsWithState, currentKey) {
 
+    let todaysMeal = todaysMealsWithState[currentKey];
     const card = document.createElement("li");
     card.className = "card drop-shadow mealcards-db";
     card.innerHTML = `<div class="check-point-db"></div>
                     <div class="todays-meal-info">
                         <span class="item-id">${i}</span>
                         <h3 class="meal-name-db">${todaysMeal.name}</h3>
-                        <span class="subtext">${todaysMeal.meal_category}</span>
+                        <span class="subtext">${currentKey}</span>
                     </div>
                     <h3 class="todays-calories">${todaysMeal.total_calories} kcal</h3>`;
 
@@ -452,20 +453,6 @@ function renderCongratulations() {
         resetEventlistener();
     }
 
-}
-
-function syncHeightFromValue(sourceHeight, targetElement) {
-    if (!targetElement) {
-        console.warn('syncHeightFromValue: target element is missing.');
-        return;
-    }
-
-    if (typeof sourceHeight !== 'number') {
-        console.warn('syncHeightFromValue: sourceHeight must be a number.');
-        return;
-    }
-
-    targetElement.style.height = `${sourceHeight}px`;
 }
 
 function resetEventlistener() {
