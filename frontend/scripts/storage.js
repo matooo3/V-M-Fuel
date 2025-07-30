@@ -59,11 +59,21 @@ export async function getUserDishes() {
 }
 
 // get dishes with ingredients
-export async function getDishesWithIngredients() {
-    const dishesWithIngredients = await Api.fetchData("/dishes_full");
-    // saveToLS('dishesWithIngredients', dishesWithIngredients); // optional
+// export async function getDishesWithIngredients() {
+//     const dishesWithIngredients = await Api.fetchData("/dishes_full");
+//     // saveToLS('dishesWithIngredients', dishesWithIngredients); // optional
+//     return dishesWithIngredients;
+// }
+export async function getDishesWithIngredients(category = "all") {
+    // category: "all" | "breakfast" | "main"
+    const token = Auth.getUserToken();
+
+    const dishesWithIngredients = await Api.postData("/dishes_full_filtered", { category }, token);
     return dishesWithIngredients;
 }
+
+
+
 
 // -----------------------------------END------------------------------------------
 
@@ -119,7 +129,7 @@ export async function setData() {
 // CHANGE USER ROLE IN DB
 
 export async function getUserIDFromDB(email) {
-    
+
     const users = await Api.fetchDataWithToken("/users", Auth.getUserToken());
 
     const user = users.find((u) => u.email === email);
@@ -172,10 +182,10 @@ export async function addNewDishToDB(data) {
 
         // 2. Anfrage an Backend
         const result = await Api.postData("/add-dish", data, token);
-        
+
         return result;
     } catch (error) {
-      alert("Failed to add new dish: " + error.message);
+        alert("Failed to add new dish: " + error.message);
     }
 }
 
@@ -187,10 +197,10 @@ export async function addNewIngredientToDB(data) {
 
         // 2. Anfrage an Backend
         const result = await Api.postData("/add-ingredient", data, token);
-        
+
         return result;
     } catch (error) {
-      alert("Failed to add new ingredient: " + error.message);
+        alert("Failed to add new ingredient: " + error.message);
     }
 }
 
@@ -202,10 +212,10 @@ export async function deleteDishFromDB(dishID) {
 
         // 2. Anfrage an Backend
         const result = await Api.postData("/delete-dish", { dishID }, token);
-        
+
         return result;
     } catch (error) {
-      alert("Failed to delete dish: " + error.message);
+        alert("Failed to delete dish: " + error.message);
     }
 }
 
@@ -216,10 +226,10 @@ export async function deleteIngredientFromDB(ingredientID) {
 
         // 2. Anfrage an Backend
         const result = await Api.postData("/delete-ingredient", { ingredientID }, token);
-        
+
         return result;
     } catch (error) {
-      alert("Failed to delete ingredient: " + error.message);
+        alert("Failed to delete ingredient: " + error.message);
     }
 }
 
@@ -232,9 +242,9 @@ export function saveWeekPlanToDB(weekPlan) {
 }
 
 export async function getWeekPlanFromDB() {
-  const token = Auth.getUserToken();
-  const weekPlan = await Api.fetchDataWithToken("/get-week-plan", token);
-  return weekPlan;
+    const token = Auth.getUserToken();
+    const weekPlan = await Api.fetchDataWithToken("/get-week-plan", token);
+    return weekPlan;
 }
 
 export async function getIngredientsFromWeekPlan() {
@@ -262,13 +272,13 @@ export function getUserDataFromLS() {
 
 // SAVE USER DATA
 export async function saveUserDataToDB(userInfo) {
-  const token = Auth.getUserToken();
+    const token = Auth.getUserToken();
 
-  if (!token || !userInfo) {
-    throw new Error("Token or UserInfo is missing");
-  }
+    if (!token || !userInfo) {
+        throw new Error("Token or UserInfo is missing");
+    }
 
-  await Api.postData("/save-user-data", userInfo, token);
+    await Api.postData("/save-user-data", userInfo, token);
 }
 
 // GET USER DATA
@@ -276,7 +286,7 @@ export async function getUserDataFromDB() {
 
     const token = Auth.getUserToken();
     const data = await Api.fetchDataWithToken("/get-user-data", token);
-  
+
     return data; // { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal }
 
 }
@@ -313,16 +323,16 @@ export async function saveInitialUserDataToDB() {
 
 // SAVE NEXT MEALS
 export async function saveNextMealsToDB(next_meals) {
-    
-  const token = Auth.getUserToken();
 
-  console.log("Data being sent to save-next-meals:", next_meals);
+    const token = Auth.getUserToken();
 
-  if (!token || !next_meals) {
-    throw new Error("Token or UserInfo is missing");
-  }
+    console.log("Data being sent to save-next-meals:", next_meals);
 
-  await Api.postData("/save-next-meals", { next_meals }, token);
+    if (!token || !next_meals) {
+        throw new Error("Token or UserInfo is missing");
+    }
+
+    await Api.postData("/save-next-meals", { next_meals }, token);
 }
 
 // GET NEXT MEALS
@@ -330,8 +340,8 @@ export async function getNextMealsFromDB() {
 
     const token = Auth.getUserToken();
     const data = await Api.fetchDataWithToken("/get-next-meals", token);
-  
-    return data; 
+
+    return data;
 
 }
 
@@ -342,34 +352,34 @@ export async function setUserListItemsInDB(items) {
     // items is:
     //           [ { id, name, amount, unit }, 
     //             { id, name, amount, unit }, ... ]
-  const token = Auth.getUserToken();
+    const token = Auth.getUserToken();
 
-  if (!token || !Array.isArray(items) || items.length === 0) {
-    throw new Error("Token or items list is missing or empty");
-  }
+    if (!token || !Array.isArray(items) || items.length === 0) {
+        throw new Error("Token or items list is missing or empty");
+    }
 
-  await Api.postData("/set-user-list-items", { items }, token);
+    await Api.postData("/set-user-list-items", { items }, token);
 }
 
 export async function getUserListItemsFromDB() {
-  const token = Auth.getUserToken();
-  const data = await Api.fetchDataWithToken("/get-user-list-items", token);
-  return data;
-  // format:
-  /**
-   * {
-   *   ingredient_id: 4,
-   *   name: "chicken breast filet",
-   *   amount: 556.09,
-   *   unit_of_measurement: "g",
-   *   category: "Protein",
-   *   ingredient_unit: "100g",
-   *   calories_per_UoM: 105,
-   *   carbs_per_UoM: 0.6,
-   *   fats_per_UoM: 2,
-   *   protein_per_UoM: 21
-   * }
-   */
+    const token = Auth.getUserToken();
+    const data = await Api.fetchDataWithToken("/get-user-list-items", token);
+    return data;
+    // format:
+    /**
+     * {
+     *   ingredient_id: 4,
+     *   name: "chicken breast filet",
+     *   amount: 556.09,
+     *   unit_of_measurement: "g",
+     *   category: "Protein",
+     *   ingredient_unit: "100g",
+     *   calories_per_UoM: 105,
+     *   carbs_per_UoM: 0.6,
+     *   fats_per_UoM: 2,
+     *   protein_per_UoM: 21
+     * }
+     */
 
 }
 
@@ -378,35 +388,35 @@ export async function getUserListItemsFromDB() {
 // ADD USER LIST ITEM
 export async function addUserListItemToDB(item) {
     //   {ingredient_id: 12, amount: 100, unit_of_measurement: "g"}
-  const token = Auth.getUserToken();
+    const token = Auth.getUserToken();
 
-  if (!token || !item) {
-    throw new Error("Token or item is missing");
-  }
+    if (!token || !item) {
+        throw new Error("Token or item is missing");
+    }
 
-  await Api.postData("/add-user-list-item", item, token);
+    await Api.postData("/add-user-list-item", item, token);
 }
 
 
 // DELETE USER LIST ITEM (via POST)
 export async function deleteUserListItemFromDB(identifier) {
-  const token = Auth.getUserToken();
+    const token = Auth.getUserToken();
 
-  if (!token || !identifier) {
-    throw new Error("Token or identifier is missing");
-  }
+    if (!token || !identifier) {
+        throw new Error("Token or identifier is missing");
+    }
 
-  await Api.postData("/delete-user-list-item", { identifier }, token);
+    await Api.postData("/delete-user-list-item", { identifier }, token);
 }
 
 export async function updateUserListItemInDB(identifier, updatedItem) {
-  const token = Auth.getUserToken();
+    const token = Auth.getUserToken();
 
-  if (!token || !identifier || !updatedItem) {
-    throw new Error("Token, identifier or updatedItem is missing");
-  }
+    if (!token || !identifier || !updatedItem) {
+        throw new Error("Token, identifier or updatedItem is missing");
+    }
 
-  await Api.postData("/update-user-list-item", { identifier, updatedItem }, token);
+    await Api.postData("/update-user-list-item", { identifier, updatedItem }, token);
 }
 
 export async function deleteOldAndCreateNewList() {
@@ -418,23 +428,23 @@ export async function deleteOldAndCreateNewList() {
 ///////////////// LIKE/DISLIKE DISH/INGREDIENT /////////////////
 // Like/Dislike a dish/ingredient
 export async function setUserPreference(type, id, preference) {
-  const token = Auth.getUserToken();
+    const token = Auth.getUserToken();
 
-  if (!token || !id || !["like", "dislike", "neutral"].includes(preference) || !["dish", "ingredient"].includes(type)) {
-    throw new Error("Invalid input");
-  }
+    if (!token || !id || !["like", "dislike", "neutral"].includes(preference) || !["dish", "ingredient"].includes(type)) {
+        throw new Error("Invalid input");
+    }
 
-  await Api.postData("/set-user-preference", { type, id, preference }, token);
+    await Api.postData("/set-user-preference", { type, id, preference }, token);
 }
 
 
 // get user preferences
 export async function getUserPreferencesFromDB() {
-  const token = Auth.getUserToken();
-  if (!token) throw new Error("Token missing");
+    const token = Auth.getUserToken();
+    if (!token) throw new Error("Token missing");
 
-  const preferences = await Api.fetchDataWithToken("/get-user-preferences", token);
-  return preferences;
+    const preferences = await Api.fetchDataWithToken("/get-user-preferences", token);
+    return preferences;
 }
 // ------------------------------------------------------------------
 
