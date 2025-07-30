@@ -5,17 +5,19 @@ import { CustomSelect } from "/frontend/scripts/drop-down.js";
 import { searchULs } from "../searchBar.js";
 import * as Settings from "./settings.js";
 import * as SwipeToDelete from "../swipetodelete.js";
+import * as Script from '../script.js';
 
 const debounceTimers = new Map();
 
 // Main function
 export default async function loadList() {
+    Script.showNavbar();
+    
     const app = document.getElementById("app");
     // LOAD app html-code
     const html = await loadHTMLTemplate("/frontend/html-pages/list.html");
     app.innerHTML = html;
 
-    Settings.loadSavedTheme();
     // Add event listener
     addEventListeners();
 
@@ -49,8 +51,9 @@ function addEventListeners() {
     document.getElementById("add-item-btn").addEventListener("click", () => {
         // only allow to open it once:
         const existingItem = document.getElementById("newItem");
+        const classList = "grocery-item drop-shadow addingContainer";
         if (!existingItem) {
-            addItemToList();
+            addItemToList(classList);
         }
     });
 }
@@ -136,10 +139,10 @@ function addItem(item) {
                 <span class="category subtext">${item.category}</span>
             </div>
             <div class="quantity-control">
-                <button class="minus-btn"><img src="/frontend/assets/icons/minus.svg" alt="-"></button>
+                <button class="minus-btn"><object src="/frontend/assets/icons/minus.svg" alt="-"></object></button>
                 <span class="amount">${item.amount.toFixed(0)}</span>
                 <span class="unit">${pieceToPcs(item.unit_of_measurement)}</span>
-                <button class="plus-btn"><img src="/frontend/assets/icons/plus.svg" alt="+"></button>
+                <button class="plus-btn"><object src="/frontend/assets/icons/plus.svg" alt="+"></object></button>
             </div>
         </div>
     `;
@@ -196,7 +199,7 @@ function pcsToPiece(unit) {
     return unit;
 }
 
-function addItemToList() {
+function addItemToList(classList = "grocery-item drop-shadow") {
     // Save item to storage
     // Storage.addGroceryListItem(item);
     // // Add item to the list in the UI
@@ -206,7 +209,7 @@ function addItemToList() {
     const newItem = document.createElement("li");
 
     newItem.id = "newItem";
-    newItem.className = "grocery-item drop-shadow";
+    newItem.className = classList;
     // Hier soll input felder kommen wo user das item eingeben kann
     newItem.innerHTML = `
     <div id="new-item-container">

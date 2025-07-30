@@ -5,6 +5,7 @@ import * as Storage from '../storage.js';
 import { searchULs } from '../searchBar.js';
 import * as Role from '../roleRouting.js';
 import * as Settings from './settings.js';
+import * as Script from '../script.js';
 
 let ingredientsArray = await Storage.getIngredients();
 let dishesArray = await Storage.getDishes();
@@ -12,12 +13,14 @@ let dishesArray = await Storage.getDishes();
 // Main function
 export default async function loadMeals() {
 
+    Script.showNavbar();
+
     const app = document.getElementById('app');
 
     // LOAD app html-code
     const html = await loadHTMLTemplate('/frontend/html-pages/meals.html');
     app.innerHTML = html;
-    
+
     Settings.loadSavedTheme();
 
     Role.renderCookButtons();
@@ -58,6 +61,8 @@ function addFilterbarEventlistener() {
     const filterButtons = document.querySelectorAll('#filter-bar-p button');
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
+            // reset scroll position
+            document.querySelector('#food-p').scrollTop = 0;
             setActiveFilterButton(button);
         });
     });
@@ -180,7 +185,6 @@ function setActiveFilterButton(button) {
     const buttons = document.querySelectorAll('#filter-bar-p button');
     buttons.forEach(btn => {
         if (btn === button) {
-
             filterPreferenceContent(button);
 
             btn.classList.add('active-p');
@@ -214,6 +218,7 @@ function filterPreferenceContent(button) {
     // Hide meal counters when showing ingredients
     prefMeal.style.display = filter === 'Ingredients' ? 'none' : '';
     blockedMeal.style.display = filter === 'Ingredients' ? 'none' : '';
+
 }
 
 
@@ -269,14 +274,14 @@ function renderIngredientListPreferences(ingredientList, preferredIngredients, b
 }
 
 function splitDataId(dataId) {
-  const [type, idStr] = dataId.split('-');
-  const id = parseInt(idStr, 10);
+    const [type, idStr] = dataId.split('-');
+    const id = parseInt(idStr, 10);
 
-  if (!type || isNaN(id)) {
-    throw new Error(`Invalid dataId format: ${dataId}`);
-  }
+    if (!type || isNaN(id)) {
+        throw new Error(`Invalid dataId format: ${dataId}`);
+    }
 
-  return [type, id];
+    return [type, id];
 }
 
 

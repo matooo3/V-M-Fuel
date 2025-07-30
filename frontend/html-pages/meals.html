@@ -49,7 +49,7 @@
             <div class="headerblock-p">
                 <span class="header-list-p">Meals</span>
                 <button class="add-item-p" id="add-meal-p">
-                    <img id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+">
+                    <object id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+"></object>
                 </button>
             </div>
             <ul id="dishes-list-p">
@@ -60,7 +60,7 @@
             <div class="headerblock-p">
                 <span class="header-list-p">Ingredients</span>
                 <button class="add-item-p" id="add-ingredient-p">
-                    <img id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+">
+                    <object id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+"></object>
                 </button>
             </div>
             <ul id="ingredients-list-p">
@@ -120,14 +120,14 @@
                 <div style="display: flex; gap: 10px; align-items: center;">
                     <input type="text" class="form-input" id="tagInput" placeholder="Add tag" style="flex: 1;">
                     <button class="add-tag-btn" id="addTagBtn">
-                        <img src="/frontend/assets/icons/plus-preferences.svg" alt="+">
+                        <object id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+"></object>
                     </button>
                 </div>
             </div>
 
             <div class="form-group instructions">
                 <label class="form-label">Cooking Instructions</label>
-                <textarea class="instructions-area" id="instructions-p"
+                <textarea class="instructions-area subtext" id="instructions-p"
                     placeholder="Enter cooking instructions..."></textarea>
             </div>
 
@@ -135,8 +135,8 @@
                 <div class="section-header-p">
                     <label class="form-label ingredient">Ingredients</label>
                     <div id="search-bar-ingr">
-                        <img id="search-icon-db" src="/frontend/assets/icons/search-icon.svg" alt="search icon">
-                        <input type="text" class="form-input" id="search-ingredients" placeholder="Search Ingredient"
+                        <!-- <img id="search-icon-db" src="/frontend/assets/icons/search-icon.svg" alt="search icon"> -->
+                        <input type="text" class="form-input search" id="search-ingredients" placeholder="Search Ingredient"
                             style="flex: 1;">
                     </div>
                 </div>
