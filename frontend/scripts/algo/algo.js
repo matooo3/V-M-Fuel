@@ -103,6 +103,8 @@ export function scaleDishByFactor(dish, factor) {
         total_fat: Math.round(dish.total_fat * factor),
         total_carbs: Math.round(dish.total_carbs * factor),
         tags: dish.tags,
+        ingredientIDs: dish.ingredientIDs,
+        ingredientNames: dish.ingredientNames,
         factor: factor, // store factor for ingredient scaling
     };
 
