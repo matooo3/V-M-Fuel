@@ -132,12 +132,12 @@ app.get("/api/user_dishes", authMiddleware, checkRole("user"), (req, res) => {
     });
 });
 
-// API-Endpunkt: Gerichte mit ihren Zutaten abrufen (JOIN-basiert, effizient)
 app.get("/api/dishes_full", (req, res) => {
     const query = `
         SELECT 
             d.dish_id AS dish_id,
             d.name AS dish_name,
+            i.ingredient_id,
             i.name AS ingredient_name
         FROM dishes d
         JOIN dish_ingredients di ON di.dish_id = d.dish_id
@@ -157,10 +157,12 @@ app.get("/api/dishes_full", (req, res) => {
                     dishMap[id] = {
                         id,
                         name: row.dish_name,
-                        ingredients: [],
+                        ingredientNames: [],
+                        ingredientIDs: []
                     };
                 }
-                dishMap[id].ingredients.push(row.ingredient_name);
+                dishMap[id].ingredientNames.push(row.ingredient_name);
+                dishMap[id].ingredientIDs.push(row.ingredient_id);
             });
 
             const dishesWithIngredients = Object.values(dishMap);
@@ -168,6 +170,7 @@ app.get("/api/dishes_full", (req, res) => {
         }
     });
 });
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Middleware: Auth & Rollenprüfung
