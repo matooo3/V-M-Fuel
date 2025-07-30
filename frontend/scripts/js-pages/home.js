@@ -8,9 +8,12 @@ import * as Role from '../roleRouting.js';
 import * as Settings from './settings.js';
 import * as Search from '../searchBar.js';
 import * as Plan from './plan.js';
+import * as Script from '../script.js';
 
 export default async function loadHome() {
 
+    Script.showNavbar();
+    
     const app = document.getElementById('app');
     // LOAD app html-code
     const html = await loadHTMLTemplate('/frontend/html-pages/home.html');

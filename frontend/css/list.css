@@ -99,6 +99,19 @@
     font-weight: 600;
     width: 100%;
     max-height: 46px;
+    gap: 10px
+}
+
+.addingContainer{
+    background-color: transparent !important;
+}
+
+#add-item-gl{
+    width: 18px;
+    height: 18px;
+    background-color: var(--background-color);
+    mask: url('/frontend/assets/icons/add-item.svg') no-repeat center;
+    mask-size: contain;
 }
 
 #add-item-btn img {
@@ -189,11 +202,14 @@
     align-items: center;
     justify-content: center;
     background-color: var(--fill-color);
-    color: #6B7280;
 }
 
-.minus-btn img {
+.minus-btn object {
     width: 13px;
+    height: 13px;
+    background-color: #6B7280;
+    mask: url('/frontend/assets/icons/minus.svg') no-repeat center;
+    mask-size: contain;
 }
 
 /* Plus-Button */
@@ -202,11 +218,14 @@
     align-items: center;
     justify-content: center;
     background-color: var(--accent-color);
-    color: #fff;
 }
 
-.plus-btn img {
+.plus-btn object {
     width: 13px;
+    height: 13px;
+    background-color: var(--background-color);
+    mask: url('/frontend/assets/icons/plus.svg') no-repeat center;
+    mask-size: contain;
 }
 
 
@@ -362,7 +381,7 @@
     right: 0;
     width: 0px; /* Start with 0 width */
     height: 100%;
-    color: white;
+    color: var(--background-color);
     display: flex;
     justify-content: center;
     align-items: center;

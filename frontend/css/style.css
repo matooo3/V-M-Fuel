@@ -43,6 +43,9 @@
     --background-color-admin: #FEF2F2;
     --border-color-cook: #C7CDFF;
     --border-color-admin: #F9BEBE;
+
+    /* section shadow */
+    --section-shadow: rgba(48, 48, 48, 0.1);
 }
 
 .dark-mode {
@@ -91,6 +94,9 @@
     --border-color-cook: #929dff;
     --background-color-admin: #1A1A1A;
     --border-color-admin: #ef5252;
+
+    /* section shadow */
+    --section-shadow: rgba(255, 255, 255, 0.06);
 
 }
 
