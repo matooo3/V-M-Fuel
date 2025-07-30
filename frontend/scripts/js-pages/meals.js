@@ -47,6 +47,10 @@ export default async function loadMeals() {
 
     addIngredientOverlayEventListeners();
 
+    const preferences = await Storage.getUserPreferencesFromDB();
+    console.warn('Preferences loaded:', preferences);
+    renderPreferenceButtons(preferences);
+
 }
 
 function addFilterbarEventlistener() {
@@ -217,9 +221,73 @@ function filterPreferenceContent(button) {
 // Like/Dislike functionality
 // -----------------------------------------------------------
 
-function toggleFavorite(event) {
+
+function renderPreferenceButtons(preferences) {
+    // load preferences from db (IDs)
+    const blockedDishes = preferences.blockedDishes;
+    const blockedIngredients = preferences.blockedIngredients;
+    const preferredDishes = preferences.preferredDishes;
+    const preferredIngredients = preferences.preferredIngredients;
+
+    const dishList = document.querySelectorAll('.dish-card-p');
+    const ingredientList = document.querySelectorAll('.ingredient-card-p');
+
+    renderDishListPreferences(dishList, preferredDishes, blockedDishes);
+
+    renderIngredientListPreferences(ingredientList, preferredIngredients, blockedIngredients);
+
+}
+
+function renderDishListPreferences(dishList, preferredDishes, blockedDishes) {
+    dishList.forEach(dish => {
+        const dishId = dish.querySelector('.item-id').textContent.trim();
+        const likeButton = dish.querySelector('.like');
+        const dislikeButton = dish.querySelector('.dislike');
+
+        if (preferredDishes.includes(parseInt(dishId, 10))) {
+            likeButton.classList.add('favorited');
+        }
+        if (blockedDishes.includes(parseInt(dishId, 10))) {
+            dislikeButton.classList.add('rejected');
+        }
+    });
+}
+
+function renderIngredientListPreferences(ingredientList, preferredIngredients, blockedIngredients) {
+    ingredientList.forEach(ingredient => {
+        const ingredientId = ingredient.querySelector('.item-id').textContent.trim();
+        const likeButton = ingredient.querySelector('.like');
+        const dislikeButton = ingredient.querySelector('.dislike');
+
+        if (preferredIngredients.includes(parseInt(ingredientId, 10))) {
+            likeButton.classList.add('favorited');
+        }
+        if (blockedIngredients.includes(parseInt(ingredientId, 10))) {
+            dislikeButton.classList.add('rejected');
+        }
+    });
+}
+
+function splitDataId(dataId) {
+  const [type, idStr] = dataId.split('-');
+  const id = parseInt(idStr, 10);
+
+  if (!type || isNaN(id)) {
+    throw new Error(`Invalid dataId format: ${dataId}`);
+  }
+
+  return [type, id];
+}
+
+
+async function toggleFavorite(event) {
     const button = event.currentTarget;
     const mealId = button.dataset.meal;
+
+    const [type, id] = splitDataId(mealId);
+
+    const ingredient = type === "ingredient";
+    const meal = type === "dish";
 
     button.classList.toggle('favorited');
 
@@ -228,17 +296,26 @@ function toggleFavorite(event) {
         const dislikeButton = document.querySelector(`[data-meal="${mealId}"].dislike`);
         if (dislikeButton && dislikeButton.classList.contains('rejected')) {
             dislikeButton.classList.remove('rejected');
-            updateCounter(mealId, 'rejected', false); // Remove from rejected
+            updateCounter('rejected', false, ingredient, meal); // Remove from rejected (combined case)
         }
-        updateCounter(mealId, 'favorited', true); // Add to favorited
+        updateCounter('favorited', true, ingredient, meal); // Add to favorited
+
+        Storage.setUserPreference(type, id, 'like'); // add to db
     } else {
-        updateCounter(mealId, 'favorited', false); // Remove from favorited
+        updateCounter('favorited', false, ingredient, meal); // Remove from favorited
+
+        Storage.setUserPreference(type, id, 'neutral'); // remove from db
     }
 }
 
 function toggleRejected(event) {
     const button = event.currentTarget;
     const mealId = button.dataset.meal;
+
+    const [type, id] = splitDataId(mealId);
+
+    const ingredient = type === "ingredient";
+    const meal = type === "dish";
 
     button.classList.toggle('rejected');
 
@@ -247,17 +324,19 @@ function toggleRejected(event) {
         const likeButton = document.querySelector(`[data-meal="${mealId}"].like`);
         if (likeButton && likeButton.classList.contains('favorited')) {
             likeButton.classList.remove('favorited');
-            updateCounter(mealId, 'favorited', false); // Remove from favorited
+            updateCounter('favorited', false, ingredient, meal); // Remove from favorited (combined case)
         }
-        updateCounter(mealId, 'rejected', true); // Add to rejected
+        updateCounter('rejected', true, ingredient, meal); // Add to rejected
+
+        Storage.setUserPreference(type, id, 'dislike'); // add to db
     } else {
-        updateCounter(mealId, 'rejected', false); // Remove from rejected
+        updateCounter('rejected', false, ingredient, meal); // Remove from rejected
+
+        Storage.setUserPreference(type, id, 'neutral'); // remove from db
     }
 }
 
-function updateCounter(id, type, isAdding) {
-    const ingredient = id.match(/^ingredient-(.+)$/);
-    const meal = id.match(/^meal-(.+)$/);
+function updateCounter(type, isAdding, ingredient, meal) {
 
     if (ingredient) {
         const prefElement = document.getElementById('ingredientsPreferred');
@@ -571,7 +650,7 @@ function validateMealForm(mealData) {
 // REPLACE the existing addMealCard function with this updated version
 function addMealCard(name, dishID, calories, time, tags = [], containerId = '#dishes-list-p') {
 
-    const dataId = `meal-${name}`;
+    const dataId = `dish-${dishID}`;
 
     const tagsHTML = tags.map(tag => `<button class="tag-p">${tag}</button>`).join('');
 
@@ -705,7 +784,7 @@ function clearMealForm() {
 // Add ingredients functionality
 function addIngredientCard(name, ingredientID, category, containerId = 'ingredients-list-p') {
 
-    const dataId = `ingredient-${name}`;
+    const dataId = `ingredient-${ingredientID}`;
 
     const cardHTML = `
         <li class="card drop-shadow ingredient-card-p">
