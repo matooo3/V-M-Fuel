@@ -42,7 +42,7 @@ function setupCheckboxValidation() {
     form.addEventListener('submit', function (e) {
         if (!checkbox.checked) {
             alert('Please accept the Terms of Use and Privacy Policy before proceeding.');
-            e.preventDefault(); // Verhindert Absenden
+            e.preventDefault(); // Prevents submission
         }
     });
 
