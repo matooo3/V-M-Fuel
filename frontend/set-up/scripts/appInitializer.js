@@ -35,26 +35,14 @@ function init() {
  */
 
 function setupCheckboxValidation() {
-    const errorMessageContainer = document.createElement('div');
-    errorMessageContainer.id = 'error-message';
-    errorMessageContainer.style.display = 'none';
-    errorMessageContainer.style.color = 'red';
-    errorMessageContainer.setAttribute('role', 'alert');
-    document.getElementById('register-form').prepend(errorMessageContainer);
-
     const checkbox = document.getElementById('acceptTerms');
     const button = document.getElementById('next-btn-register');
     const form = document.getElementById('register-form');
 
     form.addEventListener('submit', function (e) {
-        const errorMessageContainer = document.getElementById('error-message');
         if (!checkbox.checked) {
-            errorMessageContainer.textContent = 'Please accept the Terms of Use and Privacy Policy before proceeding.';
-            errorMessageContainer.style.display = 'block';
-            e.preventDefault(); // Prevent form submission
-        } else {
-            errorMessageContainer.textContent = '';
-            errorMessageContainer.style.display = 'none';
+            alert('Please accept the Terms of Use and Privacy Policy before proceeding.');
+            e.preventDefault(); // Verhindert Absenden
         }
     });
 
