@@ -300,11 +300,13 @@ async function toggleFavorite(event) {
         }
         updateCounter('favorited', true, ingredient, meal); // Add to favorited
 
-        Storage.setUserPreference(type, id, 'like'); // add to db
+        Storage.setUserPreference(type, id, 'like')
+            .catch((err) => console.error("Failed to update preference:", err)); // add to db
     } else {
         updateCounter('favorited', false, ingredient, meal); // Remove from favorited
 
-        Storage.setUserPreference(type, id, 'neutral'); // remove from db
+        Storage.setUserPreference(type, id, 'neutral')
+            .catch((err) => console.error("Failed to update preference:", err)); // remove from db
     }
 }
 
@@ -328,11 +330,13 @@ function toggleRejected(event) {
         }
         updateCounter('rejected', true, ingredient, meal); // Add to rejected
 
-        Storage.setUserPreference(type, id, 'dislike'); // add to db
+        Storage.setUserPreference(type, id, 'dislike')
+            .catch((err) => console.error("Failed to update preference:", err)); // add to db
     } else {
         updateCounter('rejected', false, ingredient, meal); // Remove from rejected
 
-        Storage.setUserPreference(type, id, 'neutral'); // remove from db
+        Storage.setUserPreference(type, id, 'neutral')
+            .catch((err) => console.error("Failed to update preference:", err)); // remove from db
     }
 }
 
