@@ -1,9 +1,24 @@
 import * as Storage from "../storage.js";
 
+const dishUsageCount = new Map(); // dish_id → count
+const MAX_DUPLICATES = 2;
+
+let dailyDishUsageCount = new Map();
+const MAX_DUPLICATES_DAILY = 1; // max duplicates per day
+
 export async function algo(kcal, puffer, like, dislike) {
     // get dishes form db
-    const dishesBreakfast = await Storage.getDishesBreakfast();
-    const dishesMain = await Storage.getDishesMain();
+    
+    // const dishesBreakfast = await Storage.getDishesBreakfast();
+    // const dishesMain = await Storage.getDishesMain();
+
+    const dishesBreakfast = await Storage.getDishesWithIngredients("breakfast");
+    const dishesMain = await Storage.getDishesWithIngredients("main");
+    console.log("Dishes for breakfast:", dishesBreakfast);
+    console.log("Dishes for main:", dishesMain);
+
+    const preferences = await Storage.getUserPreferencesFromDB();
+    console.warn('[algo.js] => Preferences loaded:', preferences);
 
     // split kcal to meal of day
     const kcalArray = split(kcal, 0);
@@ -11,7 +26,7 @@ export async function algo(kcal, puffer, like, dislike) {
     const weekPlan = [];
 
     for (let i = 0; i < 7; i++) {
-        const day = await createDay(kcalArray, dishesBreakfast, dishesMain);
+        const day = await createDay(kcalArray, dishesBreakfast, dishesMain, preferences);
 
         const scaledDay = scalePlan(day, kcalArray);
 
@@ -33,19 +48,19 @@ export function scalePlan(day, kcalArray) {
         dinner: scaleDish(day.dinner, kcalArray[2]),
         puffer: null,
     };
- 
+
     return scaledDay;
 }
 
 export function scaleDish(dish, kcalOptimal) {
-    
+
     const DISH_SCALING = 0.2; // ±20%
 
     // if dis is already optimal RETURN
-    if(dish.total_calories === kcalOptimal) {
+    if (dish.total_calories === kcalOptimal) {
         return dish;
     }
-    
+
     // Scale-Zone of dish
     const [minDish, maxDish] = calcDishScalingZone(dish.total_calories, DISH_SCALING);
 
@@ -75,7 +90,7 @@ export function scaleDish(dish, kcalOptimal) {
 }
 
 export function scaleDishByFactor(dish, factor) {
-    
+
     const scaledDish = {
         dish_id: dish.dish_id,
         name: dish.name,
@@ -95,7 +110,10 @@ export function scaleDishByFactor(dish, factor) {
 
 }
 
-export async function createDay(kcalArray, dishesBreakfast, dishesMain) {
+export async function createDay(kcalArray, dishesBreakfast, dishesMain, preferences) {
+    console.log("DAY START");
+    dailyDishUsageCount = new Map(); // Reset daily
+
     const kcalB = kcalArray[0]; // breakfast
     const kcalL = kcalArray[1]; // lunch
     const kcalD = kcalArray[2]; // dinner
@@ -108,12 +126,24 @@ export async function createDay(kcalArray, dishesBreakfast, dishesMain) {
         puffer: null,
     };
 
-    day.breakfast = pickDish(kcalB, dishesBreakfast);
-    day.lunch = pickDish(kcalL, dishesMain);
-    day.dinner = pickDish(kcalD, dishesMain);
-    // day.puffer = pickDish(kcalP, dishesMain);
+    day.breakfast = await pickDish(kcalB, dishesBreakfast, preferences);
+    // updateDailyCount(day.breakfast);
+
+    day.lunch = await pickDish(kcalL, dishesMain, preferences);
+    updateDailyCount(day.lunch);
+
+    day.dinner = await pickDish(kcalD, dishesMain, preferences);
+    // updateDailyCount(day.dinner);
+    // day.puffer = await pickDish(kcalP, dishesMain, preferences);
+    // updateDailyCount(day.puffer);
 
     return day;
+}
+function updateDailyCount(dish) {
+  if (dish) {
+    const count = dailyDishUsageCount.get(dish.dish_id) || 0;
+    dailyDishUsageCount.set(dish.dish_id, count + 1);
+  }
 }
 
 export function split(kcal, puffer) {
@@ -136,7 +166,7 @@ export function split(kcal, puffer) {
     // return [kcal * 0.24, kcal * 0.38, kcal * 0.38, 0];
 }
 
-export function pickDish(kcalOptimal, dishes) {
+export async function pickDish(kcalOptimal, dishes, preferences) {
     const DISH_SCALING = 0.2; // ±20 %
 
     for (
@@ -156,10 +186,11 @@ export function pickDish(kcalOptimal, dishes) {
             return isInPuffer(dishScalingZone, mealPZ);
         });
 
+
         // CANDIDATES FOUND!
         if (candidates.length > 0) {
             // CHOOSE FROM CANDIDATES
-            return chooseBestCandidate(candidates);
+            return await chooseBestCandidate(candidates, preferences);
         }
     }
     return noCandidateFound(kcalOptimal);
@@ -179,14 +210,125 @@ function noCandidateFound(kcalOptimal) {
     };
 }
 
-function chooseBestCandidate(candidates) {
+// function chooseBestCandidate(candidates) {
+//     console.warn("CANDIDAAAAAAAAAAAAAAAAAAAAAAAAAAAATE: " + JSON.stringify(candidates[1]));
+//     if (candidates.length === 1) {
+//         return candidates[0];
+//     }
+
+
+
+//     const random = Math.floor(Math.random() * candidates.length); // PROTOTYPE
+//     return candidates[random];
+// }
+
+async function chooseBestCandidate(candidates, preferences) {
+    // console.log("inside chooseBestCandidate");
     if (candidates.length === 1) {
+        console.log("only one candidate found");
         return candidates[0];
     }
 
-    const random = Math.floor(Math.random() * candidates.length); // PROTOTYPE
-    return candidates[random];
+    // sets for faster lookups
+    const preferredDishSet = new Set(preferences.preferredDishes || []);
+    const preferredIngredientSet = new Set(preferences.preferredIngredients || []);
+    const blockedDishSet = new Set(preferences.blockedDishes || []);
+    const blockedIngredientSet = new Set(preferences.blockedIngredients || []);
+
+    // helper function to shuffle (Fisher-Yates)
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // candidates sort to categories
+    const preferredDishes = [];
+    const preferredIngredients = [];
+    const neutral = [];
+    const duplicates = [];
+    const blockedIngredients = [];
+    const blockedDishes = [];
+
+    for (const candidate of candidates) {
+        const dishId = candidate.dish_id;
+        const timesUsedGlobal = dishUsageCount.get(dishId) || 0;
+        const timesUsedDaily = dailyDishUsageCount.get(dishId) || 0;
+
+        if (timesUsedDaily >= MAX_DUPLICATES_DAILY) {
+            // candidate._source = "duplicates (daily)";
+            duplicates.push(candidate);
+            continue;
+        }
+
+        if (timesUsedGlobal >= MAX_DUPLICATES) {
+            candidate._source = "duplicates (global)";
+            duplicates.push(candidate);
+            continue;
+        }
+
+        if (preferredDishSet.has(dishId)) {
+            candidate._source = "preferredDishes";
+            preferredDishes.push(candidate);
+        } else if (candidateContainsIngredient(candidate, preferredIngredientSet)) {
+            candidate._source = "preferredIngredients";
+            preferredIngredients.push(candidate);
+        } else if (blockedDishSet.has(dishId)) {
+            candidate._source = "blockedDishes";
+            blockedDishes.push(candidate);
+        } else if (candidateContainsIngredient(candidate, blockedIngredientSet)) {
+            candidate._source = "blockedIngredients";
+            blockedIngredients.push(candidate);
+        } else {
+            candidate._source = "neutral";
+            neutral.push(candidate);
+        }
+
+    }
+
+
+
+    // candidates in priority order (each category randomly shuffled)
+    const sorted = [
+        ...shuffle(preferredDishes),
+        ...shuffle(preferredIngredients),
+        ...shuffle(neutral),
+        ...shuffle(duplicates),
+        ...shuffle(blockedIngredients),
+        ...shuffle(blockedDishes)
+    ];
+
+    // take first/best-fitting candidate
+    const chosen = sorted[0];
+
+    if (chosen) {
+        const used = dishUsageCount.get(chosen.dish_id) || 0;
+        dishUsageCount.set(chosen.dish_id, used + 1);
+    }
+
+
+    debugCandidateSourceLog(sorted);
+
+    return chosen || null;
 }
+function debugCandidateSourceLog(sortedCandidates) {
+    const simplified = sortedCandidates.map(entry => ({
+        dish_id: entry.dish_id,
+        source: entry._source || "unknown"
+    }));
+
+    console.warn("[Debug] Zusammengesetztes Kandidaten-Array:", simplified);
+}
+
+
+function candidateContainsIngredient(candidate, ingredientSet) {
+    if (!Array.isArray(candidate.ingredientIDs)) return false;
+    return candidate.ingredientIDs.some(id => ingredientSet.has(id));
+}
+
+
 
 // meal puffer
 function calculateMealPufferZone(kcal, factor) {
