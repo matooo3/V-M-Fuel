@@ -220,12 +220,8 @@ app.get("/api/user_dishes", authMiddleware, checkRole("user"), (req, res) => {
 //   }
 // );
 
-app.post(
-  "/api/dishes_full_filtered",
-  authMiddleware,
-  checkRole("user"),
-  (req, res) => {
-    const { category } = req.body;
+app.post("/api/dishes_full_filtered", authMiddleware, checkRole("user"), (req, res) => {
+  const { category } = req.body;
 
     let query = `
       SELECT 
@@ -247,8 +243,8 @@ app.post(
 
     db.query(query, params, (err, results) => {
       if (err) {
-        console.error("Fehler bei der Abfrage von dishes_full_filtered:", err);
-        return res.status(500).send("Serverfehler bei /api/dishes_full_filtered");
+        console.error("Failed to fetch dishes_full_filtered:", err);
+        return res.status(500).send("Server error at /api/dishes_full_filtered");
       }
 
       const dishMap = {};
@@ -256,9 +252,9 @@ app.post(
         const id = row.dish_id;
 
         if (!dishMap[id]) {
-          // Alle Spalten von dishes extrahieren (außer ingredient_id und ingredient_name)
-          // Da row alle Felder von dishes + ingredient_id + ingredient_name enthält,
-          // extrahiere hier alles außer den beiden Zutatenfeldern separat:
+            // Extract all columns from dishes (except ingredient_id and ingredient_name)
+          // Since row contains all fields from dishes + ingredient_id + ingredient_name,
+          // extract everything except the two ingredient fields separately:
           const {
             ingredient_id, 
             ingredient_name, 
