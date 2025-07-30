@@ -431,7 +431,7 @@ export async function setUserPreference(type, id, preference) {
 // get user preferences
 export async function getUserPreferencesFromDB() {
   const token = Auth.getUserToken();
-  if (!token) throw new Error("Token fehlt");
+  if (!token) throw new Error("Token missing");
 
   const preferences = await Api.fetchDataWithToken("/get-user-preferences", token);
   return preferences;
