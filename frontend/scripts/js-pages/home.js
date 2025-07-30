@@ -278,7 +278,6 @@ async function updateGoalPercentage(eatenKcal, optimalKcal) {
 export async function getTodaysMealsWithState(reset = false) {
 
     let todaysMealsWithState = await Storage.getNextMealsFromDB();
-    console.log("GETTETTETRTR", todaysMealsWithState);
 
     if (!todaysMealsWithState || Object.keys(todaysMealsWithState).length === 0 || reset) {
 
