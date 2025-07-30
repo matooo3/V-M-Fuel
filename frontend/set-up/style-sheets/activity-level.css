@@ -28,7 +28,7 @@
      flex-direction: column;
      gap: 4px;
      width: 70%;
-     max-height: 55px;
+     height: fit-content;
      padding: 5px 10px;
  }
 
@@ -65,6 +65,6 @@
 
  @media (min-height: 720px) {
      .al-card {
-        min-height: 55px;
+         min-height: 55px;
      }
  }

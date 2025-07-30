@@ -7,6 +7,7 @@ import * as Storage from "./storage.js";
 import * as Auth from "./auth.js";
 import * as Role from "./roleRouting.js";
 import * as Algo from "./algo/algo.js";
+import * as Settings from "./js-pages/settings.js";
 
 const valid = await Auth.checkSessionTokenValid();
 if (!valid) {
@@ -56,6 +57,7 @@ const routes = {
 
 function initialLoad() {
     Role.renderUserRoleColors();
+    Settings.loadSavedTheme();
     router();
 }
 
@@ -111,10 +113,13 @@ async function router() {
     const baseTab = loadHome;
     const loadPage = routes[hash] || baseTab;
     // document.getElementById('app').innerHTML = '';
+
+    // Await ensures the page is fully loaded before proceeding.
     await loadPage();
+    // Page loading complete.
     setActiveTab();
     if (hash !== "settings") {
-        showNavbar();
+       showNavbar();
     }
     updateLastHash();
     console.log("Page loaded:", hash || "home");
@@ -160,6 +165,7 @@ console.log("HERE ARE THE FULL_DISHES:", dishesWithIngredients);
 export function showNavbar() {
     const navbar = document.getElementById('main-nav');
     if (navbar) {
-        navbar.style.display = 'flex';
+        navbar.classList.add('showNav');
+        navbar.classList.remove('hiddenNav');
     }
 }
