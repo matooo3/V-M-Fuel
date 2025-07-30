@@ -114,9 +114,9 @@ async function router() {
     const loadPage = routes[hash] || baseTab;
     // document.getElementById('app').innerHTML = '';
 
-    // IF ERROR!!
-    // await loadPage();
-    loadPage();
+    // Await ensures the page is fully loaded before proceeding.
+    await loadPage();
+    // Page loading complete.
     setActiveTab();
     if (hash !== "settings") {
        showNavbar();
