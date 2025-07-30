@@ -413,8 +413,28 @@ export async function deleteOldAndCreateNewList() {
     const token = Auth.getUserToken();
     return await Api.postData("/delete-old-and-create-new-list", {}, token);
 }
-
 ////////////////// END USER LIST ITEMS /////////////////
 
+///////////////// LIKE/DISLIKE DISH/INGREDIENT /////////////////
+// Like/Dislike a dish/ingredient
+export async function setUserPreference(type, id, preference) {
+  const token = Auth.getUserToken();
+
+  if (!token || !id || !["like", "dislike", "neutral"].includes(preference) || !["dish", "ingredient"].includes(type)) {
+    throw new Error("Invalid input");
+  }
+
+  await Api.postData("/set-user-preference", { type, id, preference }, token);
+}
+
+
+// get user preferences
+export async function getUserPreferencesFromDB() {
+  const token = Auth.getUserToken();
+  if (!token) throw new Error("Token missing");
+
+  const preferences = await Api.fetchDataWithToken("/get-user-preferences", token);
+  return preferences;
+}
 // ------------------------------------------------------------------
 
