@@ -220,57 +220,68 @@ app.get("/api/user_dishes", authMiddleware, checkRole("user"), (req, res) => {
 //   }
 // );
 
-app.get("/api/dishes", (req, res) => {
-  const category = req.query.category || "all";
+app.post(
+  "/api/dishes_full_filtered",
+  authMiddleware,
+  checkRole("user"),
+  (req, res) => {
+    const { category } = req.body;
 
-  let query = `
-    SELECT 
-      d.*,
-      i.ingredient_id,
-      i.name AS ingredient_name
-    FROM dishes d
-    LEFT JOIN dish_ingredients di ON di.dish_id = d.dish_id
-    LEFT JOIN ingredients i ON i.ingredient_id = di.ingredient_id
-  `;
+    let query = `
+      SELECT 
+        d.*,
+        i.ingredient_id,
+        i.name AS ingredient_name
+      FROM dishes d
+      JOIN dish_ingredients di ON di.dish_id = d.dish_id
+      JOIN ingredients i ON i.ingredient_id = di.ingredient_id
+    `;
 
-  const params = [];
-  if (category !== "all") {
-    query += ` WHERE d.meal_category = ? `;
-    params.push(category);
-  }
-
-  query += ` ORDER BY d.dish_id `;
-
-  db.query(query, params, (err, results) => {
-    if (err) {
-      console.error("Fehler beim Abrufen der Gerichte:", err);
-      return res.status(500).send("Fehler beim Abrufen der Gerichte");
+    if (category && category !== "all") {
+      query += ` WHERE d.meal_category = ? `;
     }
 
-    const dishMap = {};
+    query += ` ORDER BY d.dish_id `;
 
-    results.forEach(row => {
-      const id = row.dish_id;
+    const params = (category && category !== "all") ? [category] : [];
 
-      if (!dishMap[id]) {
-        // Alle Felder von dishes in neues Objekt kopieren (außer ingredient_* Felder)
-        const { ingredient_id, ingredient_name, ...dishData } = row;
-        dishMap[id] = {
-          ...dishData,
-          ingredientIDs: [],
-          ingredientNames: []
-        };
+    db.query(query, params, (err, results) => {
+      if (err) {
+        console.error("Fehler bei der Abfrage von dishes_full_filtered:", err);
+        return res.status(500).send("Serverfehler bei /api/dishes_full_filtered");
       }
 
-      if (row.ingredient_id) {
-        dishMap[id].ingredientIDs.push(row.ingredient_id);
+      const dishMap = {};
+      results.forEach(row => {
+        const id = row.dish_id;
+
+        if (!dishMap[id]) {
+          // Alle Spalten von dishes extrahieren (außer ingredient_id und ingredient_name)
+          // Da row alle Felder von dishes + ingredient_id + ingredient_name enthält,
+          // extrahiere hier alles außer den beiden Zutatenfeldern separat:
+          const {
+            ingredient_id, 
+            ingredient_name, 
+            ...dishFields
+          } = row;
+
+          dishMap[id] = {
+            ...dishFields,
+            ingredientNames: [],
+            ingredientIDs: []
+          };
+        }
+
         dishMap[id].ingredientNames.push(row.ingredient_name);
-      }
-    });
+        dishMap[id].ingredientIDs.push(row.ingredient_id);
+      });
 
-    res.json(Object.values(dishMap));
-  });
-});
+      const dishesWithIngredients = Object.values(dishMap);
+      res.json(dishesWithIngredients);
+    });
+  }
+);
+
 
 
 
