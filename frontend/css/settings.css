@@ -401,7 +401,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 
 .input-wrapper input {
   width: 100%;
-  padding-right: 40px; /* Platz für Einheit */
+  padding-right: 40px; /* Space for unit label */
   box-sizing: border-box;
 }
 
