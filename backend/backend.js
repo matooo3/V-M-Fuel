@@ -227,7 +227,9 @@ app.post("/api/dishes_full_filtered", authMiddleware, checkRole("user"), (req, r
       SELECT 
         d.*,
         i.ingredient_id,
-        i.name AS ingredient_name
+        i.name AS ingredient_name,
+        di.amount,
+        di.unit_of_measurement
       FROM dishes d
       JOIN dish_ingredients di ON di.dish_id = d.dish_id
       JOIN ingredients i ON i.ingredient_id = di.ingredient_id
@@ -249,31 +251,43 @@ app.post("/api/dishes_full_filtered", authMiddleware, checkRole("user"), (req, r
 
       const dishMap = {};
       results.forEach(row => {
-        const id = row.dish_id;
+        const dishId = row.dish_id;
 
-        if (!dishMap[id]) {
+        // extract information of ingredient
+        const ingredient = {
+          ingredient_id: row.ingredient_id,
+          name: row.ingredient_name,
+          amount: row.amount,
+          unit_of_measurement: row.unit_of_measurement
+        };
+
+        if (!dishMap[dishId]) {
             // Extract all columns from dishes (except ingredient_id and ingredient_name)
           // Since row contains all fields from dishes + ingredient_id + ingredient_name,
           // extract everything except the two ingredient fields separately:
           const {
             ingredient_id, 
-            ingredient_name, 
+            ingredient_name,
+            amount,
+            unit_of_measurement,
             ...dishFields
           } = row;
 
-          dishMap[id] = {
+          dishMap[dishId] = {
             ...dishFields,
-            ingredientNames: [],
-            ingredientIDs: []
+            // ingredientNames: [],
+            // ingredientIDs: []
+            ingredients: []
           };
         }
 
-        dishMap[id].ingredientNames.push(row.ingredient_name);
-        dishMap[id].ingredientIDs.push(row.ingredient_id);
+        // dishMap[dishId].ingredientNames.push(row.ingredient_name);
+        // dishMap[dishId].ingredientIDs.push(row.ingredient_id);
+        dishMap[dishId].ingredients.push(ingredient);
       });
 
-      const dishesWithIngredients = Object.values(dishMap);
-      res.json(dishesWithIngredients);
+      const result = Object.values(dishMap);
+      res.json(result);
     });
   }
 );
