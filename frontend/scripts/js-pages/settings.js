@@ -145,8 +145,10 @@ function addEventListeners() {
     const weightInput = document.getElementById('weight-st');
 
     weightInput.addEventListener('keypress', (e) => {
-        const allowed = /[0-9.,]/;
-        if (!allowed.test(e.key)) {
+        const currentValue = weightInput.value;
+        const allowed = /^[0-9]*([.,][0-9]*)?$/;
+        const newValue = currentValue + e.key;
+        if (!allowed.test(newValue)) {
             e.preventDefault();
         }
     });
