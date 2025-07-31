@@ -160,6 +160,7 @@ function addSettingsDropdownFunctionality() {
     //     // console.log("Calorie mode:", value)
     // });
 
+    // language
     // const langSelect = document.querySelector('.custom-select.lang-field');
     // new DropDown.CustomSelect(langSelect, (value) => {
     //     // console.log("Language:", value)
