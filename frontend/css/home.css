@@ -376,6 +376,7 @@
 .todays-calories {
     margin-left: auto;
     white-space: nowrap;
+    font-weight: 400;
 }
 
 #standard-container {
