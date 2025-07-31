@@ -93,11 +93,13 @@ function updateCheckedItemsCount() {
     const checked = getCheckedItems(items);
     const total = items.length;
 
-    const subtextElement = document.getElementById("subtext-gl");
-    if (subtextElement) {
-        subtextElement.textContent = `${checked.length} out of ${total} checked`;
+    const checkedCount = document.getElementById("checked-count-gl");
+    const totalCount = document.getElementById("total-count-gl");
+    if (checkedCount && totalCount) {
+        checkedCount.textContent = `${checked.length}`;
+        totalCount.textContent = `${total}`;
     } else {
-        console.warn("Subtext element not found!");
+        console.warn("Checked count or total count element not found!");
     }
 }
 

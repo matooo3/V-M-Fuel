@@ -20,7 +20,10 @@
 .list-header {
     display: flex;
     height: 100%;
-    flex-direction: column;
+    /* ALIGN THE SETTINGS BUTTON DIV CORRECT */
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 6px;
     margin-bottom: 0px;
 }
@@ -145,7 +148,7 @@
 
 .grocery-item {
     background-color: var(--card-color); /* Make container transparent */
-    border-radius: 15px;
+    border-radius: var(--border-radius-big-card);
     box-shadow: none; /* Remove shadow from container */
     position: relative;
     overflow: hidden; /* Keep hidden to clip the delete button */
@@ -177,7 +180,7 @@
 .amount {
     font-size: 1.6rem;
     color: var(--main-text-color);
-    margin-right: -12px;
+    margin-right: -11px;
 }
 
 .unit {
@@ -202,6 +205,7 @@
     align-items: center;
     justify-content: center;
     background-color: var(--fill-color);
+    margin-left: 10px;
 }
 
 .minus-btn object {
@@ -304,7 +308,7 @@
     align-items: start;
     justify-content: start;
     /* width: 40%; */
-    gap: 10px;
+    gap: 0px;
     width: 100%;
     max-width: 60%;
 }
@@ -432,14 +436,52 @@
     background-color: red;
 }
 
-@media (max-width: 350px) {
+@media(max-width: 442px) {
+    .quantity-control {
+        width: 140px;
+    }
+}
+
+@media (max-width: 426px) {
     .quantity-control {
         width: 138px;
     }
 }
 
-@media (max-width: 337px) {
+@media (max-width: 382px) {
+    .quantity-control {
+        width: 135px;
+    }
+}
+
+@media (max-width: 362px) {
     .quantity-control {
         width: 133px;
     }
+}
+
+@media (max-width: 350px) {
+    .quantity-control {
+        width: 130px;
+        justify-content: space-between;
+        transform: translateX(4%);
+    }
+    .amount {
+        margin-right: -7px;
+    }
+
+}
+
+@media (max-width: 337px) {
+    .quantity-control {
+        width: 128px;
+    }
+}
+
+#settings-gl {
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+    transform: translateY(-43%) translateX(23%);
 }
