@@ -8,16 +8,18 @@ const MAX_DUPLICATES_DAILY = 1; // max duplicates per day
 
 export async function algo(kcal, puffer, like, dislike) {
     // get dishes form db
-    
+
     // const dishesBreakfast = await Storage.getDishesBreakfast();
     // const dishesMain = await Storage.getDishesMain();
 
-    const dishesBreakfast = await Storage.getDishesWithIngredients("breakfast");
-    const dishesMain = await Storage.getDishesWithIngredients("main");
+    const [dishesBreakfast, dishesMain, preferences] = await Promise.all([
+        Storage.getDishesWithIngredients("breakfast"),
+        Storage.getDishesWithIngredients("main"),
+        Storage.getUserPreferencesFromDB()
+    ]);
+
     console.log("Dishes for breakfast:", dishesBreakfast);
     console.log("Dishes for main:", dishesMain);
-
-    const preferences = await Storage.getUserPreferencesFromDB();
     console.warn('[algo.js] => Preferences loaded:', preferences);
 
     // split kcal to meal of day
@@ -91,6 +93,11 @@ export function scaleDish(dish, kcalOptimal) {
 
 export function scaleDishByFactor(dish, factor) {
 
+    const ingredients = dish.ingredients?.map(ing => ({
+        ...ing,
+        amount_scaled: (ing.amount * factor).toFixed(1),
+    })) || [];
+
     const scaledDish = {
         dish_id: dish.dish_id,
         name: dish.name,
@@ -103,8 +110,9 @@ export function scaleDishByFactor(dish, factor) {
         total_fat: Math.round(dish.total_fat * factor),
         total_carbs: Math.round(dish.total_carbs * factor),
         tags: dish.tags,
-        ingredientIDs: dish.ingredientIDs,
-        ingredientNames: dish.ingredientNames,
+        // ingredientIDs: dish.ingredientIDs,
+        // ingredientNames: dish.ingredientNames,
+        ingredients: ingredients,
         factor: factor, // store factor for ingredient scaling
     };
 
@@ -142,10 +150,10 @@ export async function createDay(kcalArray, dishesBreakfast, dishesMain, preferen
     return day;
 }
 function updateDailyCount(dish) {
-  if (dish) {
-    const count = dailyDishUsageCount.get(dish.dish_id) || 0;
-    dailyDishUsageCount.set(dish.dish_id, count + 1);
-  }
+    if (dish) {
+        const count = dailyDishUsageCount.get(dish.dish_id) || 0;
+        dailyDishUsageCount.set(dish.dish_id, count + 1);
+    }
 }
 
 export function split(kcal, puffer) {
@@ -212,17 +220,6 @@ function noCandidateFound(kcalOptimal) {
     };
 }
 
-// function chooseBestCandidate(candidates) {
-//     console.warn("CANDIDAAAAAAAAAAAAAAAAAAAAAAAAAAAATE: " + JSON.stringify(candidates[1]));
-//     if (candidates.length === 1) {
-//         return candidates[0];
-//     }
-
-
-
-//     const random = Math.floor(Math.random() * candidates.length); // PROTOTYPE
-//     return candidates[random];
-// }
 
 async function chooseBestCandidate(candidates, preferences) {
     // console.log("inside chooseBestCandidate");
