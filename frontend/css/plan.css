@@ -302,8 +302,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     padding: 20px;
+    padding-bottom: 10px;
+    box-shadow: 0 2px 5px var(--section-shadow);
 }
 
 #view-dish-name {
