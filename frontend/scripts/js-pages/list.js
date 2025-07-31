@@ -99,7 +99,7 @@ function updateCheckedItemsCount() {
         checkedCount.textContent = `${checked.length}`;
         totalCount.textContent = `${total}`;
     } else {
-        console.warn("Subtext element not found!");
+        console.warn("Checked count or total count element not found!");
     }
 }
 
