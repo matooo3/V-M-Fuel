@@ -140,7 +140,7 @@ function addItem(item) {
             </div>
             <div class="quantity-control">
                 <button class="minus-btn"><object src="/frontend/assets/icons/minus.svg" alt="-"></object></button>
-                <span class="amount">${item.amount.toFixed(0)}</span>
+                <span class="amount">${Math.round(item.amount)}</span>
                 <span class="unit">${pieceToPcs(item.unit_of_measurement)}</span>
                 <button class="plus-btn"><object src="/frontend/assets/icons/plus.svg" alt="+"></object></button>
             </div>
