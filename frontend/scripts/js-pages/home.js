@@ -366,6 +366,10 @@ function updateTodaysMeals(todaysMealsWithState) {
 
 }
 
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function renderNextMeal(nextMeal, currentKey) {
     if (!nextMeal) {
         renderCongratulations();
@@ -390,7 +394,7 @@ function renderNextMeal(nextMeal, currentKey) {
                     <div class="next-meal-info">
                         <div class="next-meal-info-texts">
                             <h3 class="meal-name-db">${nextMeal.name}</h3>
-                            <span class="subtext meal-category-h">${currentKey}</span>
+                            <span class="subtext meal-category-h">${capitalizeFirstLetter(currentKey)}</span>
                         </div>
 
                         <span class="calories-db">
