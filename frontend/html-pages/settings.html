@@ -6,7 +6,7 @@
             <div id="arrow-back-st"> </div>
             <h1>Settings</h1>
             <div></div>
-<!-- ------------------ <button id="close-settings-btn" class="close-btn close-button-refer">
+            <!-- ------------------ <button id="close-settings-btn" class="close-btn close-button-refer">
                 <img src="/frontend/assets/icons/close-settings.svg" alt="Close">
             </button> ------------------- -->
         </div>
@@ -21,21 +21,35 @@
             <h1>Personal Data</h1>
             <div class="user-details-settings">
                 <div class="left-column-settings">
+
                     <div class="input-container">
                         <label class="subtext subtext-st" for="height-st">Height</label>
-                        <input type="text" id="height-st" placeholder="" name="height-st" value="" required>
+                        <div class="input-wrapper">
+                            <input type="number" id="height-st" name="height-st" required>
+                            <span class="unit-label">cm</span>
+                        </div>
                     </div>
+
                     <div class="input-container">
                         <label class="subtext subtext-st" for="weight-st">Weight</label>
-                        <input type="text" id="weight-st" placeholder="" name="weight-st" value="" required>
+                        <div class="input-wrapper">
+                            <input type="text" inputmode="decimal" id="weight-st" name="weight-st" required>
+                            <span class="unit-label">kg</span>
+                        </div>
                     </div>
+
                 </div>
 
                 <div class="right-column-settings">
+
                     <div class="input-container">
                         <label class="subtext subtext-st" for="age-st">Age</label>
-                        <input type="text" id="age-st" name="age-st" placeholder="" value="" required>
+                        <div class="input-wrapper">
+                            <input type="number" id="age-st" name="age-st" required>
+                            <span class="unit-label">years</span>
+                        </div>
                     </div>
+
                     <div class="input-container">
                         <label class="subtext subtext-st" for="sex-st">Sex</label>
                         <select id="sex-st" name="sex-st" required>
@@ -43,6 +57,7 @@
                             <option value="female">Female</option>
                         </select>
                     </div>
+
                 </div>
             </div> <!-- end-user-details-settings -->
         </div> <!-- end-settings-item-1 -->

@@ -392,3 +392,25 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     display: none;
     /* Chrome, Safari and Opera */
 }
+
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* Space for unit label */
+  box-sizing: border-box;
+}
+
+.unit-label {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  font-size: 0.9em;
+  pointer-events: none;
+}

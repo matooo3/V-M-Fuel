@@ -26,6 +26,10 @@ export default async function loadSettings() {
 
 }
 
+function commaToDot(value) {
+    return value.toString().replace(',', '.');
+}
+
 async function loadUserData() {
     const { gender, age, weight_kg, weight_pounds, height_cm, height_feet_and_inches, activityLevel, goal } = await Storage.getUserDataFromDB();
 
@@ -35,8 +39,12 @@ async function loadUserData() {
     const sexSelect = document.getElementById('sex-st');
 
     heightInput.value = height_cm;
-    weightInput.value = weight_kg;
+    weightInput.value = commaToDot(weight_kg.toFixed(1));
     ageInput.value = age;
+
+    heightInput.placeholder = "cm";
+    weightInput.placeholder = "kg";
+    ageInput.placeholder = "years";
 
     if (gender) {
         sexSelect.value = gender.toLowerCase();
@@ -75,7 +83,7 @@ function updateUserData() {
 
     // Get values from inputs
     const heightCm = parseFloat(heightInput.value);
-    const weightKg = parseFloat(weightInput.value);
+    const weightKg = parseFloat(commaToDot(weightInput.value));
     const age = parseInt(ageInput.value, 10);
     const gender = sexSelect.value;
 
@@ -132,6 +140,18 @@ export function loadSavedTheme() {
 }
 
 function addEventListeners() {
+
+    // DONT ALLOW TO ENTER NON-NUMERIC VALUES IN HEIGHT AND WEIGHT INPUTS
+    const weightInput = document.getElementById('weight-st');
+
+    weightInput.addEventListener('keypress', (e) => {
+        const currentValue = weightInput.value;
+        const allowed = /^[0-9]*([.,][0-9]*)?$/;
+        const newValue = currentValue + e.key;
+        if (!allowed.test(newValue)) {
+            e.preventDefault();
+        }
+    });
 
     const themeSelect = document.getElementById('theme-select')
     const savedTheme = localStorage.getItem('theme') || 'light';
