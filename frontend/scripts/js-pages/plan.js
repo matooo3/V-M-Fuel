@@ -350,6 +350,7 @@ function addOverlayEventlisteners(weekPlan) {
     document.getElementById('viewDishOverlay').addEventListener('click', function (e) {
         if (e.target === this) {
             hideOverlay();
+            Script.hideNavOverlay();
             resetLists()
             updateCompletedSteps(0);
             updateCookingProgressBarAndPercentageText(0);
@@ -357,14 +358,18 @@ function addOverlayEventlisteners(weekPlan) {
     });
 
     document.getElementById('navOverlay').addEventListener('click', function (e) {
-        hideOverlay();
-        resetLists();
-        updateCompletedSteps(0);
-        updateCookingProgressBarAndPercentageText(0);
+        if (isPlanPage()) {
+            hideOverlay();
+            Script.hideNavOverlay();
+            resetLists();
+            updateCompletedSteps(0);
+            updateCookingProgressBarAndPercentageText(0);
+        }
     });
 
     document.querySelector('#close-view-dish').addEventListener('click', function (e) {
         hideOverlay();
+        Script.hideNavOverlay();
         resetLists();
         updateCompletedSteps(0);
         updateCookingProgressBarAndPercentageText(0);
@@ -372,7 +377,7 @@ function addOverlayEventlisteners(weekPlan) {
 
     document.getElementById('reset-cooking-process').addEventListener('click', function (e) {
 
-        const checkedCheckboxes = document.querySelectorAll('#view-dish-instructions-list .view-instruction-checkbox:checked');
+        const checkedCheckboxes = document.querySelectorAll('#view-dish-instructions-list .checkbox-overlay:checked');
         checkedCheckboxes.forEach(checkbox => {
             checkbox.checked = false;
         });
@@ -386,18 +391,24 @@ function addOverlayEventlisteners(weekPlan) {
         const id = dish.dataset.id
         dish.addEventListener("click", () => {
             showOverlay();
+            Script.showNavOverlay();
             renderDishInfo(id, weekPlan);
             addCheckboxInstrEventlistener();
         });
     })
 }
 
+function isPlanPage() {
+    const isPlanPage = document.querySelector('#meal-plan') != null;
+    return isPlanPage;
+}
+
 function addCheckboxInstrEventlistener() {
-    const checkboxes = document.querySelectorAll('.view-instruction-checkbox');
+    const checkboxes = document.querySelectorAll('.checkbox-overlay');
 
     checkboxes.forEach(cb => {
         cb.addEventListener('change', event => {
-            const checkedCheckboxes = document.querySelectorAll('#view-dish-instructions-list .view-instruction-checkbox:checked');
+            const checkedCheckboxes = document.querySelectorAll('#view-dish-instructions-list .checkbox-overlay:checked');
             updateCompletedSteps(checkedCheckboxes.length);
             updateCookingProgressBarAndPercentageText(checkedCheckboxes.length);
         });
@@ -424,15 +435,19 @@ function updateCookingProgressBarAndPercentageText(completedSteps) {
 }
 
 function showOverlay() {
-    document.getElementById('navOverlay').classList.remove('hidden');
-    document.getElementById('viewDishOverlay').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+    const overlay = document.getElementById('viewDishOverlay');
+    if (overlay) {
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function hideOverlay() {
-    document.getElementById('navOverlay').classList.add('hidden');
-    document.getElementById('viewDishOverlay').classList.add('hidden');
-    document.body.style.overflow = 'auto';
+    const overlay = document.getElementById('viewDishOverlay');
+    if (overlay) {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
 }
 
 // UTILITY FUNCTIONS
@@ -476,14 +491,14 @@ function updateCompletedSteps(steps) {
 
 function resetLists() {
     const instructionsList = document.getElementById('view-dish-instructions-list');
-    const ingredientsList = document.getElementById('view-dish-instructions-list');
+    const ingredientsList = document.getElementById('view-dish-ingredients-list');
     instructionsList.innerHTML = '';
     ingredientsList.innerHTML = '';
 
 }
 
 // RENDER FUNCTIONS
-async function renderDishInfo(id, weekPlan) {
+function renderDishInfo(id, weekPlan) {
 
     // get cklicked meal
     const meal = getMealbyIdInWeekplan(id, weekPlan);
@@ -492,7 +507,8 @@ async function renderDishInfo(id, weekPlan) {
     renderDishMacrosAndName(meal);
 
     //load ingredients
-    // renderDishIngredients(ingredients);
+    console.log(meal);
+    renderDishIngredients(meal.ingredients);
 
     // load prep steps
     let preparationSteps = splitInSteps(meal.preparation);
@@ -512,10 +528,10 @@ function renderTotalCookingStepsText() {
 
 function renderDishIngredients(ingredients) {
     const list = document.getElementById('view-dish-ingredients-list');
-    ingredients.forEach(ingredient => {
-        let ingredientHTML = getIngredientHTML(ingredient);
-        list.appendChild(ingredientHTML);
-    });
+    for (const key in ingredients) {
+        let ingredientHTML = getIngredientHTML(ingredients[key]);
+        list.insertAdjacentHTML('beforeend', ingredientHTML);
+    }
 }
 
 function renderDishPreparationSteps(preparationSteps) {
@@ -545,7 +561,7 @@ function getIngredientHTML(ingredient) {
     return `
     <li class="view-dish-ingredient-el">
         <p class="view-dish-ingredient-name">${ingredient.name}</p>
-        <p class="subtext view-dish-ingredient-amount">${ingredient.amount}</p>
+        <p class="subtext view-dish-ingredient-amount">${ingredient.amount_scaled} ${ingredient.unit_of_measurement}</p>
     </li>
     `
 }
@@ -553,7 +569,7 @@ function getIngredientHTML(ingredient) {
 function getPreparationHTML(stepNumber, text) {
     return `
     <li class="view-instruction-step-el">
-        <input type="checkbox" class="view-instruction-checkbox">
+        <input type="checkbox" class="checkbox-overlay">
         <div class="view-instruction-text-container">
             <p class="view-instruction-header">Step ${stepNumber}</p>
             <p class="view-instruction-text">${text}</p>
@@ -588,6 +604,8 @@ function addGenerateEventListener(today, currentWeek) {
             if (currentlySelectedDay) {
                 showDay(currentlySelectedDay, dayContent);
             }
+
+            addOverlayEventlisteners(weekPlan);
 
         });
     }

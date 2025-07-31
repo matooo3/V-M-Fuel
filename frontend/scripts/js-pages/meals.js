@@ -53,6 +53,7 @@ export default async function loadMeals() {
     const preferences = await Storage.getUserPreferencesFromDB();
     console.warn('Preferences loaded:', preferences);
     renderPreferenceButtons(preferences);
+    updateAllCounters();
 
 }
 
@@ -105,8 +106,15 @@ function addSearchbarEventlisteners() {
 
 function addMealOverlayEventListeners() {
 
-    document.getElementById('add-meal-p').addEventListener('click', showAddMeal);
-    document.getElementById('closeMealBtn').addEventListener('click', hideAddMeal);
+    document.getElementById('add-meal-p').addEventListener('click', function (e) {
+        showAddMeal();
+        Script.showNavOverlay();
+    });
+    document.getElementById('closeMealBtn').addEventListener('click', function (e) {
+        hideAddMeal();
+        Script.hideNavOverlay();
+    });
+
     document.getElementById('addBtn-p').addEventListener('click', saveMeal);
 
     // Tag functionality
@@ -122,11 +130,15 @@ function addMealOverlayEventListeners() {
     document.getElementById('editMealOverlay').addEventListener('click', function (e) {
         if (e.target === this) {
             hideAddMeal();
+            Script.hideNavOverlay();
         }
     });
 
     document.getElementById('navOverlay').addEventListener('click', function (e) {
-        hideAddMeal();
+        if (isPreferencePage()) {
+            hideAddMeal();
+            Script.hideNavOverlay();
+        }
     });
 
     // Allow Enter key to add tags
@@ -141,8 +153,14 @@ function addMealOverlayEventListeners() {
     document.getElementById('editMealOverlay').addEventListener('click', function (e) {
         if (e.target === this) {
             hideAddMeal();
+            Script.hideNavOverlay();
         }
     });
+}
+
+function isPreferencePage() {
+    const isPreferencePage = document.querySelector('.meals-container') != null;
+    return isPreferencePage;
 }
 
 
@@ -156,11 +174,13 @@ function addIngredientOverlayEventListeners() {
     document.getElementById('editIngredientOverlay').addEventListener('click', function (e) {
         if (e.target === this) {
             hideAddIngredient();
+            Script.hideNavOverlay();
         }
     });
 
     document.getElementById('navOverlay').addEventListener('click', function (e) {
         hideAddIngredient();
+        Script.hideNavOverlay();
     });
 
 }
@@ -463,7 +483,7 @@ async function loadIngredients() {
         const uom = extractUnit(ingredient.Unit_of_Measurement);
         list.innerHTML += `
     <li class="card ingredient">
-            <input class="checkbox" type="checkbox">
+            <input class="checkbox-overlay" type="checkbox">
             <span class="ingredient-text-p">${ingredient.name}</span>
             <div class="ingredient-amount-p">
                 <input type="number" class="form-input ingredient" placeholder="0">
@@ -480,7 +500,7 @@ function extractUnit(uom) {
 }
 
 function getCheckedIngredientData() {
-    const checkboxes = document.querySelectorAll('#ingredientsContainer .checkbox');
+    const checkboxes = document.querySelectorAll('#ingredientsContainer .checkbox-overlay');
     const checkedData = [];
 
     checkboxes.forEach((checkbox, index) => {
@@ -541,7 +561,6 @@ function calculateIngredientsData() {
 // Show and hide Overlays
 
 function showAddMeal() {
-    document.getElementById('navOverlay').classList.remove('hidden');
     const overlay = document.getElementById('editMealOverlay');
     const formSection = overlay.querySelector('.form-section');
     document.body.style.overflow = 'hidden';
@@ -556,13 +575,15 @@ function showAddMeal() {
 }
 
 function hideAddMeal() {
-    document.getElementById('navOverlay').classList.add('hidden');
-    document.getElementById('editMealOverlay').classList.add('hidden');
-    document.body.style.overflow = 'auto';
+    const overlay = document.getElementById('editMealOverlay');
+    if (overlay) {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
 }
 
 function showAddIngredient() {
-    document.getElementById('navOverlay').classList.remove('hidden');
     const overlay = document.getElementById('editIngredientOverlay');
     const formSectionIng = overlay.querySelector('.form-section-ingredient');
     document.body.style.overflow = 'hidden';
@@ -575,9 +596,11 @@ function showAddIngredient() {
 }
 
 function hideAddIngredient() {
-    document.getElementById('navOverlay').classList.add('hidden');
-    document.getElementById('editIngredientOverlay').classList.add('hidden');
-    document.body.style.overflow = 'auto';
+    const overlay = document.getElementById('editIngredientOverlay');
+    if (overlay) {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
 }
 
 

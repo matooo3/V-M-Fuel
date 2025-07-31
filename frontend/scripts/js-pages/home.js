@@ -129,8 +129,7 @@ function renderFirstUneatenMeal(initialTodaysMealsWithState) {
     for (let i = 0; i < keys.length; i++) {
         const currentKey = keys[i];
         const meal = initialTodaysMealsWithState[currentKey];
-
-        if (!meal.eaten) {
+        if (meal && !meal.eaten) {
             renderNextMeal(meal, currentKey);
             return;
         }

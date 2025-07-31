@@ -158,9 +158,9 @@ dataLS.dishes.forEach((dish) => {
 });
 
 // EXAMPLE CALL FOR TESTING: (DISHES WITH INGREDIENTS)
-console.log("--------------DISHES WITH INGREDIENTS-------------");
-const dishesWithIngredients = await Storage.getDishesWithIngredients();
-console.log("HERE ARE THE FULL_DISHES:", dishesWithIngredients);
+// console.log("--------------DISHES WITH INGREDIENTS-------------");
+// const dishesWithIngredients = await Storage.getDishesWithIngredients();
+// console.log("HERE ARE THE FULL_DISHES:", dishesWithIngredients);
 
 export function showNavbar() {
     const navbar = document.getElementById('main-nav');
@@ -168,4 +168,12 @@ export function showNavbar() {
         navbar.classList.add('showNav');
         navbar.classList.remove('hiddenNav');
     }
+}
+
+export function hideNavOverlay(){
+    document.getElementById('navOverlay').classList.add('hidden');
+}
+
+export function showNavOverlay(){
+    document.getElementById('navOverlay').classList.remove('hidden');
 }
