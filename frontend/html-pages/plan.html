@@ -45,61 +45,78 @@
             <button id="close-view-dish"><img src="/frontend/assets/icons/close-settings.svg" alt=""></button>
         </div>
 
-        <div id="view-dish-info">
+        <div id="view-info-scrollable">
+            <div id="view-dish-info">
+                <p id="view-dish-info-header">
+                    Macros
+                </p>
 
-            <div id="view-kcal-time">
-                <p class="subtext"><span class="view-dish-numbers" id="view-kcal"></span> kcal</p>
-                <p class="subtext" id="view-time-prep"><object id="view-clock" src="/frontend/assets/icons/clock.svg" alt="O"></object><span class="view-dish-numbers" id="view-prep-time"></span> min</p>
+                <div id="view-dish-info-details">
+                    <div id="view-kcal-time">
+                        <p class="subtext"><span class="view-dish-numbers" id="view-kcal"></span> kcal</p>
+                        <p class="subtext" id="view-time-prep"><object id="view-clock"
+                                src="/frontend/assets/icons/clock.svg" alt="O"></object><span class="view-dish-numbers"
+                                id="view-prep-time"></span> min</p>
+                    </div>
+
+                    <div id="view-dish-macros">
+                        <div class="view-one-macro">
+                            <p class="view-macro-amount"></p>
+                            <p class="view-macro-name subtext"><span class="view-dish-numbers"
+                                    id="view-protein-amount"></span>
+                                Protein</p>
+                        </div>
+                        <div class="view-one-macro">
+                            <p class="view-macro-amount"></p>
+                            <p class="view-macro-name subtext"><span class="view-dish-numbers"
+                                    id="view-carbs-amount"></span>
+                                Carbs</p>
+                        </div>
+                        <div class="view-one-macro">
+                            <p class="view-macro-amount"></p>
+                            <p class="view-macro-name subtext"><span class="view-dish-numbers"
+                                    id="view-fat-amount"></span>
+                                Fat
+                            </p>
+                        </div>
+                        <div class="view-one-macro">
+                            <p class="view-macro-amount"></p>
+                            <p class="view-macro-name subtext"><span class="view-dish-numbers"
+                                    id="view-vm-score"></span> VM
+                                score</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="cooking-process">
+                <div id="cooking-process-header">
+                    <div id="cooking-process-name">Cooking process</div>
+                    <button id="reset-cooking-process">Reset</button>
+                </div>
+                <div id="cooking-progress-bar">
+                    <div id="cooking-progress-fill"></div>
+                </div>
+                <div id="view-completed-steps">
+                    <p class="subtext view-steps-text"><span id="view-completed-number">0</span> of
+                        <span id="view-total-number"></span> steps complete
+                    </p>
+                    <p class="subtext view-steps-text"><span id="view-%-steps">0%</span></p>
+                </div>
             </div>
 
-            <div id="view-dish-macros">
-                <div class="view-one-macro">
-                    <p class="view-macro-amount"></p>
-                    <p class="view-macro-name subtext"><span class="view-dish-numbers" id="view-protein-amount"></span> Protein</p>
-                </div>
-                <div class="view-one-macro">
-                    <p class="view-macro-amount"></p>
-                    <p class="view-macro-name subtext"><span class="view-dish-numbers" id="view-carbs-amount"></span> Carbs</p>
-                </div>
-                <div class="view-one-macro">
-                    <p class="view-macro-amount"></p>
-                    <p class="view-macro-name subtext"><span class="view-dish-numbers" id="view-fat-amount"></span> Fat</p>
-                </div>
-                <div class="view-one-macro">
-                    <p class="view-macro-amount"></p>
-                    <p class="view-macro-name subtext"><span class="view-dish-numbers" id="view-vm-score"></span> VM score</p>
-                </div>
+            <div id="view-dish-ingredients">
+                <p id="view-dish-ingredients-text">Ingredients</p>
+                <ul id="view-dish-ingredients-list">
+                </ul>
+            </div>
+
+            <div id="view-dish-instructions">
+                <p id="view-dish-instructions-text">Instructions</p>
+                <ul id="view-dish-instructions-list">
+                </ul>
+
             </div>
         </div>
-
-        <div id="cooking-process">
-            <div id="cooking-process-header">
-                <div id="cooking-process-name">Cooking process</div>
-                <button id="reset-cooking-process">Reset</button>
-            </div>
-            <div id="cooking-progress-bar">
-                <div id="cooking-progress-fill"></div>
-            </div>
-            <div id="view-completed-steps">
-                <p class="subtext view-steps-text"><span id="view-completed-number">0</span> of 
-                    <span id="view-total-number"></span> steps complete</p>
-                <p class="subtext view-steps-text"><span id="view-%-steps">0%</span></p>
-            </div>
-        </div>
-
-        <div id="view-dish-ingredients">
-            <p id="view-dish-ingredients-text">Ingredients</p>
-            <ul id="view-dish-ingredients-list">
-            </ul>
-        </div>
-
-        <div id="view-dish-instructions">
-            <p id="view-dish-instructions-text">Instructions</p>
-            <ul id="view-dish-instructions-list">
-            </ul>
-
-        </div>
-
 
     </div>
 </div>

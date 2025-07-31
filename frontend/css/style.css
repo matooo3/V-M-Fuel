@@ -46,6 +46,12 @@
 
     /* section shadow */
     --section-shadow: rgba(48, 48, 48, 0.1);
+
+    /* section shadow */
+    --border-radius: 5px;
+    --border-radius-big-card: 15px;
+    --border-radius-overlay: 10px;
+    --border-radius-checkbox: 2px;
 }
 
 .dark-mode {
@@ -97,6 +103,9 @@
 
     /* section shadow */
     --section-shadow: rgba(255, 255, 255, 0.06);
+
+    /* section shadow */
+    --border-radius: 5px;
 
 }
 
@@ -161,7 +170,7 @@ h3 {
 
 .card {
     border: 1px solid var(--border-color);
-    border-radius: 15px;
+    border-radius: var(--border-radius-big-card);
     background-color: var(--card-color);
 }
 
