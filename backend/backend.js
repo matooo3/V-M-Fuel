@@ -949,7 +949,7 @@ app.get("/api/get-user-list-items", authMiddleware, checkRole("user"), (req, res
     FROM user_list_items uli
     LEFT JOIN ingredients i ON uli.ingredient_id = i.ingredient_id
     WHERE uli.user_id = ?
-    ORDER BY uli.is_checked ASC
+    ORDER BY uli.is_checked DESC
   `;
 
   db.query(query, [userId], (err, results) => {
