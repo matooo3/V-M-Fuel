@@ -507,7 +507,6 @@ function renderDishInfo(id, weekPlan) {
     renderDishMacrosAndName(meal);
 
     //load ingredients
-    console.log(meal);
     renderDishIngredients(meal.ingredients);
 
     // load prep steps
