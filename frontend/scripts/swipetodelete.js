@@ -205,7 +205,7 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
         isSwipeActive = false;
     };
 
-    // Event handler for clicking the revealed "Delete" button
+    // Event handler for clicking the revealed "Delete" button or outside clicks
     const onDeleteClick = (e) => {
         // Prevent click if cooldown is active
         if (isDeletionCooldownActive) return;
@@ -220,6 +220,37 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
         }
     };
 
+    // Event handler for clicks outside of swiped items to close them
+    const onOutsideClick = (e) => {
+        // Check if there are any currently opened swipe items
+        const openedItems = container.querySelectorAll(card);
+        let hasOpenedItem = false;
+        let clickedItem = e.target.closest(card);
+        
+        openedItems.forEach(item => {
+            const content = item.querySelector('.swipe-content');
+            const deleteBtn = item.querySelector('.swipe-delete');
+            
+            // Check if this item is currently swiped open
+            if (content && content.style.transform && content.style.transform !== 'translateX(0px)' && content.style.transform !== '') {
+                hasOpenedItem = true;
+                
+                // If clicked outside of this specific item, close it
+                if (item !== clickedItem) {
+                    content.style.transition = 'transform 0.3s ease-out, border-radius 0.3s ease-out';
+                    content.style.transform = 'translateX(0)';
+                    content.style.borderRadius = '0px';
+                    
+                    if (deleteBtn) {
+                        deleteBtn.style.transition = 'width 0.3s ease-out, opacity 0.3s ease-out';
+                        deleteBtn.style.width = '0px';
+                        deleteBtn.style.opacity = '0';
+                    }
+                }
+            }
+        });
+    };
+
     // Attach all event listeners
     container.addEventListener('mousedown', onSwipeStart);
     document.addEventListener('mousemove', onSwipeMove);
@@ -228,4 +259,5 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
     document.addEventListener('touchmove', onSwipeMove, { passive: true });
     document.addEventListener('touchend', onSwipeEnd);
     container.addEventListener('click', onDeleteClick);
+    document.addEventListener('click', onOutsideClick); // Listen for outside clicks globally
 }
