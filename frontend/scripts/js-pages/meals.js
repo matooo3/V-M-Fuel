@@ -721,6 +721,7 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '#di
 
     // Add before other cards
     const container = document.querySelector(containerId);
+    if (!container) return;
     container.insertAdjacentHTML('beforeend', cardHTML);
 
     const newCard = container.lastElementChild;
@@ -847,7 +848,6 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
     const container = document.getElementById(containerId);
     // Add a check to prevent errors if the container doesn't exist
     if (!container) return;
-
     container.insertAdjacentHTML('beforeend', cardHTML);
 
     const newCard = container.lastElementChild;
