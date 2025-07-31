@@ -21,6 +21,8 @@ export default async function loadSettings() {
 
     Role.renderUserRoleColors();
 
+    loadSavedTheme()
+
     addEventListeners();
 
     await loadUserData();
@@ -142,17 +144,21 @@ export function loadSavedTheme() {
 
 function addSettingsDropdownFunctionality() {
 
+    const savedTheme = localStorage.getItem('theme') || 'light';
+
     // sex
     const sexSelect = document.querySelector('.custom-select.sex-field');
     new DropDown.CustomSelect(sexSelect);
 
     // theme
     const themeSelect = document.querySelector('.custom-select.theme-field');
-    new DropDown.CustomSelect(themeSelect, (value) => {
+    const themeDropDown = new DropDown.CustomSelect(themeSelect, (value) => {
         const selectedTheme = value;
-        document.body.classList.toggle('dark-mode', selectedTheme === 'dark');
         localStorage.setItem('theme', selectedTheme);
+        document.body.classList.toggle('dark-mode', selectedTheme === 'dark');
     });
+
+    themeDropDown.setValue(savedTheme);
 
     // calorie mode
     // const modeSelect = document.querySelector('.custom-select.mode-field');
