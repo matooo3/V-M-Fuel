@@ -26,8 +26,8 @@
             </div>
 
             <div class="subtext-boxes-p">
-                <span id="mealsPreferredWhole" ><span id="mealsPreferred"></span> meals</span>
-                <span id="ingredientsPreferredWhole" ><span id="ingredientsPreferred"></span> ingredients</span>
+                <span id="mealsPreferredWhole"><span id="mealsPreferred"></span> meals</span>
+                <span id="ingredientsPreferredWhole"><span id="ingredientsPreferred"></span> ingredients</span>
             </div>
         </div>
 
@@ -99,7 +99,7 @@
 
             <div class="form-group category">
                 <label class="form-label">Category</label>
-                <div class="custom-select">
+                <div class="custom-select preferences">
                     <div class="select-trigger preferences">
                         <span class="select-text" id="category-p"></span>
                         <div class="select-arrow"></div>
@@ -120,14 +120,15 @@
                 <div style="display: flex; gap: 10px; align-items: center;">
                     <input type="text" class="form-input" id="tagInput" placeholder="Add tag" style="flex: 1;">
                     <button class="add-tag-btn" id="addTagBtn">
-                        <object id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg" alt="+"></object>
+                        <object id="plus-preferences" src="/frontend/assets/icons/plus-preferences.svg"
+                            alt="+"></object>
                     </button>
                 </div>
             </div>
 
             <div class="form-group instructions">
                 <label class="form-label">Cooking Instructions</label>
-                <textarea class="instructions-area subtext" id="instructions-p"
+                <textarea class="instructions-area" id="instructions-p"
                     placeholder="Enter cooking instructions..."></textarea>
             </div>
 
@@ -136,8 +137,8 @@
                     <label class="form-label ingredient">Ingredients</label>
                     <div id="search-bar-ingr">
                         <!-- <img id="search-icon-db" src="/frontend/assets/icons/search-icon.svg" alt="search icon"> -->
-                        <input type="text" class="form-input search" id="search-ingredients" placeholder="Search Ingredient"
-                            style="flex: 1;">
+                        <input type="text" class="form-input search" id="search-ingredients"
+                            placeholder="Search Ingredient" style="flex: 1;">
                     </div>
                 </div>
                 <ul id="ingredientsContainer">
@@ -167,6 +168,37 @@
                 <input type="text" class="form-input" id="ingredientName-p" placeholder="Enter ingredient name">
             </div>
 
+            <div class="form-group category">
+                <label class="form-label">Category</label>
+                <div class="custom-select preferences">
+                    <div class="select-trigger preferences">
+                        <span class="select-text" id="ingredientCategory-p"></span>
+                        <div class="select-arrow"></div>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="Fruits">fruits</div>
+                        <div class="select-option" data-value="Protein">protein</div>
+                        <div class="select-option" data-value="Dairy">dairy</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Unit</label>
+                <div class="custom-select preferences">
+                    <div class="select-trigger">
+                        <span class="select-text" id="ingredientUnit-p"></span>
+                        <div class="select-arrow"></div>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="pieces">piece</div>
+                        <div class="select-option" data-value="g">grams</div>
+                        <div class="select-option" data-value="ml">milliliters</div>
+                        <div class="select-option" data-value="cups">slice</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-row">
                 <div class="form-col">
                     <label class="form-label">Calories (per unit)</label>
@@ -186,37 +218,6 @@
                 <div class="form-group">
                     <label class="form-label">Carbs (g)</label>
                     <input type="number" class="form-input" id="ingredientCarbs-p" placeholder="0">
-                </div>
-            </div>
-
-            <div class="form-group category">
-                <label class="form-label">Category</label>
-                <div class="custom-select">
-                    <div class="select-trigger preferences">
-                        <span class="select-text" id="ingredientCategory-p"></span>
-                        <div class="select-arrow"></div>
-                    </div>
-                    <div class="select-dropdown">
-                        <div class="select-option" data-value="Fruits">fruits</div>
-                        <div class="select-option" data-value="Protein">protein</div>
-                        <div class="select-option" data-value="Dairy">dairy</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Unit</label>
-                <div class="custom-select">
-                    <div class="select-trigger">
-                        <span class="select-text" id="ingredientUnit-p"></span>
-                        <div class="select-arrow"></div>
-                    </div>
-                    <div class="select-dropdown">
-                        <div class="select-option" data-value="pieces">piece</div>
-                        <div class="select-option" data-value="g">grams</div>
-                        <div class="select-option" data-value="ml">milliliters</div>
-                        <div class="select-option" data-value="cups">slice</div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -117,22 +117,22 @@ html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    user-select: none;
+    /* user-select: none;
     -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent; */
 }
 
-input,
+/* input,
 textarea,
 [contenteditable="true"] {
     user-select: text;
     -webkit-user-select: text;
-}
+} */
 
 body {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    overscroll-behavior: none;
+    /* overscroll-behavior: none; */
 }
 
 h1 {

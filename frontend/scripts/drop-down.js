@@ -1,6 +1,6 @@
 // Your CustomSelect class (same as before)
 export class CustomSelect {
-    constructor(element) {
+    constructor(element, onChangeCallback = null) {
         this.element = element;
         this.trigger = element.querySelector('.select-trigger');
         this.dropdown = element.querySelector('.select-dropdown');
@@ -9,6 +9,7 @@ export class CustomSelect {
         this.arrow = element.querySelector('.select-arrow');
         this.isOpen = false;
         this.selectedValue = null;
+        this.onChangeCallback = onChangeCallback;
 
         this.init();
     }
@@ -24,7 +25,7 @@ export class CustomSelect {
         // Handle option selection
         this.options.forEach(option => {
             option.addEventListener('click', (e) => {
-                console.log('Option clicked:', option.textContent); // DEBUG
+                console.log('Option clicked:', option.textContent);
                 e.stopPropagation();
                 this.selectOption(option);
             });
@@ -112,6 +113,8 @@ export class CustomSelect {
         // Close dropdown
         this.close();
 
+        if (this.onChangeCallback) this.onChangeCallback(this.selectedValue, option.textContent);
+
         // Trigger custom event
         const event = new CustomEvent('change', {
             detail: {
@@ -175,4 +178,12 @@ export class CustomSelect {
             this.selectOption(option);
         }
     }
+}
+
+export function addDropdownEventlisteners() {
+    //dropdown menu
+    const customSelects = document.querySelectorAll('.custom-select');
+    customSelects.forEach(select => {
+        new CustomSelect(select);
+    });
 }

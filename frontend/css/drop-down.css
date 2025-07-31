@@ -2,7 +2,6 @@
 .custom-select {
     position: relative;
     display: inline-block;
-    width: 100%;
     /* CHANGE WIDTH HERE */
     margin: 0;
     /* CHANGE MARGIN HERE */
@@ -140,9 +139,6 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .custom-select {
-        width: 100%;
-    }
 
     .select-trigger {
         padding: 10px 12px;
@@ -155,7 +151,5 @@
         padding: 10px 12px;
         /* Smaller padding on mobile */
         font-size: 14px;
-        /* Smaller font on mobile */
-        border-bottom: 1px solid var(--border-color);
     }
 }
