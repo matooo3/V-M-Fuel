@@ -1,5 +1,5 @@
-# V-M-Fuel
-V&amp;M Fuel s a streamlined app designed to help you create personalized meal plans and generate detailed shopping lists with ease.
+# APP NAME
+Our app creates personalized weekly meal plans based on your personal data and preferences – including a complete shopping list. It also shows your upcoming meals for the day and tracks your progress in a clear and simple way.
 
 Download the app here: [Click here](https://gfoh.ddns.net:6969/frontend)
 
