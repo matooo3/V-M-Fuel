@@ -83,7 +83,7 @@ function updateUserData() {
 
     // Get values from inputs
     const heightCm = parseFloat(heightInput.value);
-    const weightKg = parseFloat(commaToDot(weightInput.value)).toFixed(1);
+    const weightKg = parseFloat(commaToDot(weightInput.value));
     const age = parseInt(ageInput.value, 10);
     const gender = sexSelect.value;
 
