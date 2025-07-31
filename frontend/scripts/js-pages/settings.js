@@ -3,6 +3,7 @@ import * as Role from "../roleRouting.js";
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { getLastHash } from "../script.js";
 import * as Storage from "../storage.js";
+import * as DropDown from '/frontend/scripts/drop-down.js';
 
 // ==============================
 // ======= CARD ELEMENTS ========
@@ -47,9 +48,9 @@ async function loadUserData() {
     ageInput.placeholder = "years";
 
     if (gender) {
-        sexSelect.value = gender.toLowerCase();
+        sexSelect.textContent = gender.toLowerCase();
     } else {
-        sexSelect.value = "";
+        sexSelect.textContent = "";
     }
 
     // === ACTIVITY LEVEL ===
@@ -85,7 +86,7 @@ function updateUserData() {
     const heightCm = parseFloat(heightInput.value);
     const weightKg = parseFloat(commaToDot(weightInput.value));
     const age = parseInt(ageInput.value, 10);
-    const gender = sexSelect.value;
+    const gender = sexSelect.textContent;
 
     // Calculate weight -> pounds
     const weightPounds = (weightKg * 2.20462).toFixed(1);
@@ -139,7 +140,38 @@ export function loadSavedTheme() {
     document.body.classList.toggle('dark-mode', savedTheme === 'dark');
 }
 
+function addSettingsDropdownFunctionality() {
+
+    // sex
+    const sexSelect = document.querySelector('.custom-select.sex-field');
+    new DropDown.CustomSelect(sexSelect);
+
+    // theme
+    const themeSelect = document.querySelector('.custom-select.theme-field');
+    new DropDown.CustomSelect(themeSelect, (value) => {
+        const selectedTheme = value;
+        document.body.classList.toggle('dark-mode', selectedTheme === 'dark');
+        localStorage.setItem('theme', selectedTheme);
+    });
+
+    // calorie mode
+    // const modeSelect = document.querySelector('.custom-select.mode-field');
+    // new DropDown.CustomSelect(modeSelect, (value) => {
+    //     // console.log("Calorie mode:", value)
+    // });
+
+    // language
+    // const langSelect = document.querySelector('.custom-select.lang-field');
+    // new DropDown.CustomSelect(langSelect, (value) => {
+    //     // console.log("Language:", value)
+    // });
+
+}
+
 function addEventListeners() {
+
+    //dropdown menu
+    addSettingsDropdownFunctionality();
 
     // DONT ALLOW TO ENTER NON-NUMERIC VALUES IN HEIGHT AND WEIGHT INPUTS
     const weightInput = document.getElementById('weight-st');
@@ -151,17 +183,6 @@ function addEventListeners() {
         if (!allowed.test(newValue)) {
             e.preventDefault();
         }
-    });
-
-    const themeSelect = document.getElementById('theme-select')
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.body.classList.toggle('dark-mode', savedTheme === 'dark');
-    themeSelect.value = savedTheme;
-
-    themeSelect.addEventListener('change', function () {
-        const selectedTheme = this.value;
-        document.body.classList.toggle('dark-mode', selectedTheme === 'dark');
-        localStorage.setItem('theme', selectedTheme);
     });
 
 
@@ -253,7 +274,7 @@ function isSettingsValid() {
     const height = document.getElementById("height-st").value.trim();
     const weight = document.getElementById("weight-st").value.trim();
     const age = document.getElementById("age-st").value.trim();
-    const sex = document.getElementById("sex-st").value.trim();
+    const sex = document.getElementById("sex-st").textContent.trim();
 
     // const activitySelected = document.querySelector("#activity-container .al-card-st.selected");
     // const goalSelected = document.querySelector("#goal-container .goal-card-st.selected");

@@ -452,6 +452,7 @@
     width: 400px;
     max-width: 90vw;
     height: calc(80vh - var(--nav-height));
+    max-height: 622px;
     overflow: hidden;
     color: var(--main-text-color);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -502,11 +503,12 @@
 }
 
 .form-section-ingredient {
-    padding: 20px 30px;
+    padding: 20px 30px 0px;
     overflow-y: auto;
     scrollbar-width: none;
     flex: 1;
     min-height: 0;
+    max-height: 473px;
 }
 
 .form-group {
@@ -528,11 +530,6 @@
 }
 
 .form-group.instructions {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 30px;
-}
-
-.form-group.category {
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 30px;
 }
@@ -563,9 +560,9 @@
     background: var(--background-color);
 }
 
-.form-input input::placeholder {
-    font-size: 1.6rem;
+.form-input::placeholder {
     color: var(--light-text-color);
+    font-weight: 200;
 }
 
 .form-input:focus {
@@ -676,30 +673,26 @@
     margin-bottom: 15px;
 }
 
-#search-bar-ingr {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 5px;
-    gap: 5px;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
+
+.form-input.search{
     width: 100%;
-    height: 35px;
-}
-
-#search-bar-ingr input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    outline: none;
-    background: transparent;
+    min-height: 10px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
     font-size: 1.4rem;
-    color: var(--light-text-color);
+    resize: vertical;
+    font-family: inherit;
+    background-color: var(--background-color);
 }
 
-#search-bar-ingr input::placeholder {
+.form-input.search:focus {
+    outline: none;
+}
+
+.form-input.search::placeholder {
     color: var(--light-text-color);
+    font-weight: 200;
 }
 
 #ingredientsContainer {
@@ -707,7 +700,8 @@
     flex-direction: column;
     gap: 15px;
     height: 300px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #ingredientsContainer:last-child {
@@ -726,8 +720,13 @@
     list-style-type: none;
 }
 
+.custom-select.preferences{
+    width: 100%;
+}
+
 .select-trigger.preferences{
     border-radius: var(--border-radius);
+    width: 100%;
 }
 
 .ingredient-amount-p {
@@ -737,13 +736,50 @@
     margin-left: auto;
     gap: 10px;
 }
+
 .form-input.ingredient {
     height: 30px;
     width: 60px;
+    padding: 5px 10px;
     text-align: center;
-    padding: 2px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1.4rem;
+    resize: vertical;
+    font-family: inherit;
     background-color: var(--card-color);
+    color: var(--main-text-color);
+}
+
+.form-input.ingredient:focus {
+    outline: none;
+}
+
+.form-input.ingredient::placeholder {
     color: var(--light-text-color);
+    font-weight: 200;
+}
+
+.form-input.search{
+    width: 100%;
+    min-height: 10px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1.4rem;
+    resize: vertical;
+    font-family: inherit;
+    background-color: var(--background-color);
+    color: var(--main-text-color);
+}
+
+.form-input.search:focus {
+    outline: none;
+}
+
+.form-input.search::placeholder {
+    color: var(--light-text-color);
+    font-weight: 200;
 }
 
 
@@ -770,6 +806,7 @@
     resize: vertical;
     font-family: inherit;
     background-color: var(--background-color);
+    color: var(--main-text-color);
 }
 
 .instructions-area:focus {

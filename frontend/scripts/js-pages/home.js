@@ -13,7 +13,7 @@ import * as Script from '../script.js';
 export default async function loadHome() {
 
     Script.showNavbar();
-    
+
     const app = document.getElementById('app');
     // LOAD app html-code
     const html = await loadHTMLTemplate('/frontend/html-pages/home.html');
@@ -50,7 +50,7 @@ function setUpInitialEventlisteners() {
             // Add 'active' class to the clicked tab
             this.classList.add('active');
             // Update the admin-container content
-            updateAdminContainer();
+            await updateAdminContainer();
         });
     });
 }
@@ -99,7 +99,7 @@ async function updateAdminContainer() {
     const activeTab = document.querySelector('.tab.active');
     const adminContainer = document.getElementById('admin-container');
 
-    if (activeTab && activeTab.textContent.trim() === 'Standard') {
+    if (activeTab && activeTab.textContent.trim() === 'Standard' && adminContainer) {
         const html = await loadHTMLTemplate('/frontend/html-pages/homeStandard.html');
         adminContainer.innerHTML = html;
 
@@ -115,11 +115,10 @@ async function updateAdminContainer() {
         await updateUI(initialTodaysMealsWithState);
 
         setUpInitialEventlisteners();
-
     } else {
         const html = await loadHTMLTemplate('/frontend/html-pages/homeRoles.html');
         adminContainer.innerHTML = html;
-        renderUserList();
+        await renderUserList();
     }
 }
 
@@ -144,9 +143,8 @@ function renderUserGreeting() {
     const user = Auth.getUserFromToken();
     const container = document.getElementById('greeting-container');
 
-    console.log("User data loaded:", user);
-
-    container.innerHTML = `
+    if (container) {
+        container.innerHTML = `
         <div id="greeting-text">
             <span class="roboto">Hi,</span>
             <span class="roboto">${user.username}</span>
@@ -156,6 +154,7 @@ function renderUserGreeting() {
             <span id="text-um${getRoleNumber(user.role)}" class="tag-text">${enumToDisplay(user.role)}</span>
         </div>
         `;
+    }
 }
 // ------------------------------------------------------------
 //
@@ -248,15 +247,20 @@ async function updateUI(todaysMealsWithState) {
 async function updateProgressCircle(eatenKcal, optimalKcal) {
 
     const progressBar = document.querySelector('.progress-bar');
-    let percentage = await calculatePercentage(eatenKcal, optimalKcal);
-    progressBar.style.setProperty('--progress-in-percent', percentage);
+    if (progressBar) {
+        let percentage = await calculatePercentage(eatenKcal, optimalKcal);
+        progressBar.style.setProperty('--progress-in-percent', percentage);
+    }
 
 }
 
 function updateProgressCircleText(eatenKcal) {
 
     const progressTextElement = document.querySelector('.progress-text');
-    progressTextElement.textContent = `${eatenKcal} kcal`;
+
+    if (progressTextElement) {
+        progressTextElement.textContent = `${eatenKcal} kcal`;
+    }
 
 }
 
@@ -264,14 +268,20 @@ async function updateMealsPlanned(todaysMeals) {
 
     const mealsAmount = getMealsAmount(todaysMeals);
     const mealsPlanned = document.getElementById('planned-meals-h');
-    mealsPlanned.textContent = mealsAmount;
+
+    if (mealsAmount && mealsPlanned) {
+        mealsPlanned.textContent = mealsAmount;
+    }
 }
 
 async function updateGoalPercentage(eatenKcal, optimalKcal) {
 
     const percentage = await calculatePercentage(eatenKcal, optimalKcal);
     const goalPercentage = document.getElementById('goal-percentage-h');
-    goalPercentage.textContent = `${Math.round(percentage)}%`;
+
+    if (goalPercentage) {
+        goalPercentage.textContent = `${Math.round(percentage)}%`;
+    }
 }
 
 
@@ -331,26 +341,26 @@ function getNextMeal(todaysMealsWithState, nextKey) {
 
 function updateTodaysMeals(todaysMealsWithState) {
 
-
     const list = document.getElementById('todays-meals-container');
 
-    const keys = Object.keys(todaysMealsWithState);
+    if (list) {
+        const keys = Object.keys(todaysMealsWithState);
+        for (let i = 0; i < keys.length - 1; i++) {
+            const currentKey = keys[i];
 
-    for (let i = 0; i < keys.length - 1; i++) {
-        const currentKey = keys[i];
+            for (const child of list.children) {
 
-        for (const child of list.children) {
+                let iteration = child.querySelector(".item-id").textContent;
 
-            let iteration = child.querySelector(".item-id").textContent;
-
-            if (i === Number(iteration)) {
-                if (todaysMealsWithState[currentKey].eaten) {
-                    child.querySelector(".check-point-db").classList.add("active");
-                } else {
-                    child.querySelector(".check-point-db").classList.remove("active");
+                if (i === Number(iteration)) {
+                    if (todaysMealsWithState[currentKey].eaten) {
+                        child.querySelector(".check-point-db").classList.add("active");
+                    } else {
+                        child.querySelector(".check-point-db").classList.remove("active");
+                    }
                 }
-            }
 
+            }
         }
     }
 
@@ -371,8 +381,9 @@ function renderNextMeal(nextMeal, currentKey) {
     }
     const nextMealContainer = document.querySelector(".next-meal-container");
 
-    nextMealContainer.innerHTML =
-        `   <div class="card drop-shadow next-meal-card-db">
+    if (nextMealContainer) {
+        nextMealContainer.innerHTML =
+            `   <div class="card drop-shadow next-meal-card-db">
                 <div class="first-row-db">
                     <input id="checked-circle" class="checkbox" type="checkbox">
 
@@ -404,6 +415,8 @@ function renderNextMeal(nextMeal, currentKey) {
                 </div>
             </div>
         `
+    }
+
     addCheckboxEventListener();
 }
 
@@ -411,7 +424,7 @@ function renderTodaysMeals(todaysMealsWithState) {
 
     const list = document.getElementById('todays-meals-container');
 
-    if (list.children.length === 0) {
+    if (list && list.children.length === 0) {
         const keys = Object.keys(todaysMealsWithState);
 
         for (let i = 0; i < keys.length - 1; i++) {

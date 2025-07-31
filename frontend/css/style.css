@@ -132,7 +132,7 @@ textarea,
 body {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    overscroll-behavior: none;
+    /* overscroll-behavior: none; */
 }
 
 h1 {

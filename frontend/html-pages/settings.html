@@ -51,11 +51,17 @@
                     </div>
 
                     <div class="input-container">
-                        <label class="subtext subtext-st" for="sex-st">Sex</label>
-                        <select id="sex-st" name="sex-st" required>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
+                        <label class="subtext subtext-st">Sex</label>
+                        <div class="custom-select sex-field">
+                            <div class="select-trigger select-field-sex-st">
+                                <span class="select-text sex" id="sex-st"></span>
+                                <div class="select-arrow"></div>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-option sex-select" data-value="Female">female</div>
+                                <div class="select-option sex-select" data-value="Male">male</div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -116,21 +122,33 @@
                     <h3 class="al-text-st">Theme</h3>
                     <p class="al-desc-st">Choose light or dark mode</p>
                 </div>
-                <select id="theme-select" name="theme-select">
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                </select>
+                <div class="custom-select theme-field">
+                    <div class="select-trigger select-field-app-st">
+                        <span class="select-text app-st" id="theme-select"></span>
+                        <div class="select-arrow"></div>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option app" data-value="dark">dark</div>
+                        <div class="select-option app" data-value="light">light</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="app-settings-row">
+            <!-- <div class="app-settings-row">
                 <div class="app-settings-label">
                     <h3 class="al-text-st">Calorie Mode</h3>
                     <p class="al-desc-st">Choose calorie mode</p>
                 </div>
-                <select id="calorie-mode-select" name="calorie-mode-select">
-                    <option value="kcal">On</option>
-                    <option value="kj">Off</option>
-                </select>
+                <div class="custom-select mode-field">
+                    <div class="select-trigger select-field-app-st">
+                        <span class="select-text app-st" id="calorie-mode-select"></span>
+                        <div class="select-arrow"></div>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option app" data-value="On">on</div>
+                        <div class="select-option app" data-value="Off">off</div>
+                    </div>
+                </div>
             </div>
 
             <div class="app-settings-row">
@@ -138,11 +156,17 @@
                     <h3 class="al-text-st">Language</h3>
                     <p class="al-desc-st al-desc-st-2">Choose your language</p>
                 </div>
-                <select id="language-select" name="language-select">
-                    <option value="english">English</option>
-                    <option value="german">German</option>
-                </select>
-            </div>
+                <div class="custom-select lang-field">
+                    <div class="select-trigger select-field-app-st">
+                        <span class="select-text app-st" id="lang-select"></span>
+                        <div class="select-arrow"></div>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option app" data-value="On">english</div>
+                        <div class="select-option app" data-value="Off">german</div>
+                    </div>
+                </div>
+            </div> -->
 
             <div class="app-settings-row">
                 <div class="app-settings-label">

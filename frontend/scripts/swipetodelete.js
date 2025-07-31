@@ -1,6 +1,8 @@
 export function initializeSwipeToDelete(container, card, removeFromDB) {
     let isSwiping = false;
+    let isSwipeActive = false; // New flag to track if swipe animation is active
     let startX = 0;
+    let startY = 0; // Track vertical start position
     let currentX = 0;
     let swipedItem = null;
     let swipedContent = null;
@@ -12,6 +14,8 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
 
     const deleteButtonWidth = 90;
     const fullSwipeThreshold = 150;
+    const activationThreshold = 20; // Minimum horizontal distance before swipe activates
+    const verticalTolerance = 30; // Maximum vertical movement allowed for horizontal swipe
 
     // Helper function to start the cooldown timer
     const startCooldown = () => {
@@ -68,7 +72,7 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
 
     // Dynamically updates the delete button's width as the user swipes
     const updateDeleteButton = (diffX) => {
-        if (!deleteButton) return;
+        if (!deleteButton || !isSwipeActive) return;
         const revealedWidth = Math.abs(diffX);
         if (revealedWidth > 0) {
             deleteButton.style.width = `${revealedWidth}px`;
@@ -90,31 +94,59 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
         
         closeAllOtherItems(item);
         isSwiping = true;
+        isSwipeActive = false; // Reset swipe activation state
         swipedItem = item;
         swipedContent = item.querySelector('.swipe-content');
         deleteButton = item.querySelector('.swipe-delete');
         startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        startY = e.type.includes('mouse') ? e.pageY : e.touches[0].pageY;
         currentX = startX;
 
-        // Disable transitions during the swipe for direct control
-        if (deleteButton) {
-            deleteButton.style.width = '0px';
-            deleteButton.style.opacity = '0';
-            deleteButton.style.transition = 'none';
-        }
-        if (swipedContent) {
-            swipedContent.style.transition = 'none';
-        }
+        // Don't disable transitions yet - wait for activation
     };
     
     // Event handler for when the user moves their finger/mouse
     const onSwipeMove = (e) => {
         if (!isSwiping || !swipedContent) return;
+        
         currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        const currentY = e.type.includes('mouse') ? e.pageY : e.touches[0].pageY;
+        
         let diffX = currentX - startX;
-        if (diffX > 0) diffX = 0; // Only allow swiping left
-        swipedContent.style.transform = `translateX(${diffX}px)`;
-        updateDeleteButton(diffX);
+        let diffY = Math.abs(currentY - startY);
+        
+        // Check if we should activate the swipe
+        if (!isSwipeActive) {
+            // If vertical movement is too large, this is likely a scroll gesture
+            if (diffY > verticalTolerance) {
+                isSwiping = false;
+                return;
+            }
+            
+            // Only activate if horizontal movement exceeds threshold and is leftward
+            if (diffX < -activationThreshold) {
+                isSwipeActive = true;
+                
+                // Now disable transitions for direct control
+                if (deleteButton) {
+                    deleteButton.style.width = '0px';
+                    deleteButton.style.opacity = '0';
+                    deleteButton.style.transition = 'none';
+                }
+                if (swipedContent) {
+                    swipedContent.style.transition = 'none';
+                }
+            } else {
+                // Not yet activated, don't apply any visual changes
+                return;
+            }
+        }
+        
+        // Only apply visual changes if swipe is active and leftward
+        if (isSwipeActive && diffX <= 0) {
+            swipedContent.style.transform = `translateX(${diffX}px)`;
+            updateDeleteButton(diffX);
+        }
     };
 
     // Event handler for when the swipe ends (mouseup or touchend)
@@ -122,6 +154,12 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
         if (!isSwiping || !swipedContent) return;
 
         isSwiping = false; // Reset state immediately
+        
+        // If swipe was never activated, just reset everything
+        if (!isSwipeActive) {
+            isSwipeActive = false;
+            return;
+        }
 
         let diffX = currentX - startX;
         
@@ -162,9 +200,12 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
                 deleteButton.style.opacity = '0';
             }
         }
+        
+        // Reset swipe activation state
+        isSwipeActive = false;
     };
 
-    // Event handler for clicking the revealed "Delete" button
+    // Event handler for clicking the revealed "Delete" button or outside clicks
     const onDeleteClick = (e) => {
         // Prevent click if cooldown is active
         if (isDeletionCooldownActive) return;
@@ -179,6 +220,37 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
         }
     };
 
+    // Event handler for clicks outside of swiped items to close them
+    const onOutsideClick = (e) => {
+        // Check if there are any currently opened swipe items
+        const openedItems = container.querySelectorAll(card);
+        let hasOpenedItem = false;
+        let clickedItem = e.target.closest(card);
+        
+        openedItems.forEach(item => {
+            const content = item.querySelector('.swipe-content');
+            const deleteBtn = item.querySelector('.swipe-delete');
+            
+            // Check if this item is currently swiped open
+            if (content && content.style.transform && content.style.transform !== 'translateX(0px)' && content.style.transform !== '') {
+                hasOpenedItem = true;
+                
+                // If clicked outside of this specific item, close it
+                if (item !== clickedItem) {
+                    content.style.transition = 'transform 0.3s ease-out, border-radius 0.3s ease-out';
+                    content.style.transform = 'translateX(0)';
+                    content.style.borderRadius = '0px';
+                    
+                    if (deleteBtn) {
+                        deleteBtn.style.transition = 'width 0.3s ease-out, opacity 0.3s ease-out';
+                        deleteBtn.style.width = '0px';
+                        deleteBtn.style.opacity = '0';
+                    }
+                }
+            }
+        });
+    };
+
     // Attach all event listeners
     container.addEventListener('mousedown', onSwipeStart);
     document.addEventListener('mousemove', onSwipeMove);
@@ -187,4 +259,5 @@ export function initializeSwipeToDelete(container, card, removeFromDB) {
     document.addEventListener('touchmove', onSwipeMove, { passive: true });
     document.addEventListener('touchend', onSwipeEnd);
     container.addEventListener('click', onDeleteClick);
+    document.addEventListener('click', onOutsideClick); // Listen for outside clicks globally
 }

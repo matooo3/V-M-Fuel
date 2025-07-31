@@ -386,23 +386,69 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 }
 
 .input-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 100%;
+    position: relative;
+    display: inline-block;
+    width: 100%;
 }
 
 .input-wrapper input {
-  width: 100%;
-  padding-right: 40px; /* Space for unit label */
-  box-sizing: border-box;
+    width: 100%;
+    padding-right: 40px;
+    /* Space for unit label */
+    box-sizing: border-box;
 }
 
 .unit-label {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #777;
-  font-size: 0.9em;
-  pointer-events: none;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    font-size: 0.9em;
+    pointer-events: none;
+}
+
+/* drop down styling */
+
+.select-field-sex-st {
+    height: 30px;
+    border-radius: 7px;
+    padding: 8px;
+}
+
+.select-text.sex {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.select-option.sex-select {
+    text-align: left;
+    padding: 8px;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+
+/* Theme */
+
+.select-field-app-st {
+    width: 80px;
+    border-radius: 7px;
+    padding: 4px 4px 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select-text.app-st {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.select-option.app {
+    text-align: left;
+    padding: 4px;
+    padding-left: 6px;
+    font-size: 1.2rem;
+    font-weight: 300;
 }

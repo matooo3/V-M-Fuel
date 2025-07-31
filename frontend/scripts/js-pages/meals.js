@@ -1,6 +1,6 @@
 // ./pages/meals.js
 import { loadHTMLTemplate } from '../templateLoader.js';
-import { CustomSelect } from '/frontend/scripts/drop-down.js';
+import * as DropDown from '/frontend/scripts/drop-down.js';
 import * as Storage from '../storage.js';
 import { searchULs } from '../searchBar.js';
 import * as Role from '../roleRouting.js';
@@ -40,7 +40,7 @@ export default async function loadMeals() {
 
     addFilterbarEventlistener();
 
-    addDropdownEventlisteners();
+    DropDown.addDropdownEventlisteners();
 
     addPreferenceEventlisteners();
 
@@ -68,14 +68,6 @@ function addFilterbarEventlistener() {
         });
     });
 
-}
-
-function addDropdownEventlisteners() {
-    //dropdown menu
-    const customSelects = document.querySelectorAll('.custom-select');
-    customSelects.forEach(select => {
-        new CustomSelect(select);
-    });
 }
 
 function addPreferenceEventlisteners() {
@@ -166,8 +158,15 @@ function isPreferencePage() {
 
 function addIngredientOverlayEventListeners() {
 
-    document.getElementById('add-ingredient-p').addEventListener('click', showAddIngredient);
-    document.getElementById('closeIngredientBtn').addEventListener('click', hideAddIngredient);
+    document.getElementById('add-ingredient-p').addEventListener('click', function (e) {
+        showAddIngredient();
+        Script.showNavOverlay();
+    });
+    document.getElementById('closeIngredientBtn').addEventListener('click', function(e) {
+        hideAddIngredient();
+        Script.hideNavOverlay();
+    });
+
     document.getElementById('addIngredientSubmitBtn').addEventListener('click', saveIngredient);
 
     // Close overlay when clicking outside
@@ -722,6 +721,7 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '#di
 
     // Add before other cards
     const container = document.querySelector(containerId);
+    if (!container) return;
     container.insertAdjacentHTML('beforeend', cardHTML);
 
     const newCard = container.lastElementChild;
@@ -848,7 +848,6 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
     const container = document.getElementById(containerId);
     // Add a check to prevent errors if the container doesn't exist
     if (!container) return;
-
     container.insertAdjacentHTML('beforeend', cardHTML);
 
     const newCard = container.lastElementChild;
@@ -948,6 +947,7 @@ async function saveIngredient() {
     if (validateIngredientData(ingredientData)) {
 
         hideAddIngredient();
+        Script.hideNavOverlay();
 
         const response = await Storage.addNewIngredientToDB(ingredientData);
         const ingredientId = response.ingredientId;
