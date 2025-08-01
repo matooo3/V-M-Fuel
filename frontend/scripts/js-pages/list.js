@@ -6,13 +6,14 @@ import { searchULs } from "../searchBar.js";
 import * as Settings from "./settings.js";
 import * as SwipeToDelete from "../swipetodelete.js";
 import * as Script from '../script.js';
+import * as DropDown from '/frontend/scripts/drop-down.js';
 
 const debounceTimers = new Map();
 
 // Main function
 export default async function loadList() {
     Script.showNavbar();
-    
+
     const app = document.getElementById("app");
     // LOAD app html-code
     const html = await loadHTMLTemplate("/frontend/html-pages/list.html");
@@ -123,15 +124,28 @@ function addItem(item) {
     const list = document.querySelector(".grocery-list");
     const li = document.createElement("li");
     li.className = "grocery-item drop-shadow";
-    // li.dataset.id = item.id; // ID als data-Attribut speichern
 
+    li.innerHTML = loadItemHTML(item);
+
+    addCheckBoxEventListener(li, item);
+    addEditItemEventListener(li, item);
+
+    if (item.is_checked) {
+        hideQuantityControl(li);
+    }
+
+    if (list.firstChild) {
+        list.insertBefore(li, list.firstChild);
+    } else {
+        list.appendChild(li);
+    }
+}
+function loadItemHTML(item) {
+    console.warn("Loading item HTML for:", item);
     const identifier = returnIdentifier(item);
-
     const checked = item.is_checked ? "checked" : "";
 
-    // NEUE HTML-STRUKTUR: Notwendig für die Swipe-Animation.
-    // Der Inhalt wird in '.swipe-content' gepackt und ein '.swipe-delete' Button hinzugefügt.
-    li.innerHTML = `
+    return `
         <div class="swipe-delete">Delete</div>
         <div class="swipe-content">
             <span class="item-id">${identifier}</span>
@@ -148,33 +162,205 @@ function addItem(item) {
             </div>
         </div>
     `;
+}
 
-    addCheckBoxEventListener(li, identifier, item);
+// -----------------------------------------------------------
+// Edit Item
+// -----------------------------------------------------------
+function addEditItemEventListener(li, item) {
+    if (item.is_checked) return; // no EL for checked items
 
-    if (list.firstChild) {
-        list.insertBefore(li, list.firstChild);
-    } else {
-        list.appendChild(li);
+    li.querySelector('.item-details').addEventListener("click", () => {
+        editItem(li, item);
+    });
+}
+function deleteEditItemEventListener(li, item) {
+    const itemDetails = li.querySelector('.item-details');
+    if (itemDetails) {
+        const clone = itemDetails.cloneNode(true); // Deep clone ohne Event Listener
+        itemDetails.parentNode.replaceChild(clone, itemDetails);
     }
 }
 
-async function addCheckBoxEventListener(li, identifier, item) {
-    // Checkbox Event Listener
+
+function editItem(li, item) {
+    // 0. only open one at once
+    if (!isAddingNewItem()) {
+        // 1. save old item for later
+        const oldLi = li.cloneNode(true);
+
+        // 2. remove old item => open edit form
+        const formHTML = loadAddNewItemHTML(item);
+        li.innerHTML = formHTML;
+        markAsID(li);
+        li.innerHTML = formHTML;
+
+        // 3. initialize Custom Selects
+        initializeCustomSelects();
+
+        // 4. fill form with old item data
+        loadOldDataIntoForm(li, item);
+
+
+        // 5. set event listeners for save / cancel buttons:
+        const saveBtn = li.querySelector(".save-btn");
+        const cancelBtn = li.querySelector(".cancel-btn");
+        saveBtn.addEventListener("click", () => {
+            saveEditedItem(li, oldLi, item);
+        });
+        cancelBtn.addEventListener("click", () => {
+            // cancelEditItem(li, item);
+            li.replaceWith(oldLi); // Restore old item
+            // adde alle alten Event Listener wieder hinzu
+            addCheckBoxEventListener(oldLi, item);
+            addEditItemEventListener(oldLi, item);
+            updateCheckedItemsCount();
+        });
+    }
+}
+
+function markAsID(li) {
+    li.id = "newItem";
+    const classList = "grocery-item drop-shadow addingContainer";
+    li.className = classList;
+}
+
+function loadOldDataIntoForm(li, item) {
+    const container = li.querySelector("#new-item-container");
+    container.querySelector('input[type="text"]').value = item.name || "";
+    container.querySelector('input[type="number"]').value = Math.round(item.amount) || "";
+    const selects = container.querySelectorAll(".custom-select");
+    selects[0].querySelector(".select-text").textContent = item.category || "Protein";
+    selects[1].querySelector(".select-text").textContent = pieceToPcs(item.unit_of_measurement) || "g";
+}
+
+function saveEditedItem(li, oldLi, item) {
+    // 6. read data from form
+    const result = prepareItemFromForm();
+
+    // 7. validate data
+    if (!validateItemResult(result)) return;
+
+    // 8. build new data
+    const updatedItem = {
+        ...result.item,
+        is_checked: 0 // oder aus altem Zustand übernehmen
+    };
+    Storage.updateUserListItemInDB(returnIdentifier(item), updatedItem);
+    updateItem(li, oldLi, updatedItem);
+    // updateCheckedItemsCount();
+}
+
+function updateItem(li, oldLi, updatedItem) {
+    unmarkAsID(li, oldLi);
+    li.innerHTML = loadItemHTML(updatedItem);
+    // 9. create new DOM element
+    // const newLi = document.createElement("li");
+    // unmarkAsID(newLi, oldLi); // add the li-element id/classes again!
+    // newLi.className = "grocery-item drop-shadow";
+    // newLi.innerHTML = loadItemHTML(updatedItem);
+
+    // 9. add event listeners again
+    addEditItemEventListener(li, updatedItem);
+    addCheckBoxEventListener(li, updatedItem);
+    addQuantityControlEventListeners();
+    SwipeToDelete.initializeSwipeToDelete(li, ".grocery-item", deleteItemFromUserList);
+
+    // 10. update checked items count
+    // updateCheckedItemsCount();
+
+    // 11. replace old li with newLi
+    // li.replaceWith(newLi);
+
+
+
+
+
+
+
+
+
+}
+
+function unmarkAsID(li, oldLi) {
+    // li gets id and class from old item
+    li.id = oldLi.id || "";
+    li.className = oldLi.className || "grocery-item drop-shadow";
+}
+
+
+// -----------------------------------------------------------
+// Checkbox Event Handling
+// -----------------------------------------------------------
+function lockCheckbox(li, checkbox, event, duration) {
+    if (li.dataset.locked === "true") {
+        event.preventDefault();
+        checkbox.checked = true;
+        return true;
+    }
+
+    li.dataset.locked = "true";
+    setTimeout(() => {
+        delete li.dataset.locked;
+    }, duration);
+
+    return false;
+}
+function unlockCheckbox(li) {
+    delete li.dataset.locked;
+}
+async function addCheckBoxEventListener(li, item) {
     const checkbox = li.querySelector('.checkbox-gl');
-    checkbox.addEventListener('change', async () => {
-        const updatedItem = {
-            ingredient_id: item.ingredient_id || null,
-            custom_name: item.name || null,
-            category: item.category || null,
-            amount: item.amount,
-            unit_of_measurement: item.unit_of_measurement,
-            is_checked: checkbox.checked ? 1 : 0
-        };
+    checkbox.addEventListener('change', (e) => clickCheckbox(e, li, item, checkbox));
+}
 
-        updateCheckedItemsCount();
+async function clickCheckbox(e, li, item, checkbox) {
+    const timeDelay = 600;
 
-        await Storage.updateUserListItemInDB(identifier, updatedItem);
-    });
+    if (lockCheckbox(li, checkbox, e, timeDelay)) return; // LOCK
+
+    const updatedItem = {
+        ingredient_id: item.ingredient_id || null,
+        custom_name: item.name || null,
+        category: item.category || null,
+        amount: item.amount,
+        unit_of_measurement: item.unit_of_measurement,
+        is_checked: checkbox.checked ? 1 : 0
+    };
+
+    updateCheckedItemsCount();
+    await moveCheckedItemToBottom(li, updatedItem.is_checked, timeDelay, item);
+    await Storage.updateUserListItemInDB(returnIdentifier(item), updatedItem);
+
+    unlockCheckbox(li); // UNLOCK
+}
+
+
+async function moveCheckedItemToBottom(li, isChecked, timeDelay, item) {
+    const list = document.querySelector(".grocery-list");
+    if (isChecked) {
+        deleteEditItemEventListener(li, item); // lock editing
+        hideQuantityControl(li);
+        await new Promise(resolve => setTimeout(resolve, timeDelay));
+        list.appendChild(li);
+    } else {
+        addEditItemEventListener(li, item); // enable editing
+        showQuantityControl(li);
+        list.insertBefore(li, list.firstChild);
+    }
+}
+
+function hideQuantityControl(li) {
+    const quantityControl = li.querySelector(".quantity-control");
+    if (quantityControl) {
+        quantityControl.style.display = "none";
+    }
+}
+function showQuantityControl(li) {
+    const quantityControl = li.querySelector(".quantity-control");
+    if (quantityControl) {
+        quantityControl.style.display = "flex";
+    }
 }
 
 function returnIdentifier(item) {
@@ -201,6 +387,18 @@ function pcsToPiece(unit) {
     return unit;
 }
 
+// -----------------------------------------------------------
+// Add new item to the list
+// -----------------------------------------------------------
+// helper function
+function initializeCustomSelects() {
+    // Initialize custom select
+    const customSelects = newItem.querySelectorAll(".custom-select");
+    customSelects.forEach((selectElement) => {
+        new CustomSelect(selectElement);
+    });
+    // DropDown.addDropdownEventlisteners();
+}
 function addItemToList(classList = "grocery-item drop-shadow") {
     // Save item to storage
     // Storage.addGroceryListItem(item);
@@ -213,7 +411,22 @@ function addItemToList(classList = "grocery-item drop-shadow") {
     newItem.id = "newItem";
     newItem.className = classList;
     // Hier soll input felder kommen wo user das item eingeben kann
-    newItem.innerHTML = `
+    newItem.innerHTML = loadAddNewItemHTML();
+
+    // Als erstes Kind einfügen:
+    list.insertBefore(newItem, list.firstChild);
+
+    // initialize Custom Selects
+    initializeCustomSelects();
+
+    // Füge Event Listener für die Buttons hinzu
+    const saveBtn = newItem.querySelector(".save-btn");
+    const cancelBtn = newItem.querySelector(".cancel-btn");
+    saveBtn.addEventListener("click", saveNewItem);
+    cancelBtn.addEventListener("click", deleteNewItemForm);
+}
+function loadAddNewItemHTML() {
+    return `
     <div id="new-item-container">
         <div class="item-details-add">
             <input id="name-gl" type="text" placeholder="Item Name" />
@@ -249,82 +462,92 @@ function addItemToList(classList = "grocery-item drop-shadow") {
         <button class="save-btn">Save</button>
     </div>
     `;
-
-    // Als erstes Kind einfügen:
-    list.insertBefore(newItem, list.firstChild);
-
-    // Initialize custom select
-    const customSelects = newItem.querySelectorAll(".custom-select");
-    customSelects.forEach((selectElement) => {
-        new CustomSelect(selectElement);
-    });
-
-    // Füge Event Listener für die Buttons hinzu
-    const saveBtn = newItem.querySelector(".save-btn");
-    const cancelBtn = newItem.querySelector(".cancel-btn");
-    saveBtn.addEventListener("click", saveNewItem);
-    cancelBtn.addEventListener("click", deleteNewItemForm);
 }
 
 function saveNewItem() {
-    const newItemContainer = document.getElementById("new-item-container");
-    const itemName = newItemContainer.querySelector('input[type="text"]').value;
-    const amount = newItemContainer.querySelector('input[type="number"]').value;
-
-    // Get values from the custom selects by reading the displayed text
-    const customSelects = newItemContainer.querySelectorAll(".custom-select");
-    const categoryText = customSelects[0].querySelector(".select-text").textContent;
-    const unitText = customSelects[1].querySelector(".select-text").textContent;
-
-    // Check if actual values were selected (not the default placeholder text)
-    const category =
-        categoryText !== "Select Category" && categoryText !== "Protein"
-            ? categoryText
-            : categoryText;
-    const unit =
-        unitText !== "Select Unit" && unitText !== "g" ? unitText : unitText;
-
-    // Create new item object
-    const newItem = {
-        // ingredient_id: Date.now(),
-        ingredient_id: null, // No ID for new items
-        name: itemName,
-        category: category,
-        amount: parseInt(amount, 10),
-        unit_of_measurement: pcsToPiece(unit),
-    };
-
-    // Validierung Name
-    const trimmedName = itemName.trim();
-    const isValidName =
-        trimmedName.length > 0 &&            // Nicht nur Leerzeichen
-        !/^\d+$/.test(trimmedName) &&        // Nicht nur Zahlen
-        !/^\d/.test(trimmedName);            // Beginnt nicht mit einer Zahl
+    const newItem = prepareItemFromForm();
 
     // Add the new item to the list + DB, but only if all fields are filled
-    if (itemName && amount && category && unit && uniqueItemName(itemName)) {
-        if (!isValidName) {
-            alert("Please enter a valid name!\n (Name must not be empty, only numbers, or start with a number)");
-            return;
-        }
-        addItem(newItem);
-        const newItemDB = getNewItemDBFormat(newItem);
-        Storage.addUserListItemToDB(newItemDB);
-        // Remove the input form
-        deleteNewItemForm();
-    } else {
-        alert("Please fill out all fields!"); // Optional: Error message
-        return;
-    }
+    if (!validateItemResult(newItem)) return;
+
+    addItem(newItem.item);
+    const newItemDB = getNewItemDBFormat(newItem.item);
+    Storage.addUserListItemToDB(newItemDB);
+    // Remove the input form
+    deleteNewItemForm();
+
     updateCheckedItemsCount();
-    // // Aktualisiere die Liste
-    // updateGroceryList();
     // // Zeige eine Erfolgsmeldung an
-    // const successMessage = document.createElement('div');
-    // successMessage.className = 'success-message';
-    // successMessage.textContent = 'Item successfully added!';
-    // document.body.appendChild(successMessage);
 }
+
+function validateItemResult(newItem) {
+    if (!newItem.allFieldsFilled) {
+        alert("Please fill out all fields!");
+        return false;
+    }
+
+    if (!newItem.isValidName) {
+        alert("Please enter a valid name!\n(Name must not be empty, only numbers, or start with a number)");
+        return false;
+    }
+
+    if (!newItem.isUniqueName) {
+        alert("An item with this name already exists.");
+        return false;
+    }
+
+    return true;
+}
+
+function prepareItemFromForm() {
+    const container = document.getElementById("new-item-container");
+    const name = container.querySelector('input[type="text"]').value.trim();
+    const amount = parseInt(container.querySelector('input[type="number"]').value, 10);
+
+    const selects = container.querySelectorAll(".custom-select");
+    const categoryText = selects[0].querySelector(".select-text").textContent;
+    const unitText = selects[1].querySelector(".select-text").textContent;
+
+    const category = categoryText;
+    const unit = pcsToPiece(unitText);
+
+    const isValidName =
+        name.length > 0 &&
+        !/^\d+$/.test(name) &&
+        !/^\d/.test(name);
+
+    const allFieldsFilled = !!(name && amount && category && unit);
+    const isUniqueName = uniqueItemName(name); // wichtig!
+
+    return {
+        allFieldsFilled,
+        isValidName,
+        isUniqueName,
+        name,
+        amount,
+        category,
+        unit,
+        //     item = {
+        //     ingredient_id: isNaN(identifier) ? null : identifier,
+        //     custom_name: isNaN(identifier) ? identifier : null,
+        //     category: itemEl.querySelector(".category").textContent,
+        //     amount: parseInt(itemEl.querySelector(".amount").textContent, 10),
+        //     unit_of_measurement: pcsToPiece(itemEl.querySelector(".unit").textContent),
+        //     is_checked: itemEl.querySelector(".checkbox-gl").checked ? 1 : 0,
+        // };
+        item: {
+            ingredient_id: null, // Nur bei neuen Items
+            name,
+            custom_name: name, // Für die DB
+            category,
+            amount,
+            unit_of_measurement: unit,
+            is_checked: 0 // default not checked
+        }
+    };
+}
+
+
 function uniqueItemName() {
     return true;
     // #TODO => check if already exists!!
@@ -350,6 +573,10 @@ function deleteNewItemForm() {
     }
 }
 
+
+// -----------------------------------------------------------
+// Change Amount of Item
+// -----------------------------------------------------------
 function changeAmount(event) {
     // NEU: Verhindert, dass beim Klick auf "Delete" die Menge geändert wird.
     if (event.target.closest(".swipe-delete")) return;
