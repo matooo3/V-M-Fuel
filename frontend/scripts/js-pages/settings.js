@@ -14,7 +14,7 @@ export default async function loadSettings() {
     const app = document.getElementById('app');
 
     // LOAD app html-code
-    const html = await loadHTMLTemplate('../../html-pages/settings.html');
+    const html = await loadHTMLTemplate('./html-pages/settings.html');
     app.innerHTML = html;
 
     hideNavbar();

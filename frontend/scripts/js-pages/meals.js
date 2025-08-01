@@ -18,7 +18,7 @@ export default async function loadMeals() {
     const app = document.getElementById('app');
 
     // LOAD app html-code
-    const html = await loadHTMLTemplate('../../html-pages/meals.html');
+    const html = await loadHTMLTemplate('./html-pages/meals.html');
     app.innerHTML = html;
 
     Settings.loadSavedTheme();

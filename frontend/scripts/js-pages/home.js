@@ -16,7 +16,7 @@ export default async function loadHome() {
 
     const app = document.getElementById('app');
     // LOAD app html-code
-    const html = await loadHTMLTemplate('../../html-pages/home.html');
+    const html = await loadHTMLTemplate('./html-pages/home.html');
     app.innerHTML = html;
 
     //load user greeting! (eventlistener DOM loaded)
@@ -100,7 +100,7 @@ async function updateAdminContainer() {
     const adminContainer = document.getElementById('admin-container');
 
     if (activeTab && activeTab.textContent.trim() === 'Standard' && adminContainer) {
-        const html = await loadHTMLTemplate('../../html-pages/homeStandard.html');
+        const html = await loadHTMLTemplate('./html-pages/homeStandard.html');
         adminContainer.innerHTML = html;
 
         // get meals with eaten state
@@ -116,7 +116,7 @@ async function updateAdminContainer() {
 
         setUpInitialEventlisteners();
     } else {
-        const html = await loadHTMLTemplate('../../html-pages/homeRoles.html');
+        const html = await loadHTMLTemplate('./html-pages/homeRoles.html');
         adminContainer.innerHTML = html;
         await renderUserList();
     }

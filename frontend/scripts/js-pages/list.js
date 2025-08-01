@@ -16,7 +16,7 @@ export default async function loadList() {
 
     const app = document.getElementById("app");
     // LOAD app html-code
-    const html = await loadHTMLTemplate("../../html-pages/list.html");
+    const html = await loadHTMLTemplate("./html-pages/list.html");
     app.innerHTML = html;
 
     // Add event listener

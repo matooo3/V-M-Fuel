@@ -10,7 +10,7 @@ export default async function loadPlan() {
     Script.showNavbar();
 
     const app = document.getElementById("app");
-    const html = await loadHTMLTemplate("../../html-pages/plan.html");
+    const html = await loadHTMLTemplate("./html-pages/plan.html");
     app.innerHTML = html;
 
     const { today, currentWeek } = getCurrentData();
