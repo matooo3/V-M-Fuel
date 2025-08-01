@@ -3,7 +3,7 @@ import * as Role from "../roleRouting.js";
 import { loadHTMLTemplate } from '../templateLoader.js';
 import { getLastHash } from "../script.js";
 import * as Storage from "../storage.js";
-import * as DropDown from '/frontend/scripts/drop-down.js';
+import * as DropDown from '../drop-down.js';
 
 // ==============================
 // ======= CARD ELEMENTS ========
@@ -14,7 +14,7 @@ export default async function loadSettings() {
     const app = document.getElementById('app');
 
     // LOAD app html-code
-    const html = await loadHTMLTemplate('/frontend/html-pages/settings.html');
+    const html = await loadHTMLTemplate('../../html-pages/settings.html');
     app.innerHTML = html;
 
     hideNavbar();

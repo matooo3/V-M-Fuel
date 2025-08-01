@@ -1,2 +1,2 @@
-import { checkRoleAccess } from '/frontend/scripts/auth.js';
+import { checkRoleAccess } from '../auth.js';
 checkRoleAccess(['admin', 'cook']); 

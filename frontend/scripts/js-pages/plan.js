@@ -10,7 +10,7 @@ export default async function loadPlan() {
     Script.showNavbar();
 
     const app = document.getElementById("app");
-    const html = await loadHTMLTemplate("/frontend/html-pages/plan.html");
+    const html = await loadHTMLTemplate("../../html-pages/plan.html");
     app.innerHTML = html;
 
     const { today, currentWeek } = getCurrentData();
@@ -297,11 +297,11 @@ function renderMeal(dish, mealType) {
         </div>
         <div class="meal-details-mp">
             <div class="footer-mp">
-                <img class="clock-logo-mp" src="/frontend/assets/icons/clock.svg" alt="clock">
+                <img class="clock-logo-mp" src="../../assets/icons/clock.svg" alt="clock">
                 <p class="footer-text-mp">${dish.preparation_time_in_min}</p>
             </div>
             <div class="footer-mp">
-                <img class="users-logo-mp" src="/frontend/assets/icons/users.svg" alt="users">
+                <img class="users-logo-mp" src="../../assets/icons/users.svg" alt="users">
                 <p class="footer-text-mp">${(dish.factor ?? 1).toFixed(1)} serving</p>
             </div>
         </div>

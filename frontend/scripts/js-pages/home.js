@@ -2,7 +2,7 @@
 
 import { loadHTMLTemplate } from '../templateLoader.js';
 import * as Storage from '../storage.js';
-import * as Auth from '/frontend/scripts/auth.js';
+import * as Auth from '../auth.js';
 import * as Swipe from '../swipetodelete.js';
 import * as Role from '../roleRouting.js';
 import * as Settings from './settings.js';
@@ -16,7 +16,7 @@ export default async function loadHome() {
 
     const app = document.getElementById('app');
     // LOAD app html-code
-    const html = await loadHTMLTemplate('/frontend/html-pages/home.html');
+    const html = await loadHTMLTemplate('../../html-pages/home.html');
     app.innerHTML = html;
 
     //load user greeting! (eventlistener DOM loaded)
@@ -89,7 +89,7 @@ export async function sleep(ms) {
 }
 
 function createSound(volume, file) {
-    const sound = new Audio(`/frontend/assets/sounds/${file}`);
+    const sound = new Audio(`../../assets/sounds/${file}`);
     sound.volume = volume;
     sound.play();
 }
@@ -100,7 +100,7 @@ async function updateAdminContainer() {
     const adminContainer = document.getElementById('admin-container');
 
     if (activeTab && activeTab.textContent.trim() === 'Standard' && adminContainer) {
-        const html = await loadHTMLTemplate('/frontend/html-pages/homeStandard.html');
+        const html = await loadHTMLTemplate('../../html-pages/homeStandard.html');
         adminContainer.innerHTML = html;
 
         // get meals with eaten state
@@ -116,7 +116,7 @@ async function updateAdminContainer() {
 
         setUpInitialEventlisteners();
     } else {
-        const html = await loadHTMLTemplate('/frontend/html-pages/homeRoles.html');
+        const html = await loadHTMLTemplate('../../html-pages/homeRoles.html');
         adminContainer.innerHTML = html;
         await renderUserList();
     }
@@ -150,7 +150,7 @@ function renderUserGreeting() {
             <span class="roboto">${user.username}</span>
         </div>
         <div id="card-um${getRoleNumber(user.role)}" class="tag">
-            <img class="tag-logo" src="/frontend/assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
+            <img class="tag-logo" src="../../assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
             <span id="text-um${getRoleNumber(user.role)}" class="tag-text">${enumToDisplay(user.role)}</span>
         </div>
         `;
@@ -564,10 +564,10 @@ async function renderUserList() {
             </div>
             <div id="user-role">
                 <div class="user-tag" id="card-um${getRoleNumber(user.role)}">
-                    <img class="user-tag-logo" src="/frontend/assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
+                    <img class="user-tag-logo" src="../../assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
                     <span id="text-um${getRoleNumber(user.role)}" class="user-tag-text">${enumToDisplay(user.role)}</span>
                 </div>
-                <img id="change-role" src="/frontend/assets/icons/change-role.svg" alt="change role">
+                <img id="change-role" src="../../assets/icons/change-role.svg" alt="change role">
             </div>
         </div>
         `;

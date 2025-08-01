@@ -34,7 +34,7 @@ export function logout() {
 
 
     alert("Your session has expired. You are being logged out.");
-    window.location.href = "/frontend/html-pages/unauthorized.html";
+    window.location.href = "./html-pages/unauthorized.html";
 }
 
 export async function checkRoleAccess(allowedRoles) {
@@ -52,7 +52,7 @@ export async function checkRoleAccess(allowedRoles) {
 }
 
 export function redirectToGetStartedPage() {
-    window.location.href = "/frontend/set-up/pages/getstarted.html";
+    window.location.href = "./set-up/pages/getstarted.html"; //#specialLink
 }
 
 export async function redirectToUnauthorizedPage() {
@@ -63,7 +63,7 @@ export async function redirectToUnauthorizedPage() {
 
     alert("No access to this page.");
 
-    window.location.href = "/frontend/html-pages/unauthorized.html"; // Fehlerseite
+    window.location.href = "./html-pages/unauthorized.html"; // Fehlerseite //#specialLink
 }
 
 export function returnUserRole() {
