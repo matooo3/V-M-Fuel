@@ -615,7 +615,7 @@ function addTag() {
         tagElement.innerHTML = `
                     <span>${tagValue}</span>
                     <button class="tag-remove">
-                    <img src="../../assets/icons/remove-tag.svg" alt="">
+                    <img src="./assets/icons/remove-tag.svg" alt="">
                     </button>
                 `;
         tagsContainer.appendChild(tagElement);
@@ -701,7 +701,7 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '#di
                 </div>
                 <div class="preference-buttons">
                     <button class="like" data-meal="${dataId}">
-                        <object class="star-icon" src="../../assets/icons/star.svg" alt="star"></object>
+                        <object class="star-icon" src="./assets/icons/star.svg" alt="star"></object>
                     </button>
                     <button class="dislike" data-meal="${dataId}">
                         <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
@@ -830,7 +830,7 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
 
                 <div class="preference-buttons">
                     <button class="like" data-meal="${dataId}">
-                        <object class="star-icon" src="../../assets/icons/star.svg" alt="star"></object>
+                        <object class="star-icon" src="./assets/icons/star.svg" alt="star"></object>
                     </button>
                     <button class="dislike" data-meal="${dataId}">
                         <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"

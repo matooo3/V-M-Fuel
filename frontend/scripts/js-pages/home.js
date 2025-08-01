@@ -150,7 +150,7 @@ function renderUserGreeting() {
             <span class="roboto">${user.username}</span>
         </div>
         <div id="card-um${getRoleNumber(user.role)}" class="tag">
-            <img class="tag-logo" src="../../assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
+            <img class="tag-logo" src="./assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
             <span id="text-um${getRoleNumber(user.role)}" class="tag-text">${enumToDisplay(user.role)}</span>
         </div>
         `;
@@ -564,10 +564,10 @@ async function renderUserList() {
             </div>
             <div id="user-role">
                 <div class="user-tag" id="card-um${getRoleNumber(user.role)}">
-                    <img class="user-tag-logo" src="../../assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
+                    <img class="user-tag-logo" src="./assets/icons/userRoleIcon${getRoleNumber(user.role)}.svg" alt="tag">
                     <span id="text-um${getRoleNumber(user.role)}" class="user-tag-text">${enumToDisplay(user.role)}</span>
                 </div>
-                <img id="change-role" src="../../assets/icons/change-role.svg" alt="change role">
+                <img id="change-role" src="./assets/icons/change-role.svg" alt="change role">
             </div>
         </div>
         `;

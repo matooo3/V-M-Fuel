@@ -154,10 +154,10 @@ function loadItemHTML(item) {
                 <span class="category subtext">${item.category}</span>
             </div>
             <div class="quantity-control">
-                <button class="minus-btn"><object src="../../assets/icons/minus.svg" alt="-"></object></button>
+                <button class="minus-btn"><object src="./assets/icons/minus.svg" alt="-"></object></button>
                 <span class="amount">${Math.round(item.amount)}</span>
                 <span class="unit">${pieceToPcs(item.unit_of_measurement)}</span>
-                <button class="plus-btn"><object src="../../assets/icons/plus.svg" alt="+"></object></button>
+                <button class="plus-btn"><object src="./assets/icons/plus.svg" alt="+"></object></button>
             </div>
         </div>
     `;
