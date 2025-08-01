@@ -141,7 +141,6 @@ function addItem(item) {
     }
 }
 function loadItemHTML(item) {
-    console.warn("Loading item HTML for:", item);
     const identifier = returnIdentifier(item);
     const checked = item.is_checked ? "checked" : "";
 
@@ -191,7 +190,6 @@ function editItem(li, item) {
 
         // 2. remove old item => open edit form
         const formHTML = loadAddNewItemHTML(item);
-        li.innerHTML = formHTML;
         markAsID(li);
         li.innerHTML = formHTML;
 
@@ -248,38 +246,27 @@ function saveEditedItem(li, oldLi, item) {
     };
     Storage.updateUserListItemInDB(returnIdentifier(item), updatedItem);
     updateItem(li, oldLi, updatedItem);
-    // updateCheckedItemsCount();
 }
 
 function updateItem(li, oldLi, updatedItem) {
+    // 9. load updated li-item
     unmarkAsID(li, oldLi);
     li.innerHTML = loadItemHTML(updatedItem);
-    // 9. create new DOM element
+
+    // X. create new DOM element
     // const newLi = document.createElement("li");
     // unmarkAsID(newLi, oldLi); // add the li-element id/classes again!
     // newLi.className = "grocery-item drop-shadow";
     // newLi.innerHTML = loadItemHTML(updatedItem);
 
-    // 9. add event listeners again
+    // 10. add event listeners again
     addEditItemEventListener(li, updatedItem);
     addCheckBoxEventListener(li, updatedItem);
     addQuantityControlEventListeners();
     SwipeToDelete.initializeSwipeToDelete(li, ".grocery-item", deleteItemFromUserList);
 
-    // 10. update checked items count
-    // updateCheckedItemsCount();
-
-    // 11. replace old li with newLi
+    // XX. replace old li with newLi
     // li.replaceWith(newLi);
-
-
-
-
-
-
-
-
-
 }
 
 function unmarkAsID(li, oldLi) {
@@ -477,7 +464,7 @@ function saveNewItem() {
     deleteNewItemForm();
 
     updateCheckedItemsCount();
-    // // Zeige eine Erfolgsmeldung an
+    // Zeige eine Erfolgsmeldung an // #TODO (popup oder so)
 }
 
 function validateItemResult(newItem) {
@@ -527,18 +514,10 @@ function prepareItemFromForm() {
         amount,
         category,
         unit,
-        //     item = {
-        //     ingredient_id: isNaN(identifier) ? null : identifier,
-        //     custom_name: isNaN(identifier) ? identifier : null,
-        //     category: itemEl.querySelector(".category").textContent,
-        //     amount: parseInt(itemEl.querySelector(".amount").textContent, 10),
-        //     unit_of_measurement: pcsToPiece(itemEl.querySelector(".unit").textContent),
-        //     is_checked: itemEl.querySelector(".checkbox-gl").checked ? 1 : 0,
-        // };
         item: {
-            ingredient_id: null, // Nur bei neuen Items
+            ingredient_id: null, // Only for new items
             name,
-            custom_name: name, // Für die DB
+            custom_name: name, // for DB
             category,
             amount,
             unit_of_measurement: unit,
