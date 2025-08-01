@@ -1,12 +1,12 @@
 // ./pages/list.js
 import * as Storage from "../storage.js";
 import { loadHTMLTemplate } from "../templateLoader.js";
-import { CustomSelect } from "/frontend/scripts/drop-down.js";
+import { CustomSelect } from "../drop-down.js";
 import { searchULs } from "../searchBar.js";
 import * as Settings from "./settings.js";
 import * as SwipeToDelete from "../swipetodelete.js";
 import * as Script from '../script.js';
-import * as DropDown from '/frontend/scripts/drop-down.js';
+import * as DropDown from '../drop-down.js';
 
 const debounceTimers = new Map();
 
@@ -16,7 +16,7 @@ export default async function loadList() {
 
     const app = document.getElementById("app");
     // LOAD app html-code
-    const html = await loadHTMLTemplate("/frontend/html-pages/list.html");
+    const html = await loadHTMLTemplate("../../html-pages/list.html");
     app.innerHTML = html;
 
     // Add event listener
@@ -154,10 +154,10 @@ function loadItemHTML(item) {
                 <span class="category subtext">${item.category}</span>
             </div>
             <div class="quantity-control">
-                <button class="minus-btn"><object src="/frontend/assets/icons/minus.svg" alt="-"></object></button>
+                <button class="minus-btn"><object src="../../assets/icons/minus.svg" alt="-"></object></button>
                 <span class="amount">${Math.round(item.amount)}</span>
                 <span class="unit">${pieceToPcs(item.unit_of_measurement)}</span>
-                <button class="plus-btn"><object src="/frontend/assets/icons/plus.svg" alt="+"></object></button>
+                <button class="plus-btn"><object src="../../assets/icons/plus.svg" alt="+"></object></button>
             </div>
         </div>
     `;

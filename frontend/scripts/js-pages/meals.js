@@ -1,6 +1,6 @@
 // ./pages/meals.js
 import { loadHTMLTemplate } from '../templateLoader.js';
-import * as DropDown from '/frontend/scripts/drop-down.js';
+import * as DropDown from '../drop-down.js';
 import * as Storage from '../storage.js';
 import { searchULs } from '../searchBar.js';
 import * as Role from '../roleRouting.js';
@@ -18,7 +18,7 @@ export default async function loadMeals() {
     const app = document.getElementById('app');
 
     // LOAD app html-code
-    const html = await loadHTMLTemplate('/frontend/html-pages/meals.html');
+    const html = await loadHTMLTemplate('../../html-pages/meals.html');
     app.innerHTML = html;
 
     Settings.loadSavedTheme();
@@ -615,7 +615,7 @@ function addTag() {
         tagElement.innerHTML = `
                     <span>${tagValue}</span>
                     <button class="tag-remove">
-                    <img src="/frontend/assets/icons/remove-tag.svg" alt="">
+                    <img src="../../assets/icons/remove-tag.svg" alt="">
                     </button>
                 `;
         tagsContainer.appendChild(tagElement);
@@ -701,7 +701,7 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '#di
                 </div>
                 <div class="preference-buttons">
                     <button class="like" data-meal="${dataId}">
-                        <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
+                        <object class="star-icon" src="../../assets/icons/star.svg" alt="star"></object>
                     </button>
                     <button class="dislike" data-meal="${dataId}">
                         <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
@@ -830,7 +830,7 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
 
                 <div class="preference-buttons">
                     <button class="like" data-meal="${dataId}">
-                        <object class="star-icon" src="/frontend/assets/icons/star.svg" alt="star"></object>
+                        <object class="star-icon" src="../../assets/icons/star.svg" alt="star"></object>
                     </button>
                     <button class="dislike" data-meal="${dataId}">
                         <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"

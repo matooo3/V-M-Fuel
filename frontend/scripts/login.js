@@ -1,5 +1,5 @@
-import { parseJwt, getUserFromToken, checkRoleAccess } from '/frontend/scripts/auth.js';
-import * as Storage from '/frontend/scripts/storage.js';
+import { parseJwt, getUserFromToken, checkRoleAccess } from './auth.js';
+import * as Storage from './storage.js';
 
 window.port = 6969;
 const API_BASE = `https://gfoh.ddns.net:${window.port}`;
@@ -26,8 +26,8 @@ document.getElementById('login-form').addEventListener('submit', async function 
 
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        window.location.href = "/frontend/index.html";
-        // window.location.href = "../../index.html#home";
+        window.location.href = "../../index.html"; //#specialLink
+        // window.location.href = "../../index.html#home"; //#specialLink
 
         
     } else {
