@@ -1,4 +1,4 @@
-import { requiredUserRole, returnUserRole } from "/frontend/scripts/auth.js";
+import { requiredUserRole, returnUserRole } from "../scripts/auth.js";
 
 const cookTestDiv = document.getElementById("cookTest");
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hallo Welt - Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f0f4f8;
+      color: #333;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    #counter {
+      font-size: 2rem;
+      margin: 1rem 0;
+      color: #007acc;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #007acc;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 122, 204, 0.3);
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #005f99;
+    }
+    button:active {
+      background-color: #004d7a;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hallo Welt!</h1>
+  <div id="counter">0</div>
+  <button id="increaseBtn">Erhöhe den Zähler</button>
+
+  <script>
+    const counterEl = document.getElementById('counter');
+    const btn = document.getElementById('increaseBtn');
+    let count = 0;
+
+    btn.addEventListener('click', () => {
+      count++;
+      counterEl.textContent = count;
+    });
+  </script>
+</body>
+</html>
