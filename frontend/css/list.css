@@ -186,7 +186,8 @@
 .unit {
     font-size: 1.2rem;
     color: var(--icon-grey-color);
-    font-weight: 300;
+    color: var(--main-text-color);
+    font-weight: 400;
 }
 
 .quantity-control button {
@@ -484,4 +485,14 @@
     right: 0;
     left: 0;
     transform: translateY(-43%) translateX(23%);
+}
+
+.grocery-item:has(input[type="checkbox"]:checked) .subtext,
+.grocery-item:has(input[type="checkbox"]:checked) h3{
+    text-decoration: line-through;
+    color: #6B7280;
+    text-decoration-color: black;
+} 
+.grocery-item:has(input[type="checkbox"]:checked) .swipe-content {
+    filter: sepia(1) hue-rotate(90deg) brightness(0.9) saturate(1.2);
 }
