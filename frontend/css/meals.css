@@ -674,7 +674,7 @@
 }
 
 
-.form-input.search{
+.form-input.search {
     width: 100%;
     min-height: 10px;
     padding: 5px 10px;
@@ -720,10 +720,11 @@
     list-style-type: none;
 }
 
-.custom-select.preferences{
-    width: 100%;}
+.custom-select.preferences {
+    width: 100%;
+}
 
-.select-trigger.preferences{
+.select-trigger.preferences {
     border-radius: var(--border-radius);
 }
 
@@ -759,7 +760,7 @@
     font-weight: 200;
 }
 
-.form-input.search{
+.form-input.search {
     width: 100%;
     min-height: 10px;
     padding: 5px 10px;
@@ -866,7 +867,8 @@
 .instruction-text {
     font-size: 14px;
     line-height: 1.4;
-    color: var(--light-text-color);;
+    color: var(--light-text-color);
+    ;
     margin-bottom: 5px;
 }
 
