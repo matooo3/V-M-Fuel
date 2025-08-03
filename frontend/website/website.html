@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" id="htmlTag">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -266,6 +266,61 @@
         color: #f1f5f9;
     }
 
+    /* Language Switcher Styles */
+    .language-switcher {
+        position: relative;
+    }
+
+    .language-button {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--bg-secondary);
+        border: 1px solid rgba(0,0,0,0.1);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .dark-mode .language-button {
+        border-color: rgba(255,255,255,0.2);
+    }
+
+    .language-button:hover {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-md);
+    }
+
+    .language-button img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .language-dropdown {
+        min-width: 160px;
+    }
+    
+    .language-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+    }
+    
+    .language-item img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: var(--shadow-sm);
+    }
+
+
     /* Hero Section */
     .hero {
       min-height: 100vh;
@@ -355,7 +410,7 @@
     .btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center; /* MODIFIED: Ensures content is always centered */
+      justify-content: center;
       gap: 0.5rem;
       padding: 0.875rem 2rem;
       border-radius: 50px;
@@ -843,7 +898,6 @@
         margin-bottom: 2rem;
     }
 
-    /* MODIFIED: Specific styles for the overlay button */
     #overlayCloseBtn {
         padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
@@ -916,6 +970,11 @@
         transform: translateX(18px);
       }
       
+      .language-button {
+          width: 28px;
+          height: 28px;
+      }
+
       .hero-buttons {
         flex-direction: column;
         align-items: center;
@@ -963,6 +1022,13 @@
         .logo {
             font-size: 1rem;
         }
+        .language-button {
+            width: 24px;
+            height: 24px;
+        }
+        .theme-toggle {
+            margin-left: 0.25rem;
+        }
     }
 
     /* Smooth scrolling */
@@ -993,22 +1059,40 @@
   <!-- Navigation -->
   <nav class="navbar" id="navbar">
     <div class="nav-container">
-      <a href="#" class="logo">NextMeal</a>
+      <!-- MODIFIED: Added data-app-name attribute -->
+      <a href="#" class="logo" data-app-name>NutriPilot</a>
       <ul class="nav-links">
-        <!-- Dropdown-Menü für die Seitennavigation -->
+        <!-- Site Navigation Dropdown -->
         <li class="nav-item-dropdown" id="navDropdownContainer">
           <button class="nav-link dropdown-toggle" id="navDropdownToggle">
-            Navigation <i class="fas fa-chevron-down"></i>
+            <span data-translate-key="nav_navigation">Navigation</span> <i class="fas fa-chevron-down"></i>
           </button>
           <div class="dropdown-menu" id="navDropdownMenu">
-            <a href="#" class="dropdown-item">Download</a>
-            <a href="#features" class="dropdown-item">Features</a>
-            <a href="#reviews" class="dropdown-item">Bewertungen</a>
-            <a href="#feedback" class="dropdown-item">Feedback</a>
+            <a href="#" class="dropdown-item" data-translate-key="nav_download">Download</a>
+            <a href="#features" class="dropdown-item" data-translate-key="nav_features">Features</a>
+            <a href="#reviews" class="dropdown-item" data-translate-key="nav_reviews">Bewertungen</a>
+            <a href="#feedback" class="dropdown-item" data-translate-key="nav_feedback">Feedback</a>
           </div>
         </li>
 
-        <!-- Theme-Toggle-Button -->
+        <!-- Language Switcher Button -->
+        <li class="nav-item-dropdown language-switcher" id="langDropdownContainer">
+          <button class="language-button" id="langDropdownToggle" aria-label="Change language">
+              <img src="germanFlag.png" alt="German Flag" id="currentLangFlag">
+          </button>
+          <div class="dropdown-menu language-dropdown" id="langDropdownMenu">
+              <a class="dropdown-item language-item" data-lang="de">
+                  <img src="germanFlag.png" alt="German Flag">
+                  <span data-translate-key="lang_de">Deutsch</span>
+              </a>
+              <a class="dropdown-item language-item" data-lang="en">
+                  <img src="englishFlag.png" alt="British Flag">
+                  <span data-translate-key="lang_en">English</span>
+              </a>
+          </div>
+        </li>
+
+        <!-- Theme Toggle Button -->
         <li id="theme-button">
           <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
             <div class="theme-toggle-slider">
@@ -1025,21 +1109,22 @@
     <div class="hero-container">
       <div class="hero-badge">
         <i class="fas fa-rocket"></i>
-        Jetzt verfügbar
+        <span data-translate-key="hero_badge">Jetzt verfügbar</span>
       </div>
-      <h1 class="hero-title">NextMeal</h1>
-      <p class="hero-subtitle">
+      <!-- MODIFIED: Added data-app-name attribute -->
+      <h1 class="hero-title" data-app-name>NutriPilot</h1>
+      <p class="hero-subtitle" data-translate-key="hero_subtitle">
         Die revolutionäre App zur Erstellung personalisierter Mahlzeitenpläne und intelligenter Einkaufslisten — 
         designed für moderne Lifestyle und optimale Ernährung.
       </p>
       <div class="hero-buttons">
         <a href="https://gfoh.ddns.net:6969/frontend" target="_blank" class="btn btn-primary">
           <i class="fas fa-play"></i>
-          Live Demo starten
+          <span data-translate-key="hero_btn_live">Live Demo starten</span>
         </a>
         <a href="https://gfoh.ddns.net:6969/frontend" class="btn btn-secondary">
           <i class="fas fa-download"></i>
-          App herunterladen
+          <span data-translate-key="hero_btn_download">App herunterladen</span>
         </a>
       </div>
     </div>
@@ -1049,45 +1134,27 @@
   <section class="features" id="features">
     <div class="features-container">
       <div class="section-header fade-in">
-        <div class="section-badge">Features</div>
-        <h2 class="section-title">Alles was du brauchst</h2>
-        <p class="section-subtitle">
-          Entdecke die innovativen Features, die NextMeal zur perfekten Lösung für deine Meal-Planning Bedürfnisse machen.
+        <div class="section-badge" data-translate-key="features_badge">Features</div>
+        <h2 class="section-title" data-translate-key="features_title">Alles was du brauchst</h2>
+        <p class="section-subtitle" data-translate-key="features_subtitle">
+          Entdecke die innovativen Features, die NutriPilot zur perfekten Lösung für deine Meal-Planning Bedürfnisse machen.
         </p>
       </div>
-
       <div class="features-grid">
         <div class="feature-card fade-in">
-          <div class="feature-icon">
-            <i class="fas fa-utensils"></i>
-          </div>
-          <h3 class="feature-title">Intelligente Meal-Pläne</h3>
-          <p class="feature-description">
-            KI-gestützte Algorithmen erstellen personalisierte Essenspläne basierend auf deinen Vorlieben, 
-            Allergien und Ernährungszielen. Jeder Plan ist einzigartig und perfekt auf dich abgestimmt.
-          </p>
+          <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+          <h3 class="feature-title" data-translate-key="feature1_title">Intelligente Meal-Pläne</h3>
+          <p class="feature-description" data-translate-key="feature1_desc">KI-gestützte Algorithmen erstellen personalisierte Essenspläne basierend auf deinen Vorlieben, Allergien und Ernährungszielen. Jeder Plan ist einzigartig und perfekt auf dich abgestimmt.</p>
         </div>
-
         <div class="feature-card fade-in">
-          <div class="feature-icon">
-            <i class="fas fa-shopping-cart"></i>
-          </div>
-          <h3 class="feature-title">Smarte Einkaufslisten</h3>
-          <p class="feature-description">
-            Automatisch generierte, optimierte Einkaufslisten mit intelligenter Kategorisierung. 
-            Nie wieder vergessene Zutaten oder doppelte Einkäufe.
-          </p>
+          <div class="feature-icon"><i class="fas fa-shopping-cart"></i></div>
+          <h3 class="feature-title" data-translate-key="feature2_title">Smarte Einkaufslisten</h3>
+          <p class="feature-description" data-translate-key="feature2_desc">Automatisch generierte, optimierte Einkaufslisten mit intelligenter Kategorisierung. Nie wieder vergessene Zutaten oder doppelte Einkäufe.</p>
         </div>
-
         <div class="feature-card fade-in">
-          <div class="feature-icon">
-            <i class="fas fa-mobile-alt"></i>
-          </div>
-          <h3 class="feature-title">Nahtlose Erfahrung</h3>
-          <p class="feature-description">
-            Modernes, intuitives Design mit blitzschneller Performance. 
-            Synchronisation zwischen allen Geräten für maximale Flexibilität im Alltag.
-          </p>
+          <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3 class="feature-title" data-translate-key="feature3_title">Nahtlose Erfahrung</h3>
+          <p class="feature-description" data-translate-key="feature3_desc">Modernes, intuitives Design mit blitzschneller Performance. Synchronisation zwischen allen Geräten für maximale Flexibilität im Alltag.</p>
         </div>
       </div>
     </div>
@@ -1097,59 +1164,30 @@
   <section class="testimonials" id="reviews">
     <div class="features-container">
       <div class="section-header fade-in">
-        <div class="section-badge">Bewertungen</div>
-        <h2 class="section-title">Was unsere Nutzer sagen</h2>
-        <p class="section-subtitle">
-          Echte Meinungen von echten Menschen, die NextMeal bereits lieben.
-        </p>
+        <div class="section-badge" data-translate-key="reviews_badge">Bewertungen</div>
+        <h2 class="section-title" data-translate-key="reviews_title">Was unsere Nutzer sagen</h2>
+        <p class="section-subtitle" data-translate-key="reviews_subtitle">Echte Meinungen von echten Menschen, die NutriPilot bereits lieben.</p>
       </div>
-
       <div class="testimonial-chat-container">
-        <!-- Review 1 -->
         <div class="chat-bubble fade-in">
           <div class="chat-avatar avatar-2">SK</div>
           <div class="chat-content">
-            <div class="chat-header">
-              <span class="chat-name">Sarah K.</span>
-              <div class="chat-rating">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-              </div>
-            </div>
-            <p class="chat-text">
-              Absolut begeistert! Die App hat meinen Alltag so viel einfacher gemacht. Die intelligenten Einkaufslisten sind der Hammer – ich spare Zeit und Geld.
-            </p>
+            <div class="chat-header"><span class="chat-name">Sarah K.</span><div class="chat-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+            <p class="chat-text" data-translate-key="review1_text">Absolut begeistert! Die App hat meinen Alltag so viel einfacher gemacht. Die intelligenten Einkaufslisten sind der Hammer – ich spare Zeit und Geld.</p>
           </div>
         </div>
-
-        <!-- Review 2 -->
         <div class="chat-bubble right fade-in">
           <div class="chat-avatar avatar-1">TL</div>
           <div class="chat-content">
-            <div class="chat-header">
-              <span class="chat-name">Tom L.</span>
-              <div class="chat-rating">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-              </div>
-            </div>
-            <p class="chat-text">
-              Als Sportler ist die Ernährung für mich super wichtig. NextMeal erstellt mir Pläne, die perfekt auf meine Fitnessziele abgestimmt sind. Endlich stressfrei kochen!
-            </p>
+            <div class="chat-header"><span class="chat-name">Tom L.</span><div class="chat-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div>
+            <p class="chat-text" data-translate-key="review2_text">Als Sportler ist die Ernährung für mich super wichtig. NutriPilot erstellt mir Pläne, die perfekt auf meine Fitnessziele abgestimmt sind. Endlich stressfrei kochen!</p>
           </div>
         </div>
-        
-        <!-- Review 3 -->
         <div class="chat-bubble fade-in">
           <div class="chat-avatar avatar-3">LM</div>
           <div class="chat-content">
-            <div class="chat-header">
-              <span class="chat-name">Lisa M.</span>
-              <div class="chat-rating">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-              </div>
-            </div>
-            <p class="chat-text">
-              Das Design ist mega intuitiv und die App läuft super flüssig. 5 Sterne! Habe sie all meinen Freunden empfohlen.
-            </p>
+            <div class="chat-header"><span class="chat-name">Lisa M.</span><div class="chat-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+            <p class="chat-text" data-translate-key="review3_text">Das Design ist mega intuitiv und die App läuft super flüssig. 5 Sterne! Habe sie all meinen Freunden empfohlen.</p>
           </div>
         </div>
       </div>
@@ -1160,79 +1198,209 @@
   <section class="feedback" id="feedback">
     <div class="feedback-container">
       <div class="section-header fade-in">
-        <div class="section-badge">Feedback</div>
-        <h2 class="section-title">Hilf uns, besser zu werden</h2>
-        <p class="section-subtitle">
-          Hast du Vorschläge, Wünsche oder ist dir ein Fehler aufgefallen? Wir freuen uns über deine Nachricht!
-        </p>
+        <div class="section-badge" data-translate-key="feedback_badge">Feedback</div>
+        <h2 class="section-title" data-translate-key="feedback_title">Hilf uns, besser zu werden</h2>
+        <p class="section-subtitle" data-translate-key="feedback_subtitle">Hast du Vorschläge, Wünsche oder ist dir ein Fehler aufgefallen? Wir freuen uns über deine Nachricht!</p>
       </div>
       <form class="feedback-form fade-in" id="feedbackForm" action="#" method="POST">
         <textarea id="feedbackTextarea" class="feedback-textarea" name="feedback_message" placeholder="Schreibe hier dein Feedback..."></textarea>
         <button type="submit" class="btn btn-primary">
           <i class="fas fa-paper-plane"></i>
-          Feedback absenden
+          <span data-translate-key="feedback_btn">Feedback absenden</span>
         </button>
       </form>
     </div>
   </section>
 
-
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
       <div class="imprint-container">
-          <h3>Impressum</h3>
-          <p>NextMeal</p>
-          <p>E-Mail: <a href="mailto:nextmeal@gmail.com" class="footer-link">kontakt@nextmeal.de</a></p>
+          <h3 data-translate-key="footer_imprint">Impressum</h3>
+          <!-- MODIFIED: Added data-app-name attribute -->
+          <p data-app-name>NutriPilot</p>
+          <p>E-Mail: <a href="mailto:NutriPilot@gmail.com" class="footer-link">kontakt@NutriPilot.de</a></p>
       </div>
-      <div class="footer-copyright">
-        © 2025 NextMeal. Alle Rechte vorbehalten.
-      </div>
+      <div class="footer-copyright" data-translate-key="footer_copyright">© 2025 NutriPilot. Alle Rechte vorbehalten.</div>
     </div>
   </footer>
   
   <!-- Feedback Success Overlay -->
   <div class="overlay" id="feedbackOverlay">
     <div class="overlay-content">
-        <h3>Vielen Dank für Ihr Feedback!</h3>
+        <h3 data-translate-key="overlay_title">Vielen Dank für Ihr Feedback!</h3>
         <button class="btn btn-primary" id="overlayCloseBtn">OK</button>
     </div>
   </div>
 
   <script>
-    // Initialize dark mode
-    document.body.classList.add('dark-mode');
-    document.getElementById('themeIcon').className = 'fas fa-moon';
+    // --- APP CONFIGURATION ---
+    // MODIFIED: Define the app name as a central constant.
+    // CHANGE THIS VALUE TO UPDATE THE APP NAME EVERYWHERE.
+    const APP_NAME = "NutriPilot"; // Plan2Eat
 
-    // Theme toggle functionality
+    // --- TRANSLATION DATA ---
+    const translations = {
+        de: {
+            page_title: `Deine smarte Essensplan-App | ${APP_NAME}`,
+            nav_navigation: "Navigation",
+            nav_download: "Download",
+            nav_features: "Features",
+            nav_reviews: "Bewertungen",
+            nav_feedback: "Feedback",
+            lang_de: "Deutsch",
+            lang_en: "Englisch",
+            hero_badge: "Jetzt verfügbar",
+            hero_subtitle: `Die revolutionäre App zur Erstellung personalisierter Mahlzeitenpläne und intelligenter Einkaufslisten — designed für moderne Lifestyle und optimale Ernährung.`,
+            hero_btn_live: "Live Demo starten",
+            hero_btn_download: "App herunterladen",
+            features_badge: "Features",
+            features_title: "Alles was du brauchst",
+            features_subtitle: `Entdecke die innovativen Features, die {{APP_NAME}} zur perfekten Lösung für deine Meal-Planning Bedürfnisse machen.`,
+            feature1_title: "Intelligente Meal-Pläne",
+            feature1_desc: "KI-gestützte Algorithmen erstellen personalisierte Essenspläne basierend auf deinen Vorlieben, Allergien und Ernährungszielen. Jeder Plan ist einzigartig und perfekt auf dich abgestimmt.",
+            feature2_title: "Smarte Einkaufslisten",
+            feature2_desc: "Automatisch generierte, optimierte Einkaufslisten mit intelligenter Kategorisierung. Nie wieder vergessene Zutaten oder doppelte Einkäufe.",
+            feature3_title: "Nahtlose Erfahrung",
+            feature3_desc: "Modernes, intuitives Design mit blitzschneller Performance. Synchronisation zwischen allen Geräten für maximale Flexibilität im Alltag.",
+            reviews_badge: "Bewertungen",
+            reviews_title: "Was unsere Nutzer sagen",
+            reviews_subtitle: `Echte Meinungen von echten Menschen, die {{APP_NAME}} bereits lieben.`,
+            review1_text: "Absolut begeistert! Die App hat meinen Alltag so viel einfacher gemacht. Die intelligenten Einkaufslisten sind der Hammer – ich spare Zeit und Geld.",
+            review2_text: `Als Sportler ist die Ernährung für mich super wichtig. {{APP_NAME}} erstellt mir Pläne, die perfekt auf meine Fitnessziele abgestimmt sind. Endlich stressfrei kochen!`,
+            review3_text: "Das Design ist mega intuitiv und die App läuft super flüssig. 5 Sterne! Habe sie all meinen Freunden empfohlen.",
+            feedback_badge: "Feedback",
+            feedback_title: "Hilf uns, besser zu werden",
+            feedback_subtitle: "Hast du Vorschläge, Wünsche oder ist dir ein Fehler aufgefallen? Wir freuen uns über deine Nachricht!",
+            feedback_placeholder: "Schreibe hier dein Feedback...",
+            feedback_btn: "Feedback absenden",
+            footer_imprint: "Impressum",
+            footer_copyright: `© 2025 {{APP_NAME}}. Alle Rechte vorbehalten.`,
+            overlay_title: "Vielen Dank für Ihr Feedback!",
+            overlay_alert: "Bitte gib zuerst dein Feedback ein.",
+        },
+        en: {
+            page_title: `Your Smart Meal Plan App | ${APP_NAME}`,
+            nav_navigation: "Navigation",
+            nav_download: "Download",
+            nav_features: "Features",
+            nav_reviews: "Reviews",
+            nav_feedback: "Feedback",
+            lang_de: "German",
+            lang_en: "English",
+            hero_badge: "Available now",
+            hero_subtitle: "The revolutionary app for creating personalized meal plans and smart shopping lists — designed for a modern lifestyle and optimal nutrition.",
+            hero_btn_live: "Start Live Demo",
+            hero_btn_download: "Download App",
+            features_badge: "Features",
+            features_title: "Everything you need",
+            features_subtitle: `Discover the innovative features that make {{APP_NAME}} the perfect solution for your meal planning needs.`,
+            feature1_title: "Intelligent Meal Plans",
+            feature1_desc: "AI-powered algorithms create personalized meal plans based on your preferences, allergies, and nutritional goals. Every plan is unique and perfectly tailored to you.",
+            feature2_title: "Smart Shopping Lists",
+            feature2_desc: "Automatically generated, optimized shopping lists with smart categorization. No more forgotten ingredients or duplicate purchases.",
+            feature3_title: "Seamless Experience",
+            feature3_desc: "Modern, intuitive design with lightning-fast performance. Synchronization across all devices for maximum flexibility in your daily life.",
+            reviews_badge: "Reviews",
+            reviews_title: "What our users say",
+            reviews_subtitle: `Real opinions from real people who already love {{APP_NAME}}.`,
+            review1_text: "Absolutely thrilled! This app has made my daily life so much easier. The smart shopping lists are amazing – I'm saving time and money.",
+            review2_text: `As an athlete, nutrition is super important to me. {{APP_NAME}} creates plans that are perfectly tailored to my fitness goals. Finally, stress-free cooking!`,
+            review3_text: "The design is super intuitive and the app runs so smoothly. 5 stars! I've recommended it to all my friends.",
+            feedback_badge: "Feedback",
+            feedback_title: "Help us improve",
+            feedback_subtitle: "Do you have suggestions, requests, or did you notice a bug? We look forward to your message!",
+            feedback_placeholder: "Write your feedback here...",
+            feedback_btn: "Send Feedback",
+            footer_imprint: "Imprint",
+            footer_copyright: `© 2025 {{APP_NAME}}. All rights reserved.`,
+            overlay_title: "Thank you for your feedback!",
+            overlay_alert: "Please enter your feedback first.",
+        }
+    };
+
+    // --- DOM ELEMENTS ---
+    const htmlTag = document.getElementById('htmlTag');
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
+    const navbar = document.getElementById('navbar');
+    const navDropdownContainer = document.getElementById('navDropdownContainer');
+    const navDropdownToggle = document.getElementById('navDropdownToggle');
+    const navDropdownMenu = document.getElementById('navDropdownMenu');
+    const langDropdownContainer = document.getElementById('langDropdownContainer');
+    const langDropdownToggle = document.getElementById('langDropdownToggle');
+    const langDropdownMenu = document.getElementById('langDropdownMenu');
+    const currentLangFlag = document.getElementById('currentLangFlag');
+    const feedbackForm = document.getElementById('feedbackForm');
+    const feedbackOverlay = document.getElementById('feedbackOverlay');
+    const overlayCloseBtn = document.getElementById('overlayCloseBtn');
+    const feedbackTextarea = document.getElementById('feedbackTextarea');
+
+    // --- GLOBAL STATE ---
+    let currentLanguage = 'de';
+
+
+    // --- FUNCTIONS ---
+
+    /**
+     * MODIFIED: Sets the app name in all elements marked with `data-app-name`.
+     * @param {string} name - The name of the application.
+     */
+    function setAppNameInDOM(name) {
+        document.querySelectorAll('[data-app-name]').forEach(el => {
+            el.textContent = name;
+        });
+    }
+
+    /**
+     * MODIFIED: Sets the page language and replaces app name placeholders.
+     * @param {string} lang - The language code ('de' or 'en').
+     */
+    function setLanguage(lang) {
+      currentLanguage = lang;
+      const langTranslations = translations[lang];
+
+      htmlTag.lang = lang;
+      document.title = langTranslations.page_title;
+
+      document.querySelectorAll('[data-translate-key]').forEach(el => {
+        const key = el.dataset.translateKey;
+        if (langTranslations[key]) {
+          const rawText = langTranslations[key];
+          // Replace placeholder with the actual app name
+          el.textContent = rawText.replace(/{{APP_NAME}}/g, APP_NAME);
+        }
+      });
+      
+      feedbackTextarea.placeholder = langTranslations.feedback_placeholder;
+      
+      currentLangFlag.src = lang === 'de' ? 'germanFlag.png' : 'englishFlag.png';
+      currentLangFlag.alt = lang === 'de' ? 'German Flag' : 'British Flag';
+      
+      langDropdownContainer.classList.remove('open');
+    }
+
+    function getFeedback() {
+      return feedbackTextarea.value;
+    }
+    
+    function closeFeedbackOverlay() {
+        feedbackOverlay.classList.remove('active');
+    }
+
+
+    // --- INITIALIZATION & EVENT LISTENERS ---
+    document.body.classList.add('dark-mode');
+    themeIcon.className = 'fas fa-moon';
 
     themeToggle.addEventListener('click', () => {
       document.body.classList.toggle('dark-mode');
-      
-      if (document.body.classList.contains('dark-mode')) {
-        themeIcon.className = 'fas fa-moon';
-      } else {
-        themeIcon.className = 'fas fa-sun';
-      }
+      themeIcon.className = document.body.classList.contains('dark-mode') ? 'fas fa-moon' : 'fas fa-sun';
     });
 
-    // Navbar scroll effect
     window.addEventListener('scroll', () => {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
     });
-
-    // Fade in animation on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1240,104 +1408,74 @@
           entry.target.classList.add('visible');
         }
       });
-    }, observerOptions);
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-    document.querySelectorAll('.fade-in').forEach(el => {
-      observer.observe(el);
-    });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        
-        let target;
-        if (this.getAttribute('href') === '#') {
-            target = document.body;
-        } else {
-            target = document.querySelector(this.getAttribute('href'));
-        }
-
+        const href = this.getAttribute('href');
+        const target = href === '#' ? document.body : document.querySelector(href);
         if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
 
-    // Dropdown Menu Logic
-    const dropdownContainer = document.getElementById('navDropdownContainer');
-    const dropdownToggle = document.getElementById('navDropdownToggle');
-    const dropdownMenu = document.getElementById('navDropdownMenu');
-
-    dropdownToggle.addEventListener('click', (event) => {
-      event.stopPropagation(); // Prevents the window click listener from firing immediately
-      dropdownContainer.classList.toggle('open');
-    });
-    
-    dropdownMenu.addEventListener('click', () => {
-        dropdownContainer.classList.remove('open');
-    });
-
-    window.addEventListener('click', (event) => {
-      if (dropdownContainer.classList.contains('open') && !dropdownContainer.contains(event.target)) {
-        dropdownContainer.classList.remove('open');
-      }
-    });
-
-    /**
-     * Reads the text from the feedback textarea.
-     * @returns {string} The entered feedback text.
-     */
-    function getFeedback() {
-      const feedbackInput = document.getElementById('feedbackTextarea');
-      return feedbackInput.value;
+    function setupDropdown(container, toggle, menu) {
+        toggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            [navDropdownContainer, langDropdownContainer].forEach(c => {
+                if (c !== container) c.classList.remove('open');
+            });
+            container.classList.toggle('open');
+        });
+        menu.addEventListener('click', () => {
+             container.classList.remove('open');
+        });
     }
 
-    // --- Feedback Form and Overlay Logic ---
-    const feedbackForm = document.getElementById('feedbackForm');
-    const feedbackOverlay = document.getElementById('feedbackOverlay');
-    const overlayCloseBtn = document.getElementById('overlayCloseBtn');
+    setupDropdown(navDropdownContainer, navDropdownToggle, navDropdownMenu);
+    setupDropdown(langDropdownContainer, langDropdownToggle, langDropdownMenu);
+    
+    window.addEventListener('click', () => {
+      navDropdownContainer.classList.remove('open');
+      langDropdownContainer.classList.remove('open');
+    });
 
-    // Event listener for the feedback form submission
+    langDropdownMenu.addEventListener('click', (event) => {
+        const langItem = event.target.closest('.language-item');
+        if (langItem && langItem.dataset.lang) {
+            setLanguage(langItem.dataset.lang);
+        }
+    });
+
     feedbackForm.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevents the default form submission (page reload)
-      
+      event.preventDefault();
       const feedbackText = getFeedback();
       
       if (feedbackText.trim() === '') {
-        alert('Please enter your feedback first.'); // Standard alert is okay for validation
+        alert(translations[currentLanguage].overlay_alert);
         return;
       }
       
       console.log('Feedback received:', feedbackText);
-
-      // Send feedback to DB here:
-      
-      // Show the custom overlay
       feedbackOverlay.classList.add('active');
-      
-      // Clears the textarea after submission
-      document.getElementById('feedbackTextarea').value = '';
+      feedbackTextarea.value = '';
     });
     
-    /**
-     * Closes the feedback overlay.
-     */
-    function closeFeedbackOverlay() {
-        feedbackOverlay.classList.remove('active');
-    }
-
-    // Add event listeners to close the overlay
     overlayCloseBtn.addEventListener('click', closeFeedbackOverlay);
     feedbackOverlay.addEventListener('click', (event) => {
-        // Close only if the backdrop itself is clicked, not the content inside
-        if (event.target === feedbackOverlay) {
-            closeFeedbackOverlay();
-        }
+        if (event.target === feedbackOverlay) closeFeedbackOverlay();
     });
+
+    // MODIFIED: Initial page setup
+    // 1. Set the app name in static DOM elements.
+    setAppNameInDOM(APP_NAME);
+    // 2. Set the initial language (which also handles translations with the app name).
+    setLanguage('de');
+
   </script>
 </body>
 </html>
