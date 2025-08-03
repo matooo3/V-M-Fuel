@@ -47,10 +47,20 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
+      /* MODIFIED: Moved gradient to the body for a global, seamless glow effect */
+      background-color: var(--bg-primary);
+      background-image: radial-gradient(ellipse at top, rgba(27, 206, 134, 0.1) 0%, transparent 70%);
+      background-repeat: no-repeat;
+      background-attachment: fixed; /* Ensures the glow stays at the top while scrolling */
+    }
+
+    /* MODIFIED: Added a separate rule for dark mode body background */
+    body.dark-mode {
+      background-color: var(--bg-primary);
+      background-image: radial-gradient(ellipse at top, rgba(27, 206, 134, 0.3) 0%, transparent 70%);
     }
 
     /* Navigation */
@@ -327,14 +337,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(ellipse at top, rgba(27, 206, 134, 0.1) 0%, transparent 70%);
       position: relative;
       overflow: hidden;
-      transition: background 0.3s ease;
-    }
-
-    .dark-mode .hero {
-      background: radial-gradient(ellipse at top, rgba(27, 206, 134, 0.3) 0%, rgba(34, 224, 149, 0.1) 50%, transparent 100%);
+      /* MODIFIED: Removed the specific background to let the body's gradient show through */
     }
 
     .hero::before {
@@ -480,13 +485,15 @@
     /* Features Section */
     .features {
       padding: 8rem 2rem;
-      background: var(--bg-secondary);
+      /* MODIFIED: Changed the background gradient for a smooth transition */
+      background: linear-gradient(180deg, transparent, var(--bg-primary) 15%, var(--bg-secondary));
       position: relative;
       transition: background 0.3s ease;
     }
 
+    /* MODIFIED: This rule is now redundant due to the change above and can be removed for cleaner code */
     .dark-mode .features {
-      background: linear-gradient(135deg, rgba(15, 15, 35, 0.95) 0%, rgba(30, 30, 63, 0.8) 100%);
+      /* background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%); */
     }
 
     .features-container {
@@ -628,13 +635,13 @@
     /* Testimonials Section */
     .testimonials {
         padding: 8rem 2rem;
-        background: var(--bg-secondary);
+        background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
         position: relative;
         transition: background 0.3s ease;
     }
 
     .dark-mode .testimonials {
-        background: linear-gradient(180deg, rgba(15, 15, 35, 0.95) 0%, rgba(30, 30, 63, 1) 100%);
+        background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
     }
 
     .testimonial-chat-container {
@@ -724,12 +731,12 @@
     /* Feedback Section */
     .feedback {
         padding: 8rem 2rem;
-        background: var(--bg-primary);
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
         transition: background 0.3s ease;
     }
 
     .dark-mode .feedback {
-        background: var(--bg-primary);
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
     }
 
     .feedback-container {
