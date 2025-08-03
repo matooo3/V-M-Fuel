@@ -450,9 +450,15 @@ export async function getUserPreferencesFromDB() {
 
 
 // ---------- WEBSITE FEEDBACK ---------
-export function sendFeedbackToDB(message) {
+export async function sendFeedbackToDB(message) {
     // const user = Auth.getUserFromToken();
     // const token = Auth.getUserToken();
     const feedback = { message };
-    Api.postData("/add-feedback", { feedback }, null);
+    try {
+        await Api.postData("/add-feedback", { feedback }, null);
+        // Optionally, notify user of success here if desired
+    } catch (error) {
+        alert("Failed to submit feedback. Please try again later.");
+        // Optionally, log error or handle further
+    }
 }
