@@ -701,10 +701,7 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '#di
                 </div>
                 <div class="preference-buttons">
                     <button class="like" data-meal="${dataId}">
-                        <svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 17.27L18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27z"></path>
-                        </svg>
+                        <svg class="star-icon" src="./assets/icons/star.svg" alt="star"></svg>
                     </button>
                     <button class="dislike" data-meal="${dataId}">
                         <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
@@ -833,10 +830,7 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
 
                 <div class="preference-buttons">
                     <button class="like" data-meal="${dataId}">
-                        <svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 17.27L18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27z"></path>
-                        </svg>
+                        <img class="star-icon" src="./assets/icons/star.svg" alt="star">
                     </button>
                     <button class="dislike" data-meal="${dataId}">
                         <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
