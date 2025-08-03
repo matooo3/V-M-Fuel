@@ -50,14 +50,12 @@
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
-      /* MODIFIED: Moved gradient to the body for a global, seamless glow effect */
       background-color: var(--bg-primary);
       background-image: radial-gradient(ellipse at top, rgba(27, 206, 134, 0.1) 0%, transparent 70%);
       background-repeat: no-repeat;
-      background-attachment: fixed; /* Ensures the glow stays at the top while scrolling */
+      background-attachment: fixed;
     }
 
-    /* MODIFIED: Added a separate rule for dark mode body background */
     body.dark-mode {
       background-color: var(--bg-primary);
       background-image: radial-gradient(ellipse at top, rgba(27, 206, 134, 0.3) 0%, transparent 70%);
@@ -339,7 +337,6 @@
       justify-content: center;
       position: relative;
       overflow: hidden;
-      /* MODIFIED: Removed the specific background to let the body's gradient show through */
     }
 
     .hero::before {
@@ -485,15 +482,13 @@
     /* Features Section */
     .features {
       padding: 8rem 2rem;
-      /* MODIFIED: Changed the background gradient for a smooth transition */
       background: linear-gradient(180deg, transparent, var(--bg-primary) 15%, var(--bg-secondary));
       position: relative;
       transition: background 0.3s ease;
     }
 
-    /* MODIFIED: This rule is now redundant due to the change above and can be removed for cleaner code */
     .dark-mode .features {
-      /* background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%); */
+      background: linear-gradient(180deg, transparent, var(--bg-primary) 15%, var(--bg-secondary));
     }
 
     .features-container {
@@ -1041,24 +1036,14 @@
     /* Smooth scrolling */
     html {
       scroll-behavior: smooth;
+      /* MODIFIED: Hide scrollbar for Firefox */
+      scrollbar-width: none;
     }
 
     /* Custom scrollbar */
+    /* MODIFIED: Hide scrollbar for Webkit browsers (Chrome, Safari) */
     ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg-secondary);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--gradient-primary);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--primary-dark);
+      display: none;
     }
   </style>
 </head>
@@ -1066,7 +1051,6 @@
   <!-- Navigation -->
   <nav class="navbar" id="navbar">
     <div class="nav-container">
-      <!-- MODIFIED: Added data-app-name attribute -->
       <a href="#" class="logo" data-app-name>NutriPilot</a>
       <ul class="nav-links">
         <!-- Site Navigation Dropdown -->
@@ -1118,7 +1102,6 @@
         <i class="fas fa-rocket"></i>
         <span data-translate-key="hero_badge">Jetzt verfügbar</span>
       </div>
-      <!-- MODIFIED: Added data-app-name attribute -->
       <h1 class="hero-title" data-app-name>NutriPilot</h1>
       <p class="hero-subtitle" data-translate-key="hero_subtitle">
         Die revolutionäre App zur Erstellung personalisierter Mahlzeitenpläne und intelligenter Einkaufslisten — 
@@ -1224,7 +1207,6 @@
     <div class="footer-container">
       <div class="imprint-container">
           <h3 data-translate-key="footer_imprint">Impressum</h3>
-          <!-- MODIFIED: Added data-app-name attribute -->
           <p data-app-name>NutriPilot</p>
           <p>E-Mail: <a href="mailto:NutriPilot@gmail.com" class="footer-link">kontakt@NutriPilot.de</a></p>
       </div>
@@ -1242,9 +1224,7 @@
 
   <script>
     // --- APP CONFIGURATION ---
-    // MODIFIED: Define the app name as a central constant.
-    // CHANGE THIS VALUE TO UPDATE THE APP NAME EVERYWHERE.
-    const APP_NAME = "NutriPilot"; // Plan2Eat
+    const APP_NAME = "NutriPilot";
 
     // --- TRANSLATION DATA ---
     const translations = {
@@ -1348,21 +1328,12 @@
 
 
     // --- FUNCTIONS ---
-
-    /**
-     * MODIFIED: Sets the app name in all elements marked with `data-app-name`.
-     * @param {string} name - The name of the application.
-     */
     function setAppNameInDOM(name) {
         document.querySelectorAll('[data-app-name]').forEach(el => {
             el.textContent = name;
         });
     }
 
-    /**
-     * MODIFIED: Sets the page language and replaces app name placeholders.
-     * @param {string} lang - The language code ('de' or 'en').
-     */
     function setLanguage(lang) {
       currentLanguage = lang;
       const langTranslations = translations[lang];
@@ -1374,7 +1345,6 @@
         const key = el.dataset.translateKey;
         if (langTranslations[key]) {
           const rawText = langTranslations[key];
-          // Replace placeholder with the actual app name
           el.textContent = rawText.replace(/{{APP_NAME}}/g, APP_NAME);
         }
       });
@@ -1477,10 +1447,7 @@
         if (event.target === feedbackOverlay) closeFeedbackOverlay();
     });
 
-    // MODIFIED: Initial page setup
-    // 1. Set the app name in static DOM elements.
     setAppNameInDOM(APP_NAME);
-    // 2. Set the initial language (which also handles translations with the app name).
     setLanguage('de');
 
   </script>
