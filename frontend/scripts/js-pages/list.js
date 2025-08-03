@@ -434,7 +434,7 @@ function loadAddNewItemHTML() {
         </div>
         <div class="quantity-control-add">
             <input id="number-gl" type="number" placeholder="100" />
-            <div class="custom-select">
+            <div class="custom-select unit-gl">
                 <div class="select-trigger">
                     <span class="select-text">Select Unit</span>
                     <div class="select-arrow"></div>

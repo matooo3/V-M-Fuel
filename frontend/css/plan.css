@@ -102,9 +102,9 @@
     background: transparent;
 }
 
-.day:hover {
-    background: #f0f0f0;
-}
+/* .day:hover {
+    background: var(--h1-color);
+} */
 
 .other-month {
     color: #ccc;
