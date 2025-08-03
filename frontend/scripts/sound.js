@@ -1,4 +1,4 @@
-function getSoundVolume() {
+export function getSoundVolume() {
 	const volume = localStorage.getItem("soundVolume");
 	return volume ? parseFloat(volume) : 0.5;
 }
