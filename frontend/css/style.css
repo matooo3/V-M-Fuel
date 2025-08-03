@@ -190,7 +190,7 @@ button {
     position: absolute;
     top: 15px;
     right: 20px;
-    mask: url('/frontend/assets/icons/settings.svg') no-repeat center;
+    mask: url('../assets/icons/settings.svg') no-repeat center;
     mask-size: contain;
     background-color: var(--h1-color);
 }

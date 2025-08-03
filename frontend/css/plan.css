@@ -292,7 +292,7 @@
     width: 15px;
     height: 15px;
     background-color: var(--main-text-color);
-    mask: url('/frontend/assets/icons/clock.svg') no-repeat center;
+    mask: url('../assets/icons/clock.svg') no-repeat center;
     mask-size: contain;
     margin-right: 5px;
 }
