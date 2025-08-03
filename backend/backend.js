@@ -1149,6 +1149,32 @@ function dbQuery(query, values) {
   });
 }
 
+// ---------- WEBSITE FEEDBACK ---------
+app.post("/api/add-feedback", (req, res) => {
+    const { feedback } = req.body;
+
+    const query = `
+        INSERT INTO feedback (message, rating, name, email)
+        VALUES (?, ?, ?, ?)
+    `;
+
+    db.query(query, [
+        feedback.message,
+        feedback.rating || null,
+        feedback.name || null,
+        feedback.email || null
+    ], (err, result) => {
+        if (err) {
+            console.error("Error saving feedback:", err);
+            return res.status(500).json({ message: "Error saving feedback" });
+        }
+
+        return res.status(200).json({ message: "Feedback saved", insertedId: result.insertId });
+    });
+});
+
+
+
 
 
 
