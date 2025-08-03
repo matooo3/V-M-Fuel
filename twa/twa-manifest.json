@@ -1,0 +1,49 @@
+{
+  "packageId": "net_6969.ddns.gfoh.twa",
+  "host": "gfoh.ddns.net",
+  "name": "V-M-Fuel",
+  "launcherName": "MV",
+  "display": "standalone",
+  "themeColor": "#000000",
+  "themeColorDark": "#000000",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#000000",
+  "enableNotifications": true,
+  "startUrl": ":6969/frontend/index.html",
+  "iconUrl": "https://gfoh.ddns.net:6969/frontend/assets/img/logo.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "C:\\Users\\matze\\Desktop\\VM.jks",
+    "alias": "vm_nutrition"
+  },
+  "appVersionName": "4",
+  "appVersionCode": 4,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://gfoh.ddns.net:6969/frontend/manifest.json",
+  "fallbackType": "webapk",
+  "features": {
+    "playBilling": {
+      "enabled": true
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": false,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://gfoh.ddns.net:6969/frontend/",
+  "minSdkVersion": 21,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "protocolHandlers": [],
+  "fileHandlers": [],
+  "launchHandlerClientMode": "",
+  "appVersion": "4"
+}

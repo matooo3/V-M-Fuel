@@ -1,0 +1,491 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--
+3    Copyright 2019 Google Inc. All Rights Reserved.
+4
+5     Licensed under the Apache License, Version 2.0 (the "License");
+6     you may not use this file except in compliance with the License.
+7     You may obtain a copy of the License at
+8
+9         http://www.apache.org/licenses/LICENSE-2.0
+10
+11     Unless required by applicable law or agreed to in writing, software
+12     distributed under the License is distributed on an "AS IS" BASIS,
+13     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+14     See the License for the specific language governing permissions and
+15     limitations under the License.
+16-->
+17<!--
+18 The "package" attribute is rewritten by the Gradle build with the value of applicationId.
+19     It is still required here, as it is used to derive paths, for instance when referring
+20     to an Activity by ".MyActivity" instead of the full name. If more Activities are added to the
+21     application, the package attribute will need to reflect the correct path in order to use
+22     the abbreviated format.
+23-->
+24<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+25    package="net_6969.ddns.gfoh.twa"
+26    android:versionCode="4"
+27    android:versionName="4" >
+28
+29    <uses-sdk
+30        android:minSdkVersion="21"
+31        android:targetSdkVersion="35" />
+32
+33    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+33-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:26:9-80
+33-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:26:26-78
+34
+35    <queries>
+35-->[com.google.androidbrowserhelper:androidbrowserhelper:2.6.2] C:\Users\matze\.gradle\caches\8.11.1\transforms\5053e02be90783e54992393be394bb70\transformed\androidbrowserhelper-2.6.2\AndroidManifest.xml:22:5-30:15
+36        <intent>
+36-->[com.google.androidbrowserhelper:androidbrowserhelper:2.6.2] C:\Users\matze\.gradle\caches\8.11.1\transforms\5053e02be90783e54992393be394bb70\transformed\androidbrowserhelper-2.6.2\AndroidManifest.xml:23:9-29:18
+37            <action android:name="android.intent.action.VIEW" />
+37-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:131:17-68
+37-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:131:25-66
+38
+39            <category android:name="android.intent.category.BROWSABLE" />
+39-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:133:17-77
+39-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:133:27-75
+40
+41            <data android:scheme="https" />
+41-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:134:17-139:19
+41-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:134:23-45
+42        </intent>
+43        <intent>
+43-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:13:9-15:18
+44            <action android:name="com.android.vending.billing.InAppBillingService.BIND" />
+44-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:14:13-91
+44-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:14:21-88
+45        </intent>
+46        <intent>
+46-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:16:9-18:18
+47            <action android:name="com.google.android.apps.play.billingtestcompanion.BillingOverrideService.BIND" />
+47-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:17:13-116
+47-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:17:21-113
+48        </intent>
+49    </queries>
+50
+51    <uses-permission android:name="com.android.vending.BILLING" />
+51-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:10:5-67
+51-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:10:22-64
+52
+53    <permission
+53-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:22:5-24:47
+54        android:name="net_6969.ddns.gfoh.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+54-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:23:9-81
+55        android:protectionLevel="signature" />
+55-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:24:9-44
+56
+57    <uses-permission android:name="net_6969.ddns.gfoh.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+57-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:26:5-97
+57-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:26:22-94
+58    <!-- <uses-sdk android:minSdkVersion="14"/> -->
+59    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+59-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:24:5-79
+59-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:24:22-76
+60    <uses-permission android:name="android.permission.INTERNET" />
+60-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:25:5-67
+60-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:25:22-64
+61
+62    <application
+62-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:35:5-209:19
+63        android:name="net_6969.ddns.gfoh.twa.Application"
+63-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:36:9-35
+64        android:allowBackup="true"
+64-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:37:9-35
+65        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+65-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:28:18-86
+66        android:extractNativeLibs="true"
+67        android:icon="@mipmap/ic_launcher"
+67-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:38:9-43
+68        android:label="@string/appName"
+68-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:39:9-40
+69        android:supportsRtl="true"
+69-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:41:9-35
+70        android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+70-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:42:9-68
+71        <meta-data
+71-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:44:9-46:58
+72            android:name="asset_statements"
+72-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:45:13-44
+73            android:resource="@string/assetStatements" />
+73-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:46:13-55
+74        <meta-data
+74-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:49:13-51:58
+75            android:name="web_manifest_url"
+75-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:50:17-48
+76            android:value="@string/webManifestUrl" />
+76-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:51:17-55
+77        <meta-data
+77-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:54:9-56:52
+78            android:name="twa_generator"
+78-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:55:13-41
+79            android:value="@string/generatorApp" />
+79-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:56:13-49
+80
+81        <activity
+81-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:64:9-145:20
+82            android:name="net_6969.ddns.gfoh.twa.LauncherActivity"
+82-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:64:19-50
+83            android:alwaysRetainTaskState="true"
+83-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:65:13-49
+84            android:exported="true"
+84-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:67:13-36
+85            android:label="@string/launcherName" >
+85-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:66:13-49
+86            <meta-data
+86-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:68:13-69:53
+87                android:name="android.support.customtabs.trusted.DEFAULT_URL"
+87-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:68:24-85
+88                android:value="@string/launchUrl" />
+88-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:69:17-50
+89            <meta-data
+89-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:71:13-73:58
+90                android:name="android.support.customtabs.trusted.STATUS_BAR_COLOR"
+90-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:72:17-83
+91                android:resource="@color/colorPrimary" />
+91-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:73:17-55
+92            <meta-data
+92-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:77:13-79:62
+93                android:name="android.support.customtabs.trusted.STATUS_BAR_COLOR_DARK"
+93-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:78:17-88
+94                android:resource="@color/colorPrimaryDark" />
+94-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:79:17-59
+95            <meta-data
+95-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:81:13-83:61
+96                android:name="android.support.customtabs.trusted.NAVIGATION_BAR_COLOR"
+96-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:82:17-87
+97                android:resource="@color/navigationColor" />
+97-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:83:17-58
+98            <meta-data
+98-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:85:13-87:65
+99                android:name="android.support.customtabs.trusted.NAVIGATION_BAR_COLOR_DARK"
+99-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:86:17-92
+100                android:resource="@color/navigationColorDark" />
+100-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:87:17-62
+101            <meta-data
+101-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:89:13-91:68
+102                android:name="androix.browser.trusted.NAVIGATION_BAR_DIVIDER_COLOR"
+102-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:90:17-84
+103                android:resource="@color/navigationDividerColor" />
+103-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:91:17-65
+104            <meta-data
+104-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:93:13-95:72
+105                android:name="androix.browser.trusted.NAVIGATION_BAR_DIVIDER_COLOR_DARK"
+105-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:94:17-89
+106                android:resource="@color/navigationDividerColorDark" />
+106-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:95:17-69
+107            <meta-data
+107-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:97:13-98:54
+108                android:name="android.support.customtabs.trusted.SPLASH_IMAGE_DRAWABLE"
+108-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:97:24-95
+109                android:resource="@drawable/splash" />
+109-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:98:17-52
+110            <meta-data
+110-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:100:13-101:60
+111                android:name="android.support.customtabs.trusted.SPLASH_SCREEN_BACKGROUND_COLOR"
+111-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:100:24-104
+112                android:resource="@color/backgroundColor" />
+112-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:101:17-58
+113            <meta-data
+113-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:103:13-104:71
+114                android:name="android.support.customtabs.trusted.SPLASH_SCREEN_FADE_OUT_DURATION"
+114-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:103:24-105
+115                android:value="@integer/splashScreenFadeOutDuration" />
+115-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:104:17-69
+116            <meta-data
+116-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:106:13-107:60
+117                android:name="android.support.customtabs.trusted.FILE_PROVIDER_AUTHORITY"
+117-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:106:24-97
+118                android:value="@string/providerAuthority" />
+118-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:107:17-58
+119            <meta-data
+119-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:109:13-97
+120                android:name="android.app.shortcuts"
+120-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:109:24-60
+121                android:resource="@xml/shortcuts" />
+121-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:109:61-94
+122            <meta-data
+122-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:111:13-112:56
+123                android:name="android.support.customtabs.trusted.FALLBACK_STRATEGY"
+123-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:111:24-91
+124                android:value="@string/fallbackType" />
+124-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:112:17-53
+125            <meta-data
+125-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:118:13-119:54
+126                android:name="android.support.customtabs.trusted.SCREEN_ORIENTATION"
+126-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:118:24-92
+127                android:value="@string/orientation" />
+127-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:119:17-52
+128
+129            <intent-filter>
+129-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:125:13-128:29
+130                <action android:name="android.intent.action.MAIN" />
+130-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:126:17-69
+130-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:126:25-66
+131
+132                <category android:name="android.intent.category.LAUNCHER" />
+132-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:127:17-77
+132-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:127:27-74
+133            </intent-filter>
+134            <intent-filter android:autoVerify="true" >
+134-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:130:13-140:29
+134-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:130:28-53
+135                <action android:name="android.intent.action.VIEW" />
+135-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:131:17-68
+135-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:131:25-66
+136
+137                <category android:name="android.intent.category.DEFAULT" />
+137-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:132:17-76
+137-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:132:27-73
+138                <category android:name="android.intent.category.BROWSABLE" />
+138-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:133:17-77
+138-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:133:27-75
+139
+140                <data
+140-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:134:17-139:19
+141                    android:host="@string/hostName"
+141-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:135:21-52
+142                    android:pathPrefix="/frontend/"
+142-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:137:21-52
+143                    android:scheme="https" />
+143-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:134:23-45
+144            </intent-filter>
+145        </activity>
+146        <activity android:name="com.google.androidbrowserhelper.trusted.FocusActivity" />
+146-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:147:9-90
+146-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:147:19-87
+147        <activity
+147-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:149:9-150:62
+148            android:name="com.google.androidbrowserhelper.trusted.WebViewFallbackActivity"
+148-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:149:19-97
+149            android:configChanges="orientation|screenSize" />
+149-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:150:13-59
+150
+151        <provider
+151-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:152:9-160:20
+152            android:name="androidx.core.content.FileProvider"
+152-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:153:13-62
+153            android:authorities="@string/providerAuthority"
+153-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:154:13-60
+154            android:exported="false"
+154-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:156:13-37
+155            android:grantUriPermissions="true" >
+155-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:155:13-47
+156            <meta-data
+156-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:157:13-159:53
+157                android:name="android.support.FILE_PROVIDER_PATHS"
+157-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:158:17-67
+158                android:resource="@xml/filepaths" />
+158-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:159:17-50
+159        </provider>
+160
+161        <service
+161-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:162:9-177:19
+162            android:name="net_6969.ddns.gfoh.twa.DelegationService"
+162-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:163:13-46
+163            android:enabled="@bool/enableNotification"
+163-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:164:13-55
+164            android:exported="@bool/enableNotification" >
+164-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:165:13-56
+165            <meta-data
+165-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:168:17-170:73
+166                android:name="android.support.customtabs.trusted.SMALL_ICON"
+166-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:169:21-81
+167                android:resource="@drawable/ic_notification_icon" />
+167-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:170:21-70
+168
+169            <intent-filter>
+169-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:173:13-176:29
+170                <action android:name="android.support.customtabs.trusted.TRUSTED_WEB_ACTIVITY_SERVICE" />
+170-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:174:17-105
+170-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:174:25-103
+171
+172                <category android:name="android.intent.category.DEFAULT" />
+172-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:132:17-76
+172-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:132:27-73
+173            </intent-filter>
+174        </service>
+175
+176        <activity android:name="com.google.androidbrowserhelper.trusted.NotificationPermissionRequestActivity" />
+176-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:180:13-118
+176-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:180:23-115
+177        <activity
+177-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:185:9-198:20
+178            android:name="com.google.androidbrowserhelper.playbilling.provider.PaymentActivity"
+178-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:186:13-96
+179            android:configChanges="keyboardHidden|keyboard|orientation|screenLayout|screenSize"
+179-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:188:13-96
+180            android:exported="true"
+180-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:189:13-36
+181            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+181-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:187:13-72
+182            <intent-filter>
+182-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:191:13-193:29
+183                <action android:name="org.chromium.intent.action.PAY" />
+183-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:192:17-73
+183-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:192:25-70
+184            </intent-filter>
+185
+186            <meta-data
+186-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:195:13-197:67
+187                android:name="org.chromium.default_payment_method_name"
+187-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:196:17-72
+188                android:value="https://play.google.com/billing" />
+188-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:197:17-64
+189        </activity>
+190
+191        <!-- This service checks who calls it at runtime. -->
+192        <service
+192-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:201:9-207:19
+193            android:name="com.google.androidbrowserhelper.playbilling.provider.PaymentService"
+193-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:202:13-95
+194            android:exported="true" >
+194-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:203:13-36
+195            <intent-filter>
+195-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:204:13-206:29
+196                <action android:name="org.chromium.intent.action.IS_READY_TO_PAY" />
+196-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:205:17-85
+196-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:205:25-82
+197            </intent-filter>
+198        </service>
+199
+200        <meta-data
+200-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:22:9-24:37
+201            android:name="com.google.android.play.billingclient.version"
+201-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:23:13-73
+202            android:value="7.1.1" />
+202-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:24:13-34
+203
+204        <activity
+204-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:26:9-30:75
+205            android:name="com.android.billingclient.api.ProxyBillingActivity"
+205-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:27:13-78
+206            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+206-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:28:13-96
+207            android:exported="false"
+207-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:29:13-37
+208            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+208-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:30:13-72
+209        <activity
+209-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:31:9-35:75
+210            android:name="com.android.billingclient.api.ProxyBillingActivityV2"
+210-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:32:13-80
+211            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+211-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:33:13-96
+212            android:exported="false"
+212-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:34:13-37
+213            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+213-->[com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:35:13-72
+214        <activity
+214-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\57bacb9ef58048c0e6f8321d8067096b\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:9-173
+215            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+215-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\57bacb9ef58048c0e6f8321d8067096b\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:19-85
+216            android:exported="false"
+216-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\57bacb9ef58048c0e6f8321d8067096b\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:146-170
+217            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+217-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\57bacb9ef58048c0e6f8321d8067096b\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:86-145
+218
+219        <meta-data
+219-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\af1250092db6525f6762c9b32f91bede\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:9-122
+220            android:name="com.google.android.gms.version"
+220-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\af1250092db6525f6762c9b32f91bede\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:20-65
+221            android:value="@integer/google_play_services_version" />
+221-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\af1250092db6525f6762c9b32f91bede\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:66-119
+222
+223        <provider
+223-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+224            android:name="androidx.startup.InitializationProvider"
+224-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+225            android:authorities="net_6969.ddns.gfoh.twa.androidx-startup"
+225-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+226            android:exported="false" >
+226-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+227            <meta-data
+227-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+228                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+228-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+229                android:value="androidx.startup" />
+229-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+230            <meta-data
+230-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\matze\.gradle\caches\8.11.1\transforms\4bc52031417e9743197e36b704fe409f\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+231                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+231-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\matze\.gradle\caches\8.11.1\transforms\4bc52031417e9743197e36b704fe409f\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+232                android:value="androidx.startup" />
+232-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\matze\.gradle\caches\8.11.1\transforms\4bc52031417e9743197e36b704fe409f\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+233            <meta-data
+233-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+234                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+234-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+235                android:value="androidx.startup" />
+235-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+236        </provider>
+237
+238        <service
+238-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:28:9-34:19
+239            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+239-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:29:13-103
+240            android:exported="false" >
+240-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:30:13-37
+241            <meta-data
+241-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:31:13-33:39
+242                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+242-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:32:17-94
+243                android:value="cct" />
+243-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\85bc3f8cc97bd85b10d760e1ca7886a3\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:33:17-36
+244        </service>
+245        <service
+245-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\390580f802b798735a90189ae7e85163\transformed\transport-runtime-3.1.8\AndroidManifest.xml:26:9-30:19
+246            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+246-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\390580f802b798735a90189ae7e85163\transformed\transport-runtime-3.1.8\AndroidManifest.xml:27:13-117
+247            android:exported="false"
+247-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\390580f802b798735a90189ae7e85163\transformed\transport-runtime-3.1.8\AndroidManifest.xml:28:13-37
+248            android:permission="android.permission.BIND_JOB_SERVICE" >
+248-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\390580f802b798735a90189ae7e85163\transformed\transport-runtime-3.1.8\AndroidManifest.xml:29:13-69
+249        </service>
+250
+251        <receiver
+251-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\390580f802b798735a90189ae7e85163\transformed\transport-runtime-3.1.8\AndroidManifest.xml:32:9-34:40
+252            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+252-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\390580f802b798735a90189ae7e85163\transformed\transport-runtime-3.1.8\AndroidManifest.xml:33:13-132
+253            android:exported="false" />
+253-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\matze\.gradle\caches\8.11.1\transforms\390580f802b798735a90189ae7e85163\transformed\transport-runtime-3.1.8\AndroidManifest.xml:34:13-37
+254        <receiver
+254-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+255            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+255-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+256            android:directBootAware="false"
+256-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+257            android:enabled="true"
+257-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+258            android:exported="true"
+258-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+259            android:permission="android.permission.DUMP" >
+259-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+260            <intent-filter>
+260-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+261                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+261-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+261-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+262            </intent-filter>
+263            <intent-filter>
+263-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+264                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+264-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+264-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+265            </intent-filter>
+266            <intent-filter>
+266-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+267                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+267-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+267-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+268            </intent-filter>
+269            <intent-filter>
+269-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+270                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+270-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+270-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+271            </intent-filter>
+272        </receiver>
+273    </application>
+274
+275</manifest>
