@@ -60,6 +60,10 @@
     height: 50px;
 }
 
+.bigger-hitbox-st:hover{
+    cursor: pointer;
+}
+
 #close-settings-btn {
     position: absolute;
     top: 11px;
@@ -353,9 +357,13 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     font-weight: 500;
     font-family: inherit;
     height: 35px;
-    border-radius: 7px;
+    border-radius: 10px;
     font-size: 1.35rem;
     width: 100px;
+}
+
+#logout-btn:hover{
+    cursor: pointer;
 }
 
 /* ---------- HEADER & FOOTER FIXED ---------- */
@@ -445,7 +453,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 .select-field-app-st {
     width: 100px;
     height: 35px;
-    border-radius: 7px;
+    border-radius: 10px;
     padding: 4px 4px 4px 8px;
     display: flex;
     justify-content: space-between;

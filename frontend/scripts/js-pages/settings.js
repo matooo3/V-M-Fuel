@@ -25,6 +25,9 @@ export default async function loadSettings() {
 
     addEventListeners();
 
+    //dropdown menu
+    addSettingsDropdownFunctionality();
+
     await loadUserData();
 
 }
@@ -148,7 +151,8 @@ function addSettingsDropdownFunctionality() {
 
     // sex
     const sexSelect = document.querySelector('.custom-select.sex-field');
-    new DropDown.CustomSelect(sexSelect);
+    const sexDropDown = new DropDown.CustomSelect(sexSelect);
+    sexDropDown.setValue();
 
     // theme
     const themeSelect = document.querySelector('.custom-select.theme-field');
@@ -175,9 +179,6 @@ function addSettingsDropdownFunctionality() {
 }
 
 function addEventListeners() {
-
-    //dropdown menu
-    addSettingsDropdownFunctionality();
 
     // DONT ALLOW TO ENTER NON-NUMERIC VALUES IN HEIGHT AND WEIGHT INPUTS
     const weightInput = document.getElementById('weight-st');

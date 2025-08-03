@@ -77,6 +77,10 @@
     font-size: 1.6rem;
 }
 
+.filterBtn:hover{
+    cursor: pointer;
+}
+
 .filterBtn.active {
     background-color: var(--accent-color);
     color: var(--background-color);
@@ -103,6 +107,10 @@
     width: 100%;
     max-height: 46px;
     gap: 10px
+}
+
+#add-item-btn:hover{
+    cursor: pointer;
 }
 
 .addingContainer{
@@ -209,7 +217,11 @@
     margin-left: 10px;
 }
 
-.minus-btn object {
+.minus-btn:hover{
+    cursor: pointer;
+}
+
+.minus-btn svg {
     width: 13px;
     height: 13px;
     background-color: #6B7280;
@@ -225,7 +237,11 @@
     background-color: var(--accent-color);
 }
 
-.plus-btn object {
+.plus-btn:hover{
+    cursor: pointer;
+}
+
+.plus-btn svg {
     width: 13px;
     height: 13px;
     background-color: var(--background-color);
