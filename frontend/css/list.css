@@ -113,7 +113,7 @@
     width: 18px;
     height: 18px;
     background-color: var(--background-color);
-    mask: url('/frontend/assets/icons/add-item.svg') no-repeat center;
+    mask: url('../assets/icons/add-item.svg') no-repeat center;
     mask-size: contain;
 }
 
@@ -213,7 +213,7 @@
     width: 13px;
     height: 13px;
     background-color: #6B7280;
-    mask: url('/frontend/assets/icons/minus.svg') no-repeat center;
+    mask: url('../assets/icons/minus.svg') no-repeat center;
     mask-size: contain;
 }
 
@@ -229,7 +229,7 @@
     width: 13px;
     height: 13px;
     background-color: var(--background-color);
-    mask: url('/frontend/assets/icons/plus.svg') no-repeat center;
+    mask: url('../assets/icons/plus.svg') no-repeat center;
     mask-size: contain;
 }
 

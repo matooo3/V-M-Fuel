@@ -212,7 +212,7 @@
     width: 12px;
     height: 12px;
     background-color: var(--background-color);
-    mask: url('/frontend/assets/icons/plus-preferences.svg') no-repeat center;
+    mask: url('../assets/icons/plus-preferences.svg') no-repeat center;
     mask-size: contain;
 }
 
@@ -336,7 +336,7 @@
     width: 18px;
     height: 18px;
     background-color: #999;
-    mask: url('/frontend/assets/icons/star.svg') no-repeat center;
+    mask: url('../assets/icons/star.svg') no-repeat center;
     mask-size: contain;
     transition: background-color 0.3s ease;
 }
