@@ -86,10 +86,7 @@ export async function getDataDB() {
     // const userDishes = await getUserDishes();
     const dishIngredients = await getDishIngredients();
 
-    const data = { dishes, 
-        ingredients,
-        // users, 
-        dishIngredients };
+    const data = { dishes, ingredients, dishIngredients };
 
     // data --> json-Format
     // save to LocalStorage
