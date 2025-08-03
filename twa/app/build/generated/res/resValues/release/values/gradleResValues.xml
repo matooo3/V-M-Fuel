@@ -28,13 +28,13 @@
     <!-- Value from default config. -->
     <string name="fallbackType" translatable="false">webapk</string>
     <!-- Value from default config. -->
-    <string name="fullScopeUrl" translatable="false">https://gfoh.ddns.net:6969/frontend/</string>
+    <string name="fullScopeUrl" translatable="false">https://gfoh.ddns.net/frontend/</string>
     <!-- Value from default config. -->
     <string name="generatorApp" translatable="false">bubblewrap-cli</string>
     <!-- Value from default config. -->
     <string name="hostName" translatable="false">gfoh.ddns.net</string>
     <!-- Value from default config. -->
-    <string name="launchUrl" translatable="false">https://gfoh.ddns.net:6969/frontend/index.html</string>
+    <string name="launchUrl" translatable="false">https://gfoh.ddns.net/frontend/index.html</string>
     <!-- Value from default config. -->
     <string name="launcherName" translatable="false">MV</string>
     <!-- Value from default config. -->
@@ -42,6 +42,6 @@
     <!-- Value from default config. -->
     <string name="providerAuthority" translatable="false">net_6969.ddns.gfoh.twa.fileprovider</string>
     <!-- Value from default config. -->
-    <string name="webManifestUrl" translatable="false">https://gfoh.ddns.net:6969/frontend/manifest.json</string>
+    <string name="webManifestUrl" translatable="false">https://gfoh.ddns.net/frontend/manifest.json</string>
 
 </resources>

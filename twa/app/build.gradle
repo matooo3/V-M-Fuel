@@ -23,7 +23,7 @@ plugins {
 def twaManifest = [
     applicationId: 'net_6969.ddns.gfoh.twa',
     hostName: 'gfoh.ddns.net', // The domain being opened in the TWA.
-    launchUrl: ':6969/frontend/index.html', // The start path for the TWA. Must be relative to the domain.
+    launchUrl: '/frontend/index.html', // The start path for the TWA. Must be relative to the domain.
     name: 'V-M-Fuel', // The application name.
     launcherName: 'MV', // The name shown on the Android Launcher.
     themeColor: '#000000', // The color used for the status bar.
@@ -57,8 +57,8 @@ android {
         applicationId "net_6969.ddns.gfoh.twa"
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 4
-        versionName "4"
+        versionCode 9
+        versionName "9"
 
         // The name for the application
         resValue "string", "appName", twaManifest.name
@@ -76,12 +76,12 @@ android {
             // The URL the Web Manifest for the Progressive Web App that the TWA points to. This
             // is used by Chrome OS and Meta Quest to open the Web version of the PWA instead of
             // the TWA, as it will probably give a better user experience for non-mobile devices.
-            resValue "string", "webManifestUrl", 'https://gfoh.ddns.net:6969/frontend/manifest.json'
+            resValue "string", "webManifestUrl", 'https://gfoh.ddns.net/frontend/manifest.json'
         
 
         
             // This is used by Meta Quest.
-            resValue "string", "fullScopeUrl", 'https://gfoh.ddns.net:6969/frontend/'
+            resValue "string", "fullScopeUrl", 'https://gfoh.ddns.net/frontend/'
         
 
         

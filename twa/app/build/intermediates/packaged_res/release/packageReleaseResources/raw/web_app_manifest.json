@@ -1,1 +1,1 @@
-{"name":"V & M Fuels","short_name":"M & V","theme_color":"#333333","background_color":"#333333","display":"fullscreen","orientation":"portrait","scope":"./","start_url":":6969/frontend/index.html","icons":[{"src":"./assets/img/logo.png","sizes":"512x512","type":"image/png"}]}
+{"name":"V & M Fuels","short_name":"M & V","theme_color":"#333333","background_color":"#333333","display":"fullscreen","orientation":"portrait","scope":"./","start_url":"/frontend/index.html","icons":[{"src":"./assets/img/logo.png","sizes":"512x512","type":"image/png"}]}

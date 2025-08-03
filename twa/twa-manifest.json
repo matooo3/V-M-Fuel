@@ -3,7 +3,7 @@
   "host": "gfoh.ddns.net",
   "name": "V-M-Fuel",
   "launcherName": "MV",
-  "display": "standalone",
+  "display": "fullscreen",
   "themeColor": "#000000",
   "themeColorDark": "#000000",
   "navigationColor": "#000000",
@@ -12,18 +12,18 @@
   "navigationDividerColorDark": "#000000",
   "backgroundColor": "#000000",
   "enableNotifications": true,
-  "startUrl": ":6969/frontend/index.html",
-  "iconUrl": "https://gfoh.ddns.net:6969/frontend/assets/img/logo.png",
+  "startUrl": "/frontend/index.html",
+  "iconUrl": "https://gfoh.ddns.net/frontend/assets/img/logo.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "C:\\Users\\matze\\Desktop\\VM.jks",
     "alias": "vm_nutrition"
   },
-  "appVersionName": "4",
-  "appVersionCode": 4,
+  "appVersionName": "9",
+  "appVersionCode": 9,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://gfoh.ddns.net:6969/frontend/manifest.json",
+  "webManifestUrl": "https://gfoh.ddns.net/frontend/manifest.json",
   "fallbackType": "webapk",
   "features": {
     "playBilling": {
@@ -36,7 +36,7 @@
   "enableSiteSettingsShortcut": false,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "https://gfoh.ddns.net:6969/frontend/",
+  "fullScopeUrl": "https://gfoh.ddns.net/frontend/",
   "minSdkVersion": 21,
   "orientation": "portrait",
   "fingerprints": [],
@@ -45,5 +45,5 @@
   "protocolHandlers": [],
   "fileHandlers": [],
   "launchHandlerClientMode": "",
-  "appVersion": "4"
+  "appVersion": "9"
 }
