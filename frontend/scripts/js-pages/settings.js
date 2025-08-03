@@ -193,7 +193,7 @@ function addEventListeners() {
 
 
     // close buttons
-    const backArrow = document.querySelector('#arrow-back-st');
+    const backArrow = document.querySelector('.bigger-hitbox-st');
     if (backArrow) {
 
         backArrow.addEventListener('click', saveSettings);

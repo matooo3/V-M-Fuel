@@ -30,7 +30,7 @@
 .settings-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     max-height: 200px;
     width: 100%;
 }
@@ -47,6 +47,17 @@
     border-radius: 0 0 0 3px;
     transform: rotate(45deg);
     z-index: 100;
+}
+
+.bigger-hitbox-st {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 6px;
+    left: 0px;
+    width: 60px;
+    height: 50px;
 }
 
 #close-settings-btn {
@@ -341,9 +352,9 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     border: none;
     font-weight: 500;
     font-family: inherit;
-    height: 40px;
+    height: 35px;
     border-radius: 7px;
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     width: 100px;
 }
 
@@ -433,7 +444,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 
 .select-field-app-st {
     width: 100px;
-    height: 40px;
+    height: 35px;
     border-radius: 7px;
     padding: 4px 4px 4px 8px;
     display: flex;
@@ -442,7 +453,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
 }
 
 .select-text.app-st {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     font-weight: 300;
 }
 

@@ -309,7 +309,7 @@
     align-items: start;
     justify-content: start;
     /* width: 40%; */
-    gap: 0px;
+    gap: 10px;
     width: 100%;
     max-width: 60%;
 }
@@ -495,4 +495,9 @@
 } 
 .grocery-item:has(input[type="checkbox"]:checked) .swipe-content {
     filter: sepia(1) hue-rotate(90deg) brightness(0.9) saturate(1.2);
+}
+
+
+.custom-select.unit-gl{
+    width: 100%;
 }
