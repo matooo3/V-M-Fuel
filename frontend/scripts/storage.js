@@ -82,11 +82,14 @@ export async function getDishesWithIngredients(category = "all") {
 export async function getDataDB() {
     const dishes = await getDishes();
     const ingredients = await getIngredients();
-    const users = await getUsers();
+    // const users = await getUsers();
     // const userDishes = await getUserDishes();
     const dishIngredients = await getDishIngredients();
 
-    const data = { dishes, ingredients, users, dishIngredients };
+    const data = { dishes, 
+        ingredients,
+        // users, 
+        dishIngredients };
 
     // data --> json-Format
     // save to LocalStorage
