@@ -117,9 +117,10 @@ html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
+    user-select: none;  /* Prevent text selection */
+    -webkit-user-select: none; /* Prevent text selection */
+    -webkit-tap-highlight-color: transparent; /* ios/Android */
+    -webkit-touch-callout: none; /* Prevent context menu on long press */
 }
 
 input,
