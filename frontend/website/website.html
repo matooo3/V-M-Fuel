@@ -104,7 +104,7 @@
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
       list-style: none;
       align-items: center;
     }
@@ -162,10 +162,6 @@
       white-space: nowrap;
     }
 
-    .nav-link.icon-link {
-        font-size: 1.2rem;
-    }
-
     .dark-mode .nav-link {
       color: #b0c2e3;
     }
@@ -178,19 +174,96 @@
       color: #a5b4fc;
     }
 
-    .nav-link:not(.icon-link)::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--gradient-primary);
-      transition: width 0.3s ease;
+    /* Dropdown Navigation Styles */
+    .nav-item-dropdown {
+      position: relative;
     }
 
-    .nav-link:not(.icon-link):hover::after {
-      width: 100%;
+    .dropdown-toggle {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+      color: var(--text-secondary);
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .dark-mode .dropdown-toggle {
+      color: #b0c2e3;
+    }
+
+    .dropdown-toggle:hover {
+      color: var(--primary);
+    }
+
+    .dark-mode .dropdown-toggle:hover {
+      color: #a5b4fc;
+    }
+    
+    .dropdown-toggle .fa-chevron-down {
+        font-size: 0.8em;
+        transition: transform 0.3s ease;
+    }
+    
+    .nav-item-dropdown.open .dropdown-toggle .fa-chevron-down {
+        transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 15px);
+      right: 0;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 0.75rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 1001;
+      min-width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .dark-mode .dropdown-menu {
+      background: rgba(30, 30, 63, 0.85);
+      border: 1px solid rgba(27, 206, 134, 0.2);
+    }
+
+    .nav-item-dropdown.open .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .dark-mode .dropdown-item {
+        color: #b0c2e3;
+    }
+
+    .dropdown-item:hover {
+      background: rgba(27, 206, 134, 0.1);
+      color: var(--primary);
+    }
+    
+    .dark-mode .dropdown-item:hover {
+        color: #f1f5f9;
     }
 
     /* Hero Section */
@@ -282,6 +355,7 @@
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center; /* MODIFIED: Ensures content is always centered */
       gap: 0.5rem;
       padding: 0.875rem 2rem;
       border-radius: 50px;
@@ -381,7 +455,8 @@
       margin-bottom: 1rem;
     }
     
-    .testimonials .section-badge {
+    .testimonials .section-badge,
+    .feedback .section-badge {
         background: rgba(27, 206, 134, 0.1);
         color: var(--primary);
     }
@@ -581,7 +656,7 @@
     }
 
     .chat-rating {
-        color: #fbbf24; /* A gold/yellow for stars */
+        color: #fbbf24;
         font-size: 0.875rem;
         white-space: nowrap;
     }
@@ -591,11 +666,72 @@
         line-height: 1.6;
     }
 
+    /* Feedback Section */
+    .feedback {
+        padding: 8rem 2rem;
+        background: var(--bg-primary);
+        transition: background 0.3s ease;
+    }
+
+    .dark-mode .feedback {
+        background: var(--bg-primary);
+    }
+
+    .feedback-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .feedback-form {
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .feedback-textarea {
+        width: 100%;
+        min-height: 150px;
+        padding: 1.5rem;
+        border-radius: 24px;
+        border: 1px solid rgba(27, 206, 134, 0.2);
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        color: var(--text-primary);
+        resize: vertical;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-md);
+    }
+
+    .dark-mode .feedback-textarea {
+        background: rgba(30, 30, 63, 0.8);
+        border: 1px solid rgba(27, 206, 134, 0.3);
+        color: var(--text-primary);
+    }
+
+    .feedback-textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(27, 206, 134, 0.2);
+    }
+    
+    .feedback-textarea::placeholder {
+        color: var(--text-secondary);
+        opacity: 0.8;
+    }
+
+    .feedback-form .btn-primary {
+        align-self: center;
+        width: auto;
+    }
+
     /* Footer */
     .footer {
       background: var(--bg-secondary);
       color: var(--text-secondary);
-      padding: 6rem 2rem 2rem; /* Increased top padding */
+      padding: 6rem 2rem 2rem;
       text-align: center;
       transition: background 0.3s ease;
       position: relative;
@@ -610,11 +746,10 @@
       margin: 0 auto;
     }
     
-    /* MODIFIED: Imprint Styling */
     .imprint-container {
-        margin-bottom: 4rem; /* Increased bottom margin */
-        padding-top: 4rem; /* Increased top padding */
-        border-top: 1px solid rgba(0,0,0,0.1); /* Separator line */
+        margin-bottom: 4rem;
+        padding-top: 4rem;
+        border-top: 1px solid rgba(0,0,0,0.1);
     }
     
     .dark-mode .imprint-container {
@@ -622,8 +757,8 @@
     }
     
     .imprint-container h3 {
-        font-size: 1.25rem; /* Adjusted font size */
-        font-weight: 600; /* Adjusted font weight */
+        font-size: 1.25rem;
+        font-weight: 600;
         color: var(--text-primary);
         margin-bottom: 1.5rem;
     }
@@ -660,6 +795,60 @@
     .dark-mode .footer-copyright {
         border-top-color: rgba(255, 255, 255, 0.1);
     }
+
+    /* Feedback Overlay Styles */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 15, 35, 0.5);
+        backdrop-filter: blur(10px);
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .overlay-content {
+        background: var(--bg-secondary);
+        padding: 3rem;
+        border-radius: 24px;
+        box-shadow: var(--shadow-xl);
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+        border: 1px solid rgba(27, 206, 134, 0.2);
+        transform: scale(0.9);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .overlay.active .overlay-content {
+        transform: scale(1);
+    }
+
+    .overlay-content h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 2rem;
+    }
+
+    /* MODIFIED: Specific styles for the overlay button */
+    #overlayCloseBtn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
 
     /* Animations */
     @keyframes slideInUp {
@@ -708,7 +897,7 @@
       .nav-links {
         gap: 1.2rem;
       }
-      .nav-link {
+      .nav-link, .dropdown-toggle {
         font-size: 14px;
       }
       .theme-toggle {
@@ -753,6 +942,9 @@
         padding-top: 3rem;
         margin-bottom: 3rem;
       }
+      .overlay-content {
+        padding: 2rem;
+      }
     }
 
     @media (max-width: 450px) {
@@ -765,7 +957,7 @@
         .nav-links {
             gap: 1rem;
         }
-        .nav-link {
+        .nav-link, .dropdown-toggle {
             font-size: 12px;
         }
         .logo {
@@ -803,9 +995,20 @@
     <div class="nav-container">
       <a href="#" class="logo">NextMeal</a>
       <ul class="nav-links">
-        <li><a href="#" class="nav-link icon-link" ><i class="fas fa-arrow-up"></i></a></li>
-        <li><a href="#features" class="nav-link">Features</a></li>
-        <li><a href="#reviews" class="nav-link">Bewertungen</a></li>
+        <!-- Dropdown-Menü für die Seitennavigation -->
+        <li class="nav-item-dropdown" id="navDropdownContainer">
+          <button class="nav-link dropdown-toggle" id="navDropdownToggle">
+            Navigation <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu" id="navDropdownMenu">
+            <a href="#" class="dropdown-item">Download</a>
+            <a href="#features" class="dropdown-item">Features</a>
+            <a href="#reviews" class="dropdown-item">Bewertungen</a>
+            <a href="#feedback" class="dropdown-item">Feedback</a>
+          </div>
+        </li>
+
+        <!-- Theme-Toggle-Button -->
         <li id="theme-button">
           <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
             <div class="theme-toggle-slider">
@@ -953,10 +1156,30 @@
     </div>
   </section>
 
+  <!-- Feedback Section -->
+  <section class="feedback" id="feedback">
+    <div class="feedback-container">
+      <div class="section-header fade-in">
+        <div class="section-badge">Feedback</div>
+        <h2 class="section-title">Hilf uns, besser zu werden</h2>
+        <p class="section-subtitle">
+          Hast du Vorschläge, Wünsche oder ist dir ein Fehler aufgefallen? Wir freuen uns über deine Nachricht!
+        </p>
+      </div>
+      <form class="feedback-form fade-in" id="feedbackForm" action="#" method="POST">
+        <textarea id="feedbackTextarea" class="feedback-textarea" name="feedback_message" placeholder="Schreibe hier dein Feedback..."></textarea>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i>
+          Feedback absenden
+        </button>
+      </form>
+    </div>
+  </section>
+
+
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
-      <!-- MODIFIED: Imprint is now integrated into the footer flow -->
       <div class="imprint-container">
           <h3>Impressum</h3>
           <p>NextMeal</p>
@@ -967,6 +1190,14 @@
       </div>
     </div>
   </footer>
+  
+  <!-- Feedback Success Overlay -->
+  <div class="overlay" id="feedbackOverlay">
+    <div class="overlay-content">
+        <h3>Vielen Dank für Ihr Feedback!</h3>
+        <button class="btn btn-primary" id="overlayCloseBtn">OK</button>
+    </div>
+  </div>
 
   <script>
     // Initialize dark mode
@@ -1021,7 +1252,6 @@
         e.preventDefault();
         
         let target;
-        // Special handling for href="#" to scroll to the very top
         if (this.getAttribute('href') === '#') {
             target = document.body;
         } else {
@@ -1037,26 +1267,76 @@
       });
     });
 
-    // Button ripple effect
-    document.querySelectorAll('.btn').forEach(button => {
-      button.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.classList.add('ripple');
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => {
-          ripple.remove();
-        }, 600);
-      });
+    // Dropdown Menu Logic
+    const dropdownContainer = document.getElementById('navDropdownContainer');
+    const dropdownToggle = document.getElementById('navDropdownToggle');
+    const dropdownMenu = document.getElementById('navDropdownMenu');
+
+    dropdownToggle.addEventListener('click', (event) => {
+      event.stopPropagation(); // Prevents the window click listener from firing immediately
+      dropdownContainer.classList.toggle('open');
+    });
+    
+    dropdownMenu.addEventListener('click', () => {
+        dropdownContainer.classList.remove('open');
+    });
+
+    window.addEventListener('click', (event) => {
+      if (dropdownContainer.classList.contains('open') && !dropdownContainer.contains(event.target)) {
+        dropdownContainer.classList.remove('open');
+      }
+    });
+
+    /**
+     * Reads the text from the feedback textarea.
+     * @returns {string} The entered feedback text.
+     */
+    function getFeedback() {
+      const feedbackInput = document.getElementById('feedbackTextarea');
+      return feedbackInput.value;
+    }
+
+    // --- Feedback Form and Overlay Logic ---
+    const feedbackForm = document.getElementById('feedbackForm');
+    const feedbackOverlay = document.getElementById('feedbackOverlay');
+    const overlayCloseBtn = document.getElementById('overlayCloseBtn');
+
+    // Event listener for the feedback form submission
+    feedbackForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevents the default form submission (page reload)
+      
+      const feedbackText = getFeedback();
+      
+      if (feedbackText.trim() === '') {
+        alert('Please enter your feedback first.'); // Standard alert is okay for validation
+        return;
+      }
+      
+      console.log('Feedback received:', feedbackText);
+
+      // Send feedback to DB here:
+      
+      // Show the custom overlay
+      feedbackOverlay.classList.add('active');
+      
+      // Clears the textarea after submission
+      document.getElementById('feedbackTextarea').value = '';
+    });
+    
+    /**
+     * Closes the feedback overlay.
+     */
+    function closeFeedbackOverlay() {
+        feedbackOverlay.classList.remove('active');
+    }
+
+    // Add event listeners to close the overlay
+    overlayCloseBtn.addEventListener('click', closeFeedbackOverlay);
+    feedbackOverlay.addEventListener('click', (event) => {
+        // Close only if the backdrop itself is clicked, not the content inside
+        if (event.target === feedbackOverlay) {
+            closeFeedbackOverlay();
+        }
     });
   </script>
 </body>
