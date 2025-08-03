@@ -11,7 +11,7 @@
     <color name="navigationDividerColorDark">#000000</color>
     <color name="shortcut_background">#F5F5F5</color>
     <integer name="splashScreenFadeOutDuration">300</integer>
-    <string name="appName" translatable="false">V-M-Fuel</string>
+    <string name="appName" translatable="false">NutriPilot</string>
     <string name="assetStatements">
     [{
         \"relation\": [\"delegate_permission/common.handle_all_urls\"],
@@ -27,7 +27,7 @@
     <string name="generatorApp" translatable="false">bubblewrap-cli</string>
     <string name="hostName" translatable="false">gfoh.ddns.net</string>
     <string name="launchUrl" translatable="false">https://gfoh.ddns.net/frontend/index.html</string>
-    <string name="launcherName" translatable="false">MV</string>
+    <string name="launcherName" translatable="false">NutriPilot</string>
     <string name="orientation" translatable="false">portrait</string>
     <string name="providerAuthority" translatable="false">net_6969.ddns.gfoh.twa.fileprovider</string>
     <string name="webManifestUrl" translatable="false">https://gfoh.ddns.net/frontend/manifest.json</string>

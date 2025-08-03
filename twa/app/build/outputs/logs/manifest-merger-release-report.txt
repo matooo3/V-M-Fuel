@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:22:1-213:12
-INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:22:1-213:12
-INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:22:1-213:12
-INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:22:1-213:12
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:22:1-210:12
+INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:22:1-210:12
+INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:22:1-210:12
+INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:22:1-210:12
 MERGED from [com.google.androidbrowserhelper:billing:1.1.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\86daebdf1ac5a298358120b63e4f1cb9\transformed\billing-1.1.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.androidbrowserhelper:androidbrowserhelper:2.6.2] C:\Users\matze\.gradle\caches\8.11.1\transforms\5053e02be90783e54992393be394bb70\transformed\androidbrowserhelper-2.6.2\AndroidManifest.xml:17:1-32:12
 MERGED from [com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:2:1-38:12
@@ -60,8 +60,8 @@ ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidM
 	android:name
 		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:26:26-78
 application
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:35:5-212:19
-INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:35:5-212:19
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:35:5-209:19
+INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:35:5-209:19
 MERGED from [com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:21:5-36:19
 MERGED from [com.android.billingclient:billing:7.1.1] C:\Users\matze\.gradle\caches\8.11.1\transforms\1dcabcea90c9508775a51aeea5d7fca7\transformed\billing-7.1.1\AndroidManifest.xml:21:5-36:19
 MERGED from [com.google.android.gms:play-services-location:19.0.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\e7cbde54ad547b82b2f871a970f72558\transformed\play-services-location-19.0.0\AndroidManifest.xml:7:5-20
@@ -125,7 +125,7 @@ ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidM
 	android:name
 		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:55:13-41
 activity#net_6969.ddns.gfoh.twa.LauncherActivity
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:64:9-148:20
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:64:9-145:20
 	android:label
 		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:66:13-49
 	android:exported
@@ -212,136 +212,130 @@ ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidM
 		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:112:17-53
 	android:name
 		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:111:24-91
-meta-data#android.support.customtabs.trusted.DISPLAY_MODE
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:117:13-118:45
-	android:value
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:118:17-42
-	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:117:24-86
 meta-data#android.support.customtabs.trusted.SCREEN_ORIENTATION
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:121:13-122:54
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:118:13-119:54
 	android:value
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:122:17-52
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:119:17-52
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:121:24-92
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:118:24-92
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:128:13-131:29
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:125:13-128:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:129:17-69
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:126:17-69
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:129:25-66
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:126:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:130:17-77
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:127:17-77
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:130:27-74
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:127:27-74
 intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:@string/hostName+data:pathPrefix:/frontend/+data:scheme:https
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:133:13-143:29
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:130:13-140:29
 	android:autoVerify
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:133:28-53
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:130:28-53
 action#android.intent.action.VIEW
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:134:17-68
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:131:17-68
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:134:25-66
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:131:25-66
 category#android.intent.category.DEFAULT
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:135:17-76
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:132:17-76
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:135:27-73
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:132:27-73
 category#android.intent.category.BROWSABLE
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:136:17-77
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:133:17-77
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:136:27-75
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:133:27-75
 data
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:137:17-142:19
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:134:17-139:19
 	android:host
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:138:21-52
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:135:21-52
 	android:scheme
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:137:23-45
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:134:23-45
 	android:pathPrefix
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:140:21-52
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:137:21-52
 activity#com.google.androidbrowserhelper.trusted.FocusActivity
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:150:9-90
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:147:9-90
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:150:19-87
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:147:19-87
 activity#com.google.androidbrowserhelper.trusted.WebViewFallbackActivity
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:152:9-153:62
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:149:9-150:62
 	android:configChanges
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:153:13-59
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:150:13-59
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:152:19-97
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:149:19-97
 provider#androidx.core.content.FileProvider
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:155:9-163:20
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:152:9-160:20
 	android:grantUriPermissions
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:158:13-47
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:155:13-47
 	android:authorities
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:157:13-60
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:154:13-60
 	android:exported
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:159:13-37
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:156:13-37
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:156:13-62
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:153:13-62
 meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:160:13-162:53
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:157:13-159:53
 	android:resource
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:162:17-50
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:159:17-50
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:161:17-67
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:158:17-67
 service#net_6969.ddns.gfoh.twa.DelegationService
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:165:9-180:19
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:162:9-177:19
 	android:enabled
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:167:13-55
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:164:13-55
 	android:exported
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:168:13-56
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:165:13-56
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:166:13-46
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:163:13-46
 meta-data#android.support.customtabs.trusted.SMALL_ICON
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:171:17-173:73
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:168:17-170:73
 	android:resource
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:173:21-70
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:170:21-70
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:172:21-81
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:169:21-81
 intent-filter#action:name:android.support.customtabs.trusted.TRUSTED_WEB_ACTIVITY_SERVICE+category:name:android.intent.category.DEFAULT
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:176:13-179:29
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:173:13-176:29
 action#android.support.customtabs.trusted.TRUSTED_WEB_ACTIVITY_SERVICE
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:177:17-105
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:174:17-105
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:177:25-103
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:174:25-103
 activity#com.google.androidbrowserhelper.trusted.NotificationPermissionRequestActivity
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:183:13-118
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:180:13-118
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:183:23-115
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:180:23-115
 activity#com.google.androidbrowserhelper.playbilling.provider.PaymentActivity
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:188:9-201:20
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:185:9-198:20
 	android:exported
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:192:13-36
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:189:13-36
 	android:configChanges
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:191:13-96
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:188:13-96
 	android:theme
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:190:13-72
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:187:13-72
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:189:13-96
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:186:13-96
 intent-filter#action:name:org.chromium.intent.action.PAY
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:194:13-196:29
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:191:13-193:29
 action#org.chromium.intent.action.PAY
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:195:17-73
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:192:17-73
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:195:25-70
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:192:25-70
 meta-data#org.chromium.default_payment_method_name
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:198:13-200:67
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:195:13-197:67
 	android:value
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:200:17-64
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:197:17-64
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:199:17-72
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:196:17-72
 service#com.google.androidbrowserhelper.playbilling.provider.PaymentService
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:204:9-210:19
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:201:9-207:19
 	android:exported
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:206:13-36
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:203:13-36
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:205:13-95
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:202:13-95
 intent-filter#action:name:org.chromium.intent.action.IS_READY_TO_PAY
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:207:13-209:29
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:204:13-206:29
 action#org.chromium.intent.action.IS_READY_TO_PAY
-ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:208:17-85
+ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:205:17-85
 	android:name
-		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:208:25-82
+		ADDED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:205:25-82
 uses-sdk
 INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml

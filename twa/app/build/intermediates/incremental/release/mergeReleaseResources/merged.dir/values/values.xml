@@ -323,7 +323,7 @@
     <string name="abc_shareactionprovider_share_with_application">Share with <ns1:g example="Mail" id="application_name">%s</ns1:g></string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="androidx_startup" translatable="false">androidx.startup</string>
-    <string name="appName" translatable="false">V-M-Fuel</string>
+    <string name="appName" translatable="false">NutriPilot</string>
     <string name="app_name">Play Billing</string>
     <string name="assetStatements">
     [{
@@ -369,7 +369,7 @@
     <string name="generatorApp" translatable="false">bubblewrap-cli</string>
     <string name="hostName" translatable="false">gfoh.ddns.net</string>
     <string name="launchUrl" translatable="false">https://gfoh.ddns.net/frontend/index.html</string>
-    <string name="launcherName" translatable="false">MV</string>
+    <string name="launcherName" translatable="false">NutriPilot</string>
     <string name="manage_space_no_data_toast">This app holds no browsing data.</string>
     <string name="manage_space_not_supported_toast">This app\'s data is stored in %1$s.</string>
     <string name="no_provider_toast">Please install Chrome Stable 72 or later.</string>

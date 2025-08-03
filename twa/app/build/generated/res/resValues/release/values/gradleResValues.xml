@@ -24,7 +24,7 @@
     <!-- Value from default config. -->
     <integer name="splashScreenFadeOutDuration">300</integer>
     <!-- Value from default config. -->
-    <string name="appName" translatable="false">V-M-Fuel</string>
+    <string name="appName" translatable="false">NutriPilot</string>
     <!-- Value from default config. -->
     <string name="fallbackType" translatable="false">webapk</string>
     <!-- Value from default config. -->
@@ -36,7 +36,7 @@
     <!-- Value from default config. -->
     <string name="launchUrl" translatable="false">https://gfoh.ddns.net/frontend/index.html</string>
     <!-- Value from default config. -->
-    <string name="launcherName" translatable="false">MV</string>
+    <string name="launcherName" translatable="false">NutriPilot</string>
     <!-- Value from default config. -->
     <string name="orientation" translatable="false">portrait</string>
     <!-- Value from default config. -->

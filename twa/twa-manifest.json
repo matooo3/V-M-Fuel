@@ -1,9 +1,9 @@
 {
   "packageId": "net_6969.ddns.gfoh.twa",
   "host": "gfoh.ddns.net",
-  "name": "V-M-Fuel",
-  "launcherName": "MV",
-  "display": "fullscreen",
+  "name": "NutriPilot",
+  "launcherName": "NutriPilot",
+  "display": "standalone",
   "themeColor": "#000000",
   "themeColorDark": "#000000",
   "navigationColor": "#000000",
@@ -19,8 +19,8 @@
     "path": "C:\\Users\\matze\\Desktop\\VM.jks",
     "alias": "vm_nutrition"
   },
-  "appVersionName": "9",
-  "appVersionCode": 9,
+  "appVersionName": "10",
+  "appVersionCode": 10,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://gfoh.ddns.net/frontend/manifest.json",
@@ -45,5 +45,5 @@
   "protocolHandlers": [],
   "fileHandlers": [],
   "launchHandlerClientMode": "",
-  "appVersion": "9"
+  "appVersion": "10"
 }

@@ -24,8 +24,8 @@ def twaManifest = [
     applicationId: 'net_6969.ddns.gfoh.twa',
     hostName: 'gfoh.ddns.net', // The domain being opened in the TWA.
     launchUrl: '/frontend/index.html', // The start path for the TWA. Must be relative to the domain.
-    name: 'V-M-Fuel', // The application name.
-    launcherName: 'MV', // The name shown on the Android Launcher.
+    name: 'NutriPilot', // The application name.
+    launcherName: 'NutriPilot', // The name shown on the Android Launcher.
     themeColor: '#000000', // The color used for the status bar.
     themeColorDark: '#000000', // The color used for the dark status bar.
     navigationColor: '#000000', // The color used for the navigation bar.
@@ -57,8 +57,8 @@ android {
         applicationId "net_6969.ddns.gfoh.twa"
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 9
-        versionName "9"
+        versionCode 10
+        versionName "10"
 
         // The name for the application
         resValue "string", "appName", twaManifest.name
