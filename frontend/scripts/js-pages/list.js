@@ -7,6 +7,7 @@ import * as Settings from "./settings.js";
 import * as SwipeToDelete from "../swipetodelete.js";
 import * as Script from '../script.js';
 import * as DropDown from '../drop-down.js';
+import * as Sound from "../sound.js";
 
 const debounceTimers = new Map();
 
@@ -328,11 +329,13 @@ async function moveCheckedItemToBottom(li, isChecked, timeDelay, item) {
     if (isChecked) {
         deleteEditItemEventListener(li, item); // lock editing
         hideQuantityControl(li);
+        Sound.playCheckSound();
         await new Promise(resolve => setTimeout(resolve, timeDelay));
         list.appendChild(li);
     } else {
         addEditItemEventListener(li, item); // enable editing
         showQuantityControl(li);
+        Sound.playCheckSound();
         list.insertBefore(li, list.firstChild);
     }
 }

@@ -9,6 +9,7 @@ import * as Settings from './settings.js';
 import * as Search from '../searchBar.js';
 import * as Plan from './plan.js';
 import * as Script from '../script.js';
+import * as Sound from '../sound.js';
 
 export default async function loadHome() {
 
@@ -62,9 +63,7 @@ function addCheckboxEventListener() {
     if (checkbox) {
         checkbox.addEventListener('change', async () => {
 
-            const checkboxSound = 'checkbox.mp3';
-            let volCheck = 0.2;
-            createSound(volCheck, checkboxSound);
+            Sound.playCheckSound();
 
             await sleep(100);
 
@@ -87,13 +86,6 @@ function addCheckboxEventListener() {
 export async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-function createSound(volume, file) {
-    const sound = new Audio(`../../assets/sounds/${file}`);
-    sound.volume = volume;
-    sound.play();
-}
-
 
 async function updateAdminContainer() {
     const activeTab = document.querySelector('.tab.active');
@@ -480,9 +472,7 @@ function resetEventlistener() {
         let initialTodaysMealsWithState = await getTodaysMealsWithState(true);
         await Storage.saveNextMealsToDB(initialTodaysMealsWithState);
 
-        // const pageSound = 'page.mp3';
-        // let volPage = 0.1;
-        // createSound(volPage, pageSound);
+        // Sound.playCheckSound();
 
         // render first meal
         renderFirstUneatenMeal(initialTodaysMealsWithState);
