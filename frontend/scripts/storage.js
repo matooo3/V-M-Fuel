@@ -448,3 +448,11 @@ export async function getUserPreferencesFromDB() {
 }
 // ------------------------------------------------------------------
 
+
+// ---------- WEBSITE FEEDBACK ---------
+export function sendFeedbackToDB(message) {
+    // const user = Auth.getUserFromToken();
+    // const token = Auth.getUserToken();
+    const feedback = { message };
+    Api.postData("/add-feedback", { feedback }, null);
+}

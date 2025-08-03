@@ -1223,7 +1223,8 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
+    import * as Storage from "../scripts/storage.js";
     // --- APP CONFIGURATION ---
     const APP_NAME = "NutriPilot";
 
@@ -1439,6 +1440,10 @@
       }
       
       console.log('Feedback received:', feedbackText);
+
+      // save feedback to DB
+      Storage.sendFeedbackToDB(feedbackText);
+
       feedbackOverlay.classList.add('active');
       feedbackTextarea.value = '';
     });
