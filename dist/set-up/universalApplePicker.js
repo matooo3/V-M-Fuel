@@ -3,7 +3,7 @@
 // ===== UNIVERSAL APPLE PICKER CLASS =====
 // ==============================
 
-import { getUserDataFromLS } from '../../scripts/storage.js';
+import { getUserDataFromLS } from './storage.js';
 
 export class UniversalApplePicker {
     constructor(type, options = {}) {

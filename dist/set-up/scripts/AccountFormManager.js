@@ -3,7 +3,8 @@
 // ===== ACCOUNT FORM FUNCTIONS =====
 // ==============================
 
-import { getUserDataFromLS, saveUserDataToLS } from '../../scripts/storage.js';
+import { getUserDataFromLS, saveUserDataToLS } from './storage.js';
+
 
 /**
  * Initialize account form functionality
