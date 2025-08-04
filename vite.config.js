@@ -30,6 +30,11 @@ export default defineConfig({
         {
           src: 'set-up/**/*',
           dest: 'set-up',
+        },
+        // Kopiert die 'login.js' und 'register.js' Dateien
+        {
+          src: 'scripts/{login.js,register.js,auth.js,api.js,storage.js}',
+          dest: 'scripts'
         }
       ]
     })
