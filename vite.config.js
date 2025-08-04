@@ -26,10 +26,6 @@ export default defineConfig({
           src: 'assets/**/*',
           dest: 'assets',
         },
-        {
-          src: 'scripts/**/*',
-          dest: 'scripts',
-        },
         // Kopiert den 'set-up'-Ordner
         {
           src: 'set-up/**/*',

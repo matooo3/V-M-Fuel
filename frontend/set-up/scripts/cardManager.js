@@ -3,7 +3,7 @@
 // ===== CARD FUNCTIONS =====
 // ==============================
 
-import { getUserDataFromLS, saveUserDataToLS } from '../../scripts/storage.js';
+import { getUserDataFromLS, saveUserDataToLS } from './storage.js';
 import { Utils } from './utils.js';
 
 const PAGE_KEY_MAP = {
@@ -11,6 +11,7 @@ const PAGE_KEY_MAP = {
     'activity-level.html': 'activityLevel',
     'gender.html': 'gender'
 };
+
 
 /**
  * Initialize card event listeners

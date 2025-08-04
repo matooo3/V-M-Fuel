@@ -115,6 +115,10 @@
     height: 25px;
 }
 
+.contact-us-su {
+    text-decoration: none;
+}
+
 @media (max-height: 700px) {
 
     #acc-div {

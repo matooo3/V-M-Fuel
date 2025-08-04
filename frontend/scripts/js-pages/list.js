@@ -13,6 +13,7 @@ const debounceTimers = new Map();
 
 // Main function
 export default async function loadList() {
+
     Script.showNavbar();
 
     const app = document.getElementById("app");
