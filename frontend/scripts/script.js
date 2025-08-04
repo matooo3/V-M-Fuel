@@ -8,44 +8,92 @@ import * as Auth from "./auth.js";
 import * as Role from "./roleRouting.js";
 import * as Algo from "./algo/algo.js";
 import * as Settings from "./js-pages/settings.js";
+// import * as RoleCheck from "./role-check/user.js";
+import * as RoleCheck from './auth.js';
 
-const valid = await Auth.checkSessionTokenValid();
-if (!valid) {
-    console.warn(
-        `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt11111111111`
-    );
-} else {
-    console.log(`[TokenCheck] ✅ Alles in Ordnung11111111111111`);
-}
+// Funktion, die die asynchronen Startprozesse ausführt
+// Damit werden die "Top-level await"-Fehler vermieden.
+async function startApp() {
 
-// AUTHENTICATION
-setInterval(async () => {
-    console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
+    // INITIALIZE ROLE CHECK
+    await RoleCheck.checkRoleAccess(['admin', 'cook', 'user']); 
+
     const valid = await Auth.checkSessionTokenValid();
     if (!valid) {
         console.warn(
-            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
+            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt11111111111`
         );
     } else {
-        console.log(`[TokenCheck] ✅ Alles in Ordnung`);
+        console.log(`[TokenCheck] ✅ Alles in Ordnung11111111111111`);
     }
-}, 5 * 60 * 1000); // alle 5 Minuten
 
-// SAVE INITIAL USER DATA TO DB
-Storage.saveInitialUserDataToDB();
+    // AUTHENTICATION
+    setInterval(async () => {
+        console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
+        const valid = await Auth.checkSessionTokenValid();
+        if (!valid) {
+            console.warn(
+                `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
+            );
+        } else {
+            console.log(`[TokenCheck] ✅ Alles in Ordnung`);
+        }
+    }, 5 * 60 * 1000); // alle 5 Minuten
 
-// SERVICE-WORKER REGISTRATION
-// The service worker registration code is currently disabled for debugging purposes.
-// Uncomment the following block to enable service worker functionality.
-// if ('serviceWorker' in navigator) {
-//   navigator.serviceWorker.register('/sw.js')
-//     .then((registration) => {
-//       console.log('Service Worker registered successfully with scope:', registration.scope);
-//     })
-//     .catch((error) => {
-//       console.error('Service Worker registration failed:', error);
-//     });
-// }
+    // SAVE INITIAL USER DATA TO DB
+    Storage.saveInitialUserDataToDB();
+
+    // SERVICE-WORKER REGISTRATION
+    // The service worker registration code is currently disabled for debugging purposes.
+    // Uncomment the following block to enable service worker functionality.
+    // if ('serviceWorker' in navigator) {
+    //   navigator.serviceWorker.register('/sw.js')
+    //     .then((registration) => {
+    //       console.log('Service Worker registered successfully with scope:', registration.scope);
+    //     })
+    //     .catch((error) => {
+    //       console.error('Service Worker registration failed:', error);
+    //     });
+    // }
+
+    // initialLoad();
+
+    // --------------- LOAD ALL DATA --------------------
+    async function loadData() {
+        const data = await Storage.getDataDB();
+        console.log("Daten aus storage.js:", data);
+    }
+
+    await loadData();
+
+    // EXAMPLE CALL FOR TESTING: (DB)
+    console.log("--------------DATA LOADED FROM DBBBBB-------------");
+    const dishes = await Storage.getDishes();
+    dishes.forEach((dish) => {
+        console.log(`Dish Name: ${dish.name}`);
+    });
+
+    // EXAMPLE CALL FOR TESTING: (LS)
+    console.log("--------------DATA LOADED FROM LS LS LS-------------");
+    const dataLS = Storage.getDataLS();
+
+    const ingredients = dataLS.ingredients;
+
+    console.log(dataLS);
+    dataLS.dishes.forEach((dish) => {
+        console.log(`Dish Name: ${dish.name}`);
+    });
+
+    // EXAMPLE CALL FOR TESTING: (DISHES WITH INGREDIENTS)
+    // console.log("--------------DISHES WITH INGREDIENTS-------------");
+    // const dishesWithIngredients = await Storage.getDishesWithIngredients();
+    // console.log("HERE ARE THE FULL_DISHES:", dishesWithIngredients);
+    initialLoad();
+}
+
+// Startet die App, indem die asynchrone Funktion aufgerufen wird
+startApp();
+
 
 const routes = {
     home: loadHome,
@@ -61,8 +109,6 @@ function initialLoad() {
     router();
 }
 
-initialLoad();
-
 let previousHash = localStorage.getItem("lastValidHash") || "#home";
 
 export function updateLastHash() {
@@ -74,7 +120,7 @@ export function updateLastHash() {
     }
 }
 
-export function getLastHash() {    
+export function getLastHash() {     
     return localStorage.getItem("lastValidHash") || previousHash || "#home";
 }
 
@@ -100,7 +146,6 @@ function setActiveTab() {
     window.addEventListener("hashchange", setActiveFromHash);
 }
 
-
 async function router() {
     // Wenn kein Hash vorhanden ist, setze "#home" als Standard
     if (!window.location.hash || window.location.hash === "") {
@@ -119,7 +164,7 @@ async function router() {
     // Page loading complete.
     setActiveTab();
     if (hash !== "settings") {
-       showNavbar();
+        showNavbar();
     }
     updateLastHash();
     console.log("Page loaded:", hash || "home");
@@ -130,37 +175,6 @@ window.addEventListener("hashchange", router);
 // Lädt die Standardseite beim Start:
 window.addEventListener("load", router);
 
-
-// --------------- LOAD ALL DATA --------------------
-async function loadData() {
-    const data = await Storage.getDataDB();
-    console.log("Daten aus storage.js:", data);
-}
-
-await loadData();
-
-// EXAMPLE CALL FOR TESTING: (DB)
-console.log("--------------DATA LOADED FROM DBBBBB-------------");
-const dishes = await Storage.getDishes();
-dishes.forEach((dish) => {
-    console.log(`Dish Name: ${dish.name}`);
-});
-
-// EXAMPLE CALL FOR TESTING: (LS)
-console.log("--------------DATA LOADED FROM LS LS LS-------------");
-const dataLS = Storage.getDataLS();
-
-const ingredients = dataLS.ingredients;
-
-console.log(dataLS);
-dataLS.dishes.forEach((dish) => {
-    console.log(`Dish Name: ${dish.name}`);
-});
-
-// EXAMPLE CALL FOR TESTING: (DISHES WITH INGREDIENTS)
-// console.log("--------------DISHES WITH INGREDIENTS-------------");
-// const dishesWithIngredients = await Storage.getDishesWithIngredients();
-// console.log("HERE ARE THE FULL_DISHES:", dishesWithIngredients);
 
 export function showNavbar() {
     const navbar = document.getElementById('main-nav');

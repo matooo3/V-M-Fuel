@@ -1,0 +1,33 @@
+#progress-bar-fill-goal {
+    width: 82%;
+    height: 8px;
+    border-radius: 7px;
+    background-color: #1BCE86;
+}
+
+.landing-container {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10vh 10vh 45vh 10vh 20vh;
+}
+
+#selection-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    gap: 40px;
+}
+
+.goal-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    height: 80%;
+    font-size: large;
+}

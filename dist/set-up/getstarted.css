@@ -1,0 +1,21 @@
+.landing-container {
+  display: grid;
+  grid-template-rows: 70vh 30vh;
+}
+
+.buttons-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style-sheets/general.css" />
+    <link rel="stylesheet" href="../style-sheets/log-in.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <title></title>
+</head>
+
+<body>
+    <div class=landing-container>
+        <div class="bigger-hitbox-su">
+            <div class="arrow-back"> </div>
+        </div>
+
+        <!-- space-div -->
+        <div>
+
+        </div>
+
+        <div id=acc-div>
+
+            <div class="sign-up">
+                <img src="../pictures/google.svg" alt="google" id="google-logo" />
+                <h1 id="sign-up-text">Sign in with Google</h1>
+            </div>
+
+            <div class="email">
+                <div class="line"></div>
+                <h1 id="email-text"> Or log in with Email</h1>
+                <div class="line"></div>
+            </div>
+
+            <form id="login-form">
+                <input class="data" id="email" type="email" placeholder="enter email" required>
+                <input class="data" id="password" type="password" placeholder="enter password" required>
+            </form>
+            <p id="message"></p>
+
+        </div>
+
+        <!-- space-div -->
+        <div>
+
+        </div>
+
+        <div class="page-end-div">
+            <button id="next-btn-login" type="submit" form="login-form">Log in</button>
+
+            <div class="footer-div">
+                <h1 id="footer-text">Forgot password? <span class="accent-col reset">Reset password</span></h1>
+                <img src="../pictures/VM logo.svg" alt="App Logo" class="logo" />
+            </div>
+        </div>
+
+    </div>
+    <script type="module" src="../scripts/script-set-up.js"></script>
+    <script type="module" src="../../scripts/login.js"></script>
+</body>
+
+</html>

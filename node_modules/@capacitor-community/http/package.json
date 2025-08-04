@@ -1,0 +1,71 @@
+{
+  "name": "@capacitor-community/http",
+  "version": "1.4.1",
+  "description": "A native HTTP plugin for CORS-free requests and file transfers",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && tsc && rollup -c rollup.config.js",
+    "ios:build": "cd ios && pod install && cd ..",
+    "docs": "typedoc src/web.ts src/definitions.ts",
+    "clean": "rimraf ./dist",
+    "watch": "tsc --watch",
+    "fmt": "npm run prettier -- --write",
+    "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
+    "prepublishOnly": "npm run build && npm run ios:build",
+    "prepare": "husky install"
+  },
+  "author": "Max Lynch <max@ionic.io>, Thomas Vidas <thomas@ionic.io>",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/android": "^3.0.0",
+    "@capacitor/core": "^3.0.0",
+    "@capacitor/filesystem": "^1.0.0",
+    "@capacitor/ios": "^3.0.0"
+  },
+  "devDependencies": {
+    "@ionic/prettier-config": "^1.0.1",
+    "all-contributors-cli": "^6.20.0",
+    "husky": "^6.0.0",
+    "prettier": "^2.3.0",
+    "prettier-plugin-java": "^1.1.1",
+    "pretty-quick": "^3.1.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.50.0",
+    "typedoc": "^0.20.36",
+    "typescript": "^4.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "files": [
+    "dist/",
+    "ios/",
+    "android/",
+    "CapacitorCommunityHttp.podspec"
+  ],
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native"
+  ],
+  "prettier": "@ionic/prettier-config",
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/capacitor-community/http"
+  },
+  "bugs": {
+    "url": "https://github.com/capacitor-community/http/issues"
+  }
+}

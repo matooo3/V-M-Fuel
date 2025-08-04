@@ -1,5 +1,6 @@
 {
   "appId": "com.vm.app",
   "appName": "V-M-Fuel",
-  "webDir": "frontend"
+  "webDir": "dist",
+  "bundledWebRuntime": false
 }

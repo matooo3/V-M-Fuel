@@ -1,0 +1,64 @@
+<div id="standard-container">
+    <div class="progress-wrapper">
+        <svg class="progress-svg" viewBox="0 0 200 200">
+            <circle class="progress-circle-background" cx="100" cy="100" r="90"></circle>
+            <circle class="progress-bar" cx="100" cy="100" r="90"></circle>
+        </svg>
+        <div class="progress-text"></div>
+    </div>
+
+    <div id="next-meals">
+        <span id="next-meal-text">Next meal</span>
+
+        <div class="meals-info-db">
+            <div class="next-meal-container">
+                <div class="card drop-shadow next-meal-card-db">
+                    <div class="first-row-db">
+                        <input id="checked-circle" class="checkbox" type="checkbox">
+    
+                        <div class="next-meal-info">
+                            <div class="next-meal-info-texts">
+                                <h3 class="meal-name-db"></h3>
+                                <span class="subtext meal-category-h"></span>
+                            </div>
+    
+                            <span class="calories-db">
+                            </span>
+                        </div>
+                    </div>
+    
+                    <div class="nutrition-values-db">
+                        <div class="nutrition-item-db">
+                            <p class="nutrition-value-db"></p>
+                            <p class="nutrition-label-db subtext">Protein</p>
+                        </div>
+                        <div class="nutrition-item-db">
+                            <p class="nutrition-value-db"></p>
+                            <p class="nutrition-label-db subtext">Carbs</p>
+                        </div>
+                        <div class="nutrition-item-db">
+                            <p class="nutrition-value-db"></p>
+                            <p class="nutrition-label-db subtext">Fat</p>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+
+            <div id="info-stats-db">
+                <div id="planned" class="card drop-shadow">
+                    <h1 class="meals-amount-db" id = "planned-meals-h" ></h1>
+                    <p class="subtext nowrap-text">Meals planned</p>
+                </div>
+                <div id="eaten" class="card drop-shadow">
+                    <h1 class="meals-amount-db" id="goal-percentage-h"></h1>
+                    <p class="subtext nowrap-text">daily goal</p>
+                </div>
+            </div>
+
+            <span id="todays-meals-text">Today's meals</span>
+
+            <ul id="todays-meals-container">
+            </ul>
+        </div>
+    </div>
+</div>
