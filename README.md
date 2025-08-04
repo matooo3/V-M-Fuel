@@ -4,3 +4,4 @@ Our app creates personalized weekly meal plans based on your personal data and p
 Download the app here: [Click here](https://gfoh.ddns.net:6969/frontend)
 
 Our Website: [Click here](https://matooo3.github.io/landingPage.html)
+ 
