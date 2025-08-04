@@ -1,6 +1,6 @@
 {
   "appId": "com.vm.app",
-  "appName": "V-M-Fuel",
+  "appName": "NutriPilot",
   "webDir": "dist",
   "bundledWebRuntime": false
 }

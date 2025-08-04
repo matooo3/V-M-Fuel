@@ -150,6 +150,7 @@ function setupNextButton(currentIndex, currentFile) {
     if (!nextBtn) return;
 
     nextBtn.addEventListener('click', () => {
+        console.log(`Next button clicked on ${currentFile} at index ${currentIndex}`);
         handleNextButtonClick(currentIndex, currentFile);
     });
 }
