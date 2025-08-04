@@ -1,5 +1,5 @@
 {
-  "name": "v-m-fuel",
+  "name": "nutripilot",
   "version": "1.0.0",
   "description": "Our app creates personalized weekly meal plans based on your personal data and preferences – including a complete shopping list. It also shows your upcoming meals for the day and tracks your progress in a clear and simple way.",
   "main": "sw copy 2.js",
