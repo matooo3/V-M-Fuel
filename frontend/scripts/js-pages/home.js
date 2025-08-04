@@ -12,7 +12,6 @@ import * as Script from '../script.js';
 import * as Sound from '../sound.js';
 
 export default async function loadHome() {
-
     Script.showNavbar();
 
     const app = document.getElementById('app');

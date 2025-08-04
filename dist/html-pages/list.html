@@ -1,0 +1,31 @@
+<div class="list-container">
+    <div class="list-header">
+        <div>
+            <h1>Grocery list</h1>
+            <span class="subtext" id="subtext-gl"><span id="checked-count-gl"> </span> out of <span id="total-count-gl"> </span> checked</span>
+        </div>
+        <div>
+            <svg class="settings" id="settings-gl" src="./assets/icons/settings.svg" alt="settings"></svg>
+        </div>
+    </div>
+
+    <div id="search-bar-gl">
+        <input type="text" class="subtext" id="search-groceries" placeholder="Search for groceries">
+    </div>
+
+    <div id="filter-bar">
+        <button class="filterBtn active">All</button>
+        <button class="filterBtn notActive">Fruits</button>
+        <button class="filterBtn notActive">Protein</button>
+        <button class="filterBtn notActive">Dairy</button>
+    </div>
+
+    <button id="add-item-btn">
+        <svg id="add-item-gl" src="./assets/icons/add-item.svg" alt="+"></svg>
+        <div>Add item</div>
+    </button>
+
+    <ul class="grocery-list">
+        <!-- Items will be dynamically added here -->
+    </ul>
+</div>

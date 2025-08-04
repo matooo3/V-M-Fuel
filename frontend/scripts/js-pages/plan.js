@@ -7,6 +7,7 @@ import * as Script from '../script.js';
 
 // ===== MAIN EXPORT =====
 export default async function loadPlan() {
+
     Script.showNavbar();
 
     const app = document.getElementById("app");

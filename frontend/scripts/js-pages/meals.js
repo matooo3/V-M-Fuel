@@ -6,12 +6,21 @@ import { searchULs } from '../searchBar.js';
 import * as Role from '../roleRouting.js';
 import * as Settings from './settings.js';
 import * as Script from '../script.js';
+import * as Native from '../native/native.js';
 
-let ingredientsArray = await Storage.getIngredients();
-let dishesArray = await Storage.getDishes();
+// Deklariere die Variablen hier, aber ohne Wertzuweisung
+let ingredientsArray;
+let dishesArray;
 
 // Main function
 export default async function loadMeals() {
+
+    // FOR CAPACITOR TEST VIBRATION:
+    Native.vibrateDevice();
+
+    // Hier werden die Variablen asynchron zugewiesen
+    ingredientsArray = await Storage.getIngredients();
+    dishesArray = await Storage.getDishes();
 
     Script.showNavbar();
 
@@ -27,8 +36,6 @@ export default async function loadMeals() {
     Role.renderUserRoleColors();
 
     // Update ingredients and meals
-    ingredientsArray = await Storage.getIngredients();
-    dishesArray = await Storage.getDishes();
 
     //load all dishes and ingredients
     loadDishesAndIngredients();

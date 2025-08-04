@@ -1,0 +1,76 @@
+import { encode, decode } from './utils';
+/**
+ * Set a cookie
+ * @param key The key to set
+ * @param value The value to set
+ * @param options Optional additional parameters
+ */
+export const setCookie = (key, value, options = {}) => {
+    // Safely Encoded Key/Value
+    const encodedKey = encode(key);
+    const encodedValue = encode(value);
+    // Clean & sanitize options
+    const expires = `; expires=${(options.expires || '').replace('expires=', '')}`; // Default is "; expires="
+    const path = (options.path || '/').replace('path=', ''); // Default is "path=/"
+    document.cookie = `${encodedKey}=${encodedValue || ''}${expires}; path=${path}`;
+};
+/**
+ * Gets all HttpCookies
+ */
+export const getCookies = () => {
+    const output = [];
+    const map = {};
+    if (!document.cookie) {
+        return output;
+    }
+    const cookies = document.cookie.split(';') || [];
+    for (const cookie of cookies) {
+        // Replace first "=" with CAP_COOKIE to prevent splitting on additional "="
+        let [k, v] = cookie.replace(/=/, 'CAP_COOKIE').split('CAP_COOKIE');
+        k = decode(k).trim();
+        v = decode(v).trim();
+        map[k] = v;
+    }
+    const entries = Object.entries(map);
+    for (const [key, value] of entries) {
+        output.push({
+            key,
+            value,
+        });
+    }
+    return output;
+};
+/**
+ * Gets a single HttpCookie given a key
+ */
+export const getCookie = (key) => {
+    const cookies = getCookies();
+    for (const cookie of cookies) {
+        if (cookie.key === key) {
+            return cookie;
+        }
+    }
+    return {
+        key,
+        value: '',
+    };
+};
+/**
+ * Deletes a cookie given a key
+ * @param key The key of the cookie to delete
+ */
+export const deleteCookie = (key) => {
+    document.cookie = `${key}=; Max-Age=0`;
+};
+/**
+ * Clears out cookies by setting them to expire immediately
+ */
+export const clearCookies = () => {
+    const cookies = document.cookie.split(';') || [];
+    for (const cookie of cookies) {
+        document.cookie = cookie
+            .replace(/^ +/, '')
+            .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+    }
+};
+//# sourceMappingURL=cookie.js.map

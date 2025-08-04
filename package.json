@@ -1,9 +1,13 @@
 {
-  "name": "v-m-fuel",
+  "name": "nutripilot",
   "version": "1.0.0",
   "description": "Our app creates personalized weekly meal plans based on your personal data and preferences – including a complete shopping list. It also shows your upcoming meals for the day and tracks your progress in a clear and simple way.",
   "main": "sw copy 2.js",
+  "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,10 +22,17 @@
   },
   "homepage": "https://github.com/matooo3/V-M-Fuel#readme",
   "dependencies": {
+    "@capacitor-community/http": "^1.4.1",
     "@capacitor/android": "^7.4.2",
     "@capacitor/cli": "^7.4.2",
     "@capacitor/core": "^7.4.2",
+    "@capacitor/haptics": "^7.0.1",
     "@capacitor/ios": "^7.4.2",
     "@capacitor/status-bar": "^7.0.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^7.1.0",
+    "vite": "^7.0.6",
+    "vite-plugin-static-copy": "^3.1.1"
   }
 }
