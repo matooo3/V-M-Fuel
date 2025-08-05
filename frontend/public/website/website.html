@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="de" id="htmlTag">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your smart meal plan app</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a81368914c.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #1BCE86;
+      --primary-dark: #17a86f;
+      --secondary: #ec4899;
+      --accent: #06b6d4;
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --bg-primary: #fefefe;
+      --bg-secondary: #f8fafc;
+      --gradient-primary: linear-gradient(135deg, #1BCE86 0%, #22e095 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    /* Dark Mode Variables */
+    body.dark-mode {
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --bg-primary: #0f0f23;
+      --bg-secondary: #1e1e3f;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-color: var(--bg-primary);
+      background-image: radial-gradient(ellipse at top, rgba(27, 206, 134, 0.1) 0%, transparent 70%);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    body.dark-mode {
+      background-color: var(--bg-primary);
+      background-image: radial-gradient(ellipse at top, rgba(27, 206, 134, 0.3) 0%, transparent 70%);
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .dark-mode .navbar {
+        background: rgba(30, 30, 63, 0.9);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(27, 206, 134, 0.2);
+    }
+
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: var(--shadow-md);
+    }
+
+    .dark-mode .navbar.scrolled {
+        background: rgba(30, 30, 63, 0.98);
+        box-shadow: var(--shadow-md);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--text-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      width: 50px;
+      height: 26px;
+      background: var(--gradient-primary);
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      margin-left: 1rem;
+      overflow: hidden;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-md);
+    }
+
+    .theme-toggle-slider {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 22px;
+      height: 22px;
+      background: white;
+      border-radius: 50%;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dark-mode .theme-toggle-slider {
+      transform: translateX(24px);
+      color: #fbbf24;
+    }
+
+    .theme-toggle-slider i {
+      transition: all 0.3s ease;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .dark-mode .nav-link {
+      color: #b0c2e3;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+    }
+
+    .dark-mode .nav-link:hover {
+      color: #a5b4fc;
+    }
+
+    /* Dropdown Navigation Styles */
+    .nav-item-dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+      color: var(--text-secondary);
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .dark-mode .dropdown-toggle {
+      color: #b0c2e3;
+    }
+
+    .dropdown-toggle:hover {
+      color: var(--primary);
+    }
+
+    .dark-mode .dropdown-toggle:hover {
+      color: #a5b4fc;
+    }
+    
+    .dropdown-toggle .fa-chevron-down {
+        font-size: 0.8em;
+        transition: transform 0.3s ease;
+    }
+    
+    .nav-item-dropdown.open .dropdown-toggle .fa-chevron-down {
+        transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 15px);
+      right: 0;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 0.75rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 1001;
+      min-width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .dark-mode .dropdown-menu {
+      background: rgba(30, 30, 63, 0.85);
+      border: 1px solid rgba(27, 206, 134, 0.2);
+    }
+
+    .nav-item-dropdown.open .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .dark-mode .dropdown-item {
+        color: #b0c2e3;
+    }
+
+    .dropdown-item:hover {
+      background: rgba(27, 206, 134, 0.1);
+      color: var(--primary);
+    }
+    
+    .dark-mode .dropdown-item:hover {
+        color: #f1f5f9;
+    }
+
+    /* Language Switcher Styles */
+    .language-switcher {
+        position: relative;
+    }
+
+    .language-button {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--bg-secondary);
+        border: 1px solid rgba(0,0,0,0.1);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .dark-mode .language-button {
+        border-color: rgba(255,255,255,0.2);
+    }
+
+    .language-button:hover {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-md);
+    }
+
+    .language-button img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .language-dropdown {
+        min-width: 160px;
+    }
+    
+    .language-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+    }
+    
+    .language-item img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: var(--shadow-sm);
+    }
+
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23f1f5f9" opacity="0.5"/><circle cx="75" cy="75" r="1" fill="%23e2e8f0" opacity="0.3"/><circle cx="50" cy="10" r="0.5" fill="%23cbd5e1" opacity="0.4"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      animation: float 20s ease-in-out infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(27, 206, 134, 0.1);
+      border: 1px solid rgba(27, 206, 134, 0.2);
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      margin-bottom: 2rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary);
+      animation: slideInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 50%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      font-weight: 400;
+      animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-primary);
+      border: 1px solid rgba(27, 206, 134, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .dark-mode .btn-secondary {
+      background: rgba(30, 30, 63, 0.9);
+      color: #f1f5f9;
+      border: 1px solid rgba(27, 206, 134, 0.4);
+      backdrop-filter: blur(20px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dark-mode .btn-secondary:hover {
+      background: rgba(27, 206, 134, 0.2);
+      color: #ffffff;
+      border-color: rgba(27, 206, 134, 0.6);
+      box-shadow: 0 20px 40px rgba(27, 206, 134, 0.3);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 8rem 2rem;
+      background: linear-gradient(180deg, transparent, var(--bg-primary) 15%, var(--bg-secondary));
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .dark-mode .features {
+      background: linear-gradient(180deg, transparent, var(--bg-primary) 15%, var(--bg-secondary));
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-badge {
+      display: inline-block;
+      background: rgba(236, 72, 153, 0.1);
+      color: var(--secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .testimonials .section-badge,
+    .feedback .section-badge {
+        background: rgba(27, 206, 134, 0.1);
+        color: var(--primary);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 2.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dark-mode .feature-card {
+      background: rgba(30, 30, 63, 0.8);
+      border: 1px solid rgba(27, 206, 134, 0.2);
+      backdrop-filter: blur(20px);
+    }
+
+    .dark-mode .feature-card:hover {
+      background: rgba(27, 206, 134, 0.1);
+      border-color: rgba(27, 206, 134, 0.4);
+      box-shadow: 0 20px 40px rgba(27, 206, 134, 0.2);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: rgba(27, 206, 134, 0.2);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:nth-child(1) .feature-icon {
+      background: linear-gradient(135deg, rgba(27, 206, 134, 0.1), rgba(27, 206, 134, 0.2));
+      color: var(--primary);
+    }
+
+    .feature-card:nth-child(2) .feature-icon {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(236, 72, 153, 0.2));
+      color: var(--secondary);
+    }
+
+    .feature-card:nth-child(3) .feature-icon {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(6, 182, 212, 0.2));
+      color: var(--accent);
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .feature-description {
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+        padding: 8rem 2rem;
+        background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        position: relative;
+        transition: background 0.3s ease;
+    }
+
+    .dark-mode .testimonials {
+        background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    }
+
+    .testimonial-chat-container {
+        max-width: 800px;
+        margin: 4rem auto 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .chat-bubble {
+        display: flex;
+        gap: 1rem;
+        max-width: 80%;
+        align-items: flex-start;
+    }
+
+    .chat-bubble.right {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+    }
+
+    .chat-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: white;
+        flex-shrink: 0;
+        font-size: 1.1rem;
+    }
+
+    .avatar-1 { background: var(--gradient-primary); }
+    .avatar-2 { background: var(--gradient-secondary); }
+    .avatar-3 { background: var(--gradient-accent); }
+
+    .chat-content {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 1rem 1.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .chat-bubble.right .chat-content {
+        border-top-right-radius: 4px;
+    }
+    
+    .chat-bubble:not(.right) .chat-content {
+        border-top-left-radius: 4px;
+    }
+
+    .dark-mode .chat-content {
+        background: rgba(30, 30, 63, 0.8);
+        border: 1px solid rgba(27, 206, 134, 0.2);
+    }
+
+    .chat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        gap: 1rem;
+    }
+
+    .chat-name {
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .chat-rating {
+        color: #fbbf24;
+        font-size: 0.875rem;
+        white-space: nowrap;
+    }
+
+    .chat-text {
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+    /* Feedback Section */
+    .feedback {
+        padding: 8rem 2rem;
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        transition: background 0.3s ease;
+    }
+
+    .dark-mode .feedback {
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    }
+
+    .feedback-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .feedback-form {
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .feedback-textarea {
+        width: 100%;
+        min-height: 150px;
+        padding: 1.5rem;
+        border-radius: 24px;
+        border: 1px solid rgba(27, 206, 134, 0.2);
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        color: var(--text-primary);
+        resize: vertical;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-md);
+    }
+
+    .dark-mode .feedback-textarea {
+        background: rgba(30, 30, 63, 0.8);
+        border: 1px solid rgba(27, 206, 134, 0.3);
+        color: var(--text-primary);
+    }
+
+    .feedback-textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(27, 206, 134, 0.2);
+    }
+    
+    .feedback-textarea::placeholder {
+        color: var(--text-secondary);
+        opacity: 0.8;
+    }
+
+    .feedback-form .btn-primary {
+        align-self: center;
+        width: auto;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      padding: 6rem 2rem 2rem;
+      text-align: center;
+      transition: background 0.3s ease;
+      position: relative;
+    }
+    
+    .dark-mode .footer {
+        background: #1e1e3f;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .imprint-container {
+        margin-bottom: 4rem;
+        padding-top: 4rem;
+        border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .dark-mode .imprint-container {
+        border-top-color: rgba(255, 255, 255, 0.15);
+    }
+    
+    .imprint-container h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+    }
+    
+    .imprint-container p {
+        margin-bottom: 0.5rem;
+        line-height: 1.7;
+    }
+    
+    .footer-link {
+        color: var(--primary-dark);
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .footer-link:hover {
+        color: var(--primary);
+        text-decoration: underline;
+    }
+    
+    .dark-mode .footer-link {
+        color: var(--primary);
+    }
+
+    .footer-copyright {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark-mode .footer-copyright {
+        border-top-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Feedback Overlay Styles */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 15, 35, 0.5);
+        backdrop-filter: blur(10px);
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .overlay-content {
+        background: var(--bg-secondary);
+        padding: 3rem;
+        border-radius: 24px;
+        box-shadow: var(--shadow-xl);
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+        border: 1px solid rgba(27, 206, 134, 0.2);
+        transform: scale(0.9);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .overlay.active .overlay-content {
+        transform: scale(1);
+    }
+
+    .overlay-content h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 2rem;
+    }
+
+    #overlayCloseBtn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    #download-btn {
+      display: none;
+    }
+
+    /* Animations */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scroll Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #theme-button{
+      display: flex;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 0 1rem;
+      }
+      .nav-links {
+        gap: 1.2rem;
+      }
+      .nav-link, .dropdown-toggle {
+        font-size: 14px;
+      }
+      .theme-toggle {
+        margin-left: 0.5rem;
+        width: 40px;
+        height: 22px;
+      }
+      
+      .theme-toggle-slider {
+        width: 18px;
+        height: 18px;
+        font-size: 8px;
+      }
+      
+      .dark-mode .theme-toggle-slider {
+        transform: translateX(18px);
+      }
+      
+      .language-button {
+          width: 28px;
+          height: 28px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .chat-bubble {
+        max-width: 95%;
+      }
+      
+      .footer {
+        padding-top: 4rem;
+      }
+      
+      .imprint-container {
+        padding-top: 3rem;
+        margin-bottom: 3rem;
+      }
+      .overlay-content {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 450px) {
+        .logo {
+            font-size: 1.25rem;
+        }
+    }
+    
+    @media (max-width: 420px) {
+        .nav-links {
+            gap: 1rem;
+        }
+        .nav-link, .dropdown-toggle {
+            font-size: 12px;
+        }
+        .logo {
+            font-size: 1rem;
+        }
+        .language-button {
+            width: 24px;
+            height: 24px;
+        }
+        .theme-toggle {
+            margin-left: 0.25rem;
+        }
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+      /* MODIFIED: Hide scrollbar for Firefox */
+      scrollbar-width: none;
+    }
+
+    /* Custom scrollbar */
+    /* MODIFIED: Hide scrollbar for Webkit browsers (Chrome, Safari) */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo" data-app-name>NutriPilot</a>
+      <ul class="nav-links">
+        <!-- Site Navigation Dropdown -->
+        <li class="nav-item-dropdown" id="navDropdownContainer">
+          <button class="nav-link dropdown-toggle" id="navDropdownToggle">
+            <span data-translate-key="nav_navigation">Navigation</span> <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu" id="navDropdownMenu">
+            <a href="#" class="dropdown-item" data-translate-key="nav_download">Download</a>
+            <a href="#features" class="dropdown-item" data-translate-key="nav_features">Features</a>
+            <a href="#reviews" class="dropdown-item" data-translate-key="nav_reviews">Bewertungen</a>
+            <a href="#feedback" class="dropdown-item" data-translate-key="nav_feedback">Feedback</a>
+          </div>
+        </li>
+
+        <!-- Language Switcher Button -->
+        <li class="nav-item-dropdown language-switcher" id="langDropdownContainer">
+          <button class="language-button" id="langDropdownToggle" aria-label="Change language">
+              <img src="germanFlag.png" alt="German Flag" id="currentLangFlag">
+          </button>
+          <div class="dropdown-menu language-dropdown" id="langDropdownMenu">
+              <a class="dropdown-item language-item" data-lang="de">
+                  <img src="germanFlag.png" alt="German Flag">
+                  <span data-translate-key="lang_de">Deutsch</span>
+              </a>
+              <a class="dropdown-item language-item" data-lang="en">
+                  <img src="englishFlag.png" alt="British Flag">
+                  <span data-translate-key="lang_en">English</span>
+              </a>
+          </div>
+        </li>
+
+        <!-- Theme Toggle Button -->
+        <li id="theme-button">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <div class="theme-toggle-slider">
+              <i class="fas fa-sun" id="themeIcon"></i>
+            </div>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-badge">
+        <i class="fas fa-rocket"></i>
+        <span data-translate-key="hero_badge">Jetzt verfügbar</span>
+      </div>
+      <h1 class="hero-title" data-app-name>NutriPilot</h1>
+      <p class="hero-subtitle" data-translate-key="hero_subtitle">
+        Die revolutionäre App zur Erstellung personalisierter Mahlzeitenpläne und intelligenter Einkaufslisten — 
+        designed für moderne Lifestyle und optimale Ernährung.
+      </p>
+      <div class="hero-buttons">
+        <a href="https://gfoh.ddns.net:6969/frontend" target="_blank" class="btn btn-primary">
+          <i class="fas fa-play"></i>
+          <span data-translate-key="hero_btn_live">Live Demo starten</span>
+        </a>
+        <a id="download-btn" href="https://gfoh.ddns.net:6969/frontend" class="btn btn-secondary">
+          <i class="fas fa-download"></i>
+          <span data-translate-key="hero_btn_download">App herunterladen</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="features-container">
+      <div class="section-header fade-in">
+        <div class="section-badge" data-translate-key="features_badge">Features</div>
+        <h2 class="section-title" data-translate-key="features_title">Alles was du brauchst</h2>
+        <p class="section-subtitle" data-translate-key="features_subtitle">
+          Entdecke die innovativen Features, die NutriPilot zur perfekten Lösung für deine Meal-Planning Bedürfnisse machen.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card fade-in">
+          <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+          <h3 class="feature-title" data-translate-key="feature1_title">Intelligente Meal-Pläne</h3>
+          <p class="feature-description" data-translate-key="feature1_desc">KI-gestützte Algorithmen erstellen personalisierte Essenspläne basierend auf deinen Vorlieben, Allergien und Ernährungszielen. Jeder Plan ist einzigartig und perfekt auf dich abgestimmt.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon"><i class="fas fa-shopping-cart"></i></div>
+          <h3 class="feature-title" data-translate-key="feature2_title">Smarte Einkaufslisten</h3>
+          <p class="feature-description" data-translate-key="feature2_desc">Automatisch generierte, optimierte Einkaufslisten mit intelligenter Kategorisierung. Nie wieder vergessene Zutaten oder doppelte Einkäufe.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3 class="feature-title" data-translate-key="feature3_title">Nahtlose Erfahrung</h3>
+          <p class="feature-description" data-translate-key="feature3_desc">Modernes, intuitives Design mit blitzschneller Performance. Synchronisation zwischen allen Geräten für maximale Flexibilität im Alltag.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials" id="reviews">
+    <div class="features-container">
+      <div class="section-header fade-in">
+        <div class="section-badge" data-translate-key="reviews_badge">Bewertungen</div>
+        <h2 class="section-title" data-translate-key="reviews_title">Was unsere Nutzer sagen</h2>
+        <p class="section-subtitle" data-translate-key="reviews_subtitle">Echte Meinungen von echten Menschen, die NutriPilot bereits lieben.</p>
+      </div>
+      <div class="testimonial-chat-container">
+        <div class="chat-bubble fade-in">
+          <div class="chat-avatar avatar-2">SK</div>
+          <div class="chat-content">
+            <div class="chat-header"><span class="chat-name">Sarah K.</span><div class="chat-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+            <p class="chat-text" data-translate-key="review1_text">Absolut begeistert! Die App hat meinen Alltag so viel einfacher gemacht. Die intelligenten Einkaufslisten sind der Hammer – ich spare Zeit und Geld.</p>
+          </div>
+        </div>
+        <div class="chat-bubble right fade-in">
+          <div class="chat-avatar avatar-1">TL</div>
+          <div class="chat-content">
+            <div class="chat-header"><span class="chat-name">Tom L.</span><div class="chat-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div>
+            <p class="chat-text" data-translate-key="review2_text">Als Sportler ist die Ernährung für mich super wichtig. NutriPilot erstellt mir Pläne, die perfekt auf meine Fitnessziele abgestimmt sind. Endlich stressfrei kochen!</p>
+          </div>
+        </div>
+        <div class="chat-bubble fade-in">
+          <div class="chat-avatar avatar-3">LM</div>
+          <div class="chat-content">
+            <div class="chat-header"><span class="chat-name">Lisa M.</span><div class="chat-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+            <p class="chat-text" data-translate-key="review3_text">Das Design ist mega intuitiv und die App läuft super flüssig. 5 Sterne! Habe sie all meinen Freunden empfohlen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feedback Section -->
+  <section class="feedback" id="feedback">
+    <div class="feedback-container">
+      <div class="section-header fade-in">
+        <div class="section-badge" data-translate-key="feedback_badge">Feedback</div>
+        <h2 class="section-title" data-translate-key="feedback_title">Hilf uns, besser zu werden</h2>
+        <p class="section-subtitle" data-translate-key="feedback_subtitle">Hast du Vorschläge, Wünsche oder ist dir ein Fehler aufgefallen? Wir freuen uns über deine Nachricht!</p>
+      </div>
+      <form class="feedback-form fade-in" id="feedbackForm" action="#" method="POST">
+        <textarea id="feedbackTextarea" class="feedback-textarea" name="feedback_message" placeholder="Schreibe hier dein Feedback..."></textarea>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i>
+          <span data-translate-key="feedback_btn">Feedback absenden</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="imprint-container">
+          <h3 data-translate-key="footer_imprint">Impressum</h3>
+          <p data-app-name>NutriPilot</p>
+          <p>München/Albstadt</p>
+          <p>E-Mail: <a href="mailto:nutripilot.contact@gmail.com" class="footer-link">nutripilot.contact@gmail.com</a></p>
+      </div>
+      <div class="footer-copyright" data-translate-key="footer_copyright">© 2025 NutriPilot. Alle Rechte vorbehalten.</div>
+    </div>
+  </footer>
+  
+  <!-- Feedback Success Overlay -->
+  <div class="overlay" id="feedbackOverlay">
+    <div class="overlay-content">
+        <h3 data-translate-key="overlay_title">Vielen Dank für Ihr Feedback!</h3>
+        <button class="btn btn-primary" id="overlayCloseBtn">OK</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as Storage from "../scripts/storage.js";
+    // --- APP CONFIGURATION ---
+    const APP_NAME = "NutriPilot";
+
+    // --- TRANSLATION DATA ---
+    const translations = {
+        de: {
+            page_title: `Deine smarte Essensplan-App | ${APP_NAME}`,
+            nav_navigation: "Navigation",
+            nav_download: "Download",
+            nav_features: "Features",
+            nav_reviews: "Bewertungen",
+            nav_feedback: "Feedback",
+            lang_de: "Deutsch",
+            lang_en: "Englisch",
+            hero_badge: "Jetzt verfügbar",
+            hero_subtitle: `Die revolutionäre App zur Erstellung personalisierter Mahlzeitenpläne und intelligenter Einkaufslisten — designed für moderne Lifestyle und optimale Ernährung.`,
+            hero_btn_live: "Live Demo starten",
+            hero_btn_download: "App herunterladen",
+            features_badge: "Features",
+            features_title: "Alles was du brauchst",
+            features_subtitle: `Entdecke die innovativen Features, die {{APP_NAME}} zur perfekten Lösung für deine Meal-Planning Bedürfnisse machen.`,
+            feature1_title: "Intelligente Meal-Pläne",
+            feature1_desc: "KI-gestützte Algorithmen erstellen personalisierte Essenspläne basierend auf deinen Vorlieben, Allergien und Ernährungszielen. Jeder Plan ist einzigartig und perfekt auf dich abgestimmt.",
+            feature2_title: "Smarte Einkaufslisten",
+            feature2_desc: "Automatisch generierte, optimierte Einkaufslisten mit intelligenter Kategorisierung. Nie wieder vergessene Zutaten oder doppelte Einkäufe.",
+            feature3_title: "Nahtlose Erfahrung",
+            feature3_desc: "Modernes, intuitives Design mit blitzschneller Performance. Synchronisation zwischen allen Geräten für maximale Flexibilität im Alltag.",
+            reviews_badge: "Bewertungen",
+            reviews_title: "Was unsere Nutzer sagen",
+            reviews_subtitle: `Echte Meinungen von echten Menschen, die {{APP_NAME}} bereits lieben.`,
+            review1_text: "Absolut begeistert! Die App hat meinen Alltag so viel einfacher gemacht. Die intelligenten Einkaufslisten sind der Hammer – ich spare Zeit und Geld.",
+            review2_text: `Als Sportler ist die Ernährung für mich super wichtig. {{APP_NAME}} erstellt mir Pläne, die perfekt auf meine Fitnessziele abgestimmt sind. Endlich stressfrei kochen!`,
+            review3_text: "Das Design ist mega intuitiv und die App läuft super flüssig. 5 Sterne! Habe sie all meinen Freunden empfohlen.",
+            feedback_badge: "Feedback",
+            feedback_title: "Hilf uns, besser zu werden",
+            feedback_subtitle: "Hast du Vorschläge, Wünsche oder ist dir ein Fehler aufgefallen? Wir freuen uns über deine Nachricht!",
+            feedback_placeholder: "Schreibe hier dein Feedback...",
+            feedback_btn: "Feedback absenden",
+            footer_imprint: "Impressum",
+            footer_copyright: `© 2025 {{APP_NAME}}. Alle Rechte vorbehalten.`,
+            overlay_title: "Vielen Dank für Ihr Feedback!",
+            overlay_alert: "Bitte gib zuerst dein Feedback ein.",
+        },
+        en: {
+            page_title: `Your Smart Meal Plan App | ${APP_NAME}`,
+            nav_navigation: "Navigation",
+            nav_download: "Download",
+            nav_features: "Features",
+            nav_reviews: "Reviews",
+            nav_feedback: "Feedback",
+            lang_de: "German",
+            lang_en: "English",
+            hero_badge: "Available now",
+            hero_subtitle: "The revolutionary app for creating personalized meal plans and smart shopping lists — designed for a modern lifestyle and optimal nutrition.",
+            hero_btn_live: "Start Live Demo",
+            hero_btn_download: "Download App",
+            features_badge: "Features",
+            features_title: "Everything you need",
+            features_subtitle: `Discover the innovative features that make {{APP_NAME}} the perfect solution for your meal planning needs.`,
+            feature1_title: "Intelligent Meal Plans",
+            feature1_desc: "AI-powered algorithms create personalized meal plans based on your preferences, allergies, and nutritional goals. Every plan is unique and perfectly tailored to you.",
+            feature2_title: "Smart Shopping Lists",
+            feature2_desc: "Automatically generated, optimized shopping lists with smart categorization. No more forgotten ingredients or duplicate purchases.",
+            feature3_title: "Seamless Experience",
+            feature3_desc: "Modern, intuitive design with lightning-fast performance. Synchronization across all devices for maximum flexibility in your daily life.",
+            reviews_badge: "Reviews",
+            reviews_title: "What our users say",
+            reviews_subtitle: `Real opinions from real people who already love {{APP_NAME}}.`,
+            review1_text: "Absolutely thrilled! This app has made my daily life so much easier. The smart shopping lists are amazing – I'm saving time and money.",
+            review2_text: `As an athlete, nutrition is super important to me. {{APP_NAME}} creates plans that are perfectly tailored to my fitness goals. Finally, stress-free cooking!`,
+            review3_text: "The design is super intuitive and the app runs so smoothly. 5 stars! I've recommended it to all my friends.",
+            feedback_badge: "Feedback",
+            feedback_title: "Help us improve",
+            feedback_subtitle: "Do you have suggestions, requests, or did you notice a bug? We look forward to your message!",
+            feedback_placeholder: "Write your feedback here...",
+            feedback_btn: "Send Feedback",
+            footer_imprint: "Imprint",
+            footer_copyright: `© 2025 {{APP_NAME}}. All rights reserved.`,
+            overlay_title: "Thank you for your feedback!",
+            overlay_alert: "Please enter your feedback first.",
+        }
+    };
+
+    // --- DOM ELEMENTS ---
+    const htmlTag = document.getElementById('htmlTag');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const navbar = document.getElementById('navbar');
+    const navDropdownContainer = document.getElementById('navDropdownContainer');
+    const navDropdownToggle = document.getElementById('navDropdownToggle');
+    const navDropdownMenu = document.getElementById('navDropdownMenu');
+    const langDropdownContainer = document.getElementById('langDropdownContainer');
+    const langDropdownToggle = document.getElementById('langDropdownToggle');
+    const langDropdownMenu = document.getElementById('langDropdownMenu');
+    const currentLangFlag = document.getElementById('currentLangFlag');
+    const feedbackForm = document.getElementById('feedbackForm');
+    const feedbackOverlay = document.getElementById('feedbackOverlay');
+    const overlayCloseBtn = document.getElementById('overlayCloseBtn');
+    const feedbackTextarea = document.getElementById('feedbackTextarea');
+
+    // --- GLOBAL STATE ---
+    let currentLanguage = 'de';
+
+
+    // --- FUNCTIONS ---
+    function setAppNameInDOM(name) {
+        document.querySelectorAll('[data-app-name]').forEach(el => {
+            el.textContent = name;
+        });
+    }
+
+    function setLanguage(lang) {
+      currentLanguage = lang;
+      const langTranslations = translations[lang];
+
+      htmlTag.lang = lang;
+      document.title = langTranslations.page_title;
+
+      document.querySelectorAll('[data-translate-key]').forEach(el => {
+        const key = el.dataset.translateKey;
+        if (langTranslations[key]) {
+          const rawText = langTranslations[key];
+          el.textContent = rawText.replace(/{{APP_NAME}}/g, APP_NAME);
+        }
+      });
+      
+      feedbackTextarea.placeholder = langTranslations.feedback_placeholder;
+      
+      currentLangFlag.src = lang === 'de' ? 'germanFlag.png' : 'englishFlag.png';
+      currentLangFlag.alt = lang === 'de' ? 'German Flag' : 'British Flag';
+      
+      langDropdownContainer.classList.remove('open');
+    }
+
+    function getFeedback() {
+      return feedbackTextarea.value;
+    }
+    
+    function closeFeedbackOverlay() {
+        feedbackOverlay.classList.remove('active');
+    }
+
+
+    // --- INITIALIZATION & EVENT LISTENERS ---
+    document.body.classList.add('dark-mode');
+    themeIcon.className = 'fas fa-moon';
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      themeIcon.className = document.body.classList.contains('dark-mode') ? 'fas fa-moon' : 'fas fa-sun';
+    });
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        const target = href === '#' ? document.body : document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    function setupDropdown(container, toggle, menu) {
+        toggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            [navDropdownContainer, langDropdownContainer].forEach(c => {
+                if (c !== container) c.classList.remove('open');
+            });
+            container.classList.toggle('open');
+        });
+        menu.addEventListener('click', () => {
+             container.classList.remove('open');
+        });
+    }
+
+    setupDropdown(navDropdownContainer, navDropdownToggle, navDropdownMenu);
+    setupDropdown(langDropdownContainer, langDropdownToggle, langDropdownMenu);
+    
+    window.addEventListener('click', () => {
+      navDropdownContainer.classList.remove('open');
+      langDropdownContainer.classList.remove('open');
+    });
+
+    langDropdownMenu.addEventListener('click', (event) => {
+        const langItem = event.target.closest('.language-item');
+        if (langItem && langItem.dataset.lang) {
+            setLanguage(langItem.dataset.lang);
+        }
+    });
+
+    feedbackForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const feedbackText = getFeedback();
+      
+      if (feedbackText.trim() === '') {
+        alert(translations[currentLanguage].overlay_alert);
+        return;
+      }
+      
+      console.log('Feedback received:', feedbackText);
+
+      // save feedback to DB
+      Storage.sendFeedbackToDB(feedbackText);
+
+      feedbackOverlay.classList.add('active');
+      feedbackTextarea.value = '';
+    });
+    
+    overlayCloseBtn.addEventListener('click', closeFeedbackOverlay);
+    feedbackOverlay.addEventListener('click', (event) => {
+        if (event.target === feedbackOverlay) closeFeedbackOverlay();
+    });
+
+    setAppNameInDOM(APP_NAME);
+    setLanguage('de');
+
+  </script>
+</body>
+</html>
