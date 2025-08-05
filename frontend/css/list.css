@@ -18,6 +18,12 @@
     scrollbar-width: none;
 }
 
+#list-description{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
 #list-header {
     display: flex;
     height: 100%;
