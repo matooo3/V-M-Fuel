@@ -10,6 +10,7 @@
     --icon-grey-color: #999999;
     --progress-circle-color: #F3F4F6;
     --card-color: white;
+    --app-container-height: calc(100vh - var(--nav-height));
 
     /* Color for navigation bar items (not selected), star and clos icon */
     --accent-color: #E35252;
@@ -301,9 +302,12 @@ button {
     }
 }
 
-#app {
-    padding-top: 20px;
-    padding-bottom: 80px;
+.nativeContainer {
+    --native-padding: 30px;
+    padding-top: var(--native-padding) !important;
+    --app-container-height: calc(100vh - var(--native-padding) + 30px - var(--nav-height)) !important;
 }
 
-.native {}
+.nativeApp{
+    padding-bottom: 30px;
+}

@@ -58,15 +58,16 @@ export async function setStatusBarWhiteFont() {
 }
 
 // Add additional distance from the top to the app conatiner
-export function addNativeStyle() {
+export function addNativeStyle(container) {
 
-  const app = document.getElementById('app');
-  app.classList.add('native');
+  if (isNative) {
+    container.classList.add('nativeContainer');
+    addNativeStyleToApp();
+  }
+
 }
 
-function getContainers() {
-  return {
-    home: document.getElementById('home-container'),
-    list: document.getElementById('list-container')
-  }
+function addNativeStyleToApp() {
+  const app = document.getElementById('app');
+  app.classList.add('nativeApp');
 }

@@ -8,6 +8,7 @@ import * as SwipeToDelete from "../swipetodelete.js";
 import * as Script from '../script.js';
 import * as DropDown from '../drop-down.js';
 import * as Sound from "../sound.js";
+import * as Native from '../native/native.js'
 
 const debounceTimers = new Map();
 
@@ -20,6 +21,8 @@ export default async function loadList() {
     // LOAD app html-code
     const html = await loadHTMLTemplate("./html-pages/list.html");
     app.innerHTML = html;
+
+    Native.addNativeStyle(document.getElementById('list-container'));
 
     // Add event listener
     addEventListeners();

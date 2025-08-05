@@ -175,7 +175,6 @@ window.addEventListener("hashchange", router);
 // Lädt die Standardseite beim Start:
 window.addEventListener("load", router);
 
-
 export function showNavbar() {
     const navbar = document.getElementById('main-nav');
     if (navbar) {

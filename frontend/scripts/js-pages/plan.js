@@ -4,6 +4,7 @@ import * as Algo from "../algo/algo.js";
 import * as Storage from "../storage.js";
 import * as Home from "../js-pages/home.js";
 import * as Script from '../script.js';
+import * as Native from '../native/native.js';
 
 // ===== MAIN EXPORT =====
 export default async function loadPlan() {
@@ -13,6 +14,8 @@ export default async function loadPlan() {
     const app = document.getElementById("app");
     const html = await loadHTMLTemplate("./html-pages/plan.html");
     app.innerHTML = html;
+
+    Native.addNativeStyle(document.getElementById('meal-plan'));
 
     const { today, currentWeek } = getCurrentData();
 

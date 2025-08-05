@@ -30,6 +30,8 @@ export default async function loadMeals() {
     const html = await loadHTMLTemplate('./html-pages/meals.html');
     app.innerHTML = html;
 
+    Native.addNativeStyle(document.querySelector('.meals-container'));
+
     Settings.loadSavedTheme();
 
     Role.renderCookButtons();
