@@ -117,17 +117,21 @@ html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    user-select: none;  /* Prevent text selection */
-    -webkit-user-select: none; /* Prevent text selection */
-    -webkit-tap-highlight-color: transparent; /* ios/Android */
-    -webkit-touch-callout: none; /* Prevent context menu on long press */
-    
+    user-select: none;
+    /* Prevent text selection */
+    -webkit-user-select: none;
+    /* Prevent text selection */
+    -webkit-tap-highlight-color: transparent;
+    /* ios/Android */
+    -webkit-touch-callout: none;
+    /* Prevent context menu on long press */
+
 }
 
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 input,
@@ -194,10 +198,7 @@ button {
 .settings {
     width: 30px;
     height: 30px;
-    margin: 10px;
-    position: absolute;
-    top: 15px;
-    right: 20px;
+    margin-top: -10px;
     mask: url('../assets/icons/settings.svg') no-repeat center;
     mask-size: contain;
     background-color: var(--h1-color);
@@ -299,3 +300,10 @@ button {
         gap: 30px;
     }
 }
+
+#app {
+    padding-top: 20px;
+    padding-bottom: 80px;
+}
+
+.native {}

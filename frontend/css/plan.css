@@ -10,16 +10,21 @@
 
 }
 
-.list-header-pl {
+#plan-description {
     display: flex;
     flex-direction: column;
     gap: 6px;
     margin-bottom: 20px;
 }
 
-.list-header-pl h1 {
+#plan-description h1 {
     font-size: 2.4rem;
     font-weight: 500;
+}
+
+#plan-header {
+    display: flex;
+    justify-content: space-between;
 }
 
 .subtext {
@@ -268,7 +273,7 @@
     scrollbar-width: none;
 }
 
-#view-info-scrollable{
+#view-info-scrollable {
     padding: 20px;
     padding-top: 10px;
     overflow: auto;

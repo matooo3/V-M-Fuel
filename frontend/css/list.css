@@ -1,11 +1,11 @@
 
-.list-container *,
+#list-container *,
 #new-item-container * {
     min-width: 0;
     font-family: inherit;
 }
 
-.list-container {
+#list-container {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto 1fr;
@@ -17,18 +17,15 @@
     background-color: var(--background-color);
 }
 
-.list-header {
+#list-header {
     display: flex;
     height: 100%;
-    /* ALIGN THE SETTINGS BUTTON DIV CORRECT */
-    flex-direction: row;
-    align-items: center;
     justify-content: space-between;
     gap: 6px;
     margin-bottom: 0px;
 }
 
-.list-header h1 {
+#list-header h1 {
     font-size: 2.4rem;
     font-weight: 500;
 }
@@ -479,13 +476,13 @@
     }
 }
 
-#settings-gl {
+/* #settings-gl {
     position: relative;
     top: 0;
     right: 0;
     left: 0;
     transform: translateY(-43%) translateX(23%);
-}
+} */
 
 .grocery-item:has(input[type="checkbox"]:checked) .subtext,
 .grocery-item:has(input[type="checkbox"]:checked) h3{

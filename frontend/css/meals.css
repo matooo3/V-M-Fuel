@@ -1,9 +1,9 @@
-.meals-container * {
+#meals-container * {
     min-width: 0;
     font-family: inherit;
 }
 
-.meals-container {
+#meals-container {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto 1fr;
@@ -15,13 +15,18 @@
     background-color: var(--background-color);
 }
 
-.meals-header {
+#meals-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+#meals-description {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
 
-.meals-header h1 {
+#meals-description h1 {
     font-size: 2.4rem;
     font-weight: 500;
 }

@@ -15,7 +15,6 @@
     justify-content: flex-start;
     flex-shrink: 0;
     gap: 5px;
-    padding: 20px 27px 0px 27px;
     color: var(--h1-color);
 }
 
@@ -67,7 +66,7 @@
     padding: 0px 27px 0px 27px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .tab {
@@ -134,8 +133,8 @@
 #next-meals {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    flex: 1;
+    /* overflow: hidden;
+    flex: 1; */
 }
 
 #next-meal-text {
@@ -151,10 +150,10 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 22px;
-    overflow-y: auto;
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
+    overflow-y: visible;
+    /* scrollbar-width: none;
+    /* Firefox 
+    -ms-overflow-style: none; */
     /* IE/Edge */
 }
 
@@ -661,4 +660,11 @@
 /*  HIDDEN ADMIN PANEL  */
 .hidden-admin-panel {
     display: none !important;
+}
+
+#home-header{
+    display: flex;
+    justify-content: space-between;
+
+    padding: 27px 27px 0px 27px;
 }
