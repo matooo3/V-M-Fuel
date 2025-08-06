@@ -89,7 +89,9 @@ export async function fetchWithCache(url, options = {}) {
     if (cachedData) {
       // starte asynchrones Update
       setTimeout(() => updateCache(), 0);
-      setInterval(() => updateCache(), 60000);
+      if (!cacheUpdateIntervals[cacheKey]) {
+        cacheUpdateIntervals[cacheKey] = setInterval(() => updateCache(), 60000);
+      }
       return createFakeResponseFromCache(cachedData);
     } else {
       const resp = await updateCache();
