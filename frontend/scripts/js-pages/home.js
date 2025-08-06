@@ -10,6 +10,7 @@ import * as Search from '../searchBar.js';
 import * as Plan from './plan.js';
 import * as Script from '../script.js';
 import * as Sound from '../sound.js';
+import * as Native from '../native/native.js'
 
 export default async function loadHome() {
     Script.showNavbar();
@@ -18,6 +19,9 @@ export default async function loadHome() {
     // LOAD app html-code
     const html = await loadHTMLTemplate('./html-pages/home.html');
     app.innerHTML = html;
+
+    Native.addNativeStyle(document.getElementById('home-container'));
+    Native.addNativeStyleToApp();
 
     //load user greeting! (eventlistener DOM loaded)
     // document.addEventListener('DOMContentLoaded', renderUserGreeting);

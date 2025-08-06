@@ -5,8 +5,9 @@
     grid-template-rows: auto 1fr;
     width: 100%;
     overflow-y: auto;
-    height: calc(100vh - var(--nav-height));
+    height: var(--app-container-height);
     background-color: var(--background-color);
+    scrollbar-width: none;
 }
 
 #greeting-container {
@@ -15,7 +16,6 @@
     justify-content: flex-start;
     flex-shrink: 0;
     gap: 5px;
-    padding: 20px 27px 0px 27px;
     color: var(--h1-color);
 }
 
@@ -67,7 +67,7 @@
     padding: 0px 27px 0px 27px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .tab {
@@ -79,6 +79,14 @@
     width: 90px;
     height: 30px;
     transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+    cursor: pointer;
+}
+
+.checkbox:hover{
+    cursor: pointer;
 }
 
 .tab.active {
@@ -134,8 +142,8 @@
 #next-meals {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    flex: 1;
+    /* overflow: hidden;
+    flex: 1; */
 }
 
 #next-meal-text {
@@ -151,10 +159,10 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 22px;
-    overflow-y: auto;
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
+    overflow-y: visible;
+    /* scrollbar-width: none;
+    /* Firefox 
+    -ms-overflow-style: none; */
     /* IE/Edge */
 }
 
@@ -510,7 +518,7 @@
     right: 0;
     width: 0px;
     height: 100%;
-    color: white;
+    color: var(--background-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -661,4 +669,11 @@
 /*  HIDDEN ADMIN PANEL  */
 .hidden-admin-panel {
     display: none !important;
+}
+
+#home-header{
+    display: flex;
+    justify-content: space-between;
+
+    padding: 27px 27px 0px 27px;
 }

@@ -56,3 +56,30 @@ export async function setStatusBarWhiteFont() {
   }
   await StatusBar.setStyle({ style: Style.Dark });
 }
+
+// Add additional distance from the top to the app conatiner
+export function addNativeStyle(container) {
+
+  if (isNative) {
+    container.classList.add('nativeContainer');
+  }
+
+}
+
+export function addNativeStyleToApp() {
+  
+  if (isNative) {
+    const app = document.getElementById('app');
+    app.classList.add('nativeApp');
+  }
+
+}
+
+export function removeNativeStyleToApp() {
+
+  if (isNative) {
+    const app = document.getElementById('app');
+    app.classList.remove('nativeApp');
+  }
+
+}

@@ -4,6 +4,7 @@ import { loadHTMLTemplate } from '../templateLoader.js';
 import { getLastHash } from "../script.js";
 import * as Storage from "../storage.js";
 import * as DropDown from '../drop-down.js';
+import * as Native from '../native/native.js'
 
 // ==============================
 // ======= CARD ELEMENTS ========
@@ -16,6 +17,9 @@ export default async function loadSettings() {
     // LOAD app html-code
     const html = await loadHTMLTemplate('./html-pages/settings.html');
     app.innerHTML = html;
+
+    Native.addNativeStyle(document.querySelector('.settings-container'));
+    Native.removeNativeStyleToApp();
 
     hideNavbar();
 
@@ -148,7 +152,8 @@ function addSettingsDropdownFunctionality() {
 
     // sex
     const sexSelect = document.querySelector('.custom-select.sex-field');
-    new DropDown.CustomSelect(sexSelect);
+    const sexDropDown = new DropDown.CustomSelect(sexSelect);
+    sexDropDown.setValue();
 
     // theme
     const themeSelect = document.querySelector('.custom-select.theme-field');

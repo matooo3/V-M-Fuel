@@ -8,6 +8,7 @@ import * as SwipeToDelete from "../swipetodelete.js";
 import * as Script from '../script.js';
 import * as DropDown from '../drop-down.js';
 import * as Sound from "../sound.js";
+import * as Native from '../native/native.js'
 
 const debounceTimers = new Map();
 
@@ -20,6 +21,9 @@ export default async function loadList() {
     // LOAD app html-code
     const html = await loadHTMLTemplate("./html-pages/list.html");
     app.innerHTML = html;
+
+    Native.addNativeStyle(document.getElementById('list-container'));
+    Native.addNativeStyleToApp();
 
     // Add event listener
     addEventListeners();
@@ -156,10 +160,10 @@ function loadItemHTML(item) {
                 <span class="category subtext">${item.category}</span>
             </div>
             <div class="quantity-control">
-                <button class="minus-btn"><img src="./assets/icons/minus.svg" alt="-"></button>
+                <button class="minus-btn"><svg src="./assets/icons/minus.svg" alt="-"></svg></button>
                 <span class="amount">${Math.round(item.amount)}</span>
                 <span class="unit">${pieceToPcs(item.unit_of_measurement)}</span>
-                <button class="plus-btn"><img src="./assets/icons/plus.svg" alt="+"></button>
+                <button class="plus-btn"><svg src="./assets/icons/plus.svg" alt="+"></svg></button>
             </div>
         </div>
     `;

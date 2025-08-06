@@ -21,10 +21,10 @@ async function startApp() {
     const valid = await Auth.checkSessionTokenValid();
     if (!valid) {
         console.warn(
-            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt11111111111`
+            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
         );
     } else {
-        console.log(`[TokenCheck] ✅ Alles in Ordnung11111111111111`);
+        console.log(`[TokenCheck] ✅ Alles in Ordnung`);
     }
 
     // AUTHENTICATION
@@ -59,30 +59,30 @@ async function startApp() {
     // initialLoad();
 
     // --------------- LOAD ALL DATA --------------------
-    async function loadData() {
-        const data = await Storage.getDataDB();
-        console.log("Daten aus storage.js:", data);
-    }
+    // async function loadData() {
+    //     const data = await Storage.getDataDB();
+    //     // console.log("Daten aus storage.js:", data);
+    // }
 
-    await loadData();
+    // await loadData();
 
     // EXAMPLE CALL FOR TESTING: (DB)
-    console.log("--------------DATA LOADED FROM DBBBBB-------------");
-    const dishes = await Storage.getDishes();
-    dishes.forEach((dish) => {
-        console.log(`Dish Name: ${dish.name}`);
-    });
+    // console.log("--------------DATA LOADED FROM DBBBBB-------------");
+    // const dishes = await Storage.getDishes();
+    // dishes.forEach((dish) => {
+    //     console.log(`Dish Name: ${dish.name}`);
+    // });
 
     // EXAMPLE CALL FOR TESTING: (LS)
-    console.log("--------------DATA LOADED FROM LS LS LS-------------");
-    const dataLS = Storage.getDataLS();
+    // console.log("--------------DATA LOADED FROM LS LS LS-------------");
+    // const dataLS = Storage.getDataLS();
 
-    const ingredients = dataLS.ingredients;
+    // const ingredients = dataLS.ingredients;
 
-    console.log(dataLS);
-    dataLS.dishes.forEach((dish) => {
-        console.log(`Dish Name: ${dish.name}`);
-    });
+    // console.log(dataLS);
+    // dataLS.dishes.forEach((dish) => {
+    //     console.log(`Dish Name: ${dish.name}`);
+    // });
 
     // EXAMPLE CALL FOR TESTING: (DISHES WITH INGREDIENTS)
     // console.log("--------------DISHES WITH INGREDIENTS-------------");
@@ -174,7 +174,6 @@ window.addEventListener("hashchange", router);
 
 // Lädt die Standardseite beim Start:
 window.addEventListener("load", router);
-
 
 export function showNavbar() {
     const navbar = document.getElementById('main-nav');
