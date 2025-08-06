@@ -4,7 +4,7 @@
 // ==============================
 
 import { Utils } from './utils.js';
-import { getUserDataFromLS } from './storage.js';
+import { getUserDataFromLS } from './modules/storage.js';
 
 const PAGES = [
     'getstarted.html',
