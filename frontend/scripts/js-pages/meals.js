@@ -31,6 +31,7 @@ export default async function loadMeals() {
     app.innerHTML = html;
 
     Native.addNativeStyle(document.querySelector('.meals-container'));
+    Native.addNativeStyleToApp();
 
     Settings.loadSavedTheme();
 

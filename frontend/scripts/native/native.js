@@ -62,12 +62,15 @@ export function addNativeStyle(container) {
 
   if (isNative) {
     container.classList.add('nativeContainer');
-    addNativeStyleToApp();
   }
 
 }
 
-function addNativeStyleToApp() {
-  const app = document.getElementById('app');
-  app.classList.add('nativeApp');
+export function addNativeStyleToApp() {
+
+  if (isNative) {
+    const app = document.getElementById('app');
+    app.classList.add('nativeApp');
+  }
+  
 }

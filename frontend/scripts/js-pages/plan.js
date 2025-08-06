@@ -16,6 +16,7 @@ export default async function loadPlan() {
     app.innerHTML = html;
 
     Native.addNativeStyle(document.getElementById('meal-plan'));
+    Native.addNativeStyleToApp();
 
     const { today, currentWeek } = getCurrentData();
 

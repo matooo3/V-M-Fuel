@@ -21,6 +21,7 @@ export default async function loadHome() {
     app.innerHTML = html;
 
     Native.addNativeStyle(document.getElementById('home-container'));
+    Native.addNativeStyleToApp();
 
     //load user greeting! (eventlistener DOM loaded)
     // document.addEventListener('DOMContentLoaded', renderUserGreeting);

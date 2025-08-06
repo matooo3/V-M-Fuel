@@ -23,6 +23,7 @@ export default async function loadList() {
     app.innerHTML = html;
 
     Native.addNativeStyle(document.getElementById('list-container'));
+    Native.addNativeStyleToApp();
 
     // Add event listener
     addEventListeners();
