@@ -85,6 +85,21 @@ export class CustomSelect {
 
     open() {
         console.log('Opening dropdown'); // DEBUG
+
+        const currentText = this.selectedText.textContent.trim().toLowerCase();
+        if (currentText) {
+            this.options.forEach(opt => {
+                if (opt.textContent.trim().toLowerCase() === currentText) {
+                    if (!opt.classList.contains('selected')) {
+                        opt.classList.add('selected');
+                        this.selectedValue = opt.dataset.value; 
+                    }
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+        }
+        
         this.isOpen = true;
         this.trigger.classList.add('active');
         this.dropdown.classList.add('active');

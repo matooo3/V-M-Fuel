@@ -205,6 +205,10 @@ button {
     background-color: var(--h1-color);
 }
 
+.settings:hover{
+    cursor: pointer;
+}
+
 .nav-icons {
     width: 35px;
     height: 35px;

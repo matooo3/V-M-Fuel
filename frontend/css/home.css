@@ -81,6 +81,14 @@
     transition: background-color 0.3s ease;
 }
 
+.tab:hover {
+    cursor: pointer;
+}
+
+.checkbox:hover{
+    cursor: pointer;
+}
+
 .tab.active {
     color: var(--background-color);
     background-color: var(--accent-color);
@@ -510,7 +518,7 @@
     right: 0;
     width: 0px;
     height: 100%;
-    color: white;
+    color: var(--background-color);
     display: flex;
     justify-content: center;
     align-items: center;

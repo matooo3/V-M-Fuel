@@ -47,6 +47,10 @@
     font-size: 1.6rem;
 }
 
+.filterBtn-p:hover{
+    cursor: pointer;
+}
+
 .filterBtn-p.long-text {
     padding: 0px 53px;
     width: 100px;
@@ -239,6 +243,10 @@
     justify-content: center;
 }
 
+.add-item-p:hover{
+    cursor: pointer;
+}
+
 #dishes-list-p {
     list-style-type: none;
 }
@@ -317,6 +325,10 @@
     background-color: var(--fill-color);
 }
 
+.like:hover{
+    cursor: pointer;
+}
+
 .like.favorited {
     background-color: var(--positive-color);
 }
@@ -332,6 +344,10 @@
     justify-content: center;
     transition: all 0.3s ease;
     background-color: var(--fill-color);
+}
+
+.dislike:hover{
+    cursor: pointer;
 }
 
 .dislike.rejected {

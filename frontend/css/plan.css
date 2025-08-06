@@ -71,6 +71,10 @@
     margin-right: 6px;
 }
 
+.generate-btn:hover{
+    cursor: pointer;
+}
+
 .days-header {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -108,9 +112,9 @@
     background: transparent;
 }
 
-/* .day:hover {
-    background: var(--h1-color);
-} */
+.day:hover {
+    cursor: pointer;
+}
 
 .other-month {
     color: #ccc;

@@ -148,7 +148,8 @@ function addSettingsDropdownFunctionality() {
 
     // sex
     const sexSelect = document.querySelector('.custom-select.sex-field');
-    new DropDown.CustomSelect(sexSelect);
+    const sexDropDown = new DropDown.CustomSelect(sexSelect);
+    sexDropDown.setValue();
 
     // theme
     const themeSelect = document.querySelector('.custom-select.theme-field');
