@@ -19,6 +19,7 @@ export default async function loadSettings() {
     app.innerHTML = html;
 
     Native.addNativeStyle(document.querySelector('.settings-container'));
+    Native.removeNativeStyleToApp();
 
     hideNavbar();
 

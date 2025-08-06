@@ -72,5 +72,14 @@ export function addNativeStyleToApp() {
     const app = document.getElementById('app');
     app.classList.add('nativeApp');
   }
-  
+
+}
+
+export function removeNativeStyleToApp() {
+
+  if (isNative) {
+    const app = document.getElementById('app');
+    app.classList.remove('nativeApp');
+  }
+
 }
