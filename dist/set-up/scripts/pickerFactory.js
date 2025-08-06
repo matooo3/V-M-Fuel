@@ -4,7 +4,7 @@
 // ==============================
 
 import { UniversalApplePicker } from './universalApplePicker.js';
-import { getUserDataFromLS, saveUserDataToLS } from './storage.js';
+import { getUserDataFromLS, saveUserDataToLS } from './modules/storage.js';
 
 /**
  * Create a picker instance

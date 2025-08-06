@@ -3,7 +3,7 @@
 // ===== CARD FUNCTIONS =====
 // ==============================
 
-import { getUserDataFromLS, saveUserDataToLS } from './storage.js';
+import { getUserDataFromLS, saveUserDataToLS } from './modules/storage.js';
 import { Utils } from './utils.js';
 
 const PAGE_KEY_MAP = {
