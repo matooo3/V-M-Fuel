@@ -161,6 +161,11 @@ function addSettingsDropdownFunctionality() {
         const selectedTheme = value;
         localStorage.setItem('theme', selectedTheme);
         document.body.classList.toggle('dark-mode', selectedTheme === 'dark');
+        if (selectedTheme === 'dark') {
+            Native.setStatusBarWhiteFont();
+        } else {
+            Native.setStatusBarBlackFont();
+        }
     });
 
     themeDropDown.setValue(savedTheme);
