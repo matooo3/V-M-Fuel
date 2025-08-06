@@ -3,7 +3,7 @@
 const apiBaseUrl = 'https://gfoh.ddns.net:6969/api'; // PER REVERSE PROXY
 // const apiBaseUrl = `${window.location.protocol}//${window.location.hostname}:3000`;
 
-import * as nativeSw from './native/sw.js';
+import * as nativeSw from './native/nativeSw.js';
 
 // global port
 window.port = 6969;
