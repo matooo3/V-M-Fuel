@@ -65,11 +65,10 @@ export function addNativeStyle(container) {
   }
 
 }
-const platform = Capacitor.getPlatform()
 
 export function addNativeStyleToApp() {
-
-  if (platform === 'ios' || platform === 'android') {
+  
+  if (isNative) {
     const app = document.getElementById('app');
     app.classList.add('nativeApp');
   }
@@ -78,7 +77,7 @@ export function addNativeStyleToApp() {
 
 export function removeNativeStyleToApp() {
 
-  if (platform === 'ios' || platform === 'android') {
+  if (isNative) {
     const app = document.getElementById('app');
     app.classList.remove('nativeApp');
   }
