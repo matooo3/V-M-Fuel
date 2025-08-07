@@ -15,9 +15,6 @@ let dishesArray;
 // Main function
 export default async function loadMeals() {
 
-    // FOR CAPACITOR TEST VIBRATION:
-    Native.vibrateDevice();
-
     // Hier werden die Variablen asynchron zugewiesen
     ingredientsArray = await Storage.getIngredients();
     dishesArray = await Storage.getDishes();

@@ -144,6 +144,12 @@ function updateUserData() {
 export function loadSavedTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+    // #TODO
+    if (savedTheme === 'dark') {
+            Native.setStatusBarWhiteFont();
+        } else {
+            Native.setStatusBarBlackFont();
+        }
 }
 
 function addSettingsDropdownFunctionality() {
