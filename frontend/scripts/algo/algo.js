@@ -164,7 +164,8 @@ export function split(kcal, puffer) {
 
     switch (puffer) {
         case 0:
-            return [kcal * 0.24, kcal * 0.38, kcal * 0.38];
+            // return [kcal * 0.24, kcal * 0.38, kcal * 0.38];
+            return [kcal * 0.3, kcal * 0.36, kcal * 0.34];
         case 1:
             return [kcal * 0.2, kcal * 0.35, kcal * 0.35, kcal * 0.1];
         case 2:

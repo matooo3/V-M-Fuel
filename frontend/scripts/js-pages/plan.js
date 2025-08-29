@@ -192,17 +192,17 @@ function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, 
     switch (goalAdjustment) {
 
         case GOAL_ADJUSTMENT_LOSE:
-            // Cut (Harris):
-            bmr = calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm);
+            // Cut (Mifflin):
+            bmr = calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm);
             break;
 
         case GOAL_ADJUSTMENT_MAINTAIN:
-            // Maintain (Miffilin):
-            bmr = (calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm) + calculateBMR_HarrisBenedict(gender, age, weightKg, heightCm)) / 2;
+            // Maintain (Mifflin):
+            bmr = calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm);
             break;
 
         case GOAL_ADJUSTMENT_GAIN:
-            // Bulk (Miffilin):
+            // Bulk (Mifflin):
             bmr = calculateBMR_MifflinStJeor(gender, age, weightKg, heightCm);
             break;
     }
@@ -214,6 +214,7 @@ function calculateCalories(gender, age, weightKg, heightCm, activityMultiplier, 
     return Math.round(tdee + goalAdjustment);
 
 };
+
 
 export async function getOptimalKcal() {
 
