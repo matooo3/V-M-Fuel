@@ -161,7 +161,7 @@ self.addEventListener('fetch', event => {
 
 // Hilfsfunktion: Internetverbindung prüfen über /ping
 // function isOnline() {
-//   return fetch('https://gfoh.ddns.net:6969/ping', {
+//   return fetch('https://nutripilot.ddns.net:443/ping', {
 //     method: 'HEAD',
 //     cache: 'no-store',
 //     mode: 'cors'

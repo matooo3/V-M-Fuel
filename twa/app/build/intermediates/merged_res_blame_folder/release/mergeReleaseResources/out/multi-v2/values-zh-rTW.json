@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-mergeReleaseResources-27:/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-mergeReleaseResources-27:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-zh-rTW\\values.xml",

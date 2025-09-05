@@ -17,18 +17,18 @@
         \"relation\": [\"delegate_permission/common.handle_all_urls\"],
         \"target\": {
             \"namespace\": \"web\",
-            \"site\": \"https://gfoh.ddns.net\"
+            \"site\": \"https://nutripilot.ddns.net\"
         }
     }]
     
   </string>
     <string name="fallbackType" translatable="false">webapk</string>
-    <string name="fullScopeUrl" translatable="false">https://gfoh.ddns.net/frontend/</string>
+    <string name="fullScopeUrl" translatable="false">https://nutripilot.ddns.net/frontend/</string>
     <string name="generatorApp" translatable="false">bubblewrap-cli</string>
-    <string name="hostName" translatable="false">gfoh.ddns.net</string>
-    <string name="launchUrl" translatable="false">https://gfoh.ddns.net/frontend/index.html</string>
+    <string name="hostName" translatable="false">nutripilot.ddns.net</string>
+    <string name="launchUrl" translatable="false">https://nutripilot.ddns.net/frontend/index.html</string>
     <string name="launcherName" translatable="false">NutriPilot</string>
     <string name="orientation" translatable="false">portrait</string>
-    <string name="providerAuthority" translatable="false">net_6969.ddns.gfoh.twa.fileprovider</string>
-    <string name="webManifestUrl" translatable="false">https://gfoh.ddns.net/frontend/manifest.json</string>
+    <string name="providerAuthority" translatable="false">net_443.ddns.nutripilot.twa.fileprovider</string>
+    <string name="webManifestUrl" translatable="false">https://nutripilot.ddns.net/frontend/manifest.json</string>
 </resources>

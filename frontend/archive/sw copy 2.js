@@ -83,7 +83,7 @@ self.addEventListener('fetch', event => {
 
 // Hilfsfunktion: Internetverbindung testen
 function isOnline() {
-  return fetch('https://gfoh.ddns.net:6969/ping', { method: 'HEAD', cache: 'no-store', mode: 'no-cors' })
+  return fetch('https://nutripilot.ddns.net:443/ping', { method: 'HEAD', cache: 'no-store', mode: 'no-cors' })
     .then(() => true)
     .catch(() => false);
 }

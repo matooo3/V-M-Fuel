@@ -22,7 +22,7 @@
      the abbreviated format.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net_6969.ddns.gfoh.twa"
+    package="net_443.ddns.nutripilot.twa"
     android:versionCode="10"
     android:versionName="10" >
 
@@ -51,16 +51,16 @@
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <permission
-        android:name="net_6969.ddns.gfoh.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="net_443.ddns.nutripilot.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="net_6969.ddns.gfoh.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+    <uses-permission android:name="net_443.ddns.nutripilot.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
     <!-- <uses-sdk android:minSdkVersion="14"/> -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="net_6969.ddns.gfoh.twa.Application"
+        android:name="net_443.ddns.nutripilot.twa.Application"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:extractNativeLibs="true"
@@ -79,7 +79,7 @@
             android:value="@string/generatorApp" />
 
         <activity
-            android:name="net_6969.ddns.gfoh.twa.LauncherActivity"
+            android:name="net_443.ddns.nutripilot.twa.LauncherActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:label="@string/launcherName" >
@@ -159,7 +159,7 @@
         </provider>
 
         <service
-            android:name="net_6969.ddns.gfoh.twa.DelegationService"
+            android:name="net_443.ddns.nutripilot.twa.DelegationService"
             android:enabled="@bool/enableNotification"
             android:exported="@bool/enableNotification" >
             <meta-data
@@ -222,7 +222,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="net_6969.ddns.gfoh.twa.androidx-startup"
+            android:authorities="net_443.ddns.nutripilot.twa.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

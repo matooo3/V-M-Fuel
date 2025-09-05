@@ -1,6 +1,6 @@
 {
-  "packageId": "net_6969.ddns.gfoh.twa",
-  "host": "gfoh.ddns.net",
+  "packageId": "net_443.ddns.nutripilot.twa",
+  "host": "nutripilot.ddns.net",
   "name": "NutriPilot",
   "launcherName": "NutriPilot",
   "display": "standalone",
@@ -13,7 +13,7 @@
   "backgroundColor": "#000000",
   "enableNotifications": true,
   "startUrl": "/frontend/index.html",
-  "iconUrl": "https://gfoh.ddns.net/frontend/assets/img/logo.png",
+  "iconUrl": "https://nutripilot.ddns.net/frontend/assets/img/logo.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "C:\\Users\\matze\\Desktop\\VM.jks",
@@ -23,7 +23,7 @@
   "appVersionCode": 10,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://gfoh.ddns.net/frontend/manifest.json",
+  "webManifestUrl": "https://nutripilot.ddns.net/frontend/manifest.json",
   "fallbackType": "webapk",
   "features": {
     "playBilling": {
@@ -36,7 +36,7 @@
   "enableSiteSettingsShortcut": false,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "https://gfoh.ddns.net/frontend/",
+  "fullScopeUrl": "https://nutripilot.ddns.net/frontend/",
   "minSdkVersion": 21,
   "orientation": "portrait",
   "fingerprints": [],

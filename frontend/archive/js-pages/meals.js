@@ -39,7 +39,7 @@ async function getDataDB() {
     try {
         // Anfrage an das Backend
         // const response = await fetch('http://172.18.45.1:3000/dishes'); // direct to backend
-        const response = await fetch('https://gfoh.ddns.net:6969/api/dishes'); // via reverse proxy
+        const response = await fetch('https://nutripilot.ddns.net:443/api/dishes'); // via reverse proxy
         if (!response.ok) {
             throw new Error(`Fehler: ${response.statusText}`);
         }

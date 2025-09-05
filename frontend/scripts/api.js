@@ -1,12 +1,12 @@
 // BACKEND base-URL
 // const apiBaseUrl = 'http://172.18.45.1:3000'; // DIREKT
-const apiBaseUrl = 'https://gfoh.ddns.net:6969/api'; // PER REVERSE PROXY
+const apiBaseUrl = 'https://nutripilot.ddns.net:443/api'; // PER REVERSE PROXY
 // const apiBaseUrl = `${window.location.protocol}//${window.location.hostname}:3000`;
 
 import * as nativeSw from './native/nativeSw.js';
 
 // global port
-window.port = 6969;
+window.port = 443;
 
 // fetching any DATA-ENDPOINT from BACKEND
 export async function fetchData(endpoint) {

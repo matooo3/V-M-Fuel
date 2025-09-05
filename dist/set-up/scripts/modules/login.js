@@ -1,8 +1,8 @@
 import { parseJwt, getUserFromToken, checkRoleAccess } from './auth.js';
 import * as Storage from './storage.js';
 
-window.port = 6969;
-const API_BASE = `https://gfoh.ddns.net:${window.port}`;
+window.port = 443;
+const API_BASE = `https://nutripilot.ddns.net:${window.port}`;
 
 document.getElementById('login-form').addEventListener('submit', async function (e) {
     e.preventDefault();

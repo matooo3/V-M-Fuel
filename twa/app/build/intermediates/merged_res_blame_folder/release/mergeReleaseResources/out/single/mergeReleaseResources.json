@@ -1,78 +1,78 @@
 [
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/mipmap-xhdpi/ic_launcher.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-xxhdpi_ic_notification_icon.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-xxhdpi/ic_notification_icon.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-xxhdpi_ic_notification_icon.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-xxhdpi/ic_notification_icon.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/xml_shortcuts.xml.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/xml/shortcuts.xml"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/xml_shortcuts.xml.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/xml/shortcuts.xml"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/raw_web_app_manifest.json.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/raw/web_app_manifest.json"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/raw_web_app_manifest.json.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/raw/web_app_manifest.json"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-xhdpi_splash.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-xhdpi/splash.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-xhdpi_splash.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-xhdpi/splash.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-xxhdpi_splash.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-xxhdpi/splash.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-xxhdpi_splash.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-xxhdpi/splash.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-xxxhdpi_splash.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-xxxhdpi/splash.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-xxxhdpi_splash.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-xxxhdpi/splash.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/mipmap-hdpi/ic_launcher.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/mipmap-hdpi/ic_launcher.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/mipmap-mdpi/ic_launcher.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-anydpi_shortcut_legacy_background.xml.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-anydpi/shortcut_legacy_background.xml"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-anydpi_shortcut_legacy_background.xml.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-anydpi/shortcut_legacy_background.xml"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-hdpi_ic_notification_icon.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-hdpi/ic_notification_icon.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-hdpi_ic_notification_icon.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-hdpi/ic_notification_icon.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-hdpi_splash.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-hdpi/splash.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-hdpi_splash.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-hdpi/splash.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-mdpi_splash.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-mdpi/splash.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-mdpi_splash.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-mdpi/splash.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-xxxhdpi_ic_notification_icon.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-xxxhdpi/ic_notification_icon.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-xxxhdpi_ic_notification_icon.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-xxxhdpi/ic_notification_icon.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-xhdpi_ic_notification_icon.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-xhdpi/ic_notification_icon.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-xhdpi_ic_notification_icon.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-xhdpi/ic_notification_icon.png"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/xml_filepaths.xml.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/xml/filepaths.xml"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/xml_filepaths.xml.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/xml/filepaths.xml"
     },
     {
-        "merged": "net_6969.ddns.gfoh.twa.app-release-29:/drawable-mdpi_ic_notification_icon.png.flat",
-        "source": "net_6969.ddns.gfoh.twa.app-main-30:/drawable-mdpi/ic_notification_icon.png"
+        "merged": "net_443.ddns.nutripilot.twa.app-release-29:/drawable-mdpi_ic_notification_icon.png.flat",
+        "source": "net_443.ddns.nutripilot.twa.app-main-30:/drawable-mdpi/ic_notification_icon.png"
     }
 ]

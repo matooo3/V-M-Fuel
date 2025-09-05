@@ -27,7 +27,7 @@
 Command Line: --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-opens=java.base/java.nio.charset=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.xml/javax.xml.namespace=ALL-UNNAMED -Xmx1536m -Dfile.encoding=windows-1252 -Duser.country=DE -Duser.language=de -Duser.variant -javaagent:C:\Users\matze\.gradle\wrapper\dists\gradle-8.11.1-bin\bpt9gzteqjrbo1mjrsomdt32c\gradle-8.11.1\lib\agents\gradle-instrumentation-agent-8.11.1.jar org.gradle.launcher.daemon.bootstrap.GradleDaemon 8.11.1
 
 Host: 13th Gen Intel(R) Core(TM) i9-13905H, 20 cores, 31G,  Windows 11 , 64 bit Build 26100 (10.0.26100.4768)
-Time: Sun Aug  3 11:49:48 2025 Mitteleuropäische Sommerzeit elapsed time: 20.073818 seconds (0d 0h 0m 20s)
+Time: Sun Aug  3 11:49:48 2025 Mitteleuropï¿½ische Sommerzeit elapsed time: 20.073818 seconds (0d 0h 0m 20s)
 
 ---------------  T H R E A D  ---------------
 
@@ -1332,7 +1332,7 @@ Java Threads: ( => current thread )
   0x67328ae8 JavaThread "Notification Thread" daemon [_thread_blocked, id=24056, stack(0x67760000,0x677b0000)]
   0x68782888 JavaThread "Daemon health stats" [_thread_blocked, id=36236, stack(0x69050000,0x690a0000)]
   0x687de010 JavaThread "Incoming local TCP Connector on port 53844" [_thread_in_native, id=20228, stack(0x69420000,0x69470000)]
-  0x68840750 JavaThread "Daemon periodic checks" [_thread_blocked, id=24324, stack(0x69640000,0x69690000)]
+  0x68840750 JavaThread "Daemon periodic checks" [_thread_blocked, id=24324, stack(0x69640000,0x4430000)]
   0x688d9f70 JavaThread "Daemon" [_thread_blocked, id=6816, stack(0x696d0000,0x69720000)]
   0x688ea1d0 JavaThread "Handler for socket connection from /127.0.0.1:53844 to /127.0.0.1:53845" [_thread_in_native, id=18788, stack(0x697d0000,0x69820000)]
   0x688feef8 JavaThread "Cancel handler" [_thread_blocked, id=35664, stack(0x69860000,0x698b0000)]

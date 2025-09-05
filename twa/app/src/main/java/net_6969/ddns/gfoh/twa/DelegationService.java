@@ -1,4 +1,4 @@
-package net_6969.ddns.gfoh.twa;
+package net_443.ddns.nutripilot.twa;
 
 
 import com.google.androidbrowserhelper.playbilling.digitalgoods.DigitalGoodsRequestHandler;

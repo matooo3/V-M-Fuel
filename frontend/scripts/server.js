@@ -1,9 +1,9 @@
 export function getDomain() {
-    return "https://gfoh.ddns.net";
+    return "https://nutripilot.ddns.net";
 }
 
 export function getPort() {
-    return 6969;
+    return 443;
 }
 
 export function getUrl() {

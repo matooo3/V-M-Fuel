@@ -21,8 +21,8 @@ plugins {
 }
 
 def twaManifest = [
-    applicationId: 'net_6969.ddns.gfoh.twa',
-    hostName: 'gfoh.ddns.net', // The domain being opened in the TWA.
+    applicationId: 'net_443.ddns.nutripilot.twa',
+    hostName: 'nutripilot.ddns.net', // The domain being opened in the TWA.
     launchUrl: '/frontend/index.html', // The start path for the TWA. Must be relative to the domain.
     name: 'NutriPilot', // The application name.
     launcherName: 'NutriPilot', // The name shown on the Android Launcher.
@@ -52,9 +52,9 @@ def twaManifest = [
 
 android {
     compileSdkVersion 36
-    namespace "net_6969.ddns.gfoh.twa"
+    namespace "net_443.ddns.nutripilot.twa"
     defaultConfig {
-        applicationId "net_6969.ddns.gfoh.twa"
+        applicationId "net_443.ddns.nutripilot.twa"
         minSdkVersion 21
         targetSdkVersion 35
         versionCode 10
@@ -76,12 +76,12 @@ android {
             // The URL the Web Manifest for the Progressive Web App that the TWA points to. This
             // is used by Chrome OS and Meta Quest to open the Web version of the PWA instead of
             // the TWA, as it will probably give a better user experience for non-mobile devices.
-            resValue "string", "webManifestUrl", 'https://gfoh.ddns.net/frontend/manifest.json'
+            resValue "string", "webManifestUrl", 'https://nutripilot.ddns.net/frontend/manifest.json'
         
 
         
             // This is used by Meta Quest.
-            resValue "string", "fullScopeUrl", 'https://gfoh.ddns.net/frontend/'
+            resValue "string", "fullScopeUrl", 'https://nutripilot.ddns.net/frontend/'
         
 
         

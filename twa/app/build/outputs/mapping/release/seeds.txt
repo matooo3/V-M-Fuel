@@ -39,7 +39,7 @@ androidx.appcompat.widget.ActionBarContainer
 androidx.lifecycle.ReflectiveGenericLifecycleObserver
 com.google.android.gms.dynamite.DynamiteModule$DynamiteLoaderClassLoader
 androidx.lifecycle.LifecycleDispatcher$DispatcherActivityCallback
-net_6969.ddns.gfoh.twa.Application
+net_443.ddns.nutripilot.twa.Application
 androidx.profileinstaller.ProfileInstallReceiver
 com.google.android.gms.common.GooglePlayServicesMissingManifestValueException
 androidx.profileinstaller.ProfileInstallerInitializer
@@ -57,7 +57,7 @@ com.android.billingclient.api.SkuDetails
 com.google.android.gms.common.api.internal.BasePendingResult
 android.support.v4.graphics.drawable.IconCompatParcelizer
 androidx.lifecycle.ReportFragment
-net_6969.ddns.gfoh.twa.LauncherActivity
+net_443.ddns.nutripilot.twa.LauncherActivity
 androidx.core.content.FileProvider
 com.google.android.gms.common.api.GoogleApiActivity
 androidx.lifecycle.CompositeGeneratedAdaptersObserver
@@ -67,7 +67,7 @@ kotlin.internal.jdk8.JDK8PlatformImplementations
 androidx.appcompat.view.menu.ListMenuItemView
 androidx.appcompat.widget.ActionMenuView
 com.google.android.gms.common.internal.ReflectedParcelable
-net_6969.ddns.gfoh.twa.DelegationService
+net_443.ddns.nutripilot.twa.DelegationService
 com.google.androidbrowserhelper.playbilling.provider.PaymentActivity
 com.google.android.datatransport.cct.CctBackendFactory
 androidx.fragment.app.DialogFragment
@@ -919,7 +919,7 @@ com.google.android.datatransport.cct.internal.ClientInfo$ClientType: com.google.
 androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VPathRenderer: void setRootAlpha(int)
 androidx.core.app.NotificationCompatBuilder$Api20Impl: android.app.Notification$Action$Builder addExtras(android.app.Notification$Action$Builder,android.os.Bundle)
 androidx.appcompat.widget.AppCompatImageView: void setImageResource(int)
-net_6969.ddns.gfoh.twa.DelegationService: DelegationService()
+net_443.ddns.nutripilot.twa.DelegationService: DelegationService()
 androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VPath: java.lang.String getPathName()
 androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VFullPath: void setTrimPathEnd(float)
 androidx.core.widget.EdgeEffectCompat$Api31Impl: float getDistance(android.widget.EdgeEffect)
@@ -965,7 +965,7 @@ androidx.core.app.NotificationCompatBuilder$Api20Impl: android.app.Notification$
 androidx.core.view.WindowInsetsCompat$Impl: androidx.core.graphics.Insets getStableInsets()
 androidx.core.app.RemoteInput$Api26Impl: void addDataResultToIntent(androidx.core.app.RemoteInput,android.content.Intent,java.util.Map)
 androidx.core.view.accessibility.AccessibilityNodeInfoCompat$Api34Impl: boolean isAccessibilityDataSensitive(android.view.accessibility.AccessibilityNodeInfo)
-net_6969.ddns.gfoh.twa.LauncherActivity: LauncherActivity()
+net_443.ddns.nutripilot.twa.LauncherActivity: LauncherActivity()
 android.support.v4.app.RemoteActionCompatParcelizer: androidx.core.app.RemoteActionCompat read(androidx.versionedparcelable.VersionedParcel)
 androidx.lifecycle.ReportFragment$LifecycleCallbacks: void onActivityResumed(android.app.Activity)
 androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VGroup: void setScaleX(float)
@@ -1067,7 +1067,7 @@ androidx.core.view.WindowInsetsCompat$Impl20: void setRootWindowInsets(androidx.
 androidx.lifecycle.ReportFragment$LifecycleCallbacks: void onActivityPaused(android.app.Activity)
 androidx.appcompat.widget.ActionBarContainer: ActionBarContainer(android.content.Context,android.util.AttributeSet)
 androidx.appcompat.widget.Toolbar: void setContentInsetEndWithActions(int)
-net_6969.ddns.gfoh.twa.Application: Application()
+net_443.ddns.nutripilot.twa.Application: Application()
 androidx.core.widget.TextViewCompat$Api28Impl: java.lang.CharSequence castToCharSequence(android.text.PrecomputedText)
 androidx.appcompat.widget.AppCompatImageButton: void setSupportImageTintList(android.content.res.ColorStateList)
 androidx.appcompat.widget.AppCompatTextView: int getAutoSizeStepGranularity()

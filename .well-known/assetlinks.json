@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "net_6969.ddns.gfoh.twa",
+      "package_name": "net_443.ddns.nutripilot.twa",
       "sha256_cert_fingerprints": [
         "5E:37:16:6C:74:97:CB:6B:F0:86:E5:6D:3E:BF:6E:DA:38:A3:DE:5F:5F:35:27:19:AE:16:5E:1A:3E:E7:CC:5B"
       ]

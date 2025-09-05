@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-iw_values-iw.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-iw_values-iw.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-iw\\values-iw.xml",
@@ -91,7 +91,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-sl_values-sl.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-sl_values-sl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-sl\\values-sl.xml",
@@ -181,7 +181,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-watch-v21_values-watch-v21.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-watch-v21_values-watch-v21.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-watch-v21\\values-watch-v21.xml",
@@ -197,7 +197,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v18_values-v18.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v18_values-v18.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-v18\\values-v18.xml",
@@ -212,7 +212,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-pt_values-pt.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-pt_values-pt.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-pt\\values-pt.xml",
@@ -268,7 +268,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-in_values-in.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-in_values-in.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-in\\values-in.xml",
@@ -358,7 +358,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ja_values-ja.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ja_values-ja.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-ja\\values.xml",
@@ -448,7 +448,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-pt-rPT_values-pt-rPT.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-pt-rPT_values-pt-rPT.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-pt-rPT\\values.xml",
@@ -538,7 +538,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-en-rGB_values-en-rGB.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-en-rGB_values-en-rGB.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-en-rGB\\values.xml",
@@ -628,7 +628,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-fr_values-fr.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-fr_values-fr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-fr\\values-fr.xml",
@@ -718,7 +718,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ka_values-ka.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ka_values-ka.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-ka\\values-ka.xml",
@@ -808,7 +808,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-tl_values-tl.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-tl_values-tl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-tl\\values.xml",
@@ -898,7 +898,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-sw600dp-v13_values-sw600dp-v13.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-sw600dp-v13_values-sw600dp-v13.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
@@ -913,7 +913,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-watch-v20_values-watch-v20.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-watch-v20_values-watch-v20.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-watch-v20\\values-watch-v20.xml",
@@ -929,7 +929,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-pt-rBR_values-pt-rBR.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-pt-rBR_values-pt-rBR.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-pt-rBR\\values-pt-rBR.xml",
@@ -1019,7 +1019,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-is_values-is.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-is_values-is.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-is\\values-is.xml",
@@ -1109,7 +1109,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-night-v8_values-night-v8.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-night-v8_values-night-v8.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-night-v8\\values-night-v8.xml",
@@ -1124,7 +1124,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-hi_values-hi.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-hi_values-hi.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-hi\\values-hi.xml",
@@ -1214,7 +1214,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ru_values-ru.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ru_values-ru.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-ru\\values-ru.xml",
@@ -1304,7 +1304,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-lt_values-lt.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-lt_values-lt.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-lt\\values-lt.xml",
@@ -1394,7 +1394,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ko_values-ko.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ko_values-ko.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-ko\\values.xml",
@@ -1484,7 +1484,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-lo_values-lo.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-lo_values-lo.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-lo\\values.xml",
@@ -1574,7 +1574,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-port_values-port.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-port_values-port.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-port\\values-port.xml",
@@ -1589,7 +1589,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-am_values-am.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-am_values-am.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-am\\values-am.xml",
@@ -1679,7 +1679,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-fi_values-fi.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-fi_values-fi.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-fi\\values-fi.xml",
@@ -1769,7 +1769,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-uz_values-uz.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-uz_values-uz.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-uz\\values-uz.xml",
@@ -1859,7 +1859,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-eu_values-eu.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-eu_values-eu.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-eu\\values.xml",
@@ -1949,7 +1949,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-h720dp-v13_values-h720dp-v13.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-h720dp-v13_values-h720dp-v13.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
@@ -1964,7 +1964,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-mn_values-mn.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-mn_values-mn.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-mn\\values-mn.xml",
@@ -2054,7 +2054,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-el_values-el.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-el_values-el.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-el\\values.xml",
@@ -2144,7 +2144,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-fa_values-fa.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-fa_values-fa.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-fa\\values-fa.xml",
@@ -2234,7 +2234,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-nl_values-nl.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-nl_values-nl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-nl\\values.xml",
@@ -2324,7 +2324,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-sk_values-sk.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-sk_values-sk.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-sk\\values.xml",
@@ -2414,7 +2414,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-uk_values-uk.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-uk_values-uk.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-uk\\values-uk.xml",
@@ -2504,7 +2504,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-tr_values-tr.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-tr_values-tr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-tr\\values-tr.xml",
@@ -2594,7 +2594,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-da_values-da.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-da_values-da.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-da\\values-da.xml",
@@ -2684,7 +2684,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-vi_values-vi.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-vi_values-vi.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-vi\\values-vi.xml",
@@ -2774,7 +2774,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-km_values-km.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-km_values-km.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-km\\values.xml",
@@ -2864,7 +2864,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-mr_values-mr.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-mr_values-mr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-mr\\values-mr.xml",
@@ -2954,7 +2954,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-kn_values-kn.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-kn_values-kn.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-kn\\values-kn.xml",
@@ -3044,7 +3044,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-bn_values-bn.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-bn_values-bn.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-bn\\values-bn.xml",
@@ -3134,7 +3134,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v26_values-v26.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v26_values-v26.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-v26\\values-v26.xml",
@@ -3150,7 +3150,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-be_values-be.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-be_values-be.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-be\\values-be.xml",
@@ -3240,7 +3240,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ms_values-ms.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ms_values-ms.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-ms\\values-ms.xml",
@@ -3330,7 +3330,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v28_values-v28.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v28_values-v28.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-v28\\values-v28.xml",
@@ -3346,7 +3346,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-hdpi-v4_values-hdpi-v4.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-hdpi-v4_values-hdpi-v4.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
@@ -3362,7 +3362,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-th_values-th.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-th_values-th.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-th\\values.xml",
@@ -3452,7 +3452,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v24_values-v24.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v24_values-v24.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-v24\\values-v24.xml",
@@ -3467,7 +3467,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-az_values-az.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-az_values-az.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-az\\values.xml",
@@ -3557,7 +3557,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-zh-rTW_values-zh-rTW.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-zh-rTW_values-zh-rTW.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-zh-rTW\\values.xml",
@@ -3647,7 +3647,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v22_values-v22.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v22_values-v22.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-v22\\values-v22.xml",
@@ -3663,7 +3663,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-bs_values-bs.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-bs_values-bs.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-bs\\values-bs.xml",
@@ -3753,7 +3753,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-nb_values-nb.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-nb_values-nb.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-nb\\values-nb.xml",
@@ -3843,7 +3843,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-de_values-de.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-de_values-de.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-de\\values-de.xml",
@@ -3933,7 +3933,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-pl_values-pl.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-pl_values-pl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-pl\\values.xml",
@@ -4023,7 +4023,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-hy_values-hy.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-hy_values-hy.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-hy\\values.xml",
@@ -4113,7 +4113,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-en-rAU_values-en-rAU.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-en-rAU_values-en-rAU.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-en-rAU\\values-en-rAU.xml",
@@ -4169,7 +4169,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values_values.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values_values.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values\\values.xml",
@@ -4397,7 +4397,7 @@
                         "startOffsets": "105,160,205,314,355,410,577,641,711,772,847,923,1000,1288,1373,1455,1531,1607,1684,1762,1868,1974,2053,2382,2439,3397,3471,3546,3611,3677,3737,3798,3870,3943,4010,4078,4137,4196,4255,4314,4373,4427,4481,4534,4588,4642,4696,5104,5178,5257,5330,5404,5475,5547,5619,5692,5749,5807,5880,5954,6028,6157,6229,6302,6372,6443,6503,6564,6633,6702,6772,6846,6922,6986,7063,7139,7216,7281,7350,7427,7502,7571,7639,7716,7782,7843,7940,8005,8074,8173,8244,8303,8361,8418,8477,8541,8612,8684,8756,8828,8900,8967,9035,9103,9162,9225,9289,9379,9470,9530,9596,9663,9729,9799,9863,9916,9983,10044,10111,10224,10282,10345,10410,10475,10550,10623,10695,10739,10786,10832,10881,10942,11003,11064,11126,11190,11254,11318,11383,11446,11506,11567,11633,11692,11752,11814,11885,11945,12644,12730,12817,12907,12994,13082,13164,13247,13337,14406,14458,14516,14561,14627,14691,14748,14805,16982,17039,17087,17136,17244,17348,17395,17551,18456,18759,18823,18885,18945,19202,19276,19346,19424,19478,19548,19633,19681,19727,19788,19851,19917,19981,20052,20115,20180,20244,20305,20366,20418,20491,20565,20634,20709,20783,20857,20998,25583,25908,25986,26076,26164,26260,26350,26932,27021,27268,27549,27801,28086,28479,28956,29178,29400,29676,29903,30133,30363,30593,30823,31050,31469,31695,32120,32350,32778,32997,33280,33488,33619,33846,34272,34497,34924,35145,35570,35690,35966,36267,36591,36882,37196,37333,37464,37569,37811,37978,38182,38390,38661,38773,38885,38990,39107,39321,39467,39607,39693,40041,40129,40375,40793,41042,41124,41222,41879,41979,42231,42655,42910,43004,43093,43330,45354,45596,45698,45951,48107,58788,60304,70999,72527,74284,74910,75330,76591,77856,78112,78348,78895,79389,79994,80192,80772,82140,82515,82633,83171,83328,83524,83797,84053,84223,84364,84428,84793,85160,85836,86100,86438,86791,86885,87071,87377,87639,87764,87891,88130,88341,88460,88653,88830,89285,89466,89588,89847,89960,90147,90249,90356,90485,90760,91268,91764,92641,92935,93505,93654,94386,94558,94642,94978,95070,95348,100579,105950,106012,106590,107174,107265,107378,107607,107767,107919,108090,108256,108425,108592,108755,108998,109168,109341,109512,109786,109985,110190,110520,110604,110700,110796,110894,110994,111096,111198,111300,111402,111504,111604,111700,111812,111941,112064,112195,112326,112424,112538,112632,112772,112906,113002,113114,113214,113330,113426,113538,113638,113778,113914,114078,114208,114366,114516,114657,114801,114936,115048,115198,115326,115454,115590,115722,115852,115982,116094,116992,117138,117282,117420,117486,117576,117652,117756,117846,117948,118056,118164,118264,118344,118436,118534,118644,118696,118774,118880,118972,119076,119186,119308,119471,119628,119708,119808,119898,120008,120098,120339,120433,120539,120631,120731,120843,120957,121073,121189,121283,121397,121509,121611,121731,121853,121935,122039,122159,122285,122383,122477,122565,122677,122793,122915,123027,123202,123318,123404,123496,123608,123732,123799,123925,123993,124121,124265,124393,124462,124557,124672,124785,124884,124993,125104,125215,125316,125421,125521,125651,125742,125865,125959,126071,126157,126261,126357,126445,126563,126667,126771,126897,126985,127093,127193,127283,127393,127477,127579,127663,127717,127781,127887,127973,128083,128167,128426,131042,131160,131275,131355,131716,131949,133353,133431,134775,136136,136524,139367,149420,149758,151429,152786,156938,157689,157951,158466,158845,163123,163729,163958,164109,164324,165824,166674,169700,170444,172575,172915,174226",
                         "endLines": "2,3,4,6,7,8,11,12,13,14,15,16,17,21,22,23,24,25,26,27,28,29,30,35,36,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,77,78,79,80,81,82,83,84,85,86,87,88,89,90,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,188,189,190,191,192,193,194,195,196,212,213,214,215,216,217,218,219,255,256,257,258,260,263,264,267,284,290,291,292,293,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,377,381,382,383,384,385,393,394,398,402,406,411,417,424,428,432,437,441,445,449,453,457,461,467,471,477,481,487,491,496,500,503,507,513,517,523,527,533,536,540,544,548,552,556,557,558,559,562,565,568,571,575,576,577,578,579,582,584,586,588,593,594,598,604,608,609,611,623,624,628,634,638,639,640,644,671,675,676,680,708,880,906,1077,1103,1134,1142,1148,1164,1186,1191,1196,1206,1215,1224,1228,1235,1254,1261,1262,1271,1274,1277,1281,1285,1289,1292,1293,1298,1303,1313,1318,1325,1331,1332,1335,1339,1344,1346,1348,1351,1354,1356,1360,1363,1370,1373,1376,1380,1382,1386,1388,1390,1392,1396,1404,1412,1424,1430,1439,1442,1453,1456,1457,1462,1463,1468,1537,1607,1608,1618,1627,1628,1630,1634,1637,1640,1643,1646,1649,1652,1655,1659,1662,1665,1668,1672,1675,1679,1683,1684,1685,1686,1687,1688,1689,1690,1691,1692,1693,1694,1695,1696,1697,1698,1699,1700,1701,1702,1703,1705,1707,1708,1709,1710,1711,1712,1713,1714,1716,1717,1719,1720,1722,1724,1725,1727,1728,1729,1730,1731,1732,1734,1735,1736,1737,1738,1739,1752,1754,1756,1757,1758,1759,1760,1761,1762,1763,1764,1765,1766,1767,1768,1770,1771,1772,1773,1774,1775,1776,1778,1782,1786,1787,1788,1789,1790,1791,1795,1796,1797,1798,1800,1802,1804,1806,1808,1809,1810,1811,1813,1815,1817,1818,1819,1820,1821,1822,1823,1824,1825,1826,1827,1828,1831,1832,1833,1834,1836,1838,1839,1841,1842,1844,1846,1848,1849,1850,1851,1852,1853,1854,1855,1856,1857,1858,1859,1861,1862,1863,1864,1866,1867,1868,1869,1870,1872,1874,1876,1878,1879,1880,1881,1882,1883,1884,1885,1886,1887,1888,1889,1890,1891,1892,1893,1970,1973,1976,1979,1993,1999,2009,2044,2073,2100,2109,2173,2536,2540,2574,2612,2630,2756,2762,2768,2802,2926,2946,2952,2956,2962,2997,3028,3114,3134,3189,3201,3227,3234",
                         "endColumns": "54,44,48,40,54,61,63,69,60,74,75,76,77,84,81,75,75,76,77,105,105,78,79,56,57,73,74,64,65,59,60,71,72,66,67,58,58,58,58,58,53,53,52,53,53,53,53,73,78,72,73,70,71,71,72,56,57,72,73,73,74,71,72,69,70,59,60,68,68,69,73,75,63,76,75,76,64,68,76,74,68,67,76,65,60,96,64,68,98,70,58,57,56,58,63,70,71,71,71,71,66,67,67,58,62,63,89,90,59,65,66,65,69,63,52,66,60,66,112,57,62,64,64,74,72,71,43,46,45,48,60,60,60,61,63,63,63,64,62,59,60,65,58,59,61,70,59,67,85,86,89,86,87,81,82,89,90,51,57,44,65,63,56,56,53,56,47,48,50,33,46,48,45,31,63,61,59,56,73,69,77,53,69,84,47,45,60,62,65,63,70,62,64,63,60,60,51,72,73,68,74,73,73,140,69,52,77,89,87,95,89,12,88,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,136,130,104,12,12,12,12,12,111,111,104,116,12,12,12,12,12,87,12,12,12,81,12,12,99,12,12,12,93,88,12,12,12,101,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,117,12,12,12,12,12,12,12,63,12,12,12,12,12,12,93,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,83,12,91,12,12,12,61,12,12,90,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,83,95,95,97,99,101,101,101,101,101,99,95,111,128,122,130,130,97,113,93,12,12,95,111,99,115,95,111,99,12,135,12,129,12,12,140,12,134,111,149,127,127,12,131,129,129,111,139,12,12,12,65,89,75,103,89,101,107,107,99,79,91,97,12,51,77,105,91,103,109,12,12,12,79,99,89,109,89,12,93,105,91,12,12,12,12,12,93,113,111,12,12,12,81,103,119,125,97,93,87,111,115,121,111,12,115,85,91,12,12,66,12,67,12,12,12,68,94,114,112,98,108,110,110,100,104,99,12,90,122,93,12,85,103,95,87,12,12,12,12,87,107,99,89,109,83,101,83,53,63,105,85,109,83,119,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24",
-                        "endOffsets": "155,200,249,350,405,467,636,706,767,842,918,995,1073,1368,1450,1526,1602,1679,1757,1863,1969,2048,2128,2434,2492,3466,3541,3606,3672,3732,3793,3865,3938,4005,4073,4132,4191,4250,4309,4368,4422,4476,4529,4583,4637,4691,4745,5173,5252,5325,5399,5470,5542,5614,5687,5744,5802,5875,5949,6023,6098,6224,6297,6367,6438,6498,6559,6628,6697,6767,6841,6917,6981,7058,7134,7211,7276,7345,7422,7497,7566,7634,7711,7777,7838,7935,8000,8069,8168,8239,8298,8356,8413,8472,8536,8607,8679,8751,8823,8895,8962,9030,9098,9157,9220,9284,9374,9465,9525,9591,9658,9724,9794,9858,9911,9978,10039,10106,10219,10277,10340,10405,10470,10545,10618,10690,10734,10781,10827,10876,10937,10998,11059,11121,11185,11249,11313,11378,11441,11501,11562,11628,11687,11747,11809,11880,11940,12008,12725,12812,12902,12989,13077,13159,13242,13332,13423,14453,14511,14556,14622,14686,14743,14800,14854,17034,17082,17131,17182,17273,17390,17439,17592,18483,18818,18880,18940,18997,19271,19341,19419,19473,19543,19628,19676,19722,19783,19846,19912,19976,20047,20110,20175,20239,20300,20361,20413,20486,20560,20629,20704,20778,20852,20993,21063,25631,25981,26071,26159,26255,26345,26927,27016,27263,27544,27796,28081,28474,28951,29173,29395,29671,29898,30128,30358,30588,30818,31045,31464,31690,32115,32345,32773,32992,33275,33483,33614,33841,34267,34492,34919,35140,35565,35685,35961,36262,36586,36877,37191,37328,37459,37564,37806,37973,38177,38385,38656,38768,38880,38985,39102,39316,39462,39602,39688,40036,40124,40370,40788,41037,41119,41217,41874,41974,42226,42650,42905,42999,43088,43325,45349,45591,45693,45946,48102,58783,60299,70994,72522,74279,74905,75325,76586,77851,78107,78343,78890,79384,79989,80187,80767,82135,82510,82628,83166,83323,83519,83792,84048,84218,84359,84423,84788,85155,85831,86095,86433,86786,86880,87066,87372,87634,87759,87886,88125,88336,88455,88648,88825,89280,89461,89583,89842,89955,90142,90244,90351,90480,90755,91263,91759,92636,92930,93500,93649,94381,94553,94637,94973,95065,95343,100574,105945,106007,106585,107169,107260,107373,107602,107762,107914,108085,108251,108420,108587,108750,108993,109163,109336,109507,109781,109980,110185,110515,110599,110695,110791,110889,110989,111091,111193,111295,111397,111499,111599,111695,111807,111936,112059,112190,112321,112419,112533,112627,112767,112901,112997,113109,113209,113325,113421,113533,113633,113773,113909,114073,114203,114361,114511,114652,114796,114931,115043,115193,115321,115449,115585,115717,115847,115977,116089,116229,117133,117277,117415,117481,117571,117647,117751,117841,117943,118051,118159,118259,118339,118431,118529,118639,118691,118769,118875,118967,119071,119181,119303,119466,119623,119703,119803,119893,120003,120093,120334,120428,120534,120626,120726,120838,120952,121068,121184,121278,121392,121504,121606,121726,121848,121930,122034,122154,122280,122378,122472,122560,122672,122788,122910,123022,123197,123313,123399,123491,123603,123727,123794,123920,123988,124116,124260,124388,124457,124552,124667,124780,124879,124988,125099,125210,125311,125416,125516,125646,125737,125860,125954,126066,126152,126256,126352,126440,126558,126662,126766,126892,126980,127088,127188,127278,127388,127472,127574,127658,127712,127776,127882,127968,128078,128162,128282,131037,131155,131270,131350,131711,131944,132461,133426,134770,136131,136519,139362,149415,149550,151123,152781,153353,157684,157946,158146,158840,163118,163724,163953,164104,164319,165402,166131,169695,170439,172570,172910,174221,174424"
+                        "endOffsets": "155,200,249,350,405,467,636,706,767,842,918,995,1073,1368,1450,1526,1602,1679,1757,1863,1969,2048,2128,2434,2492,3466,3541,3606,3672,3732,3793,3865,3938,4005,4073,4132,4191,4250,4309,4368,4422,4476,4529,4583,4637,4691,4745,5173,5252,5325,5399,5470,5542,5614,5687,5744,5802,5875,5949,6023,6098,6224,6297,6367,6438,6498,6559,6628,6697,6767,6841,6917,6981,7058,7134,7211,7276,7345,7422,7497,7566,7634,7711,7777,7838,7935,8000,8069,8168,8239,8298,8356,8413,8472,8536,8607,8679,8751,8823,8895,8962,9030,9098,9157,9220,9284,9374,9465,9525,9591,9658,9724,9794,9858,9911,9978,10039,10106,10219,10277,10340,10405,10470,10545,10618,10690,10734,10781,10827,10876,10937,10998,11059,11121,11185,11249,11313,11378,11441,11501,11562,11628,11687,11747,11809,11880,11940,12008,12725,12812,12902,12989,13077,13159,13242,13332,13423,14453,14511,14556,14622,14686,14743,14800,14854,17034,17082,17131,17182,17273,17390,17439,17592,18483,18818,18880,18940,18997,19271,19341,19419,19473,19543,19628,19676,19722,19783,19846,19912,19976,20047,20110,20175,20239,20300,20361,20413,20486,20560,20629,20704,20778,20852,20993,21063,25631,25981,26071,26159,26255,26345,26927,27016,27263,27544,27796,28081,28474,28951,29173,29395,29671,29898,30128,30358,30588,30818,31045,31464,31690,32115,32345,32773,32992,33275,33483,33614,33841,34267,34492,34919,35140,35565,35685,35961,36262,36586,36877,37191,37328,37459,37564,37806,37973,38177,38385,38656,38768,38880,38985,39102,39316,39462,39602,39688,40036,40124,40370,40788,41037,41119,41217,41874,41974,42226,42650,42905,42999,43088,43325,45349,45591,45693,45946,48102,58783,60299,70994,72522,74279,74905,75325,76586,77851,78107,78343,78890,79384,79989,80187,80767,82135,82510,82628,83166,83323,83519,83792,84048,84218,84359,84423,84788,85155,85831,86095,86433,86786,86880,87066,87372,87634,87759,87886,88125,88336,88455,88648,88825,89280,89461,89583,89842,89955,90142,90244,90351,90480,90755,91263,91759,92636,92930,93500,93649,94381,94553,94637,94973,95065,95343,100574,105945,106007,106585,107169,107260,107373,107602,107762,107914,108085,108251,108420,108587,108750,108993,109163,109336,109507,109781,109980,110185,110515,110599,110695,110791,110889,110989,111091,111193,111295,111397,111499,111599,111695,111807,111936,112059,112190,112321,112419,112533,112627,112767,112901,112997,113109,113209,113325,113421,113533,113633,113773,113909,114073,114203,114361,114511,114652,114796,114931,115043,115193,115321,115449,115585,115717,115847,115977,116089,116229,117133,117277,117415,117481,117571,117647,117751,117841,117943,118051,118159,118259,118339,118431,118529,118639,118691,118769,118875,118967,119071,119181,119303,119466,119623,119703,119803,119893,120003,120093,120334,120428,120534,120626,120726,120838,120952,121068,121184,121278,121392,121504,121606,121726,121848,121930,122034,122154,122280,122378,122472,122560,122672,122788,122910,123022,123197,123313,123399,123491,123603,123727,123794,123920,123988,124116,124260,124388,124457,124552,124667,124780,124879,124988,125099,125210,125311,125416,125516,125646,125737,125860,125954,126066,126152,126256,126352,126440,126558,126662,126766,126892,126980,127088,127188,127278,127388,127472,127574,127658,127712,127776,127882,127968,128078,128162,128282,131037,131155,131270,131350,131711,131944,132461,133426,134770,136131,136519,139362,149415,149550,151123,152781,153353,157684,157946,158146,158840,163118,163724,163953,164104,164319,165402,166131,14435,170439,172570,172910,174221,174424"
                     }
                 },
                 {
@@ -4475,7 +4475,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-et_values-et.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-et_values-et.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-et\\values-et.xml",
@@ -4565,7 +4565,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ta_values-ta.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ta_values-ta.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-ta\\values-ta.xml",
@@ -4655,7 +4655,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-sw_values-sw.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-sw_values-sw.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-sw\\values-sw.xml",
@@ -4745,7 +4745,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v16_values-v16.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v16_values-v16.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-v16\\values-v16.xml",
@@ -4761,7 +4761,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-es-rUS_values-es-rUS.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-es-rUS_values-es-rUS.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-es-rUS\\values.xml",
@@ -4851,7 +4851,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-en-rCA_values-en-rCA.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-en-rCA_values-en-rCA.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-en-rCA\\values-en-rCA.xml",
@@ -4907,7 +4907,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-lv_values-lv.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-lv_values-lv.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-lv\\values-lv.xml",
@@ -4997,7 +4997,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-gl_values-gl.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-gl_values-gl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-gl\\values.xml",
@@ -5087,7 +5087,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-land_values-land.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-land_values-land.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-land\\values-land.xml",
@@ -5102,7 +5102,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-gu_values-gu.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-gu_values-gu.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-gu\\values-gu.xml",
@@ -5192,7 +5192,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-hu_values-hu.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-hu_values-hu.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-hu\\values-hu.xml",
@@ -5282,7 +5282,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-af_values-af.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-af_values-af.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-af\\values-af.xml",
@@ -5372,7 +5372,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-zh-rCN_values-zh-rCN.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-zh-rCN_values-zh-rCN.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-zh-rCN\\values-zh-rCN.xml",
@@ -5462,7 +5462,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ca_values-ca.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ca_values-ca.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-ca\\values.xml",
@@ -5552,7 +5552,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-or_values-or.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-or_values-or.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-or\\values.xml",
@@ -5642,7 +5642,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-pa_values-pa.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-pa_values-pa.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-pa\\values.xml",
@@ -5732,7 +5732,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-si_values-si.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-si_values-si.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-si\\values-si.xml",
@@ -5822,7 +5822,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-sv_values-sv.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-sv_values-sv.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-sv\\values.xml",
@@ -5912,7 +5912,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ur_values-ur.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ur_values-ur.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-ur\\values-ur.xml",
@@ -6002,7 +6002,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v21_values-v21.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v21_values-v21.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-v21\\values-v21.xml",
@@ -6045,7 +6045,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ro_values-ro.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ro_values-ro.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-ro\\values-ro.xml",
@@ -6135,7 +6135,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-en-rIN_values-en-rIN.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-en-rIN_values-en-rIN.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-en-rIN\\values-en-rIN.xml",
@@ -6191,7 +6191,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-my_values-my.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-my_values-my.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-my\\values-my.xml",
@@ -6281,7 +6281,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ar_values-ar.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ar_values-ar.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-ar\\values.xml",
@@ -6371,7 +6371,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-es_values-es.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-es_values-es.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-es\\values.xml",
@@ -6461,7 +6461,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-large-v4_values-large-v4.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-large-v4_values-large-v4.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-large-v4\\values-large-v4.xml",
@@ -6476,7 +6476,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ml_values-ml.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ml_values-ml.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\57bacb9ef58048c0e6f8321d8067096b\\transformed\\play-services-base-18.5.0\\res\\values-ml\\values.xml",
@@ -6566,7 +6566,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v17_values-v17.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v17_values-v17.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-v17\\values-v17.xml",
@@ -6582,7 +6582,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-en-rXC_values-en-rXC.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-en-rXC_values-en-rXC.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-en-rXC\\values-en-rXC.xml",
@@ -6638,7 +6638,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ky_values-ky.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ky_values-ky.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-ky\\values-ky.xml",
@@ -6728,7 +6728,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-sr_values-sr.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-sr_values-sr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-sr\\values-sr.xml",
@@ -6818,7 +6818,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ne_values-ne.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ne_values-ne.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-ne\\values-ne.xml",
@@ -6908,7 +6908,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-ldltr-v21_values-ldltr-v21.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-ldltr-v21_values-ldltr-v21.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
@@ -6923,7 +6923,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-te_values-te.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-te_values-te.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-te\\values-te.xml",
@@ -7013,7 +7013,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-mk_values-mk.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-mk_values-mk.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-mk\\values-mk.xml",
@@ -7103,7 +7103,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-it_values-it.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-it_values-it.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-it\\values-it.xml",
@@ -7193,7 +7193,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-cs_values-cs.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-cs_values-cs.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-cs\\values-cs.xml",
@@ -7283,7 +7283,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-sq_values-sq.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-sq_values-sq.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-sq\\values-sq.xml",
@@ -7373,7 +7373,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-hr_values-hr.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-hr_values-hr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\af1250092db6525f6762c9b32f91bede\\transformed\\play-services-basement-18.4.0\\res\\values-hr\\values.xml",
@@ -7463,7 +7463,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-fr-rCA_values-fr-rCA.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-fr-rCA_values-fr-rCA.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-fr-rCA\\values-fr-rCA.xml",
@@ -7553,7 +7553,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-kk_values-kk.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-kk_values-kk.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-kk\\values-kk.xml",
@@ -7643,7 +7643,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-b+sr+Latn_values-b+sr+Latn.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-b+sr+Latn_values-b+sr+Latn.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-b+sr+Latn\\values-b+sr+Latn.xml",
@@ -7733,7 +7733,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v25_values-v25.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v25_values-v25.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-v25\\values-v25.xml",
@@ -7749,7 +7749,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-bg_values-bg.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-bg_values-bg.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-bg\\values-bg.xml",
@@ -7839,7 +7839,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-zu_values-zu.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-zu_values-zu.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\a5429f7b20c607b890f08b5283ad4ec0\\transformed\\core-1.13.0\\res\\values-zu\\values-zu.xml",
@@ -7929,7 +7929,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-as_values-as.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-as_values-as.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-as\\values-as.xml",
@@ -8019,7 +8019,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-zh-rHK_values-zh-rHK.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-zh-rHK_values-zh-rHK.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\be57bd43967b699c12a0f6b8bd2f21c6\\transformed\\browser-1.9.0-alpha04\\res\\values-zh-rHK\\values-zh-rHK.xml",
@@ -8109,7 +8109,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-xlarge-v4_values-xlarge-v4.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-xlarge-v4_values-xlarge-v4.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-xlarge-v4\\values-xlarge-v4.xml",
@@ -8124,7 +8124,7 @@
             ]
         },
         {
-            "outputFile": "net_6969.ddns.gfoh.twa.app-release-29:/values-v23_values-v23.arsc.flat",
+            "outputFile": "net_443.ddns.nutripilot.twa.app-release-29:/values-v23_values-v23.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\matze\\.gradle\\caches\\8.11.1\\transforms\\183ebbc8ed821348f80a6d36d20b75e3\\transformed\\appcompat-1.7.0\\res\\values-v23\\values-v23.xml",

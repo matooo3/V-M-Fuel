@@ -22,7 +22,7 @@
 22     the abbreviated format.
 23-->
 24<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-25    package="net_6969.ddns.gfoh.twa"
+25    package="net_443.ddns.nutripilot.twa"
 26    android:versionCode="10"
 27    android:versionName="10" >
 28
@@ -70,12 +70,12 @@
 52
 53    <permission
 53-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:22:5-24:47
-54        android:name="net_6969.ddns.gfoh.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+54        android:name="net_443.ddns.nutripilot.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
 54-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:23:9-81
 55        android:protectionLevel="signature" />
 55-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:24:9-44
 56
-57    <uses-permission android:name="net_6969.ddns.gfoh.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+57    <uses-permission android:name="net_443.ddns.nutripilot.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
 57-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:26:5-97
 57-->[androidx.core:core:1.13.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\a5429f7b20c607b890f08b5283ad4ec0\transformed\core-1.13.0\AndroidManifest.xml:26:22-94
 58    <!-- <uses-sdk android:minSdkVersion="14"/> -->
@@ -88,7 +88,7 @@
 61
 62    <application
 62-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:35:5-209:19
-63        android:name="net_6969.ddns.gfoh.twa.Application"
+63        android:name="net_443.ddns.nutripilot.twa.Application"
 63-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:36:9-35
 64        android:allowBackup="true"
 64-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:37:9-35
@@ -124,7 +124,7 @@
 80
 81        <activity
 81-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:64:9-145:20
-82            android:name="net_6969.ddns.gfoh.twa.LauncherActivity"
+82            android:name="net_443.ddns.nutripilot.twa.LauncherActivity"
 82-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:64:19-50
 83            android:alwaysRetainTaskState="true"
 83-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:65:13-49
@@ -281,7 +281,7 @@
 160
 161        <service
 161-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:162:9-177:19
-162            android:name="net_6969.ddns.gfoh.twa.DelegationService"
+162            android:name="net_443.ddns.nutripilot.twa.DelegationService"
 162-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:163:13-46
 163            android:enabled="@bool/enableNotification"
 163-->C:\Users\matze\Desktop\Local Repos\V-M-Fuel\twa\app\src\main\AndroidManifest.xml:164:13-55
@@ -396,7 +396,7 @@
 223-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
 224            android:name="androidx.startup.InitializationProvider"
 224-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
-225            android:authorities="net_6969.ddns.gfoh.twa.androidx-startup"
+225            android:authorities="net_443.ddns.nutripilot.twa.androidx-startup"
 225-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
 226            android:exported="false" >
 226-->[androidx.emoji2:emoji2:1.3.0] C:\Users\matze\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
