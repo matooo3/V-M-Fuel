@@ -23,7 +23,8 @@ document.getElementById('register-form').addEventListener('submit', async functi
             document.getElementById('message').textContent = 'Registration was successful. Please log in.';
             
             await new Promise(resolve => setTimeout(resolve, 1000));
-            window.location.href = "../../index.html#home"; //#specialLink
+            // window.location.href = "../../index.html#home"; //#specialLink
+            window.location.href = "../pages/log-in.html"; //#specialLink
 
         } else {
             document.getElementById('message').textContent = data.message || 'Fehler bei der Registrierung.';
