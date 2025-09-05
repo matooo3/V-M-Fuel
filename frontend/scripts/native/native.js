@@ -60,26 +60,26 @@ export async function setStatusBarWhiteFont() {
 // Add additional distance from the top to the app conatiner
 export function addNativeStyle(container) {
 
-  if (isNative) {
+  // if (isNative) {
     container.classList.add('nativeContainer');
-  }
+  // }
 
 }
 
 export function addNativeStyleToApp() {
   
-  if (isNative) {
+  // if (isNative) {
     const app = document.getElementById('app');
     app.classList.add('nativeApp');
-  }
+  // }
 
 }
 
 export function removeNativeStyleToApp() {
 
-  if (isNative) {
+  // if (isNative) {
     const app = document.getElementById('app');
     app.classList.remove('nativeApp');
-  }
+  // }
 
 }
