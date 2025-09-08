@@ -362,7 +362,7 @@ function updateTodaysMeals(todaysMealsWithState) {
 }
 
 function capitalizeFirstLetter(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 function renderNextMeal(nextMeal, currentKey) {
@@ -385,6 +385,7 @@ function renderNextMeal(nextMeal, currentKey) {
             `   <div class="card drop-shadow next-meal-card-db">
                 <div class="first-row-db">
                     <input id="checked-circle" class="checkbox" type="checkbox">
+                    <label for="checked-circle" class="sr-only">Auswahl für ${nextMeal.name}</label>
 
                     <div class="next-meal-info">
                         <div class="next-meal-info-texts">
@@ -415,6 +416,7 @@ function renderNextMeal(nextMeal, currentKey) {
             </div>
         `
     }
+
 
     addCheckboxEventListener();
 }
