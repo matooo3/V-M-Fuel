@@ -707,10 +707,10 @@ function addMealCard(name, dishID, calories, time, tags = [], containerId = '#di
                     </div>
                 </div>
                 <div class="preference-buttons">
-                    <button class="like" data-meal="${dataId}">
+                    <button aria-label="Gericht favorisieren" class="like" data-meal="${dataId}">
                         <svg class="star-icon" src="./assets/icons/star.svg" alt="star"></svg>
                     </button>
-                    <button class="dislike" data-meal="${dataId}">
+                    <button aria-label="Gericht blockieren" class="dislike" data-meal="${dataId}">
                         <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -836,10 +836,10 @@ function addIngredientCard(name, ingredientID, category, containerId = 'ingredie
                 </div>
 
                 <div class="preference-buttons">
-                    <button class="like" data-meal="${dataId}">
+                    <button aria-label="Zutat favorisieren" class="like" data-meal="${dataId}">
                         <img class="star-icon" src="./assets/icons/star.svg" alt="star">
                     </button>
-                    <button class="dislike" data-meal="${dataId}">
+                    <button aria-label="Zutat blockieren" class="dislike" data-meal="${dataId}">
                         <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>

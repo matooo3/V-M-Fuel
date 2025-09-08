@@ -154,16 +154,17 @@ function loadItemHTML(item) {
         <div class="swipe-delete">Delete</div>
         <div class="swipe-content">
             <span class="item-id">${identifier}</span>
-            <input class="checkbox checkbox-gl" type="checkbox" ${checked} />
+            <input id="chk-${identifier}" class="checkbox checkbox-gl" type="checkbox" ${checked} />
+            <label for="chk-${identifier}" class="sr-only"> ${item.name} auswählen </label>
             <div class="item-details">
                 <h3>${item.name}</h3>
                 <span class="category subtext">${item.category}</span>
             </div>
             <div class="quantity-control">
-                <button class="minus-btn"><svg src="./assets/icons/minus.svg" alt="-"></svg></button>
+                <button class="minus-btn" aria-label="Weniger"><svg src="./assets/icons/minus.svg" alt="-"></svg></button>
                 <span class="amount">${Math.round(item.amount)}</span>
                 <span class="unit">${pieceToPcs(item.unit_of_measurement)}</span>
-                <button class="plus-btn"><svg src="./assets/icons/plus.svg" alt="+"></svg></button>
+                <button class="plus-btn" aria-label="Mehr"><svg src="./assets/icons/plus.svg" alt="+"></svg></button>
             </div>
         </div>
     `;
