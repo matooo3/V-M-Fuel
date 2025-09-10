@@ -9,7 +9,7 @@
     display: grid;
     justify-items: center;
     grid-template-columns: 1fr;
-    grid-template-rows: 10vh 10vh 45vh 10vh 20vh;
+    grid-template-rows: 10dvh 10dvh 45dvh 10dvh 20dvh;
 }
 
 #acc-div {

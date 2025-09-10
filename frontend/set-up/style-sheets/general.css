@@ -20,7 +20,7 @@ body {
     display: grid;
     justify-items: center;
     grid-template-columns: 1fr;
-    grid-template-rows: 10vh 10vh 35vh 20vh 20vh;
+    grid-template-rows: 10dvh 10dvh 35dvh 20dvh 20dvh;
 }
 
 /* pictures */
