@@ -269,7 +269,7 @@
     border-radius: var(--border-radius-overlay);
     width: 450px;
     max-width: 90vw;
-    height: calc(90vh - var(--nav-height));
+    height: calc(90dvh - var(--nav-height));
     overflow: hidden;
     color: var(--main-text-color);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);

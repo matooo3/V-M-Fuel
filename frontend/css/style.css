@@ -10,13 +10,13 @@
     --icon-grey-color: #999999;
     --progress-circle-color: #F3F4F6;
     --card-color: white;
-    --app-container-height: calc(100vh - var(--nav-height));
+    --app-container-height: calc(100dvh - var(--nav-height));
 
     /* Color for navigation bar items (not selected), star and clos icon */
     --accent-color: #E35252;
     --accent-background: #FEF2F2;
     --circle-stroke: 12px;
-    --nav-height: max(10vh, 80px);
+    --nav-height: max(10dvh, 80px);
     --nav-active-color: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(110%);
 
     /* ----------------------*/
@@ -309,7 +309,7 @@ button {
 .nativeContainer {
     --native-padding: 30px;
     padding-top: var(--native-padding) !important;
-    --app-container-height: calc(100vh - var(--native-padding) + 30px - var(--nav-height)) !important;
+    --app-container-height: calc(100dvh - var(--native-padding) + 30px - var(--nav-height)) !important;
 }
 
 .nativeApp{

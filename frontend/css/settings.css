@@ -380,7 +380,7 @@ eg8uzbeirzgbierzgbierbgierzbgoerbguzerbgiuerbgizebeuzgbiebgzerbgierzbgie */
     /* Adjust based on header height */
     padding: 10px 20px;
     overflow-y: auto;
-    height: calc(100vh - 40px);
+    height: calc(100dvh - 40px);
     /* Full height minus header */
     display: flex;
     flex-direction: column;

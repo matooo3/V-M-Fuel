@@ -3,9 +3,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
 
 // Check, ob wir auf einer nativen Plattform sind (iOS, Android, etc.)
-const isNative = true;
-
-// const isNative = Capacitor.isNativePlatform();
+const isNative = Capacitor.isNativePlatform();
 
 
 export async function vibrateDevice() {
