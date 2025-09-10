@@ -1,6 +1,6 @@
 .landing-container {
   display: grid;
-  grid-template-rows: 70vh 30vh;
+  grid-template-rows: 70dvh 30dvh;
 }
 
 .buttons-div {
