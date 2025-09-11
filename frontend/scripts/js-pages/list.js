@@ -433,7 +433,7 @@ function loadAddNewItemHTML() {
                 </div>
                 <div class="select-dropdown">
                     <div class="select-option" data-value="Protein">Protein</div>
-                    <div class="select-option" data-value="Fruit">Fruit</div>
+                    <div class="select-option" data-value="Fruits">Fruits</div>
                     <div class="select-option" data-value="Dairy">Dairy</div>
                 </div>
             </div>
