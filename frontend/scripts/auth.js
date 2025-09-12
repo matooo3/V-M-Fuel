@@ -176,6 +176,7 @@ export async function checkSessionTokenValid() {
   const token = localStorage.getItem("token");
   if (!token) {
     console.log("[checkSessionTokenValid] Kein Token gefunden");
+    logout();
     return "expired";
   }
 
