@@ -5,8 +5,8 @@
   "background_color": "#333333",
   "display": "fullscreen",
   "orientation": "portrait",
-  "scope": "./",
-  "start_url": "./index.html",
+  "scope": "/",
+  "start_url": "/index.html",
   "icons": [
   {
     "src": "assets/img/windows11/SmallTile.scale-100.png",
