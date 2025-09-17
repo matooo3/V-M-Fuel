@@ -14,7 +14,7 @@ export function parseJwt(token) {
 export function getUserToken() {
     const token = localStorage.getItem("token");
     if (!token) {
-        logout();
+        redirectToGetStartedPage();
         throw new Error("Token nicht gefunden");
     }
     return token;
@@ -50,7 +50,6 @@ export function logout() {
   window.location.href = "./html-pages/unauthorized.html";
 }
 
-
 export async function checkRoleAccess(allowedRoles) {
     try {
         const userData = getUserFromToken();
@@ -60,7 +59,7 @@ export async function checkRoleAccess(allowedRoles) {
     } catch (error) {
         // TOKEN NOT FOUND ERROR
         console.warn("Access denied because no token was found. Redirecting...");
-        // redirectToUnauthorizedPage(); // !!!! DONT DELETE THIS
+        // redirectToUnauthorizedPage(); // !!!! DONT DELETE THIS COMMENT
         redirectToGetStartedPage();
     }
 }
@@ -176,7 +175,7 @@ export async function checkSessionTokenValid() {
   const token = localStorage.getItem("token");
   if (!token) {
     console.log("[checkSessionTokenValid] Kein Token gefunden");
-    logout();
+    redirectToGetStartedPage();
     return "expired";
   }
 
