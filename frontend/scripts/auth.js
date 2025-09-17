@@ -101,7 +101,7 @@ export async function checkSessionTokenValid() {
         "[checkSessionTokenValid] ❌ Token abgelaufen – Nutzer wird ausgeloggt"
       );
       logout();
-      return "expired";
+    }
     }
 
     try {
