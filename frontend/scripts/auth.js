@@ -15,7 +15,7 @@ export function getUserToken() {
     const token = localStorage.getItem("token");
     if (!token) {
         redirectToGetStartedPage();
-        // throw new Error("Token nicht gefunden"); // Removed: error will never be caught after redirect
+        throw new Error("Token nicht gefunden");
     }
     return token;
 }
@@ -177,7 +177,7 @@ export async function checkSessionTokenValid() {
   if (!token) {
     console.log("[checkSessionTokenValid] Kein Token gefunden");
     redirectToGetStartedPage();
-    // return "expired"; // No return needed after redirect
+    return "expired"; // maybe no return needed after redirect
   }
 
   try {
@@ -188,7 +188,7 @@ export async function checkSessionTokenValid() {
         "[checkSessionTokenValid] ❌ Token abgelaufen – Nutzer wird ausgeloggt"
       );
       logout();
-      // return "expired"; // No return needed after redirect
+      return "expired"; // maybe no return needed after redirect
     }
 
     console.log("[checkSessionTokenValid] ✅ Token gültig");
@@ -199,7 +199,7 @@ export async function checkSessionTokenValid() {
         "[checkSessionTokenValid] ❌ Token abgelaufen – Nutzer wird ausgeloggt"
       );
       logout();
-      // return "expired"; // No return needed after redirect
+      return "expired"; // maybe no return needed after redirect
     }
 
     console.warn(
