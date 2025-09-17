@@ -16,57 +16,29 @@ import * as RoleCheck from './auth.js';
 async function startApp() {
 
     // INITIALIZE ROLE CHECK
-    // await RoleCheck.checkRoleAccess(['admin', 'cook', 'user']); 
+    await RoleCheck.checkRoleAccess(['admin', 'cook', 'user']); 
 
-    // const valid = await Auth.checkSessionTokenValid();
-    // if (!valid) {
-    //     console.warn(
-    //         `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
-    //     );
-    // } else {
-    //     console.log(`[TokenCheck] ✅ Alles in Ordnung`);
-    // }
-
-    // // AUTHENTICATION
-    // setInterval(async () => {
-    //     console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
-    //     const valid = await Auth.checkSessionTokenValid();
-    //     if (!valid) {
-    //         console.warn(
-    //             `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
-    //         );
-    //     } else {
-    //         console.log(`[TokenCheck] ✅ Alles in Ordnung`);
-    //     }
-    // }, 5 * 60 * 1000); // alle 5 Minuten
-
-    await RoleCheck.checkRoleAccess(["admin", "cook", "user"]);
-
-    const status = await Auth.checkSessionTokenValid();
-    if (status === "valid") {
-        console.log(`[TokenCheck] ✅ Alles in Ordnung`);
-    } else if (status === "unknown") {
-        console.warn(`[TokenCheck] ⚠️ Serverproblem – Nutzer bleibt eingeloggt (Status unbekannt)`);
+    const valid = await Auth.checkSessionTokenValid();
+    if (!valid) {
+        console.warn(
+            `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
+        );
     } else {
-        // "expired" → logout wurde bereits getriggert
-        console.warn(`[TokenCheck] ❌ Token ungültig/abgelaufen – Logout ausgelöst`);
-        return; // Optional: weiteren App-Start abbrechen
+        console.log(`[TokenCheck] ✅ Alles in Ordnung`);
     }
 
-    // AUTHENTICATION – regelmäßige Prüfung
+    // AUTHENTICATION
     setInterval(async () => {
         console.log(`[TokenCheck] 🔄 Starte regelmäßige Prüfung...`);
-        const s = await Auth.checkSessionTokenValid();
-        if (s === "valid") {
-            console.log(`[TokenCheck] ✅ Alles in Ordnung`);
-        } else if (s === "unknown") {
-            console.warn(`[TokenCheck] ⚠️ Serverproblem – Nutzer bleibt eingeloggt (Status unbekannt)`);
+        const valid = await Auth.checkSessionTokenValid();
+        if (!valid) {
+            console.warn(
+                `[TokenCheck] ❌ Tokenprüfung fehlgeschlagen – Nutzer wird ausgeloggt`
+            );
         } else {
-            console.warn(`[TokenCheck] ❌ Token ungültig/abgelaufen – Logout ausgelöst`);
+            console.log(`[TokenCheck] ✅ Alles in Ordnung`);
         }
-    }, 5 * 60 * 1000);
-
-
+    }, 5 * 60 * 1000); // alle 5 Minuten
 
     // SAVE INITIAL USER DATA TO DB
     Storage.saveInitialUserDataToDB();
@@ -148,7 +120,7 @@ export function updateLastHash() {
     }
 }
 
-export function getLastHash() {
+export function getLastHash() {     
     return localStorage.getItem("lastValidHash") || previousHash || "#home";
 }
 
@@ -211,10 +183,10 @@ export function showNavbar() {
     }
 }
 
-export function hideNavOverlay() {
+export function hideNavOverlay(){
     document.getElementById('navOverlay').classList.add('hidden');
 }
 
-export function showNavOverlay() {
+export function showNavOverlay(){
     document.getElementById('navOverlay').classList.remove('hidden');
 }
