@@ -90,7 +90,7 @@ export async function checkSessionTokenValid() {
   if (!token) {
     console.log("[checkSessionTokenValid] Kein Token gefunden");
     redirectToGetStartedPage();
-    return "expired";
+    // No return needed after redirect
   }
 
   try {
