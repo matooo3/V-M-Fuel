@@ -26,28 +26,16 @@ export function getUserFromToken() {
 }
 
 // Logout
-// export function logout() {
-//     localStorage.removeItem("token");
-//     localStorage.removeItem("userData"); // delete initial user data
-
-//     // reload site 
-//     // location.reload();
-
-
-//     alert("Your session has expired. You are being logged out.");
-//     window.location.href = "./html-pages/unauthorized.html";
-// }
-let IS_LOGGING_OUT = false;
-
 export function logout() {
-  if (IS_LOGGING_OUT) return;
-  IS_LOGGING_OUT = true;
+    localStorage.removeItem("token");
+    localStorage.removeItem("userData"); // delete initial user data
 
-  localStorage.removeItem("token");
-  localStorage.removeItem("userData");
+    // reload site 
+    // location.reload();
 
-  alert("Your session has expired. You are being logged out.");
-  window.location.href = "./html-pages/unauthorized.html";
+
+    alert("Your session has expired. You are being logged out.");
+    window.location.href = "./html-pages/unauthorized.html";
 }
 
 export async function checkRoleAccess(allowedRoles) {
@@ -97,80 +85,6 @@ export function requiredUserRole(role) {
 
 // check if user toke is valid use my api.js functions:
 
-// export async function checkSessionTokenValid() {
-//     const token = localStorage.getItem("token");
-//     if (!token) {
-//         console.log("[checkSessionTokenValid] Kein Token gefunden");
-//         return false;
-//     }
-
-//     try {
-//         const response = await Api.fetchDataWithToken("/check-token", token);
-
-//         // if (!response.valid) {
-//         //   console.warn("[checkSessionTokenValid] ❌ Token ungültig oder abgelaufen – Nutzer wird ausgeloggt");
-//         //   logout();
-//         //   return false;
-//         // }
-
-//         console.log("[checkSessionTokenValid] ✅ Token gültig");
-//         return true;
-//     } catch (err) {
-//         if (err.message.includes("403")) {
-//             console.warn(
-//                 "[checkSessionTokenValid] ❌ Token abgelaufen – Nutzer wird ausgeloggt"
-//             );
-//             logout();
-//             return false;
-//         }
-
-//         // Andere Fehler, z.B. Netzwerkproblem, Server nicht erreichbar
-//         console.warn(
-//             "[checkSessionTokenValid] ⚠️ Server nicht erreichbar – Tokenstatus unbekannt, Nutzer bleibt eingeloggt"
-//         );
-//         return true;
-//     }
-// }
-
-
-// export async function checkSessionTokenValid() {
-//   const token = localStorage.getItem("token");
-//   if (!token) {
-//     console.log("[checkSessionTokenValid] Kein Token gefunden");
-//     return false;
-//   }
-
-//   try {
-//     const response = await Api.fetchDataWithToken("/check-token", token);
-
-//     if (!response) {
-//       // Wenn response null → Fehler war 403 oder sonst was
-//       console.warn(
-//         "[checkSessionTokenValid] ❌ Token abgelaufen – Nutzer wird ausgeloggt"
-//       );
-//       logout();
-//       return false;
-//     }
-
-//     console.log("[checkSessionTokenValid] ✅ Token gültig");
-//     return true;
-//   } catch (err) {
-//     if (err.message.includes("403")) {
-//       console.warn(
-//         "[checkSessionTokenValid] ❌ Token abgelaufen – Nutzer wird ausgeloggt"
-//       );
-//       logout();
-//       return false;
-//     }
-
-//     // Andere Fehler, z.B. Netzwerkproblem, Server nicht erreichbar
-//     console.warn(
-//       "[checkSessionTokenValid] ⚠️ Server nicht erreichbar – Tokenstatus unbekannt, Nutzer bleibt eingeloggt"
-//     );
-//     return true;
-//   }
-// }
-
 export async function checkSessionTokenValid() {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -190,20 +104,30 @@ export async function checkSessionTokenValid() {
       return "expired";
     }
 
-    console.log("[checkSessionTokenValid] ✅ Token gültig");
-    return "valid";
-  } catch (err) {
-    if (err.message.includes("403")) {
-      console.warn(
-        "[checkSessionTokenValid] ❌ Token abgelaufen – Nutzer wird ausgeloggt"
-      );
-      logout();
-      return "expired";
-    }
+    try {
+        const response = await Api.fetchDataWithToken("/check-token", token);
 
-    console.warn(
-      "[checkSessionTokenValid] ⚠️ Server nicht erreichbar – Tokenstatus unbekannt, Nutzer bleibt eingeloggt"
-    );
-    return "unknown";
-  }
+        // if (!response.valid) {
+        //   console.warn("[checkSessionTokenValid] ❌ Token ungültig oder abgelaufen – Nutzer wird ausgeloggt");
+        //   logout();
+        //   return false;
+        // }
+
+        console.log("[checkSessionTokenValid] ✅ Token gültig");
+        return true;
+    } catch (err) {
+        if (err.message.includes("403")) {
+            console.warn(
+                "[checkSessionTokenValid] ❌ Token abgelaufen – Nutzer wird ausgeloggt"
+            );
+            logout();
+            return false;
+        }
+
+        // Andere Fehler, z.B. Netzwerkproblem, Server nicht erreichbar
+        console.warn(
+            "[checkSessionTokenValid] ⚠️ Server nicht erreichbar – Tokenstatus unbekannt, Nutzer bleibt eingeloggt"
+        );
+        return true;
+    }
 }
