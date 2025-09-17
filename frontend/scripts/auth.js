@@ -15,7 +15,7 @@ export function getUserToken() {
     const token = localStorage.getItem("token");
     if (!token) {
         redirectToGetStartedPage();
-        throw new Error("Token nicht gefunden");
+        // throw new Error("Token nicht gefunden"); // Removed: error will never be caught after redirect
     }
     return token;
 }
